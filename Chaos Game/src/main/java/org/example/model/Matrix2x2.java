@@ -43,6 +43,7 @@ public class Matrix2x2 {
    *
    * @param vector the vector to multiply with
    * @return the resulting vector
+   * @throws IllegalArgumentException if the given vector is null
    */
   public Vector2D multiply (Vector2D vector) {
     verifyNotNull(vector);
