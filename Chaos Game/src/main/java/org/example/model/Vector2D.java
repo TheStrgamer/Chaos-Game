@@ -79,7 +79,7 @@ public class Vector2D {
    */
   public Vector2D add(Vector2D vector) {
     verifyNotNull(vector);
-    double newX0 =getX0() + vector.getX0();
+    double newX0 = getX0() + vector.getX0();
     double newX1 = getX1() + vector.getX1();
     return new Vector2D(newX0, newX1);
   }

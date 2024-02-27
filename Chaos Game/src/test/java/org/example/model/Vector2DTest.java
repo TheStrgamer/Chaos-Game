@@ -137,6 +137,7 @@ class Vector2DTest {
       }
     }
   }
+
   @Nested
   @DisplayName("Negative tests")
   class NegativeTests {

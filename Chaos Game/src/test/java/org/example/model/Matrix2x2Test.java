@@ -53,7 +53,7 @@ public class Matrix2x2Test {
         matrix.multiply(vector);
         fail("An exception was not thrown");
       } catch (Exception e) {
-        assertEquals(e.getMessage(),"Vector cannot be null");
+        assertEquals(e.getMessage(), "Vector cannot be null");
       }
     }
   }
