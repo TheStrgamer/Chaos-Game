@@ -93,4 +93,15 @@ public class Complex extends Vector2D {
 
     return new Complex(newReal, newImaginary);
   }
+
+  /**
+   * Multiplies the given complex number by given scalar.
+   *
+   * @param scalar the scalar to multiply by
+   */
+  public Complex multiply(double scalar) {
+    Vector2D result = super.multiply(scalar);
+    return new Complex(result.getX0(), result.getX1());
+  }
+
 }
