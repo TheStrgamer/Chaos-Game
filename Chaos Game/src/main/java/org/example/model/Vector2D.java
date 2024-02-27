@@ -30,8 +30,8 @@ public class Vector2D {
    * @param x1 the x1 value
    */
   public Vector2D(double x0, double x1) {
-    this.x0 = x0;
-    this.x1 = x1;
+    setX0(x0);
+    setX1(x1);
   }
 
   /**
@@ -53,36 +53,60 @@ public class Vector2D {
   }
 
   /**
-   * adds the given vector to this vector.
+   * Sets the x0 value of this vector.
+   *
+   * @param x0 the new x0 value
+   */
+  public void setX0(double x0) {
+    this.x0 = x0;
+  }
+
+  /**
+   * Sets the x1 value of this vector.
+   *
+   * @param x1 the new x1 value
+   */
+  public void setX1(double x1) {
+    this.x1 = x1;
+  }
+
+  /**
+   * adds the given vector to this vector, and returns the result as a new vector.
    *
    * @param vector the vector to add
+   * @return the new vector
    * @throws IllegalArgumentException if the given vector is null
    */
-  public void add(Vector2D vector) {
+  public Vector2D add(Vector2D vector) {
     verifyNotNull(vector);
-    x0 += vector.getX0();
-    x1 += vector.getX1();
+    double newX0 =getX0() + vector.getX0();
+    double newX1 = getX1() + vector.getX1();
+    return new Vector2D(newX0, newX1);
   }
 
   /**
    * Subtracts the given vector from this vector.
    *
    * @param vector the vector to subtract
+   * @return the new vector
    * @throws IllegalArgumentException if the given vector is null
    */
-  public void subtract(Vector2D vector) {
+  public Vector2D subtract(Vector2D vector) {
     verifyNotNull(vector);
-    x0 -= vector.getX0();
-    x1 -= vector.getX1();
+    double newX0 = x0 - vector.getX0();
+    double newX1 = x1 - vector.getX1();
+    return new Vector2D(newX0, newX1);
   }
 
   /**
    * Multiplies this vector by the given scalar.
    *
    * @param scalar the scalar to multiply by
+   * @return the new vector
    */
-  public void multiply(double scalar) {
-    x0 *= scalar;
-    x1 *= scalar;
+  public Vector2D multiply(double scalar) {
+    double newX0 = x0 * scalar;
+    double newX1 = x1 * scalar;
+    return new Vector2D(newX0, newX1);
   }
 }
