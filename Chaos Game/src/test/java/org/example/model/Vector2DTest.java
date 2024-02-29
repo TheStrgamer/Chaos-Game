@@ -73,6 +73,7 @@ class Vector2DTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("subtract method returns vector with correct values")
     void testSubtractMethodReturnsVectorWithCorrectValues() {
@@ -86,6 +87,7 @@ class Vector2DTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("multiply method returns a new vector")
     void testMultiplyMethodReturnsNewVector() {
@@ -97,6 +99,7 @@ class Vector2DTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("multiply method returns vector with correct values")
     void testMultiplyMethodReturnsVectorWithCorrectValues() {
@@ -109,6 +112,7 @@ class Vector2DTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("setter sets the x0 value of this vector")
     void testSetX0SetsCorrectly() {
@@ -120,6 +124,7 @@ class Vector2DTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("setter sets the x1 value of this vector")
     void testSetX1SetsCorrectly() {
@@ -133,27 +138,33 @@ class Vector2DTest {
     }
   }
 
-  @Test
-  @DisplayName("add method throws IllegalArgumentException when given vector is null")
-  void testAddMethodThrowsOnNull() {
-    try {
-      Vector2D vector = new Vector2D(1, 2);
-      vector.add(null);
-      fail("An exception was not thrown");
-    } catch (Exception e) {
-      assertEquals(e.getMessage(),"Vector cannot be null");
-    }
-  }
+  @Nested
+  @DisplayName("Negative tests")
+  class NegativeTests {
 
-  @Test
-  @DisplayName("subtract method throws IllegalArgumentException when given vector is null")
-  void testSubtractMethodThrowsOnNull() {
-    try {
-      Vector2D vector = new Vector2D(1, 2);
-      vector.subtract(null);
-      fail("An exception was not thrown");
-    } catch (Exception e) {
-      assertEquals(e.getMessage(),"Vector cannot be null");
+
+    @Test
+    @DisplayName("add method throws IllegalArgumentException when given vector is null")
+    void testAddMethodThrowsOnNull() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        vector.add(null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Vector cannot be null");
+      }
+    }
+
+    @Test
+    @DisplayName("subtract method throws IllegalArgumentException when given vector is null")
+    void testSubtractMethodThrowsOnNull() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        vector.subtract(null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Vector cannot be null");
+      }
     }
   }
 

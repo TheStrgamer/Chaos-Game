@@ -35,7 +35,6 @@ class ComplexTest {
     }
 
 
-
     @Test
     @DisplayName("add method returns a new complex number")
     void testAddMethodReturnsNewComplex() {
@@ -48,13 +47,14 @@ class ComplexTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("add method returns a complex number with the correct values")
     void testAddMethodReturnsComplexWithCorrectValues() {
       try {
         Complex complex = new Complex(1, 2);
         Complex complex2 = new Complex(3, 4);
-        Complex complex3 =  complex.add(complex2);
+        Complex complex3 = complex.add(complex2);
         assertEquals(4, complex3.getReal());
         assertEquals(6, complex3.getImaginary());
       } catch (Exception e) {
@@ -74,6 +74,7 @@ class ComplexTest {
         fail("An exception was thrown" + e.getMessage());
       }
     }
+
     @Test
     @DisplayName("subtract method returns a complex number with the correct values")
     void testSubtractMethodReturnsComplexWithCorrectValues() {
@@ -99,6 +100,7 @@ class ComplexTest {
         fail("An exception was thrown");
       }
     }
+
     @Test
     @DisplayName("sqrt method returns a complex number with the correct values")
     void testSqrtMethodReturnsComplexWithCorrectValues() {
@@ -111,7 +113,6 @@ class ComplexTest {
         fail("An exception was thrown");
       }
     }
-
 
 
     @Test
@@ -138,6 +139,7 @@ class ComplexTest {
       }
     }
   }
+
   @Nested
   @DisplayName("Negative tests")
   class NegativeTests {

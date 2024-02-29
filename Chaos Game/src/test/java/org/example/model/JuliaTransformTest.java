@@ -63,6 +63,7 @@ class JuliaTransformTest {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
     }
+
     @Test
     @DisplayName("Transform method returns opposite result with opposite sign")
     void testTransformReturnsOppositeResultWithIooisuteSign() {
