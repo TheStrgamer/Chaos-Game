@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * A class that represents a description of a chaos game.
- *
  * The description includes the minimum and maximum coordinates of the game,
  * as well as a list of transforms that are used to generate the game.
  */
@@ -13,8 +12,61 @@ public class ChaosGameDescription {
   private Vector2D maxCoords;
   List<Transform2D> transforms;
 
+  private void verifyNotNull(Vector2D vector) {
+    if (vector == null) {
+      throw new IllegalArgumentException("Vector cannot be null");
+    }
+  }
+
+  /**
+   * Verifies that the given vector of transform2D type is not null.
+   * @param vector  is the vector to use.
+   *
+   * @throws IllegalArgumentException if the given vector is null.
+   */
+  private void verifyNotNullTransform(Transform2D vector) {
+    if (vector == null) {
+      throw new IllegalArgumentException("Objects in Transform2D list cannot be null");
+    }
+  }
+
+  /**
+   * Verifies that the given list of transforms is not null, not empty and does not
+   * contain any null objects.
+   * @param listTransforms a list of transforms2D objects.
+   *
+   * @throws IllegalArgumentException if the list is null, empty of contains null
+   *                                  objects.
+   */
+  private void verifyListNotNullAndNotEmpty(List<Transform2D> listTransforms) {
+    if (listTransforms == null) {
+      throw new IllegalArgumentException("List cannot be null");
+    }
+    if (listTransforms.isEmpty()) {
+      throw new IllegalArgumentException("List cannot be empty");
+    }
+    for (Transform2D listTransform : listTransforms) {
+      verifyNotNullTransform(listTransform);
+    }
+  }
+
+  /**
+   * Constructs a new ChaosGameDescription object with the given minimum and maximum coordinates,
+   * as well as a list of transforms.
+   *
+   * @param minCoords  is the minimum coordinates to use.
+   * @param maxCoords  is the maximum coordinates to use.
+   * @param transforms is the list of transforms to use.
+   *
+   * @throws IllegalArgumentException if the given minimum or maximum coordinates are null,
+   *                                  if the given list of transforms is null, empty or contains
+   *                                  null objects
+   */
   public ChaosGameDescription(Vector2D minCoords, Vector2D maxCoords,
                               List<Transform2D> transforms) {
+    verifyNotNull(minCoords);
+    verifyNotNull(maxCoords);
+    verifyListNotNullAndNotEmpty(transforms);
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
