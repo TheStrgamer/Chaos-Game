@@ -62,8 +62,8 @@ public class ChaosCanvas {
     this.maxCoords = maxCoords;
     this.canvas = new int[width][height];
     this.transformCoordsToIndices = new AffineTransform2D(
-        new Matrix2x2(0, (width-1)/(maxCoords.getX0()-minCoords.getX0()),
-            (height-1)/(minCoords.getX1()-maxCoords.getX1()), 0),
+        new Matrix2x2(0, (height-1)/(minCoords.getX1()-maxCoords.getX1()),(width-1)/(maxCoords.getX0()-minCoords.getX0()),0),
+
         new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1() )
         , ((width - 1) * minCoords.getX0()) / (minCoords.getX0()-maxCoords.getX0()))
     );
