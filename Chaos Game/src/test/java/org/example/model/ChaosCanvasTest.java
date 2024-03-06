@@ -33,8 +33,29 @@ class ChaosCanvasTest {
       }
     }
 
-
-
-
+    @Test
+    @DisplayName("transformCoordsToIndices transforms the coordinates correctly")
+    void testTransformCoordsToIndicesTransformsCorrectly() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(10, 10, new Vector2D(0, 0), new Vector2D(2, 2));
+        Vector2D result = chaosCanvas.transformCoords(new Vector2D(1, 1));
+        assertEquals(4.5, result.getX0());
+        assertEquals(4.5, result.getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+    @Test
+    @DisplayName("transformCoordsToIndices transforms the coordinates correctly with different values")
+    void testTransformCoordsToIndicesTransformsCorrectlyWithDifferentValues() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(10, 10, new Vector2D(0, 0), new Vector2D(2, 2));
+        Vector2D result = chaosCanvas.transformCoords(new Vector2D(1, 1));
+        assertEquals(4.5, result.getX0());
+        assertEquals(4.5, result.getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
   }
 }

@@ -27,9 +27,10 @@ public class ChaosCanvas {
       throw new IllegalArgumentException("Vector cannot be null");
     }
   }
+
   /**
-   * Verifies that the given width and height are positive. Throws an IllegalArgumentException if the
-   * given width or height is not positive.
+   * Verifies that the given width and height are positive. Throws an IllegalArgumentException if
+   * the given width or height is not positive.
    *
    * @param width  the width to verify
    * @param height the height to verify
@@ -42,8 +43,25 @@ public class ChaosCanvas {
   }
 
   /**
-   * Constructor for ChaosCanvas, creates an object with the given width, height, minimum coordinates and
-   * maximum coordinates.
+   * Verifies that the given minimum and maximum coordinates are valid. Throws an
+   * IllegalArgumentException if the given coordinates are not valid.
+   *
+   * @param minCoords the minimum coordinates to verify
+   * @param maxCoords the maximum coordinates to verify
+   * @throws IllegalArgumentException if the given minimum or maximum coordinates are equal, or if
+   *                                  the minimum coordinates are greater than the maximum
+   *                                  coordinates
+   */
+  private void minMaxCoordsValid(Vector2D minCoords, Vector2D maxCoords) {
+    if (minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()) {
+      throw new IllegalArgumentException(
+          "Minimum coordinates must be less than maximum coordinates");
+    }
+  }
+
+  /**
+   * Constructor for ChaosCanvas, creates an object with the given width, height, minimum
+   * coordinates and maximum coordinates.
    *
    * @param width     the width to use
    * @param height    the height to use
@@ -56,21 +74,24 @@ public class ChaosCanvas {
     verifyDimensions(width, height);
     verifyNotNull(minCoords);
     verifyNotNull(maxCoords);
+    minMaxCoordsValid(minCoords, maxCoords);
     this.width = width;
     this.height = height;
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.canvas = new int[width][height];
     this.transformCoordsToIndices = new AffineTransform2D(
-        new Matrix2x2(0, (height-1)/(minCoords.getX1()-maxCoords.getX1()),(width-1)/(maxCoords.getX0()-minCoords.getX0()),0),
+        new Matrix2x2(0, (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
+            (width - 1) / (maxCoords.getX0() - minCoords.getX0()), 0),
 
-        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1() )
-        , ((width - 1) * minCoords.getX0()) / (minCoords.getX0()-maxCoords.getX0()))
+        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1())
+            , ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0()))
     );
   }
 
   /**
    * Returns the pixel value at the given point.
+   *
    * @param point the point to get the pixel value at
    * @return the pixel value
    */
@@ -78,16 +99,20 @@ public class ChaosCanvas {
     Vector2D indices = transformCoords(point);
     return canvas[(int) indices.getX0()][(int) indices.getX1()];
   }
+
   /**
    * Sets the pixel value at the given point to 1.
+   *
    * @param point the point to set the pixel value at
    */
   public void setPixel(Vector2D point) {
     Vector2D indices = transformCoords(point);
     canvas[(int) indices.getX0()][(int) indices.getX1()] = 1;
   }
+
   /**
    * Sets the pixel value at the given point to 0.
+   *
    * @param point the point to set the pixel value at
    */
   public void removePixel(Vector2D point) {
@@ -117,6 +142,7 @@ public class ChaosCanvas {
 
   /**
    * transforms the given indices to coordinates. Main goal is testing.
+   *
    * @param indices the indices to transform
    * @return the transformed coordinates
    */
