@@ -30,7 +30,7 @@ class AffineTransform2DTest {
         AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
             new Vector2D(5, 6));
         Vector2D vector = new Vector2D(7, 8);
-        Vector2D result = (Vector2D) affineTransform2D.transform(vector);
+        Vector2D result = affineTransform2D.transform(vector);
         assertNotNull(result);
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
@@ -44,7 +44,7 @@ class AffineTransform2DTest {
         AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(.5, 1, 1, .5),
             new Vector2D(3, 1));
         Vector2D vector = new Vector2D(1, 2);
-        Vector2D result = (Vector2D) affineTransform2D.transform(vector);
+        Vector2D result = affineTransform2D.transform(vector);
         assertEquals(5.5, result.getX0());
         assertEquals(3, result.getX1());
       } catch (Exception e) {
@@ -59,7 +59,7 @@ class AffineTransform2DTest {
         AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(2, 3, 6, 9),
             new Vector2D(1, 10));
         Vector2D vector = new Vector2D(2, 5);
-        Vector2D result = (Vector2D) affineTransform2D.transform(vector);
+        Vector2D result = affineTransform2D.transform(vector);
         assertEquals(20, result.getX0());
         assertEquals(67, result.getX1());
       } catch (Exception e) {
