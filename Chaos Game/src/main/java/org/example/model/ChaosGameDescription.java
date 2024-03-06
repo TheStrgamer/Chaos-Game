@@ -12,20 +12,26 @@ public class ChaosGameDescription {
   private Vector2D maxCoords;
   List<Transform2D> transforms;
 
-  private void verifyNotNull(Vector2D vector) {
+  /**
+   * Verifies that the given Vector2D object is not null.
+   * @param vector  is the vector to use.
+   *
+   * @throws IllegalArgumentException if the given vector is null.
+   */
+  private void verifyNotNullVector(Vector2D vector) {
     if (vector == null) {
       throw new IllegalArgumentException("Vector cannot be null");
     }
   }
 
   /**
-   * Verifies that the given vector of transform2D type is not null.
-   * @param vector  is the vector to use.
+   * Verifies that the given transform2D is not null.
+   * @param transform  is the transform to use.
    *
    * @throws IllegalArgumentException if the given vector is null.
    */
-  private void verifyNotNullTransform(Transform2D vector) {
-    if (vector == null) {
+  private void verifyNotNullTransform(Transform2D transform) {
+    if (transform == null) {
       throw new IllegalArgumentException("Objects in Transform2D list cannot be null");
     }
   }
@@ -64,8 +70,8 @@ public class ChaosGameDescription {
    */
   public ChaosGameDescription(Vector2D minCoords, Vector2D maxCoords,
                               List<Transform2D> transforms) {
-    verifyNotNull(minCoords);
-    verifyNotNull(maxCoords);
+    verifyNotNullVector(minCoords);
+    verifyNotNullVector(maxCoords);
     verifyListNotNullAndNotEmpty(transforms);
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
@@ -83,6 +89,11 @@ public class ChaosGameDescription {
     return minCoords;
   }
 
+  /**
+   * Returns the maximum coordinates of the game.
+   *
+   * @return the maximum coordinates.
+   */
   public Vector2D getMaxCoords() {
     return maxCoords;
   }
