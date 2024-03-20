@@ -187,10 +187,10 @@ public class ChaosCanvas {
 
   public String toString() {
     String canvasString = "";
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        if (canvas[j][i] == 0) {
-          canvasString += "_";
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        if (canvas[i][j] == 0) {
+          canvasString += " ";
         } else {
           canvasString += "*";
         }
@@ -199,5 +199,6 @@ public class ChaosCanvas {
     }
     return canvasString;
   }
+
 
 }

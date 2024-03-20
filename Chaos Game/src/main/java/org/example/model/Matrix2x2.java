@@ -50,8 +50,16 @@ public class Matrix2x2 {
     verifyNotNull(vector);
     double x0 = a00 * vector.getX0() + a01 * vector.getX1();
     double x1 = a10 * vector.getX0() + a11 * vector.getX1();
-    vector.setX0(x0);
-    vector.setX1(x1);
-    return vector;
+
+    return new Vector2D(x0, x1);
+  }
+
+  public String toString() {
+    return "Matrix2x2[" +
+        "[" + a00 +
+        "," + a01 +
+        "],[" + a10 +
+        ", " + a11 +
+        "]]";
   }
 }
