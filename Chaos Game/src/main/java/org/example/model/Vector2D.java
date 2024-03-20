@@ -109,4 +109,8 @@ public class Vector2D {
     double newX1 = x1 * scalar;
     return new Vector2D(newX0, newX1);
   }
+
+  public String toString() {
+    return "Vector2D[" + x0 + ", " + x1 + ']';
+  }
 }
