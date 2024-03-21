@@ -246,6 +246,51 @@ class ChaosCanvasTest {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
     }
+
+    @Test
+    @DisplayName("getInfoString returns correct info")
+    void testGetInfoStringReturnsCorrectInfo() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
+                new Vector2D(100, 100));
+        String result = chaosCanvas.getInfoString();
+        assertNotNull(result);
+        assertEquals("ChaosCanvas{" +
+            "width=" + 101 +
+            ", height=" + 101 +
+            ", minCoords=Vector2D[0.0, 0.0]" +
+            ", maxCoords=Vector2D[100.0, 100.0]" +
+            '}', result);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("toString returns correct string")
+    void testToStringReturnsCorrectString() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(11, 11, new Vector2D(0, 0),
+                new Vector2D(10, 10));
+        chaosCanvas.setPixel(new Vector2D(0, 0));
+        chaosCanvas.setPixel(new Vector2D(10, 10));
+        String result = chaosCanvas.toString();
+        assertNotNull(result);
+        assertEquals("          X\n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "X          \n", result);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
   }
 
 

@@ -176,12 +176,10 @@ public class ChaosCanvas {
 
   public String getInfoString() {
     return "ChaosCanvas{" +
-        "canvas=" + canvas +
-        ", width=" + width +
+        "width=" + width +
         ", height=" + height +
         ", minCoords=" + minCoords +
         ", maxCoords=" + maxCoords +
-        ", transformCoordsToIndices=" + transformCoordsToIndices +
         '}';
   }
 
@@ -192,7 +190,7 @@ public class ChaosCanvas {
         if (canvas[i][j] == 0) {
           canvasString += " ";
         } else {
-          canvasString += "*";
+          canvasString += "X";
         }
       }
       canvasString += "\n";
