@@ -54,12 +54,12 @@ public class Matrix2x2 {
     return new Vector2D(x0, x1);
   }
 
+  /**
+   * Returns a string representation of this matrix.
+   *
+   * @return a string representation of this matrix
+   */
   public String toString() {
-    return "Matrix2x2[" +
-        "[" + a00 +
-        "," + a01 +
-        "],[" + a10 +
-        ", " + a11 +
-        "]]";
+    return a00 + ", " + a01 + ", " + a10 + ", " + a11;
   }
 }

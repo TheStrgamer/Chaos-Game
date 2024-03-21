@@ -106,4 +106,30 @@ public class ChaosGameDescription {
   public List<Transform2D> getTransforms() {
     return transforms;
   }
+
+  public String getTransformType() {
+    Transform2D transform = transforms.get(0);
+    if (transform instanceof AffineTransform2D) {
+      return "Affine";
+    } else if (transform instanceof JuliaTransform) {
+      return "Julia";
+    } else {
+      throw new IllegalArgumentException("Invalid transform type");
+    }
+  }
+
+  /**
+   * Returns a string representation of the ChaosGameDescription object.
+   *
+   * @return a string representation of the ChaosGameDescription object.
+   */
+  public String toString() {
+    StringBuilder result = new StringBuilder(getTransformType() + "\n");
+    result.append(minCoords).append("\n");
+    result.append(maxCoords).append("\n");
+    for (Transform2D transform : transforms) {
+      result.append(transform).append("\n");
+    }
+    return result.toString();
+  }
 }

@@ -64,9 +64,12 @@ public class AffineTransform2D implements Transform2D {
     return matrix.multiply(vector).add(this.vector);
   }
 
-  public String toString() {
-    return "AffineTransform2D[" + matrix.toString() + ", " + vector + "]";
-  }
+  /**
+   * Returns a string representation of this AffineTransform2D object.
+   * @return a string representation of this AffineTransform2D object
+   */
+
+  public String toString() {return matrix.toString() + ", " + vector;}
 
 
 }

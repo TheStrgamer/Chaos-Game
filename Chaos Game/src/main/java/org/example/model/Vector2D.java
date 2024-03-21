@@ -111,6 +111,6 @@ public class Vector2D {
   }
 
   public String toString() {
-    return "Vector2D[" + x0 + ", " + x1 + ']';
+    return x0 + ", " + x1;
   }
 }
