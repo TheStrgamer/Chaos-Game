@@ -75,6 +75,21 @@ public class ChaosGameFileHandler {
 
 
   /**
+   * Removes comments from the given string. Comments in the string are everything after #
+   *
+   * @param str the given string
+   * @return the string with comments removed
+   */
+  private String removeCommentsFromString(String str) {
+    if (str.contains("#")) {
+      return str.split("#")[0].trim();
+    } else {
+      return str;
+    }
+  }
+
+
+  /**
    * Reads a chaos game description from a file.
    *
    * @param path is the path to the file.
@@ -86,24 +101,21 @@ public class ChaosGameFileHandler {
     path = makeValidPath(path);
     verifyValidPath(path);
     try (Scanner scanner = new Scanner(new File(path))) {
-      String transformType = scanner.nextLine();
+      String transformType = removeCommentsFromString(scanner.nextLine());
       verifyValidTransformType(transformType);
 
-      String minCoords = scanner.nextLine();
+      String minCoords = removeCommentsFromString(scanner.nextLine());
       Vector2D minCoordsVector = new Vector2D(Double.parseDouble(minCoords.split(",")[0]),
           Double.parseDouble(minCoords.split(",")[1]));
 
-      String maxCoords = scanner.nextLine();
+      String maxCoords = removeCommentsFromString(scanner.nextLine());
       Vector2D maxCoordsVector = new Vector2D(Double.parseDouble(maxCoords.split(",")[0]),
           Double.parseDouble(maxCoords.split(",")[1]));
 
       List<Transform2D> transforms = new ArrayList<>();
 
       while (scanner.hasNextLine()) {
-        String nextLine = scanner.nextLine();
-        if (nextLine.contains("#")) {
-          nextLine = nextLine.split("#")[0].trim();
-        }
+        String nextLine = removeCommentsFromString(scanner.nextLine());
         if (nextLine.isEmpty()) {
           continue;
         }
@@ -131,8 +143,11 @@ public class ChaosGameFileHandler {
       }
       return new ChaosGameDescription(minCoordsVector, maxCoordsVector, transforms);
 
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
+      //Todo muligens fjern try catch, og eventuelt legg til verify metoder for ting som kan gå galt.
+      // tror de fleste feil er dekket allerede.
+      // husk å lukke scanneren hvis du fjerner try catch.
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
     return null;
   }
@@ -149,12 +164,9 @@ public class ChaosGameFileHandler {
     path = makeValidPath(path);
     verifyValidPath(path);
     verifyNotNullDescription(description);
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
-      writer.write(description.toString());
-    }
-    catch (IOException e) {
-      System.out.println(e.getMessage());
-    }
+    BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+    writer.write(description.toString());
+    writer.close();
   }
 
 }

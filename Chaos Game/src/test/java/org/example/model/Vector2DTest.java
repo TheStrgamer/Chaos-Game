@@ -12,6 +12,8 @@ class Vector2DTest {
   @DisplayName("Positive tests")
   class PositiveTests {
 
+    //Todo test tostring
+
     @Test
     @DisplayName("getX0 returns the x0 value of the vector")
     void testGetX0returnsCorrectValue() {

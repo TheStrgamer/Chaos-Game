@@ -11,6 +11,8 @@ class ComplexTest {
   @Nested
   @DisplayName("Positive tests")
   class PositiveTests {
+    //Todo legg til tester for toString metoden
+
 
     @Test
     @DisplayName("getReal returns the real part of the complex number")

@@ -11,6 +11,7 @@ class JuliaTransformTest {
   @Nested
   @DisplayName("Positive tests")
   class PositiveTests {
+    //Todo legg til tester for toString metoden
 
     @Test
     @DisplayName("Constructor throws no exceptions with valid input")
