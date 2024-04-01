@@ -74,4 +74,15 @@ public class JuliaTransform implements Transform2D {
 
 
   }
+
+  /**
+   * Returns a string representation of the Julia transformation.
+   *
+   * @return a string representation of the Julia transformation
+   */
+  public String toString() {
+    return point.toString() + ", " + sign;
+  }
+
+
 }

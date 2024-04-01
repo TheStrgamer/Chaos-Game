@@ -104,4 +104,11 @@ public class Complex extends Vector2D {
     return new Complex(result.getX0(), result.getX1());
   }
 
+  /**
+   * Returns a string representation of the complex number.
+   */
+  public String toString() {
+    return getReal() + ", " + getImaginary();
+  }
+
 }

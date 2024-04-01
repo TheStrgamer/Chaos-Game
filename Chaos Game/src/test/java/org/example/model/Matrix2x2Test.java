@@ -38,6 +38,11 @@ public class Matrix2x2Test {
         fail("An exception was thrown");
       }
     }
+    //Todo test toString
+    //fikk også feil der jeg transformerte en vector, og så satt piksel, som gjorde enda en
+    // transformasjon for å gjøre til indecies. tidligere ble transformasjonenen lagret i vektor
+    // istedenfor å returnere en ny, men har fikset det. legg til test for å sørge for at
+    // lignende feil  ikke skjer igjen. kan også gjøre noe lignende på complex
   }
 
   @Nested

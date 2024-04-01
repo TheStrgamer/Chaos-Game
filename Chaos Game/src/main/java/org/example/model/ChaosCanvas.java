@@ -125,6 +125,7 @@ public class ChaosCanvas {
   public void setPixel(Vector2D point) {
     verifyNotNull(point);
     verifyPointWithinParameters(point);
+
     Vector2D indices = transformCoords(point);
     canvas[(int) indices.getX0()][(int) indices.getX1()] = 1;
   }
@@ -172,5 +173,30 @@ public class ChaosCanvas {
     verifyPointWithinParameters(coord);
     return transformCoordsToIndices.transform(coord);
   }
+
+  public String getInfoString() {
+    return "ChaosCanvas{" +
+        "width=" + width +
+        ", height=" + height +
+        ", minCoords=" + minCoords +
+        ", maxCoords=" + maxCoords +
+        '}';
+  }
+
+  public String toString() {
+    String canvasString = "";
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        if (canvas[i][j] == 0) {
+          canvasString += " ";
+        } else {
+          canvasString += "X";
+        }
+      }
+      canvasString += "\n";
+    }
+    return canvasString;
+  }
+
 
 }

@@ -143,7 +143,7 @@ class ChaosCanvasTest {
     void testTransformCoordsToIndicesTransformsCorrectlyWithNegativeAndPositiveValues() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(-50, -50),
-                new Vector2D(50, 50));
+            new Vector2D(50, 50));
         Vector2D result = chaosCanvas.transformCoords(new Vector2D(0, 0));
         assertEquals(50, result.getX0());
         assertEquals(50, result.getX1());
@@ -157,7 +157,7 @@ class ChaosCanvasTest {
     void testTransformCoordsToIndicesTransformsCorrectlyWithNegativeCoords() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(-100, -100),
-                new Vector2D(0, 0));
+            new Vector2D(0, 0));
         Vector2D result = chaosCanvas.transformCoords(new Vector2D(-50, -50));
         assertEquals(50, result.getX0());
         assertEquals(50, result.getX1());
@@ -171,7 +171,7 @@ class ChaosCanvasTest {
     void testTransformCoordsToIndicesTransformsMaxCoordsToTopRight() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
-                new Vector2D(100, 100));
+            new Vector2D(100, 100));
         Vector2D result = chaosCanvas.transformCoords(new Vector2D(100, 100));
         assertEquals(0, result.getX0());
         assertEquals(100, result.getX1());
@@ -185,7 +185,7 @@ class ChaosCanvasTest {
     void testTransformCoordsToIndicesTransformsMinCoordsToBottomLeft() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
-                new Vector2D(100, 100));
+            new Vector2D(100, 100));
         Vector2D result = chaosCanvas.transformCoords(new Vector2D(0, 0));
         assertEquals(100, result.getX0());
         assertEquals(0, result.getX1());
@@ -199,7 +199,7 @@ class ChaosCanvasTest {
     void testGetCanvasArrayReturnsCorrectly() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
-                new Vector2D(100, 100));
+            new Vector2D(100, 100));
         int[][] result = chaosCanvas.getCanvasArray();
         assertNotNull(result);
       } catch (Exception e) {
@@ -212,7 +212,7 @@ class ChaosCanvasTest {
     void testGetCanvasArrayReturnsCorrectlyWithCorrectDimensions() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
-                new Vector2D(100, 100));
+            new Vector2D(100, 100));
         int[][] result = chaosCanvas.getCanvasArray();
         assertEquals(101, result.length);
         assertEquals(101, result[0].length);
@@ -220,24 +220,26 @@ class ChaosCanvasTest {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
     }
+
     @Test
     @DisplayName("getCanvasArray returns a new array")
     void testGetCanvasArrayReturnsNewArray() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
-                new Vector2D(100, 100));
+            new Vector2D(100, 100));
         int[][] result = chaosCanvas.getCanvasArray();
         assertNotEquals(chaosCanvas.getCanvasArray(), result);
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
     }
+
     @Test
     @DisplayName("clear method clears the canvas")
     void testClearMethodClearsCanvas() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
-                new Vector2D(100, 100));
+            new Vector2D(100, 100));
         chaosCanvas.setPixel(new Vector2D(0, 0));
         assertEquals(1, chaosCanvas.getPixel(new Vector2D(0, 0)));
         chaosCanvas.clear();
@@ -246,6 +248,52 @@ class ChaosCanvasTest {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
     }
+
+    @Test
+    @DisplayName("getInfoString returns correct info")
+    void testGetInfoStringReturnsCorrectInfo() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
+            new Vector2D(100, 100));
+        String result = chaosCanvas.getInfoString();
+        assertNotNull(result);
+        assertEquals("ChaosCanvas{" +
+            "width=" + 101 +
+            ", height=" + 101 +
+            ", minCoords=0.0, 0.0" +
+            ", maxCoords=100.0, 100.0" +
+            '}', result);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("toString returns correct string")
+    void testToStringReturnsCorrectString() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(11, 11, new Vector2D(0, 0),
+            new Vector2D(10, 10));
+        chaosCanvas.setPixel(new Vector2D(0, 0));
+        chaosCanvas.setPixel(new Vector2D(10, 10));
+        String result = chaosCanvas.toString();
+        assertNotNull(result);
+        assertEquals("          X\n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "           \n"
+            + "X          \n", result);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
   }
 
 
@@ -257,7 +305,8 @@ class ChaosCanvasTest {
     @DisplayName("Constructor throws IllegalArgumentException when width is negative")
     void constructorThrowsExceptionOnNegativeWidth() {
       try {
-        ChaosCanvas chaosCanvas = new ChaosCanvas(-100, 100, new Vector2D(0, 0), new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas = new ChaosCanvas(-100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
@@ -268,7 +317,8 @@ class ChaosCanvasTest {
     @DisplayName("Constructor throws IllegalArgumentException when height is negative")
     void constructorThrowsExceptionOnNegativeHeight() {
       try {
-        ChaosCanvas chaosCanvas = new ChaosCanvas(100, -100, new Vector2D(0, 0), new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, -100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
@@ -279,7 +329,8 @@ class ChaosCanvasTest {
     @DisplayName("Constructor throws IllegalArgumentException when width is negative")
     void constructorThrowsExceptionOnListNull() {
       try {
-        ChaosCanvas chaosCanvas = new ChaosCanvas(-100, 100, new Vector2D(0, 0), new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas = new ChaosCanvas(-100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
@@ -311,20 +362,22 @@ class ChaosCanvasTest {
     @Test
     @DisplayName("getPixel throws IllegalArgumentException when given point is not within the given parameters")
     void getPixelThrowsExceptionOnPointNotWithinParameters() {
-          try {
-            ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0), new Vector2D(200, 200));
-            chaosCanvas.getPixel(new Vector2D(300, 300));
-            fail("An exception was not thrown");
-          } catch (Exception e) {
-            assertEquals(e.getMessage(), "Point is not within the given parameters");
-          }
-        }
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        chaosCanvas.getPixel(new Vector2D(300, 300));
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Point is not within the given parameters");
+      }
+    }
 
     @Test
     @DisplayName("getPixel throws IllegalArgumentException when given point is null")
     void getPixelThrowsExceptionWhenPointIsNull() {
       try {
-        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0), new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
         chaosCanvas.getPixel(null);
         fail("An exception was not thrown");
       } catch (Exception e) {
@@ -336,7 +389,8 @@ class ChaosCanvasTest {
     @DisplayName("setPixel throws IllegalArgumentException when given point is not within the given parameters")
     void setPixelThrowsExceptionOnPointNotWithinParameters() {
       try {
-        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0), new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
         chaosCanvas.setPixel(new Vector2D(300, 300));
         fail("An exception was not thrown");
       } catch (Exception e) {
@@ -348,7 +402,8 @@ class ChaosCanvasTest {
     @DisplayName("setPixel throws IllegalArgumentException when given point is null")
     void setPixelThrowsExceptionWhenPointIsNull() {
       try {
-        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0), new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
         chaosCanvas.setPixel(null);
         fail("An exception was not thrown");
       } catch (Exception e) {
@@ -357,5 +412,7 @@ class ChaosCanvasTest {
     }
 
     //TODO add test for transformCoordsToIndices and removePixel
+    //Todo legg til test der mincoords er mer enn makscoords
+
   }
 }
