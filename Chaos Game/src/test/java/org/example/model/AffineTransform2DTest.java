@@ -67,7 +67,17 @@ class AffineTransform2DTest {
       }
     }
 
-    //Todo test tostring
+    @Test
+    @DisplayName("toString returns a string")
+    void testToStringReturnsString() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        assertEquals("1.0, 2.0, 3.0, 4.0, 5.0, 6.0", affineTransform2D.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
 
 
   }
