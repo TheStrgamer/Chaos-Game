@@ -136,9 +136,8 @@ public class ChaosGameFileHandler {
           double real = Double.parseDouble(transform[0]);
           double imaginary = Double.parseDouble(transform[1]);
           Complex complex = new Complex(real, imaginary);
-          int sign = Integer.parseInt(transform[2]);
-
-          transforms.add(new JuliaTransform(complex, sign));
+          transforms.add(new JuliaTransform(complex, 1));
+          transforms.add(new JuliaTransform(complex, -1));
         }
       }
       return new ChaosGameDescription(minCoordsVector, maxCoordsVector, transforms);
