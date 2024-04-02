@@ -411,8 +411,68 @@ class ChaosCanvasTest {
       }
     }
 
-    //TODO add test for transformCoordsToIndices and removePixel
-    //Todo legg til test der mincoords er mer enn makscoords
+    @Test
+    @DisplayName("transformCoordsToIndices throws IllegalArgumentException when given point is not within the given parameters")
+    void transformCoordsToIndicesThrowsExceptionOnPointNotWithinParameters() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        chaosCanvas.transformCoords(new Vector2D(300, 300));
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Point is not within the given parameters");
+      }
+    }
 
+    @Test
+    @DisplayName("transformCoordsToIndices throws IllegalArgumentException when given point is null")
+    void transformCoordsToIndicesThrowsExceptionWhenPointIsNull() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        chaosCanvas.transformCoords(null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Vector cannot be null");
+      }
+    }
+
+    @Test
+    @DisplayName("removePixel throws IllegalArgumentException when given point is not within the given parameters")
+    void removePixelThrowsExceptionOnPointNotWithinParameters() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        chaosCanvas.removePixel(new Vector2D(300, 300));
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Point is not within the given parameters");
+      }
+    }
+
+    @Test
+    @DisplayName("removePixel throws IllegalArgumentException when given point is null")
+    void removePixelThrowsExceptionWhenPointIsNull() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        chaosCanvas.removePixel(null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Vector cannot be null");
+      }
+    }
+
+    @Test
+    @DisplayName("Constructor Throws exception when minCoords are bigger than maxCoords")
+    void ConstructorThrowsExceptionOnMinCoordsBiggerThanMaxCoords() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(200, 200),
+            new Vector2D(0, 0));
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Minimum coordinates must be less than maximum coordinates");
+      }
+    }
   }
 }
