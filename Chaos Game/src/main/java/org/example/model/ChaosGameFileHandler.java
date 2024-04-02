@@ -21,6 +21,7 @@ public class ChaosGameFileHandler {
     if (!transformType.equals("Affine") && !transformType.equals("Julia")) {
       throw new IllegalArgumentException("Invalid transform type");
     }
+    //System.out.println("Valid transform type");
   }
 
   /**
@@ -147,9 +148,9 @@ public class ChaosGameFileHandler {
       // tror de fleste feil er dekket allerede.
       // husk å lukke scanneren hvis du fjerner try catch.
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      throw new IllegalArgumentException(e.getMessage());
     }
-    return null;
+    //return null;
   }
 
 
