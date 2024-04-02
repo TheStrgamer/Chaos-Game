@@ -17,9 +17,16 @@ class ChaosGameFileHandlerTest {
       List<Transform2D> transforms = new ArrayList<>();
       transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(50, 0)));
       ChaosGameDescription description = new ChaosGameDescription(new Vector2D(0, 0),
-          new Vector2D(100, 100), transforms);
+              new Vector2D(100, 100), transforms);
+
+      List<Transform2D> transformsJulia = new ArrayList<>();
+      transformsJulia.add(new JuliaTransform(new Complex(1, 3), 1));
+      ChaosGameDescription descriptionJulia = new ChaosGameDescription(new Vector2D(0, 0),
+              new Vector2D(100, 100), transformsJulia);
+
 
       ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+      chaosGameFileHandler.writeToFile(descriptionJulia, "test/testFileJulia.txt");
       chaosGameFileHandler.writeToFile(description, "test/testFile.txt");
     } catch (Exception e) {
       fail("An exception was thrown with the message: " + e.getMessage());
@@ -121,12 +128,63 @@ class ChaosGameFileHandlerTest {
       }
     }
 
-    //TODO legg til tester med julia transform også.
-    //bruk filen testFileJulia.txt, som ligger i chaosFIles/test mappa
-    //trenger du andre filer for andre tester, eller lager dem i julia testen, legg dem i test mappa
-    //tester for fil uten kommentar, og for en fil som har tomme linjer midt i kan også være nyttig.
-    //
+    //TODO legg til tester for en fil som har tomme linjer midt i kan også være nyttig.
 
+    @Test
+    @DisplayName("readFile makes a ChaosGameDescription object with julia transform")
+    void testReadFileMakesChaosGameDescriptionObjectWithJulia() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+                "test/testFileJulia");
+        assertNotNull(description);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("readFile makes a ChaosGameDescription object with correct values with julia transform")
+    void testReadFileMakesChaosGameDescriptionObjectWithCorrectValuesWithJulia() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile("test/testFileJulia");
+        assertEquals(description.getMinCoords().toString(), "0.0, 0.0");
+        assertEquals(description.getMaxCoords().toString(), "100.0, 100.0");
+        assertEquals(description.getTransforms().get(0).toString(),
+            "1.0, 3.0, 1");
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("readFromFile, with no comments text file, return object that is not null")
+    void testReadFromFileWithNoCommentsTextFileReturnsObjectNotNull() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "chaosFiles/test/testFileNoComments.txt");
+        assertNotNull(description);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("readFromFile, with no comments text file, reads correctly")
+    void testReadFromFileWithNoCommentsTextFileReadsCorrectly() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+                "chaosFiles/test/testFileNoComments.txt");
+        assertEquals("0.0, 0.0", description.getMinCoords().toString());
+        assertEquals("100.0, 100.0", description.getMaxCoords().toString());
+        assertEquals("0.5, 0.0, 0.0, 0.5, 50.0, 0.0", description.getTransforms().get(0).toString());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
   }
 
   @Nested
@@ -175,9 +233,30 @@ class ChaosGameFileHandlerTest {
       }
     }
 
-    //Todo lag tester for invalidTransformType txt filen og invalid values filen.
+    @Test
+    @DisplayName("readFromFile throws exception with invalid transform type")
+    void testReadFromFileThrowsExceptionWithInvalidTransformType() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "chaosFiles/test/testFileInvalidTransformType.txt");
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals("Invalid transform type", e.getMessage());
+      }
+    }
 
-
+    @Test
+    @DisplayName("readFromFile throws exception with invalid values")
+    void testReadFromFileThrowsExceptionWithInvalidValues() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "chaosFiles/test/testFileInvalidValues.txt");
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals("Non-double value found in the file", e.getMessage());
+      }
+    }
   }
-
 }
