@@ -21,7 +21,21 @@ public class ChaosGameFileHandler {
     if (!transformType.equals("Affine") && !transformType.equals("Julia")) {
       throw new IllegalArgumentException("Invalid transform type");
     }
-    //System.out.println("Valid transform type");
+  }
+
+  /**
+   * Verifies that the given string is a double and if true it returns parsed double.
+   *
+   * @param value is the string to verify.
+   * @return the double value of the string.
+   * @throws IllegalArgumentException if the given string is not a double.
+   */
+  private double verifyDouble(String value) {
+    try {
+      return Double.parseDouble(value);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Non-double value found in the file");
+    }
   }
 
   /**
@@ -106,12 +120,12 @@ public class ChaosGameFileHandler {
       verifyValidTransformType(transformType);
 
       String minCoords = removeCommentsFromString(scanner.nextLine());
-      Vector2D minCoordsVector = new Vector2D(Double.parseDouble(minCoords.split(",")[0]),
-          Double.parseDouble(minCoords.split(",")[1]));
+      Vector2D minCoordsVector = new Vector2D(verifyDouble(minCoords.split(",")[0]),
+          verifyDouble(minCoords.split(",")[1]));
 
       String maxCoords = removeCommentsFromString(scanner.nextLine());
-      Vector2D maxCoordsVector = new Vector2D(Double.parseDouble(maxCoords.split(",")[0]),
-          Double.parseDouble(maxCoords.split(",")[1]));
+      Vector2D maxCoordsVector = new Vector2D(verifyDouble(maxCoords.split(",")[0]),
+          verifyDouble(maxCoords.split(",")[1]));
 
       List<Transform2D> transforms = new ArrayList<>();
 
@@ -124,18 +138,18 @@ public class ChaosGameFileHandler {
         String[] transform = nextLine.split(",");
 
         if (transformType.equals("Affine")) {
-          Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(transform[0]),
-                  Double.parseDouble(transform[1]), Double.parseDouble(transform[2]),
-                  Double.parseDouble(transform[3]));
+          Matrix2x2 matrix = new Matrix2x2(verifyDouble(transform[0]),
+                  verifyDouble(transform[1]), verifyDouble(transform[2]),
+                  verifyDouble(transform[3]));
 
-          Vector2D vector = new Vector2D(Double.parseDouble(transform[4]),
-                  Double.parseDouble(transform[5]));
+          Vector2D vector = new Vector2D(verifyDouble(transform[4]),
+                  verifyDouble(transform[5]));
 
           transforms.add(new AffineTransform2D(matrix, vector));
 
         } else if (transformType.equals("Julia")) {
-          double real = Double.parseDouble(transform[0]);
-          double imaginary = Double.parseDouble(transform[1]);
+          double real = verifyDouble(transform[0]);
+          double imaginary = verifyDouble(transform[1]);
           Complex complex = new Complex(real, imaginary);
           int sign = Integer.parseInt(transform[2].trim());
 
