@@ -40,6 +40,19 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
+   * Verifies that the given vector is not null. Throws an IllegalArgumentException if the given
+   * vector is null.
+   *
+   * @param vector the vector to verify
+   * @throws IllegalArgumentException if the given vector is null
+   */
+  private void verifyNotNull(Vector2D vector) {
+    if (vector == null) {
+      throw new IllegalArgumentException("Vector cannot be null");
+    }
+  }
+
+  /**
    * Constructs a new JuliaTransform object with the given point and sign.
    *
    * @param point the point to use
@@ -64,7 +77,7 @@ public class JuliaTransform implements Transform2D {
    */
   @Override
   public Vector2D transform(Vector2D vector) throws IllegalArgumentException {
-    verifyValidComplex(vector);
+    verifyNotNull(vector);
     Complex result = new Complex(vector.getX0(), vector.getX1());
     result = result.subtract(point);
     result = result.sqrt();

@@ -120,7 +120,7 @@ class JuliaTransformTest {
         juliaTransform.transform(null);
         fail("An exception was not thrown");
       } catch (IllegalArgumentException e) {
-        assertEquals("Input must be of the Complex class", e.getMessage());
+        assertEquals("Vector cannot be null", e.getMessage());
       }
     }
 
