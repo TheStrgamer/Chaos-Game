@@ -124,11 +124,11 @@ public class ChaosGameFileHandler {
 
         if (transformType.equals("Affine")) {
           Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(transform[0]),
-              Double.parseDouble(transform[1]), Double.parseDouble(transform[2]),
-              Double.parseDouble(transform[3]));
+                  Double.parseDouble(transform[1]), Double.parseDouble(transform[2]),
+                  Double.parseDouble(transform[3]));
 
           Vector2D vector = new Vector2D(Double.parseDouble(transform[4]),
-              Double.parseDouble(transform[5]));
+                  Double.parseDouble(transform[5]));
 
           transforms.add(new AffineTransform2D(matrix, vector));
 
@@ -136,7 +136,7 @@ public class ChaosGameFileHandler {
           double real = Double.parseDouble(transform[0]);
           double imaginary = Double.parseDouble(transform[1]);
           Complex complex = new Complex(real, imaginary);
-          int sign = Integer.parseInt(transform[2]);
+          int sign = Integer.parseInt(transform[2].trim());
 
           transforms.add(new JuliaTransform(complex, sign));
         }
