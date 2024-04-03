@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.stud.idi.ntnu.no/idatt_1005_2024_group13/idatt2003_group51_chaos_game.git
+git remote add origin https://gitlab.stud.idi.ntnu.no/konrados/idatt2003_group51_chaos_game.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.stud.idi.ntnu.no/idatt_1005_2024_group13/idatt2003_group51_chaos_game/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.stud.idi.ntnu.no/konrados/idatt2003_group51_chaos_game/-/settings/integrations)
 
 ## Collaborate with your team
 
