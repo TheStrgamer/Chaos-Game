@@ -131,6 +131,18 @@ class ChaosGameFileHandlerTest {
     //TODO legg til tester for en fil som har tomme linjer midt i kan også være nyttig.
 
     @Test
+    @DisplayName("readFile skips empty lines")
+    void testReadFileSkipsEmptyLines() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "chaosFiles/test/testFileEmptyLines.txt");
+        assertNotNull(description);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+    @Test
     @DisplayName("readFile makes a ChaosGameDescription object with julia transform")
     void testReadFileMakesChaosGameDescriptionObjectWithJulia() {
       try {
@@ -152,7 +164,7 @@ class ChaosGameFileHandlerTest {
         assertEquals(description.getMinCoords().toString(), "0.0, 0.0");
         assertEquals(description.getMaxCoords().toString(), "100.0, 100.0");
         assertEquals(description.getTransforms().get(0).toString(),
-            "1.0, 3.0, 1");
+            "1.0, 3.0");
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -258,5 +270,6 @@ class ChaosGameFileHandlerTest {
         assertEquals("Non-double value found in the file", e.getMessage());
       }
     }
+
   }
 }

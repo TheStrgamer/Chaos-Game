@@ -11,8 +11,6 @@ class JuliaTransformTest {
   @Nested
   @DisplayName("Positive tests")
   class PositiveTests {
-    //Todo legg til tester for toString metoden
-
     @Test
     @DisplayName("Constructor throws no exceptions with valid input")
     void testConstructorThrowsNoExceptions() {
@@ -79,6 +77,27 @@ class JuliaTransformTest {
         assertEquals(-result_1.getReal(), result_2.getReal());
         assertEquals(-result_1.getImaginary(), result_2.getImaginary());
 
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("toString returns the correct string")
+    void testToStringReturnsCorrectString() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        assertEquals("1.0, 2.0, 1", juliaTransform.toStringWithSign());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+    @Test
+    @DisplayName("toStringWithoutSign returns the correct string")
+    void testToStringWithoutSignReturnsCorrectString() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        assertEquals("1.0, 2.0", juliaTransform.toString());
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }

@@ -38,11 +38,32 @@ public class Matrix2x2Test {
         fail("An exception was thrown");
       }
     }
-    //Todo test toString
-    //fikk også feil der jeg transformerte en vector, og så satt piksel, som gjorde enda en
-    // transformasjon for å gjøre til indecies. tidligere ble transformasjonenen lagret i vektor
-    // istedenfor å returnere en ny, men har fikset det. legg til test for å sørge for at
-    // lignende feil  ikke skjer igjen. kan også gjøre noe lignende på complex
+
+    @Test
+    @DisplayName("toString returns correct string")
+    void testToString() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        assertEquals("1.0, 2.0, 3.0, 4.0", matrix.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("Matrix can multiply vector twice without changing the result")
+    void testMultiplyTwice() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        Vector2D vector = new Vector2D(1, 2);
+        Vector2D result1 = matrix.multiply(vector);
+        Vector2D result2 = matrix.multiply(vector);
+        assertEquals(result1.getX0(), result2.getX0());
+        assertEquals(result1.getX1(), result2.getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
   }
 
   @Nested

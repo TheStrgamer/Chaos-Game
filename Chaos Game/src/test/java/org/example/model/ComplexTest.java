@@ -11,8 +11,6 @@ class ComplexTest {
   @Nested
   @DisplayName("Positive tests")
   class PositiveTests {
-    //Todo legg til tester for toString metoden
-
 
     @Test
     @DisplayName("getReal returns the real part of the complex number")
@@ -116,6 +114,19 @@ class ComplexTest {
       }
     }
 
+    @Test
+    @DisplayName("multiply method multiplies the complex number with scalar")
+    void testMultiplyMethodReturnsNewComplex() {
+      try {
+        Complex complex = new Complex(1, 2);
+        Complex result = complex.multiply(2);
+        assertEquals(2, result.getReal());
+        assertEquals(4, result.getImaginary());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
 
     @Test
     @DisplayName("setX0 sets the x0 value of the vector")
@@ -136,6 +147,17 @@ class ComplexTest {
         Complex complex = new Complex(1, 2);
         complex.setX1(3);
         assertEquals(3, complex.getImaginary());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("toString returns correct string")
+    void testToString() {
+      try {
+        Complex complex = new Complex(1, 2);
+        assertEquals("1.0, 2.0", complex.toString());
       } catch (Exception e) {
         fail("An exception was thrown");
       }
