@@ -29,15 +29,9 @@ public class Gui {
    * default value for the runSteps and description.
    */
   public Gui() {
-    List<Transform2D> transforms = new ArrayList<>();
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.5, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.25, 0.5)));
     chaosGameController = new ChaosGameController();
     scanner = new Scanner(System.in);
     this.runSteps = 10000;
-    this.chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
-        new Vector2D(1, 1), transforms);
   }
 
   /**
