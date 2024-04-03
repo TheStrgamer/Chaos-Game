@@ -23,15 +23,9 @@ public class Gui {
     * it initializes the transforms and the scanner as well as a default value for the runSteps and description.
    */
   public Gui() {
-    List<Transform2D> transforms = new ArrayList<>();
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.5, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.25, 0.5)));
     chaosGameController = new ChaosGameController();
     scanner = new Scanner(System.in);
     this.runSteps = 10000;
-    this.chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
-            new Vector2D(1, 1), transforms);
   }
 
   /*
@@ -51,6 +45,7 @@ public class Gui {
     * Method that runs the GUI.
     * it contains a while loop that runs until the user chooses to exit the program.
     * it also contains a switch statement that runs the different methods in the controller class based on the user input.
+    *
    */
   public void run () {
     boolean running = true;

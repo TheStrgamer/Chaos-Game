@@ -51,13 +51,12 @@ public class ChaosGameController {
     Scanner scanner = new Scanner(System.in);
     ChaosGameDescription description;
     String inputPath;
-    System.out.println("Enter the path to the file you want to read from: ");
+    System.out.println("Enter the text file you want to read from (Chaos Game/chaosFiles/...): ");
     while (true) {
       scanner.hasNextLine();
       try {
         inputPath = scanner.nextLine();
-        System.out.println(inputPath);
-        description = chaosGameFileHandler.readFromFile("chaosFiles/" + inputPath);
+        description = chaosGameFileHandler.readFromFile("Chaos Game/chaosFiles/" + inputPath);
         if (description != null) {
           return description;
         }
@@ -75,26 +74,29 @@ public class ChaosGameController {
     Scanner scanner = new Scanner(System.in);
     int choice;
     System.out.println("Enter the path to the file you want to write to: ");
-    System.out.println("1: juliamengde.txt");
+    System.out.println("1: Juliamengde.txt");
     System.out.println("2: sierpinski.txt");
     while (true) {
       scanner.hasNextInt();
       try {
         choice = scanner.nextInt();
-        System.out.println(choice);
         if (choice == 1) {
-          chaosGameFileHandler.writeToFile(description, "chaosFiles/Juliamengde.txt");
-          System.out.println("description written to chaosFiles/Juliamengde.txt");
+          chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/test/guiJuliamengdeOutput.txt");
+          System.out.println("description written to guiJuliamengdeOutput.txt");
         } else if (choice == 2) {
-          chaosGameFileHandler.writeToFile(description, "chaosFiles/Sierpinski.txt");
-          System.out.println("description written to chaosFiles/Sierpinski.txt");
+          chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/test/guiSierpinskiOutput.txt");
+          System.out.println("description written to guiSierpinskiOutput.txt");
         } else {
           System.out.println("Not a valid choice!");
           break;
         }
       } catch (Exception e) {
-        System.out.println("Error! Unable to write to file!");
-        scanner.next();
+        if (description != null) {
+          System.out.println("Error! Unable to write to file!");
+          scanner.next();
+        }
+        System.out.println("Error! No values to write to file! Make sure to get values first by reading a file.");
+        break;
       }
     }
   }
