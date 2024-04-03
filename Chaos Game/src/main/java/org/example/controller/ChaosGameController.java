@@ -32,13 +32,9 @@ public class ChaosGameController {
       scanner.hasNextInt();
       try {
         input = scanner.nextInt();
-        if (0 > input && input < 5) {
-          System.out.println("Error! Enter a integer 1-5!");
-        } else {
-          break;
-        }
+        break;
       } catch (Exception e) {
-        System.out.println("Error! Enter a integer 1-5!!");
+        System.out.println("Error: "+ e.getMessage());
         scanner.next();
       }
     }
@@ -65,7 +61,7 @@ public class ChaosGameController {
           return description;
         }
       } catch (Exception e) {
-        System.out.println("Error! Enter a valid path!");
+        System.out.println("Error: "+ e.getMessage());
       }
     }
   }
@@ -88,7 +84,7 @@ public class ChaosGameController {
         chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/" + writePath);
         break;
       } catch (Exception e) {
-        System.out.println("Error! Enter a valid path!");
+        System.out.println("Error: "+ e.getMessage());
       }
     }
   }
@@ -111,10 +107,10 @@ public class ChaosGameController {
         if (iterations > 0) {
           return iterations;
         } else {
-          System.out.println("Error! Enter a positive integer!");
+          System.out.println("Error: Enter a positive integer!");
         }
       } catch (Exception e) {
-        System.out.println("A non-integer value is invalid input!");
+        System.out.println("Error: "+ e.getMessage());
         scanner.next();
       }
     }
@@ -133,7 +129,9 @@ public class ChaosGameController {
       chaosGame.runSteps(runSteps);
       System.out.println(chaosGame.getCanvas().toString());
     } catch (Exception e) {
-      System.out.println("Error! Unable to print ASCII fractal!");
+      System.out.println("Error: Unable to print ASCII fractal!");
+      System.out.println("Message: "+ e.getMessage());
+
     }
   }
 }

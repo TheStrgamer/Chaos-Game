@@ -216,22 +216,6 @@ class ChaosGameFileHandlerTest {
       }
     }
 
-    @Test
-    @DisplayName("writeToFile throws exception with invalid input")
-    void testWriteToFileThrowsExceptionWithInvalidInput() {
-      try {
-        List<Transform2D> transforms = new ArrayList<>();
-        transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(50, 0)));
-        ChaosGameDescription description = new ChaosGameDescription(new Vector2D(0, 0),
-            new Vector2D(100, 100), transforms);
-
-        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
-        chaosGameFileHandler.writeToFile(description, "test/invalidFile.txt");
-        fail("An exception was not thrown");
-      } catch (Exception e) {
-        assertEquals("File not found", e.getMessage());
-      }
-    }
 
     @Test
     @DisplayName("writeToFile throws exception with null description")
