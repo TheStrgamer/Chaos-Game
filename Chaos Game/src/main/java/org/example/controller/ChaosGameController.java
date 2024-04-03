@@ -6,21 +6,23 @@ import org.example.model.ChaosGameFileHandler;
 
 import java.util.Scanner;
 
-/*
-  * The controller class for the Chaos Game program.
-  * it contains the methods that the user can interact with in the terminal.
+/**
+ * The controller class for the Chaos Game program. it contains the methods that the user can
+ * interact with in the terminal.
  */
 public class ChaosGameController {
+
   ChaosGameFileHandler chaosGameFileHandler;
 
   public ChaosGameController() {
     chaosGameFileHandler = new ChaosGameFileHandler();
   }
 
-  /*
-    * Method that gets the user input, verifies it and returns it.
-    * @param scanner is the scanner object that reads the input.
-    * @return the integer value of the user input.
+  /**
+   * Method that gets the user input, verifies it and returns it.
+   *
+   * @param scanner is the scanner object that reads the input.
+   * @return the integer value of the user input.
    */
 
   public int getValidInput(Scanner scanner) {
@@ -43,9 +45,11 @@ public class ChaosGameController {
     return input;
   }
 
-  /*
-    * Method that reads a description from a file. it also needs the user to enter the path to the file.
-    * @return the ChaosGameDescription object that was read from the file.
+  /**
+   * Method that reads a description from a file. it also needs the user to enter the path to the
+   * file.
+   *
+   * @return the ChaosGameDescription object that was read from the file.
    */
   public ChaosGameDescription userReadFromFile() {
     Scanner scanner = new Scanner(System.in);
@@ -66,44 +70,34 @@ public class ChaosGameController {
     }
   }
 
-  /*
-    * Method that writes a description to a file. it also needs the user to enter the path to the file.
-    * @param description is the ChaosGameDescription object that is to be written to the file.
+  /**
+   * Method that writes a description to a file. it also needs the user to enter the path to the
+   * file.
+   *
+   * @param description is the ChaosGameDescription object that is to be written to the file.
    */
   public void userWriteToFile(ChaosGameDescription description) {
     Scanner scanner = new Scanner(System.in);
-    int choice;
-    System.out.println("Enter the path to the file you want to write to: ");
-    System.out.println("1: Juliamengde.txt");
-    System.out.println("2: sierpinski.txt");
+    String writePath;
+    System.out.println(
+        "Enter the name of the file you want to write in (Chaos Game/chaosFiles/...): ");
     while (true) {
-      scanner.hasNextInt();
+      scanner.hasNextLine();
       try {
-        choice = scanner.nextInt();
-        if (choice == 1) {
-          chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/test/guiJuliamengdeOutput.txt");
-          System.out.println("description written to guiJuliamengdeOutput.txt");
-        } else if (choice == 2) {
-          chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/test/guiSierpinskiOutput.txt");
-          System.out.println("description written to guiSierpinskiOutput.txt");
-        } else {
-          System.out.println("Not a valid choice!");
-          break;
-        }
-      } catch (Exception e) {
-        if (description != null) {
-          System.out.println("Error! Unable to write to file!");
-          scanner.next();
-        }
-        System.out.println("Error! No values to write to file! Make sure to get values first by reading a file.");
+        writePath = scanner.nextLine();
+        chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/" + writePath);
         break;
+      } catch (Exception e) {
+        System.out.println("Error! Enter a valid path!");
       }
     }
   }
 
-  /*
-* Method that gets the number of iterations the user wants to run. Method also verifies the input.
-    * @return the number of iterations the user wants to run.
+  /**
+   * Method that gets the number of iterations the user wants to run. Method also verifies the
+   * input.
+   *
+   * @return the number of iterations the user wants to run.
    */
 
   public int userSetIterations() {
@@ -126,10 +120,11 @@ public class ChaosGameController {
     }
   }
 
-  /*
-    * Method that prints the ASCII fractal to the terminal.
-    * @param description is the ChaosGameDescription object to be used to print the fractal.
-    * @param runSteps is the number of iterations the fractal to be run.
+  /**
+   * Method that prints the ASCII fractal to the terminal.
+   *
+   * @param description is the ChaosGameDescription object to be used to print the fractal.
+   * @param runSteps    is the number of iterations the fractal to be run.
    */
   public void userPrintAsciiFractal(ChaosGameDescription description, int runSteps) {
 
