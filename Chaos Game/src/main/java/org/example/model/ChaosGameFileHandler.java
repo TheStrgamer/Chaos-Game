@@ -176,7 +176,6 @@ public class ChaosGameFileHandler {
    */
   public void writeToFile(ChaosGameDescription description, String path) throws IOException {
     path = makeValidPath(path);
-    verifyValidPath(path);
     verifyNotNullDescription(description);
     BufferedWriter writer = new BufferedWriter(new FileWriter(path));
     writer.write(description.toString());
