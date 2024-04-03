@@ -151,9 +151,8 @@ public class ChaosGameFileHandler {
           double real = verifyDouble(transform[0]);
           double imaginary = verifyDouble(transform[1]);
           Complex complex = new Complex(real, imaginary);
-          int sign = Integer.parseInt(transform[2].trim());
-
-          transforms.add(new JuliaTransform(complex, sign));
+          transforms.add(new JuliaTransform(complex, 1));
+          transforms.add(new JuliaTransform(complex, -1));
         }
       }
       return new ChaosGameDescription(minCoordsVector, maxCoordsVector, transforms);

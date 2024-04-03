@@ -114,7 +114,7 @@ public class ChaosCanvas {
     verifyNotNull(point);
     verifyPointWithinParameters(point);
     Vector2D indices = transformCoords(point);
-    return canvas[(int) indices.getX0()][(int) indices.getX1()];
+    return canvas[(int) indices.getX1()][(int) indices.getX0()];
   }
 
   /**
@@ -127,7 +127,7 @@ public class ChaosCanvas {
     verifyPointWithinParameters(point);
 
     Vector2D indices = transformCoords(point);
-    canvas[(int) indices.getX0()][(int) indices.getX1()] = 1;
+    canvas[(int) indices.getX1()][(int) indices.getX0()] = 1;
   }
 
   /**
@@ -139,7 +139,7 @@ public class ChaosCanvas {
     verifyNotNull(point);
     verifyPointWithinParameters(point);
     Vector2D indices = transformCoords(point);
-    canvas[(int) indices.getX0()][(int) indices.getX1()] = 0;
+    canvas[(int) indices.getX1()][(int) indices.getX0()] = 0;
   }
 
   /**
@@ -185,9 +185,9 @@ public class ChaosCanvas {
 
   public String toString() {
     String canvasString = "";
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        if (canvas[i][j] == 0) {
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        if (canvas[j][i] == 0) {
           canvasString += " ";
         } else {
           canvasString += "X";
