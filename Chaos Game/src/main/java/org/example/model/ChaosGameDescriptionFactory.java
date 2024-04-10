@@ -17,15 +17,12 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   public ChaosGameDescription createDescription(String type) {
-    if (type.equals("Sierpinski")) {
-      return createSierpinskiDescription();
-    } else if (type.equals("Barnsley")) {
-      return createBarnsleyDescription();
-    } else if (type.equals("Julia")) {
-      return createJuliaDescription();
-    } else {
-      throw new IllegalArgumentException("Invalid description type");
-    }
+    return switch (type) {
+      case "Sierpinski" -> createSierpinskiDescription();
+      case "Barnsley" -> createBarnsleyDescription();
+      case "Julia" -> createJuliaDescription();
+      default -> throw new IllegalArgumentException("Invalid description type");
+    };
   }
 
   /**
