@@ -183,6 +183,11 @@ public class ChaosCanvas {
         '}';
   }
 
+  /**
+   * Returns a string representation of the canvas.
+   *
+   * @return a string representation of the canvas
+   */
   public String toString() {
     String canvasString = "";
     for (int i = 0; i < height; i++) {

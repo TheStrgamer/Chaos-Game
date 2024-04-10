@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * <h1>ChaosGameFileHandler</h1>
+ * A class that handles reading and writing chaos game descriptions to and from files.
+ */
 public class ChaosGameFileHandler {
 
   /**

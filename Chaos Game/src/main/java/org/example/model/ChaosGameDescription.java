@@ -3,6 +3,7 @@ package org.example.model;
 import java.util.List;
 
 /**
+ * <h1>ChaosGameDescription</h1>
  * A class that represents a description of a chaos game. The description includes the minimum and
  * maximum coordinates of the game, as well as a list of transforms that are used to generate the
  * game.
