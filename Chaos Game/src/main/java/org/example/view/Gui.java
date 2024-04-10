@@ -2,10 +2,6 @@ package org.example.view;
 
 import org.example.controller.ChaosGameController;
 import org.example.model.*;
-
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,8 +10,8 @@ import java.util.Scanner;
  */
 public class Gui {
 
-  private ChaosGameController chaosGameController;
-  private Scanner scanner;
+  private final ChaosGameController chaosGameController;
+  private final Scanner scanner;
   private ChaosGameDescription chaosGameDescription;
   private int runSteps;
 

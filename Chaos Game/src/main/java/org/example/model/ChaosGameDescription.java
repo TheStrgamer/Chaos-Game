@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class ChaosGameDescription {
 
-  private Vector2D minCoords;
-  private Vector2D maxCoords;
+  private final Vector2D minCoords;
+  private final Vector2D maxCoords;
   List<Transform2D> transforms;
 
   /**

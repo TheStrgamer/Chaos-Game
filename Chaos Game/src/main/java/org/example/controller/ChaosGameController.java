@@ -30,7 +30,7 @@ public class ChaosGameController {
    */
 
   public int getValidInput(Scanner scanner) {
-    int input = 0;
+    int input;
     System.out.println("Enter here: ");
     while (true) {
       scanner.hasNextInt();
