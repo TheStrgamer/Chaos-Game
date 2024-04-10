@@ -189,18 +189,18 @@ public class ChaosCanvas {
    * @return a string representation of the canvas
    */
   public String toString() {
-    String canvasString = "";
+    StringBuilder canvasString = new StringBuilder();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         if (canvas[j][i] == 0) {
-          canvasString += " ";
+          canvasString.append(" ");
         } else {
-          canvasString += "X";
+          canvasString.append("X");
         }
       }
-      canvasString += "\n";
+      canvasString.append("\n");
     }
-    return canvasString;
+    return canvasString.toString();
   }
 
 
