@@ -138,6 +138,17 @@ class Vector2DTest {
         fail("An exception was thrown");
       }
     }
+
+    @Test
+    @DisplayName("toString returns the correct string")
+    void testToStringReturnsCorrectString() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        assertEquals("1.0, 2.0", vector.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
   }
 
   @Nested

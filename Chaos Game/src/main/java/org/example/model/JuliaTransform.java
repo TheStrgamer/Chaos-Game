@@ -89,12 +89,22 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
-   * Returns a string representation of the Julia transformation.
+   * Returns a string representation of the Julia transformation with the sign.
    *
    * @return a string representation of the Julia transformation
    */
-  public String toString() {
+  public String toStringWithSign() {
     return point.toString() + ", " + sign;
+  }
+
+  /**
+   * Returns a string representation of the Julia transformation without the sign.
+   * Used when writing to file.
+   *
+   * @return a string representation of the Julia transformation without the sign
+   */
+  public String toString() {
+    return point.toString();
   }
 
 

@@ -103,7 +103,7 @@ public class ChaosGameDescriptionTest {
     //Todo legg til tester for tostring og getTransformType, på både affine og julia transform
 
     @Test
-    @DisplayName("toString returns a string")
+    @DisplayName("toString returns the correct string with julia transform")
     void testToStringReturnsString() {
       try {
         List<Transform2D> transforms = new ArrayList<>();
@@ -115,8 +115,27 @@ public class ChaosGameDescriptionTest {
         String expectedString = "Julia    #Transform type\n" +
             "1.0, 2.0    #minimum coordinates\n" +
             "3.0, 4.0    #maximum coordinates\n" +
-            "1.0, 3.0, 1    #transform\n" +
-            "2.0, 4.0, -1    #transform\n";
+            "1.0, 3.0    #transform\n" +
+            "2.0, 4.0    #transform\n";
+        assertEquals(expectedString, chaosGameDescription.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("toString returns the correct string with affine transform")
+    void testToStringReturnsStringWithAffine() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new AffineTransform2D(new Matrix2x2(1, 2, 3, 4), new Vector2D(1, 2)));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        String expectedString = "Affine    #Transform type\n" +
+            "1.0, 2.0    #minimum coordinates\n" +
+            "3.0, 4.0    #maximum coordinates\n" +
+            "1.0, 2.0, 3.0, 4.0, 1.0, 2.0    #transform\n";
         assertEquals(expectedString, chaosGameDescription.toString());
       } catch (Exception e) {
         fail("An exception was thrown");
