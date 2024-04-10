@@ -136,11 +136,11 @@ public class ChaosGameFileHandler {
 
         if (transformType.equals("Affine")) {
           Matrix2x2 matrix = new Matrix2x2(verifyDouble(transform[0]),
-                  verifyDouble(transform[1]), verifyDouble(transform[2]),
-                  verifyDouble(transform[3]));
+              verifyDouble(transform[1]), verifyDouble(transform[2]),
+              verifyDouble(transform[3]));
 
           Vector2D vector = new Vector2D(verifyDouble(transform[4]),
-                  verifyDouble(transform[5]));
+              verifyDouble(transform[5]));
 
           transforms.add(new AffineTransform2D(matrix, vector));
 
@@ -154,13 +154,9 @@ public class ChaosGameFileHandler {
       }
       return new ChaosGameDescription(minCoordsVector, maxCoordsVector, transforms);
 
-      //Todo muligens fjern try catch, og eventuelt legg til verify metoder for ting som kan gå galt.
-      // tror de fleste feil er dekket allerede.
-      // husk å lukke scanneren hvis du fjerner try catch.
     } catch (Exception e) {
       throw new IllegalArgumentException(e.getMessage());
     }
-    //return null;
   }
 
 
@@ -174,9 +170,11 @@ public class ChaosGameFileHandler {
   public void writeToFile(ChaosGameDescription description, String path) throws IOException {
     path = makeValidPath(path);
     verifyNotNullDescription(description);
-    BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-    writer.write(description.toString());
-    writer.close();
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+      writer.write(description.toString());
+    } catch (IOException e) {
+      throw new IOException(e.getMessage());
+    }
   }
 
 }
