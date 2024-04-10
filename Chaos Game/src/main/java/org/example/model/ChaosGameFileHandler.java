@@ -18,7 +18,7 @@ public class ChaosGameFileHandler {
    * @throws IllegalArgumentException if the given transform type is invalid.
    */
   private void verifyValidTransformType(String transformType) {
-    if (!transformType.equals("Affine") && !transformType.equals("Julia")) {
+    if (!transformType.contains("Affine") && !transformType.contains("Julia")) {
       throw new IllegalArgumentException("Invalid transform type");
     }
   }
@@ -134,7 +134,7 @@ public class ChaosGameFileHandler {
 
         String[] transform = nextLine.split(",");
 
-        if (transformType.equals("Affine")) {
+        if (transformType.contains("Affine")) {
           Matrix2x2 matrix = new Matrix2x2(verifyDouble(transform[0]),
               verifyDouble(transform[1]), verifyDouble(transform[2]),
               verifyDouble(transform[3]));
@@ -144,7 +144,7 @@ public class ChaosGameFileHandler {
 
           transforms.add(new AffineTransform2D(matrix, vector));
 
-        } else if (transformType.equals("Julia")) {
+        } else if (transformType.contains("Julia")) {
           double real = verifyDouble(transform[0]);
           double imaginary = verifyDouble(transform[1]);
           Complex complex = new Complex(real, imaginary);
