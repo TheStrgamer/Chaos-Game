@@ -11,7 +11,16 @@ class JuliaTransformTest {
   @Nested
   @DisplayName("Positive tests")
   class PositiveTests {
-    //Todo legg til tester for toString metoden
+    @Test
+    @DisplayName("toString returns the correct string")
+    void testToStringReturnsCorrectString() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        assertEquals("1.0, 2.0, 1", juliaTransform.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
 
     @Test
     @DisplayName("Constructor throws no exceptions with valid input")
@@ -67,7 +76,7 @@ class JuliaTransformTest {
 
     @Test
     @DisplayName("Transform method returns opposite result with opposite sign")
-    void testTransformReturnsOppositeResultWithIooisuteSign() {
+    void testTransformReturnsOppositeResultWithOppositeSign() {
       try {
         JuliaTransform juliaTransformPositive = new JuliaTransform(new Complex(0.3, 0.6), 1);
         JuliaTransform juliaTransformNegative = new JuliaTransform(new Complex(0.3, 0.6), -1);

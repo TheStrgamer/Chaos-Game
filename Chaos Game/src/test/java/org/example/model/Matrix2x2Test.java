@@ -38,6 +38,17 @@ public class Matrix2x2Test {
         fail("An exception was thrown");
       }
     }
+
+    @Test
+    @DisplayName("toString returns the correct string")
+    void testToStringReturnsCorrectString() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        assertEquals("1.0, 2.0, 3.0, 4.0", matrix.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
     //Todo test toString
     //fikk også feil der jeg transformerte en vector, og så satt piksel, som gjorde enda en
     // transformasjon for å gjøre til indecies. tidligere ble transformasjonenen lagret i vektor
