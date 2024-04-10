@@ -59,9 +59,6 @@ public class ChaosGameFileHandler {
     if (!path.contains(".txt")) {
       path += ".txt";
     }
-    if (!path.contains("chaosFiles/")) {
-      path = "chaosFiles/" + path;
-    }
     return path;
   }
 
