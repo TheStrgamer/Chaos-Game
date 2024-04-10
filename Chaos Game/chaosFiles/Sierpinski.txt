@@ -1,0 +1,6 @@
+Affine    #Transform type
+0.0, 0.0    #minimum coordinates
+1.0, 1.0    #maximum coordinates
+0.5, 0.0, 0.0, 0.5, 0.0, 0.0    #transform
+0.5, 0.0, 0.0, 0.5, 0.5, 0.0    #transform
+0.5, 0.0, 0.0, 0.5, 0.25, 0.5    #transform

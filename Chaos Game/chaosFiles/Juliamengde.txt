@@ -1,0 +1,4 @@
+Julia # Type of transform
+-1.6, -1 # Lower left
+1.6, 1 # Upper right
+-.74543, .11301 # Real and imaginary parts of the constant c
