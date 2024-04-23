@@ -39,7 +39,7 @@ public class ChaosCanvas {
   private void verifyPointWithinParameters(Vector2D point) {
     if (point.getX0() < minCoords.getX0() || point.getX0() > maxCoords.getX0() ||
         point.getX1() < minCoords.getX1() || point.getX1() > maxCoords.getX1()) {
-      throw new IllegalArgumentException("Point is not within the given parameters");
+      throw new IllegalArgumentException("Point "+ point +" is not within the given parameters " + minCoords + " " + maxCoords);
     }
   }
 
@@ -118,6 +118,17 @@ public class ChaosCanvas {
   }
 
   /**
+   * Returns the pixel value at the given point. Used to create image from canvas
+   *
+   * @param point the point to get the pixel value at
+   * @return the pixel value
+   */
+  public int getPixelFromCanvas(Vector2D point) {
+    verifyNotNull(point);
+    return canvas[(int) point.getX0()][(int) point.getX1()];
+  }
+
+  /**
    * Sets the pixel value at the given point to 1.
    *
    * @param point the point to set the pixel value at
@@ -172,6 +183,14 @@ public class ChaosCanvas {
     verifyNotNull(coord);
     verifyPointWithinParameters(coord);
     return transformCoordsToIndices.transform(coord);
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
   }
 
   public String getInfoString() {

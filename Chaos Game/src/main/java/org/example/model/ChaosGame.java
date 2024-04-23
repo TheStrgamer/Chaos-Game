@@ -55,7 +55,6 @@ public class ChaosGame {
         canvas.setPixel(currentPoint);
       } catch (Exception e) {
         System.out.println(e.getMessage());
-        System.out.println(currentPoint.toString()+"\n");
       }
 
     }
