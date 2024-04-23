@@ -2,17 +2,18 @@ package org.example.view;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.example.controller.ChaosGameController;
 import org.example.controller.MainController;
 import org.example.controller.ModifyDescriptionController;
-import org.example.model.ChaosGame;
-import org.example.model.ChaosGameDescription;
 
+/**
+ * <h1>ModifyDescriptionView</h1>
+ * The view class for the Modify Description page of the application.
+ * Responsible for displaying the Modify Description page.
+ * Implements the PageView interface.
+ */
 public class ModifyDescriptionView implements PageViewInterface {
 
   private final ModifyDescriptionController modifyDescriptionController;
@@ -22,6 +23,12 @@ public class ModifyDescriptionView implements PageViewInterface {
 
 
 
+  /**
+   * Constructor for the ModifyDescriptionView class.
+   *
+   * @param modifyDescriptionController the controller for the Modify Description page.
+   * @param mainController             the main controller for the application.
+   */
   public ModifyDescriptionView(ModifyDescriptionController modifyDescriptionController,
       MainController mainController) {
     this.modifyDescriptionController = modifyDescriptionController;
@@ -30,6 +37,11 @@ public class ModifyDescriptionView implements PageViewInterface {
 
   }
 
+  /**
+   * Method for creating the layout of the Modify Description page.
+   *
+   * @return the layout of the Modify Description page.
+   */
   private VBox createLayout() {
     VBox layout = new VBox();
     HBox buttonLayout = new HBox();
@@ -64,23 +76,11 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     content.getChildren().addAll(chooseDescription);
 
-    sierpinskiButton.setOnAction(event -> {
-      modifyDescriptionController.chooseDescription("Sierpinski");
-    });
-    barnsleyButton.setOnAction(event -> {
-      modifyDescriptionController.chooseDescription("Barnsley");
-    });
-    juliaButton.setOnAction(event -> {
-      modifyDescriptionController.chooseDescription("Julia");
-    });
-    readFromFile.setOnAction(event -> {
-      modifyDescriptionController.readFromFile();
-    });
-
-
-    toChaosGame.setOnAction(event -> {
-      mainController.switchToChaosGameView();
-          });
+    sierpinskiButton.setOnAction(event -> modifyDescriptionController.chooseDescription("Sierpinski"));
+    barnsleyButton.setOnAction(event -> modifyDescriptionController.chooseDescription("Barnsley"));
+    juliaButton.setOnAction(event -> modifyDescriptionController.chooseDescription("Julia"));
+    readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
+    toChaosGame.setOnAction(event -> mainController.switchToChaosGameView());
 
     buttonLayout.getChildren().addAll(toChaosGame);
     layout.getChildren().addAll(buttonLayout);
@@ -93,6 +93,11 @@ public class ModifyDescriptionView implements PageViewInterface {
     return layout;
   }
 
+  /**
+   * Method for getting the layout of the Modify Description page.
+   *
+   * @return the layout of the Modify Description page.
+   */
   public VBox getLayout() {
     return createLayout();
   }

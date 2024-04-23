@@ -6,8 +6,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
 import org.example.controller.MainController;
-import org.example.model.ChaosGame;
 import org.example.controller.ChaosGameController;
+
+/**
+ * <h1>ChaosGameView</h1>
+ * The view class for the Chaos Game page of the application.
+ * Responsible for displaying the Chaos Game page.
+ * Implements the PageView interface.
+ */
 public class ChaosGameView implements PageViewInterface {
   private final ChaosGameController chaosGameController;
   private final MainController mainController;
@@ -16,6 +22,12 @@ public class ChaosGameView implements PageViewInterface {
   private ImageView imageView;
   private TextField iterationsField;
 
+  /**
+   * Constructor for the ChaosGameView class.
+   *
+   * @param chaosGameController the controller for the Chaos Game page.
+   * @param mainController      the main controller for the application.
+   */
   public ChaosGameView(ChaosGameController chaosGameController, MainController mainController) {
     this.chaosGameController = chaosGameController;
     this.mainController = mainController;
@@ -25,6 +37,11 @@ public class ChaosGameView implements PageViewInterface {
 
   }
 
+  /**
+   * Method for creating the layout of the Chaos Game page.
+   *
+   * @return the layout of the Chaos Game page.
+   */
   private VBox createLayout() {
     VBox layout = new VBox();
     HBox buttonLayout = new HBox();
@@ -32,9 +49,7 @@ public class ChaosGameView implements PageViewInterface {
     iterationsField.setPromptText("Iterations");
     Button runButton = new Button("Run");
 
-    runButton.setOnAction(event -> {
-      chaosGameController.runIterations(iterationsField.getText());
-    });
+    runButton.setOnAction(event -> chaosGameController.runIterations(iterationsField.getText()));
 
 
     Button toModifyDescription = new Button("Change Description");
@@ -50,9 +65,19 @@ public class ChaosGameView implements PageViewInterface {
     return layout;
   }
 
+  /**
+   * Method for getting the layout of the Chaos Game page.
+   *
+   * @return the layout of the Chaos Game page.
+   */
   public VBox getLayout() {
     return createLayout();
   }
+  /**
+   * Method for setting the image of the Chaos Game page.
+   *
+   * @param image the image to set.
+   */
   public void setImage(Image image) {
     imageView.setImage(image);
   }

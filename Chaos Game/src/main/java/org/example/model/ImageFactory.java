@@ -5,7 +5,18 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
 
+/**
+ * <h1>ImageFactory</h1>
+ * The ImageFactory class creates an image from a ChaosCanvas object.
+ */
 public class ImageFactory {
+
+  /**
+   * Creates an image from a ChaosCanvas object.
+   *
+   * @param canvas is the canvas to create the image from.
+   * @return the image created from the canvas.
+   */
   public Image createImage(ChaosCanvas canvas) {
       try {
 

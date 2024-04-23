@@ -1,30 +1,23 @@
 package org.example.view;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import org.example.controller.ChaosGameController;
 import org.example.controller.MainController;
-import org.example.model.ChaosGame;
-import org.example.model.ChaosGameDescription;
-import org.example.model.ChaosGameDescriptionFactory;
-import org.example.model.ImageFactory;
 
+
+/**
+ * <h1>App</h1>
+ * The main class for the Chaos Game application.
+ * Responsible for starting the application.
+ *
+ */
 public class App extends Application {
 
-//  public static void main(String[] args) {
 
-//    Gui gui = new Gui();
-//    gui.run();
-
-//  }
-
+  /**
+   * the start method for the application.
+   * @param primaryStage the primary stage for the application.
+   */
   @Override
   public void start(Stage primaryStage) {
     MainController mainController = new MainController(primaryStage);
