@@ -89,7 +89,7 @@ public class Complex extends Vector2D {
     double imaginary = getImaginary();
     double r = Math.sqrt(real * real + imaginary * imaginary);
     double newReal = Math.sqrt((r + real) / 2);
-    double newImaginary = Math.sqrt((r - real) / 2);
+    double newImaginary = Math.sqrt((r - real) / 2) * Math.signum(imaginary);
 
     return new Complex(newReal, newImaginary);
   }

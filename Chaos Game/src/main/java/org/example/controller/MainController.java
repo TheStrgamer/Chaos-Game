@@ -27,7 +27,7 @@ public class MainController {
   private int height = 600;
 
   private int imageWidth = 800;
-  private int imageHeight = 600;
+  private int imageHeight = 550;
 
   /**
    * Constructor for the MainController class.
