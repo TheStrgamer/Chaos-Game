@@ -120,12 +120,12 @@ public class ChaosCanvas {
   /**
    * Returns the pixel value at the given point. Used to create image from canvas
    *
-   * @param point the point to get the pixel value at
+   * @param pixel the point to get the pixel value at
    * @return the pixel value
    */
-  public int getPixelFromCanvas(Vector2D point) {
-    verifyNotNull(point);
-    return canvas[(int) point.getX0()][(int) point.getX1()];
+  public int getPixelFromCanvas(Vector2D pixel) {
+    verifyNotNull(pixel);
+    return canvas[(int) pixel.getX0()][(int) pixel.getX1()];
   }
 
   /**
