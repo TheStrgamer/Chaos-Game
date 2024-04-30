@@ -2,6 +2,7 @@ package org.example.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,12 +25,25 @@ class ChaosCanvasTest {
     }
 
     @Test
-    @DisplayName("GetPixel gets the pixel correctly")
+    @DisplayName("getPixel gets the pixel correctly")
     void testGetPixelGetsCorrectly() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
         assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 0)));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+    @Test
+    @DisplayName("getPixelFromCanvas gets the pixel without transforming the coordinates")
+    void testGetPixelFromCanvasGetsCorrectPixel() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        assertEquals(0, chaosCanvas.getPixelFromCanvas(new Vector2D(0, 0)));
+        assertEquals(0, chaosCanvas.getPixelFromCanvas(new Vector2D(chaosCanvas.getWidth()-1, chaosCanvas.getHeight()-1)));
+
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -54,7 +68,19 @@ class ChaosCanvasTest {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
         chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(1, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        assertEquals(255, chaosCanvas.getPixel(new Vector2D(0, 0)));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+    @Test
+    @DisplayName("SetPixel with value sets the pixel correctly")
+    void testSetPixelWithValueSetsCorrectly() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        chaosCanvas.setPixel(new Vector2D(0, 0),5);
+        assertEquals(5, chaosCanvas.getPixel(new Vector2D(0, 0)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -104,7 +130,7 @@ class ChaosCanvasTest {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
         chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(1, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        assertEquals(255, chaosCanvas.getPixel(new Vector2D(0, 0)));
         chaosCanvas.removePixel(new Vector2D(0, 0));
         assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 0)));
       } catch (Exception e) {
@@ -241,7 +267,7 @@ class ChaosCanvasTest {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
             new Vector2D(100, 100));
         chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(1, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        assertEquals(255, chaosCanvas.getPixel(new Vector2D(0, 0)));
         chaosCanvas.clear();
         assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 0)));
       } catch (Exception e) {
@@ -386,15 +412,15 @@ class ChaosCanvasTest {
     }
 
     @Test
-    @DisplayName("setPixel throws IllegalArgumentException when given point is not within the given parameters")
+    @DisplayName("setPixel does nothing when given point is not within the given parameters")
     void setPixelThrowsExceptionOnPointNotWithinParameters() {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
         chaosCanvas.setPixel(new Vector2D(300, 300));
-        fail("An exception was not thrown");
+        assertEquals(0, Arrays.stream(chaosCanvas.getCanvasArray()).flatMapToInt(Arrays::stream).max().getAsInt());
       } catch (Exception e) {
-        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0 200.0, 200.0");
+        fail(e.getMessage());
       }
     }
 

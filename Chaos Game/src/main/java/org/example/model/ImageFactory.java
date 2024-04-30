@@ -25,10 +25,11 @@ public class ImageFactory {
       for (int i = 0; i < canvas.getWidth(); i++) {
           for (int j = 0; j < canvas.getHeight(); j++) {
             if (canvas.getPixelFromCanvas(new Vector2D(i,j)) == 0) {
-                  writer.setArgb(i, j, 0xFFFFFFFF);
+                  writer.setArgb(i, j, 0x00FFFFFF);
               } else {
-                  writer.setArgb(i, j, 0xFF000000);
-              }
+                int argb = canvas.getPixelFromCanvas(new Vector2D(i,j));
+                writer.setArgb(i, j,(argb << 24));
+            }
           }
       }
       return image;

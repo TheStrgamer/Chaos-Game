@@ -16,14 +16,16 @@ public class ChaosGame {
   private final Random random;
 
   /**
-   * Constructs a new ChaosGame object with the given description and creates a canvas based on the values.
+   * Constructs a new ChaosGame object with the given description and creates a canvas based on the
+   * values.
    *
    * @param description is the description to use.
    * @param width       is the width of the canvas.
    * @param height      is the height of the canvas.
    */
   public ChaosGame(ChaosGameDescription description, int width, int height) {
-    this.canvas = new ChaosCanvas(width, height, description.getMinCoords(), description.getMaxCoords());
+    this.canvas = new ChaosCanvas(width, height, description.getMinCoords(),
+        description.getMaxCoords());
     this.description = description;
     this.currentPoint = new Vector2D(0, 0);
     this.random = new Random();
@@ -46,13 +48,13 @@ public class ChaosGame {
   public void runSteps(int steps) {
     for (int i = 0; i < steps; i++) {
       try {
-        Transform2D transform = description.getTransforms()
-            .get(random.nextInt(description.getTransforms().size()));
+        int randomInt = random.nextInt(description.getTransforms().size());
+        Transform2D transform = description.getTransforms().get(randomInt);
         Vector2D tmp = transform.transform(currentPoint);
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint);
+        canvas.setPixel(currentPoint,5);
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
