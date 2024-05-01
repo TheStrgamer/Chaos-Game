@@ -24,6 +24,7 @@ public class ChaosGameDescriptionFactory {
       case "Julia" -> createJuliaDescription();
       case "Julia2" -> createJuliaDescription2();
       case "Julia3" -> createJuliaDescription3();
+      case "Julia4" -> createJuliaDescription4();
       case "Grain" -> createGrainDescription();
       case "Snowflake" -> createSnowflakeDescription();
       case "Wave" -> createWaveDescription();
@@ -140,14 +141,27 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform2);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
+  private ChaosGameDescription createJuliaDescription4() {
+    Vector2D minCoords = new Vector2D(-1.6, -1);
+    Vector2D maxCoords = new Vector2D(1.6, 1);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Complex complex1 = new Complex(-1.3871741369151636, -0.015918399340009826);
+    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
+    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
   private ChaosGameDescription createJuliaRandomDescription() {
     Vector2D minCoords = new Vector2D(-1.6, -1);
     Vector2D maxCoords = new Vector2D(1.6, 1);
     List<Transform2D> transforms = new ArrayList<>();
 
     Random random = new Random();
-    double real = random.nextDouble() * 2 - 1;
-    double imaginary = random.nextDouble() * 2 - 1;
+    double real = random.nextDouble() * 3 - 1.5;
+    double imaginary = random.nextDouble() * 3 - 1.5;
     Complex complex1 = new Complex(real, imaginary);
     System.out.println(complex1);
     JuliaTransform transform1 = new JuliaTransform(complex1, 1);
@@ -159,8 +173,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   private ChaosGameDescription createAffineRandomDescription() {
-    Vector2D minCoords = new Vector2D(-2, -2);
-    Vector2D maxCoords = new Vector2D(2, 2);
+    Vector2D minCoords = new Vector2D(-4, -4);
+    Vector2D maxCoords = new Vector2D(4, 4);
     List<Transform2D> transforms = new ArrayList<>();
 
     Random random = new Random();
@@ -170,8 +184,8 @@ public class ChaosGameDescriptionFactory {
       double b = random.nextDouble() * 2 - 1;
       double c = random.nextDouble() * 2 - 1;
       double d = random.nextDouble() * 2 - 1;
-      double e = random.nextDouble() * 2 - 1;
-      double f = random.nextDouble() * 2 - 1;
+      double e = random.nextDouble() * 4 - 2;
+      double f = random.nextDouble() * 4 - 2;
       Matrix2x2 matrix = new Matrix2x2(a, b, c, d);
       Vector2D vector = new Vector2D(e, f);
       AffineTransform2D transform = new AffineTransform2D(matrix, vector);
