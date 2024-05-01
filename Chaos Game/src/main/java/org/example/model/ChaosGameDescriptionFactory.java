@@ -2,6 +2,7 @@ package org.example.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <h1>ChaosGameDescriptionFactory</h1>
@@ -27,6 +28,8 @@ public class ChaosGameDescriptionFactory {
       case "Snowflake" -> createSnowflakeDescription();
       case "Wave" -> createWaveDescription();
       case "Diamond" -> createDiamondDescription();
+      case "JuliaRandom" -> createJuliaRandomDescription();
+      case "AffineRandom" -> createAffineRandomDescription();
       default -> throw new IllegalArgumentException("Invalid description type");
     };
   }
@@ -135,6 +138,47 @@ public class ChaosGameDescriptionFactory {
 
     transforms.add(transform1);
     transforms.add(transform2);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+  private ChaosGameDescription createJuliaRandomDescription() {
+    Vector2D minCoords = new Vector2D(-1.6, -1);
+    Vector2D maxCoords = new Vector2D(1.6, 1);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Random random = new Random();
+    double real = random.nextDouble() * 2 - 1;
+    double imaginary = random.nextDouble() * 2 - 1;
+    Complex complex1 = new Complex(real, imaginary);
+    System.out.println(complex1);
+    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
+    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  private ChaosGameDescription createAffineRandomDescription() {
+    Vector2D minCoords = new Vector2D(-2, -2);
+    Vector2D maxCoords = new Vector2D(2, 2);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Random random = new Random();
+    int transformCount = random.nextInt(3) + 2;
+    for (int i = 0; i < transformCount; i++) {
+      double a = random.nextDouble() * 2 - 1;
+      double b = random.nextDouble() * 2 - 1;
+      double c = random.nextDouble() * 2 - 1;
+      double d = random.nextDouble() * 2 - 1;
+      double e = random.nextDouble() * 2 - 1;
+      double f = random.nextDouble() * 2 - 1;
+      Matrix2x2 matrix = new Matrix2x2(a, b, c, d);
+      Vector2D vector = new Vector2D(e, f);
+      AffineTransform2D transform = new AffineTransform2D(matrix, vector);
+      transforms.add(transform);
+    }
+    System.out.println();
+    System.out.println(new ChaosGameDescription(minCoords, maxCoords, transforms));
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 

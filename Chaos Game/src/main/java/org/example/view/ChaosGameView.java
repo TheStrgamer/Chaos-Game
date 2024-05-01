@@ -61,6 +61,20 @@ public class ChaosGameView implements PageViewInterface {
     descriptionComboBox.setOnAction(
         event -> mainController.setCurrentDescription(descriptionComboBox.getValue()));
 
+    Button randomJulia = new Button("Random Julia Set");
+    randomJulia.setOnAction(
+        event -> {
+          mainController.setCurrentDescription("JuliaRandom");
+          chaosGameController.runIterations(iterationsField.getText());
+        });
+
+    Button randomAffine = new Button("Random Affine Set");
+    randomAffine.setOnAction(
+        event -> {
+          mainController.setCurrentDescription("AffineRandom");
+          chaosGameController.runIterations(iterationsField.getText());
+        });
+
 
 
     Button toModifyDescription = new Button("Modify/Save/Load Description");
