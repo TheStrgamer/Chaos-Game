@@ -45,7 +45,6 @@ public class ModifyDescriptionController {
   public void chooseDescription(String description) {
     mainController.setCurrentDescription(
         chaosGameDescriptionFactory.createDescription(description));
-    mainController.refreshImage();
     mainController.switchToChaosGameView();
   }
 

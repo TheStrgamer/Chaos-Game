@@ -63,10 +63,22 @@ public class MainController {
 
   /**
    * method for setting the current description of the Chaos Game.
+   *
    * @param description the description to set as the current description.
    */
   public void setCurrentDescription(ChaosGameDescription description) {
     currentDescription = description;
+    chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
+    chaosGameController.setChaosGame(chaosGame);
+  }
+
+  /**
+   * Method for setting the current description of the Chaos Game from a string.
+   *
+   * @param description the name of the description to set as the current description.
+   */
+  public void setCurrentDescription(String description) {
+    currentDescription = chaosGameDescriptionFactory.createDescription(description);
     chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
     chaosGameController.setChaosGame(chaosGame);
   }

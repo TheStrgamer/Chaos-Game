@@ -65,8 +65,8 @@ public class ChaosGameController {
    * @return the number of iterations to run the Chaos Game for.
    */
   public int getIterations(String iterations) {
-    int defaultIterations = 10000000;
-    int minIterations = 1;
+    int defaultIterations = 0;
+    int minIterations = 0;
     try {
       return Math.max(Integer.parseInt(iterations), minIterations);
     } catch (NumberFormatException e) {
@@ -90,6 +90,7 @@ public class ChaosGameController {
    */
   public void setChaosGame(ChaosGame chaosGame) {
     this.chaosGame = chaosGame;
+    refreshImage();
   }
 
   /**
