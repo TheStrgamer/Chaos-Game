@@ -61,6 +61,7 @@ public class ChaosGameView implements PageViewInterface {
     descriptionComboBox.setOnAction(
         event -> mainController.setCurrentDescription(descriptionComboBox.getValue()));
 
+    VBox randomButtonLayout = new VBox();
     Button randomJulia = new Button("Random Julia Set");
     randomJulia.setOnAction(
         event -> {
@@ -75,19 +76,23 @@ public class ChaosGameView implements PageViewInterface {
           chaosGameController.runIterations(iterationsField.getText());
         });
 
+    randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
+
 
 
     Button toModifyDescription = new Button("Modify/Save/Load Description");
     toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
 
     buttonLayout.getChildren()
-        .addAll(iterationsField, runButton, descriptionComboBox, randomJulia, randomAffine, toModifyDescription);
+        .addAll(iterationsField, runButton, descriptionComboBox, randomButtonLayout, toModifyDescription);
     layout.getChildren().addAll(buttonLayout, imageView);
 
     //Style
     buttonLayout.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
+        "-fx-alignment: center; -fx-spacing: 5px; -fx-background-color: #8f8f8f; -fx-padding: 5px; -fx-pref-height: 60px;");
 
+    randomJulia.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
+    randomAffine.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
     return layout;
   }
 
