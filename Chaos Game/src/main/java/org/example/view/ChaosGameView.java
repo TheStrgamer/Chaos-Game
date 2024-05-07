@@ -24,6 +24,9 @@ public class ChaosGameView implements PageViewInterface {
   private ImageView imageView;
   private TextField iterationsField;
 
+  private ComboBox<String> descriptionComboBox;
+
+
   /**
    * Constructor for the ChaosGameView class.
    *
@@ -46,33 +49,37 @@ public class ChaosGameView implements PageViewInterface {
    */
   private VBox createLayout() {
     VBox layout = new VBox();
+
     HBox buttonLayout = new HBox();
+    HBox imageView = new HBox();
     iterationsField = new TextField();
     iterationsField.setPromptText("Iterations");
     iterationsField.setText("1000000");
     Button runButton = new Button("Run");
-
     runButton.setOnAction(event -> chaosGameController.runIterations(iterationsField.getText()));
 
-    ComboBox<String> descriptionComboBox = new ComboBox<>();
-    descriptionComboBox.setValue("Barnsley");
+    descriptionComboBox = new ComboBox<>();
+    descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
-        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Julia4", "Grain", "Snowflake", "Wave", "Diamond");
+        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Snowflake", "Diamond", "Plant", "Flower");
     descriptionComboBox.setOnAction(
-        event -> mainController.setCurrentDescription(descriptionComboBox.getValue()));
+        event -> {
+          if (descriptionComboBox.getValue() != null) {
+          mainController.setCurrentDescription(descriptionComboBox.getValue());}});
 
     VBox randomButtonLayout = new VBox();
     Button randomJulia = new Button("Random Julia Set");
     randomJulia.setOnAction(
         event -> {
           mainController.setCurrentDescription("JuliaRandom");
+          setComboBoxEmpty();
           chaosGameController.runIterations(iterationsField.getText());
         });
-
     Button randomAffine = new Button("Random Affine Set");
     randomAffine.setOnAction(
         event -> {
           mainController.setCurrentDescription("AffineRandom");
+          setComboBoxEmpty();
           chaosGameController.runIterations(iterationsField.getText());
         });
 
@@ -85,6 +92,7 @@ public class ChaosGameView implements PageViewInterface {
 
     buttonLayout.getChildren()
         .addAll(iterationsField, runButton, descriptionComboBox, randomButtonLayout, toModifyDescription);
+    imageView.getChildren().add(this.imageView);
     layout.getChildren().addAll(buttonLayout, imageView);
 
     //Style
@@ -93,6 +101,8 @@ public class ChaosGameView implements PageViewInterface {
 
     randomJulia.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
     randomAffine.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
+
+    imageView.setStyle("-fx-alignment: center;");
     return layout;
   }
 
@@ -112,6 +122,10 @@ public class ChaosGameView implements PageViewInterface {
    */
   public void setImage(Image image) {
     imageView.setImage(image);
+  }
+
+  public void setComboBoxEmpty() {
+    descriptionComboBox.setValue(null);
   }
 
 
