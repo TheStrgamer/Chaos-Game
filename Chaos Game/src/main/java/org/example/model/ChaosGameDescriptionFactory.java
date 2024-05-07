@@ -95,7 +95,7 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with the julia values.
+   * Creates a ChaosGameDescription object with the julia transform for the complex -0.74543, 0.11301.
    *
    * @return the ChaosGameDescription object.
    */
@@ -103,12 +103,29 @@ public class ChaosGameDescriptionFactory {
     return generateJulia(new Complex(-0.74543, 0.11301));
   }
 
+  /**
+   * Creates a ChaosGameDescription object with the julia transform for the complex 0.15546, -0.63690.
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createJuliaDescription2() {
     return generateJulia(new Complex(0.15546, -0.63690));
   }
+
+  /**
+   * Creates a ChaosGameDescription object with the julia transform for the complex 0.42428198918101634, 0.14423276134020324.
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createJuliaDescription3() {
     return generateJulia(new Complex(0.42428198918101634, 0.14423276134020324));
   }
+
+  /**
+   * Creates a ChaosGameDescription object with randomly generated julia transforms. It can have up to 2 transforms.
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createJuliaRandomDescription() {
     Random random = new Random();
     int transformCount = random.nextInt(2) + 1;
@@ -123,6 +140,11 @@ public class ChaosGameDescriptionFactory {
     return generateJulia(complexes);
   }
 
+  /**
+   * Creates a ChaosGameDescription object with randomly generated affine transforms. It can have 2-4 transforms.
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createAffineRandomDescription() {
     Vector2D minCoords = new Vector2D(-6, -6);
     Vector2D maxCoords = new Vector2D(6, 6);
@@ -155,6 +177,11 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
+  /**
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Diamond".
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createDiamondDescription() {
     Vector2D minCoords = new Vector2D(-0.25, -.75);
     Vector2D maxCoords = new Vector2D(1.25, .5);
@@ -175,6 +202,11 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
+  /**
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Plant".
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createPlantDescription() {
     Vector2D minCoords = new Vector2D(-6, -2.5);
     Vector2D maxCoords = new Vector2D(2.5, 6);
@@ -194,6 +226,11 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
+  /**
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Flower".
+   *
+   * @return the ChaosGameDescription object.
+   */
   private ChaosGameDescription createFlowerDescription() {
     Vector2D minCoords = new Vector2D(-2, -2);
     Vector2D maxCoords = new Vector2D(2, 2);
