@@ -61,7 +61,7 @@ public class ChaosGameView implements PageViewInterface {
     descriptionComboBox = new ComboBox<>();
     descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
-        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Snowflake", "Diamond", "Plant", "Flower");
+        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Diamond", "Plant", "Flower");
     descriptionComboBox.setOnAction(
         event -> {
           if (descriptionComboBox.getValue() != null) {

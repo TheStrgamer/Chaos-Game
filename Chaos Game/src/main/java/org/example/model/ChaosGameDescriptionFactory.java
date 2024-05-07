@@ -24,11 +24,9 @@ public class ChaosGameDescriptionFactory {
       case "Julia" -> createJuliaDescription();
       case "Julia2" -> createJuliaDescription2();
       case "Julia3" -> createJuliaDescription3();
-      case "Julia4" -> createJuliaDescription4();
-      case "Grain" -> createGrainDescription();
-      case "Snowflake" -> createSnowflakeDescription();
-      case "Wave" -> createWaveDescription();
       case "Diamond" -> createDiamondDescription();
+      case "Plant" -> createPlantDescription();
+      case "Flower" -> createFlowerDescription();
       case "JuliaRandom" -> createJuliaRandomDescription();
       case "AffineRandom" -> createAffineRandomDescription();
       default -> throw new IllegalArgumentException("Invalid description type");
@@ -141,19 +139,6 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform2);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
-  private ChaosGameDescription createJuliaDescription4() {
-    Vector2D minCoords = new Vector2D(-1.6, -1);
-    Vector2D maxCoords = new Vector2D(1.6, 1);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Complex complex1 = new Complex(-1.3871741369151636, -0.015918399340009826);
-    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
-    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
-  }
   private ChaosGameDescription createJuliaRandomDescription() {
     Vector2D minCoords = new Vector2D(-1.6, -1);
     Vector2D maxCoords = new Vector2D(1.6, 1);
@@ -161,7 +146,9 @@ public class ChaosGameDescriptionFactory {
 
     Random random = new Random();
     double real = random.nextDouble() * 3 - 1.5;
+    real = Math.round(real * 10000.0) / 10000.0;
     double imaginary = random.nextDouble() * 3 - 1.5;
+    imaginary = Math.round(imaginary * 10000.0) / 10000.0;
     Complex complex1 = new Complex(real, imaginary);
     System.out.println(complex1);
     JuliaTransform transform1 = new JuliaTransform(complex1, 1);
@@ -173,8 +160,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   private ChaosGameDescription createAffineRandomDescription() {
-    Vector2D minCoords = new Vector2D(-4, -4);
-    Vector2D maxCoords = new Vector2D(4, 4);
+    Vector2D minCoords = new Vector2D(-6, -6);
+    Vector2D maxCoords = new Vector2D(6, 6);
     List<Transform2D> transforms = new ArrayList<>();
 
     Random random = new Random();
@@ -186,6 +173,14 @@ public class ChaosGameDescriptionFactory {
       double d = random.nextDouble() * 2 - 1;
       double e = random.nextDouble() * 4 - 2;
       double f = random.nextDouble() * 4 - 2;
+
+      a = Math.round(a * 10000.0) / 10000.0;
+      b = Math.round(b * 10000.0) / 10000.0;
+      c = Math.round(c * 10000.0) / 10000.0;
+      d = Math.round(d * 10000.0) / 10000.0;
+      e = Math.round(e * 10000.0) / 10000.0;
+      f = Math.round(f * 10000.0) / 10000.0;
+
       Matrix2x2 matrix = new Matrix2x2(a, b, c, d);
       Vector2D vector = new Vector2D(e, f);
       AffineTransform2D transform = new AffineTransform2D(matrix, vector);
@@ -196,63 +191,6 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
-  private ChaosGameDescription createGrainDescription() {
-    Vector2D minCoords = new Vector2D(-2, -2);
-    Vector2D maxCoords = new Vector2D(2, 2);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Matrix2x2 matrix1 = new Matrix2x2(0.8526, -0.6319, -0.9674, -0.4780);
-    Vector2D vector1 = new Vector2D(-0.8476, 0.7119);
-    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
-
-    Matrix2x2 matrix2 = new Matrix2x2(-0.4179, 0.3461, -0.4627, -0.3773);
-    Vector2D vector2 = new Vector2D(0.6458, 0.1437);
-    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
-
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
-  }
-  private ChaosGameDescription createSnowflakeDescription() {
-    Vector2D minCoords = new Vector2D(-2.5, -2);
-    Vector2D maxCoords = new Vector2D(-.5, .5);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Matrix2x2 matrix1 = new Matrix2x2(0.4616, 0.7805, -0.4300, 0.2053);
-    Vector2D vector1 = new Vector2D(-0.1491, -0.6422);
-    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
-
-    Matrix2x2 matrix2 = new Matrix2x2(0.7374, 0.2385, 0.4507, -0.7032);
-    Vector2D vector2 = new Vector2D(-0.2748, -0.9047);
-    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
-
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
-  }
-  private ChaosGameDescription createWaveDescription() {
-    Vector2D minCoords = new Vector2D(-2.5, -2);
-    Vector2D maxCoords = new Vector2D(-.5, .5);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Matrix2x2 matrix1 = new Matrix2x2(0.4591390135618698, 0.8832052017098566, -0.7462426250152951, 0.833017031294506);
-    Vector2D vector1 = new Vector2D( -0.11902225565217517, -0.9110847611752506);
-    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
-
-    Matrix2x2 matrix2 = new Matrix2x2(0.2583303066519558, -0.5680200732142788, 0.6128344748728818, -0.08576953593379777);
-    Vector2D vector2 = new Vector2D(-0.7718854713164023, -0.8008603013926072);
-    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
-
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
-  }
   private ChaosGameDescription createDiamondDescription() {
     Vector2D minCoords = new Vector2D(-0.25, -.75);
     Vector2D maxCoords = new Vector2D(1.25, .5);
@@ -266,6 +204,44 @@ public class ChaosGameDescriptionFactory {
     Vector2D vector2 = new Vector2D( 0.0674954419906022, -0.5411159639984362 );
     AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
 
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  private ChaosGameDescription createPlantDescription() {
+    Vector2D minCoords = new Vector2D(-6, -2.5);
+    Vector2D maxCoords = new Vector2D(2.5, 6);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Matrix2x2 matrix1 = new Matrix2x2(0.7735, 0.2473, -0.3505, 0.8680);
+    Vector2D vector1 = new Vector2D(-1.5435, -0.0778);
+    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
+
+    Matrix2x2 matrix2 = new Matrix2x2(-0.1939, -0.6283, -0.5006, 0.0103);
+    Vector2D vector2 = new Vector2D(0.4887, -1.0326);
+    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  private ChaosGameDescription createFlowerDescription() {
+    Vector2D minCoords = new Vector2D(-2, -2);
+    Vector2D maxCoords = new Vector2D(2, 2);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Matrix2x2 matrix1 = new Matrix2x2(-0.5639, -0.1856, -0.9115, 0.7954);
+    Vector2D vector1 = new Vector2D(0.8410, 0.1493);
+    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
+
+    Matrix2x2 matrix2 = new Matrix2x2(-0.5211, -0.3527, -0.5343, 0.5359);
+    Vector2D vector2 = new Vector2D(0.1484, 0.4851);
+    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
 
     transforms.add(transform1);
     transforms.add(transform2);
