@@ -100,63 +100,27 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   private ChaosGameDescription createJuliaDescription() {
-    Vector2D minCoords = new Vector2D(-1.6, -1);
-    Vector2D maxCoords = new Vector2D(1.6, 1);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Complex complex1 = new Complex(-0.74543, 0.11301);
-    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
-    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    return generateJulia(new Complex(-0.74543, 0.11301));
   }
 
   private ChaosGameDescription createJuliaDescription2() {
-    Vector2D minCoords = new Vector2D(-1.4, -1.2);
-    Vector2D maxCoords = new Vector2D(1.4, 1.2);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Complex complex1 = new Complex(0.15545970506376272, -0.6369025653907516);
-    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
-    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    return generateJulia(new Complex(0.15546, -0.63690));
   }
   private ChaosGameDescription createJuliaDescription3() {
-    Vector2D minCoords = new Vector2D(-1.4, -1.4);
-    Vector2D maxCoords = new Vector2D(1.4, 1.4);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Complex complex1 = new Complex(0.42428198918101634, 0.14423276134020324);
-    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
-    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    return generateJulia(new Complex(0.42428198918101634, 0.14423276134020324));
   }
   private ChaosGameDescription createJuliaRandomDescription() {
-    Vector2D minCoords = new Vector2D(-1.6, -1);
-    Vector2D maxCoords = new Vector2D(1.6, 1);
-    List<Transform2D> transforms = new ArrayList<>();
-
     Random random = new Random();
-    double real = random.nextDouble() * 3 - 1.5;
-    real = Math.round(real * 10000.0) / 10000.0;
-    double imaginary = random.nextDouble() * 3 - 1.5;
-    imaginary = Math.round(imaginary * 10000.0) / 10000.0;
-    Complex complex1 = new Complex(real, imaginary);
-    System.out.println(complex1);
-    JuliaTransform transform1 = new JuliaTransform(complex1, 1);
-    JuliaTransform transform2 = new JuliaTransform(complex1, -1);
-
-    transforms.add(transform1);
-    transforms.add(transform2);
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    int transformCount = random.nextInt(2) + 1;
+    Complex[] complexes = new Complex[transformCount];
+    for (int i = 0; i < transformCount; i++) {
+      double real = random.nextDouble() * 3 - 1.5;
+      real = Math.round(real * 10000.0) / 10000.0;
+      double imaginary = random.nextDouble() * 3 - 1.5;
+      imaginary = Math.round(imaginary * 10000.0) / 10000.0;
+      complexes[i] = new Complex(real, imaginary);
+    }
+    return generateJulia(complexes);
   }
 
   private ChaosGameDescription createAffineRandomDescription() {
@@ -246,6 +210,49 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform1);
     transforms.add(transform2);
 
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  /**
+   * Generates a ChaosGameDescription with a julia transform for the given complex number.
+   *
+   * @param c is the complex number to use.
+   * @return the ChaosGameDescription object.
+   */
+  private ChaosGameDescription generateJulia(Complex c) {
+    List<Transform2D> transforms = new ArrayList<>();
+
+    JuliaTransform transform1 = new JuliaTransform(c, 1);
+    JuliaTransform transform2 = new JuliaTransform(c, -1);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+    //TODO find a way to calculate min and max coords
+    Vector2D minCoords = new Vector2D(-1.6, -1.2);
+    Vector2D maxCoords = new Vector2D(1.6, 1.2);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  /**
+   * Generates a ChaosGameDescription with julia transforms for the given complex numbers.
+   *
+   * @param complexes is the array of complex numbers to use.
+   * @return the ChaosGameDescription object.
+   */
+  private ChaosGameDescription generateJulia(Complex[] complexes) {
+    List<Transform2D> transforms = new ArrayList<>();
+
+    for (Complex c : complexes) {
+      JuliaTransform transform1 = new JuliaTransform(c, 1);
+      JuliaTransform transform2 = new JuliaTransform(c, -1);
+
+      transforms.add(transform1);
+      transforms.add(transform2);
+    }
+
+    //TODO find a way to calculate min and max coords
+    Vector2D minCoords = new Vector2D(-1.6, -1.4);
+    Vector2D maxCoords = new Vector2D(1.6, 1.4);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
