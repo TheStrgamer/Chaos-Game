@@ -42,16 +42,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     return modifyDescriptionView.getLayout();
   }
 
-  /**
-   * Method for choosing a description for the Chaos Game.
-   *
-   * @param description the description to choose.
-   */
-  public void chooseDescription(String description) {
-    mainController.setCurrentDescription(
-        chaosGameDescriptionFactory.createDescription(description));
-    mainController.switchToChaosGameView();
-  }
 
   /**
    * Method for reading a description from a file.
