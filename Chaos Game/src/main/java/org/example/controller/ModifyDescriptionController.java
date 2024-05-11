@@ -59,6 +59,31 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     System.out.println("Save to file");
   }
 
+  public void addTransform() {
+    System.out.println("Add transform");
+    }
+
+  public String getTransformType() {
+    return mainController.getCurrentDescription().getTransformType();
+  }
+
+  public String getMinCoords() {
+    return mainController.getCurrentDescription().getMinCoords().toString();
+  }
+
+  public String getMaxCoords() {
+    return mainController.getCurrentDescription().getMaxCoords().toString();
+  }
+
+  public List<String> getTransforms() {
+    List<String> transforms = new ArrayList<>();
+    return mainController.getCurrentDescription().getTransformsAsStringList();
+  }
+
+  public void setDescriptionSize(int width, int height) {
+    modifyDescriptionView.changeDescriptionListScale(width, height);
+  }
+
 
   /**
    * Method for listening to changes in the description of the Chaos Game.
