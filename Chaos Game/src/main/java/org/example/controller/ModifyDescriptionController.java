@@ -66,7 +66,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    */
   @Override
   public void updateDescription(ChaosGameDescription description) {
-    modifyDescriptionView.updateDescriptionList();
   }
 
   /**
@@ -75,6 +74,5 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    */
   @Override
   public void updateCanvas(ChaosCanvas canvas) {
-
   }
 }

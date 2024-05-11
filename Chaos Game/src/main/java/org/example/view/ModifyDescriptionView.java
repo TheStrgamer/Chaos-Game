@@ -68,9 +68,6 @@ public class ModifyDescriptionView implements PageViewInterface {
     //Style
     buttonLayout.setStyle(
         "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
-    editDescription.setStyle("-fx-font-size: 25px;");
-    readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
-    description.setStyle("-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
 
     return layout;
   }

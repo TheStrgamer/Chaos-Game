@@ -97,7 +97,6 @@ public class MainController {
     this.currentWidth = width;
     this.currentHeight = height;
     chaosGame.setCanvasSize(imageWidth, imageHeight);
-    modifyDescriptionController.setDescriptionSize(currentWidth-200, currentHeight-135);
   }
 
   /**
