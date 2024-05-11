@@ -61,6 +61,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
     toChaosGame.setOnAction(event -> mainController.switchToChaosGameView());
 
+    content.getChildren().addAll(readAndWrite);
     buttonLayout.getChildren().addAll(toChaosGame);
     layout.getChildren().addAll(buttonLayout, content);
 

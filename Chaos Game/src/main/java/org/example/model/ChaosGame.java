@@ -50,6 +50,19 @@ public class ChaosGame {
   }
 
   /**
+   * Verifies that the given steps is more than zero. Throws an IllegalArgumentException if the
+   * given steps is less than or equal to zero.
+   *
+   * @param steps the steps to verify
+   * @throws IllegalArgumentException if the given steps is less than or equal to zero
+   */
+  private void verifyStepsMoreThanZero(int steps) {
+    if (steps <= 0) {
+      throw new IllegalArgumentException("Steps need to be more than 0");
+    }
+  }
+
+  /**
    * Constructs a new ChaosGame object with the given description and creates a canvas based on the
    * values.
    *
@@ -147,12 +160,22 @@ public class ChaosGame {
   }
 
   /**
+   * Returns the description of this chaos game.
+   *
+   * @return the description of this chaos game.
+   */
+  public ChaosGameDescription getDescription() {
+    return description;
+  }
+
+  /**
    * Runs the chaos game for the given number of steps. Notifies all observers that the canvas has
    * changed after all steps have been run.
    *
    * @param steps is the number of steps to run.
    */
   public void runSteps(int steps) {
+    verifyStepsMoreThanZero(steps);
     for (int i = 0; i < steps; i++) {
       try {
         int randomInt = random.nextInt(description.getTransforms().size());
