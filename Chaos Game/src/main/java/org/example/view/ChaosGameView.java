@@ -37,6 +37,8 @@ public class ChaosGameView implements PageViewInterface {
     this.chaosGameController = chaosGameController;
     this.mainController = mainController;
     this.imageView = new ImageView();
+    this.descriptionComboBox = new ComboBox<>();
+    initializeComboBox();
     imageView.setStyle("-fx-alignment: center;");
     this.layout = createLayout();
 
@@ -57,15 +59,6 @@ public class ChaosGameView implements PageViewInterface {
     iterationsField.setText("1000000");
     Button runButton = new Button("Run");
     runButton.setOnAction(event -> chaosGameController.runIterations(iterationsField.getText()));
-
-    descriptionComboBox = new ComboBox<>();
-    descriptionComboBox.setValue("Sierpinski");
-    descriptionComboBox.getItems()
-        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Diamond", "Plant", "Flower");
-    descriptionComboBox.setOnAction(
-        event -> {
-          if (descriptionComboBox.getValue() != null) {
-          mainController.setCurrentDescription(descriptionComboBox.getValue());}});
 
     VBox randomButtonLayout = new VBox();
     Button randomJulia = new Button("Random Julia Set");
@@ -126,6 +119,17 @@ public class ChaosGameView implements PageViewInterface {
 
   public void setComboBoxEmpty() {
     descriptionComboBox.setValue(null);
+  }
+
+  private void initializeComboBox() {
+    descriptionComboBox.setValue("Sierpinski");
+    descriptionComboBox.getItems()
+        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Diamond", "Plant", "Flower");
+    descriptionComboBox.setOnAction(
+        event -> {
+          if (descriptionComboBox.getValue() != null) {
+            mainController.setCurrentDescription(descriptionComboBox.getValue());}});
+
   }
 
 

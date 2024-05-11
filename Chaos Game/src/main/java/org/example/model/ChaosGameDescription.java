@@ -1,5 +1,6 @@
 package org.example.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -116,6 +117,21 @@ public class ChaosGameDescription {
     } else {
       throw new IllegalArgumentException("Invalid transform type");
     }
+  }
+
+  public List<String> getTransformsAsStringList() {
+    List<String> transformsAsString = new ArrayList<>();
+
+    if (getTransformType().equals("Julia")) {
+      for (int i = 0; i < transforms.size(); i += 2) {
+        transformsAsString.add(transforms.get(i).toString());
+      }
+    } else {
+      for (Transform2D transform : transforms) {
+        transformsAsString.add(transform.toString());
+      }
+    }
+    return transformsAsString;
   }
 
   /**

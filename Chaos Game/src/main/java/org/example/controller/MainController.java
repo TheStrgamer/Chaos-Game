@@ -19,15 +19,18 @@ public class MainController {
   private final ChaosGameDescriptionFactory chaosGameDescriptionFactory;
 
   private ChaosGameDescription currentDescription;
-  private ChaosGame chaosGame;
+  private final ChaosGame chaosGame;
 
   private Stage stage;
 
-  private int width = 800;
-  private int height = 600;
+  private final int originalWidth = 800;
+  private final int originalHeight = 600;
+
+  private int currentWidth = 800;
+  private int currentHeight = 600;
 
   private int imageWidth = 800;
-  private int imageHeight = 540;
+  private int imageHeight = 500;
 
   /**
    * Constructor for the MainController class.
@@ -36,12 +39,18 @@ public class MainController {
    */
   public MainController(Stage stage) {
     this.stage = stage;
+    stage.setTitle("Chaos Game");
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
-    currentDescription = chaosGameDescriptionFactory.createDescription("Barnsley");
+    currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
 
     chaosGameController = new ChaosGameController(this, chaosGame);
     modifyDescriptionController = new ModifyDescriptionController(this);
+    chaosGame.addObserver(modifyDescriptionController);
+    chaosGame.addObserver(chaosGameController);
+
+    stage.widthProperty().addListener((obs, oldVal, newVal) -> changeScale(newVal.intValue(), currentHeight));
+    stage.heightProperty().addListener((obs, oldVal, newVal) -> changeScale(currentWidth, newVal.intValue()));
   }
 
 
@@ -49,7 +58,7 @@ public class MainController {
    * Method for switching to the Chaos Game view.
    */
   public void switchToChaosGameView() {
-    Scene scene = new Scene(chaosGameController.getLayout(), width, height);
+    Scene scene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
     stage.setScene(scene);
   }
 
@@ -57,7 +66,7 @@ public class MainController {
    * Method for switching to the Modify Description view.
    */
   public void switchToDescriptionView() {
-    Scene scene = new Scene(modifyDescriptionController.getLayout(), width, height);
+    Scene scene = new Scene(modifyDescriptionController.getLayout(), originalWidth, originalHeight);
     stage.setScene(scene);
   }
 
@@ -68,8 +77,7 @@ public class MainController {
    */
   public void setCurrentDescription(ChaosGameDescription description) {
     currentDescription = description;
-    chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
-    chaosGameController.setChaosGame(chaosGame);
+    chaosGame.setDescription(currentDescription);
   }
 
   /**
@@ -79,15 +87,26 @@ public class MainController {
    */
   public void setCurrentDescription(String description) {
     currentDescription = chaosGameDescriptionFactory.createDescription(description);
-    chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
-    chaosGameController.setChaosGame(chaosGame);
+    chaosGame.setDescription(currentDescription);
+  }
+
+
+  private void changeScale(int width, int height) {
+    this.imageWidth = width-30;
+    this.imageHeight = height - 100;
+    this.currentWidth = width;
+    this.currentHeight = height;
+    chaosGame.setCanvasSize(imageWidth, imageHeight);
+    modifyDescriptionController.setDescriptionSize(currentWidth-200, currentHeight-135);
   }
 
   /**
-   * Method for refreshing the image of the Chaos Game.
+   * Method for getting the current description of the Chaos Game.
+   *
+   * @return the current description of the Chaos Game.
    */
-  public void refreshImage() {
-    chaosGameController.refreshImage();
+  public ChaosGameDescription getCurrentDescription() {
+    return currentDescription;
   }
 
 

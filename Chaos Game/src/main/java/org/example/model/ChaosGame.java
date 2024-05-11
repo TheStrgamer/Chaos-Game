@@ -1,5 +1,7 @@
 package org.example.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -8,12 +10,44 @@ import java.util.Random;
  */
 public class ChaosGame {
 
-  private final ChaosCanvas canvas;
-  private final ChaosGameDescription description;
+  private ChaosCanvas canvas;
+  private ChaosGameDescription description;
 
   private final Vector2D currentPoint;
 
   private final Random random;
+
+  private int canvasWidth;
+  private int canvasHeight;
+
+  private List<ChaosGameObserver> observers = new ArrayList<>();
+
+  /**
+   * Verifies that the given width and height are positive. Throws an IllegalArgumentException if
+   * the given width or height is not positive.
+   *
+   * @param width  the width to verify
+   * @param height the height to verify
+   * @throws IllegalArgumentException if the given width or height is not positive
+   */
+  private void verifyValidCanvasSize(int width, int height) {
+    if (width < 0 || height < 0) {
+      throw new IllegalArgumentException("Width and height must be positive");
+    }
+  }
+
+  /**
+   * Verifies that the given description is not null. Throws an IllegalArgumentException if the
+   * given description is null.
+   *
+   * @param description the description to verify
+   * @throws IllegalArgumentException if the given description is null
+   */
+  private void verifyNotNullDescription(ChaosGameDescription description) {
+    if (description == null) {
+      throw new IllegalArgumentException("Description cannot be null");
+    }
+  }
 
   /**
    * Constructs a new ChaosGame object with the given description and creates a canvas based on the
@@ -24,12 +58,84 @@ public class ChaosGame {
    * @param height      is the height of the canvas.
    */
   public ChaosGame(ChaosGameDescription description, int width, int height) {
-    this.canvas = new ChaosCanvas(width, height, description.getMinCoords(),
-        description.getMaxCoords());
-    this.description = description;
+    verifyNotNullDescription(description);
+    verifyValidCanvasSize(width, height);
+
+    this.canvasWidth = width;
+    this.canvasHeight = height;
     this.currentPoint = new Vector2D(0, 0);
     this.random = new Random();
+    setDescription(description);
+
   }
+
+  /**
+   * Adds an observer to the list of observers listening to this chaos game.
+   *
+   * @param observer is the observer to add.
+   */
+  public void addObserver(ChaosGameObserver observer) {
+    observers.add(observer);
+  }
+
+  /**
+   * Removes an observer from the list of observers listening to this chaos game.
+   *
+   * @param observer is the observer to remove.
+   */
+  public void removeObserver(ChaosGameObserver observer) {
+    observers.remove(observer);
+  }
+
+  /**
+   * Notifies all observers that the canvas has changed.
+   */
+  private void notifyCanvasChanged() {
+    for (ChaosGameObserver observer : observers) {
+      observer.updateCanvas(canvas);
+    }
+  }
+
+  /**
+   * Notifies all observers that the description has changed.
+   */
+  private void notifyDescriptionChanged() {
+    for (ChaosGameObserver observer : observers) {
+      observer.updateDescription(description);
+    }
+  }
+
+  /**
+   * Sets the description of this chaos game. The canvas is reset to a new canvas based on the
+   * description. Notifies all observers that the description has changed.
+   *
+   * @param description is the description to use.
+   */
+  public void setDescription(ChaosGameDescription description) {
+    verifyNotNullDescription(description);
+    this.description = description;
+    this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
+        description.getMaxCoords());
+    notifyDescriptionChanged();
+    notifyCanvasChanged();
+  }
+
+  /**
+   * Sets the canvas size of this chaos game. The canvas is reset to a new canvas with the given
+   * parameters. Notifies all observers that the canvas has changed.
+   *
+   * @param width  is the width of the canvas.
+   * @param height is the height of the canvas.
+   */
+  public void setCanvasSize(int width, int height) {
+    verifyValidCanvasSize(width, height);
+    this.canvas = new ChaosCanvas(width, height, description.getMinCoords(),
+        description.getMaxCoords());
+    this.canvasWidth = width;
+    this.canvasHeight = height;
+    notifyCanvasChanged();
+  }
+
 
   /**
    * Returns the canvas of this chaos game.
@@ -41,7 +147,8 @@ public class ChaosGame {
   }
 
   /**
-   * Runs the chaos game for the given number of steps.
+   * Runs the chaos game for the given number of steps. Notifies all observers that the canvas has
+   * changed after all steps have been run.
    *
    * @param steps is the number of steps to run.
    */
@@ -54,11 +161,11 @@ public class ChaosGame {
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint,5);
+        canvas.setPixel(currentPoint, 5);
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
-
     }
+    notifyCanvasChanged();
   }
 }

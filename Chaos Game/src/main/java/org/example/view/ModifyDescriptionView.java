@@ -3,6 +3,8 @@ package org.example.view;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.controller.MainController;
@@ -45,51 +47,30 @@ public class ModifyDescriptionView implements PageViewInterface {
   private VBox createLayout() {
     VBox layout = new VBox();
     HBox buttonLayout = new HBox();
-
-    Button toChaosGame = new Button("Chaos Game");
+    Button toChaosGame = new Button("To Chaos Game");
 
     HBox content = new HBox();
-
-    VBox chooseDescription = new VBox();
-    chooseDescription.setStyle("-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
+    VBox readAndWrite = new VBox();
 
     Label descriptionLabel = new Label("Description: ");
+    Button readFromFile = new Button("Read description from file");
+    Button saveToFile = new Button("Save current description");
+    readAndWrite.getChildren().addAll(descriptionLabel, readFromFile, saveToFile);
 
-    HBox sierpinski = new HBox();
-    Label sierpinskiLabel = new Label("Sierpinski:");
-    Button sierpinskiButton = new Button("Choose");
-    sierpinski.getChildren().addAll(sierpinskiLabel, sierpinskiButton);
-
-    HBox barnsley = new HBox();
-    Label barnsleyLabel = new Label("Barnsley:");
-    Button barnsleyButton = new Button("Choose");
-    barnsley.getChildren().addAll(barnsleyLabel, barnsleyButton);
-
-    HBox julia = new HBox();
-    Label juliaLabel = new Label("Juliamengde:");
-    Button juliaButton = new Button("Choose");
-    julia.getChildren().addAll(juliaLabel, juliaButton);
-
-    Button readFromFile = new Button("Read from file");
-
-    chooseDescription.getChildren().addAll(descriptionLabel, sierpinski, barnsley, julia, readFromFile);
-
-    content.getChildren().addAll(chooseDescription);
-
-    sierpinskiButton.setOnAction(event -> modifyDescriptionController.chooseDescription("Sierpinski"));
-    barnsleyButton.setOnAction(event -> modifyDescriptionController.chooseDescription("Barnsley"));
-    juliaButton.setOnAction(event -> modifyDescriptionController.chooseDescription("Julia"));
     readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
+    saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
     toChaosGame.setOnAction(event -> mainController.switchToChaosGameView());
 
     buttonLayout.getChildren().addAll(toChaosGame);
-    layout.getChildren().addAll(buttonLayout);
+    layout.getChildren().addAll(buttonLayout, content);
 
     //Style
     buttonLayout.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
+        "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
+    editDescription.setStyle("-fx-font-size: 25px;");
+    readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
+    description.setStyle("-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
 
-    layout.getChildren().addAll(content);
     return layout;
   }
 

@@ -1,7 +1,12 @@
 package org.example.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.layout.VBox;
+import org.example.model.ChaosCanvas;
+import org.example.model.ChaosGameDescription;
 import org.example.model.ChaosGameDescriptionFactory;
+import org.example.model.ChaosGameObserver;
 import org.example.view.ModifyDescriptionView;
 
 /**
@@ -10,7 +15,7 @@ import org.example.view.ModifyDescriptionView;
  * the Modify Description page, and is responsible for choosing and creating descriptions for the
  * Chaos Game.
  */
-public class ModifyDescriptionController {
+public class ModifyDescriptionController implements ChaosGameObserver {
 
   private final MainController mainController;
   private final ModifyDescriptionView modifyDescriptionView;
@@ -56,5 +61,30 @@ public class ModifyDescriptionController {
     System.out.println("Read from file");
   }
 
+  /**
+   * Method for saving the current description to a file.
+   */
+  public void saveToFile() {
+    //TODO
+    System.out.println("Save to file");
+  }
 
+
+  /**
+   * Method for listening to changes in the description of the Chaos Game.
+   * @param description the description of the Chaos Game.
+   */
+  @Override
+  public void updateDescription(ChaosGameDescription description) {
+    modifyDescriptionView.updateDescriptionList();
+  }
+
+  /**
+   * Method for listening to changes in the canvas of the Chaos Game.
+   * @param canvas the canvas of the Chaos Game.
+   */
+  @Override
+  public void updateCanvas(ChaosCanvas canvas) {
+
+  }
 }

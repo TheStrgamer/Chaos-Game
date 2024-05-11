@@ -2,8 +2,11 @@ package org.example.controller;
 
 
 import javafx.scene.layout.VBox;
+import org.example.model.ChaosCanvas;
 import org.example.model.ChaosGame;
 
+import org.example.model.ChaosGameDescription;
+import org.example.model.ChaosGameObserver;
 import org.example.model.ImageFactory;
 import org.example.view.ChaosGameView;
 
@@ -12,9 +15,9 @@ import org.example.view.ChaosGameView;
  * The controller class for the Chaos Game page of the application. It handles the logic for the
  * Chaos Game page, and is responsible for running the Chaos Game.
  */
-public class ChaosGameController {
+public class ChaosGameController implements ChaosGameObserver {
 
-  private ChaosGame chaosGame;
+  private final ChaosGame chaosGame;
   private final ChaosGameView chaosGameView;
 
   private final MainController mainController;
@@ -44,7 +47,6 @@ public class ChaosGameController {
   public void runIterations(String iterations) {
     int steps = getIterations(iterations);
     chaosGame.runSteps(steps);
-    chaosGameView.setImage(imageFactory.createImage(chaosGame.getCanvas()));
   }
 
   /**
@@ -54,7 +56,6 @@ public class ChaosGameController {
    */
   public void runIterations(int steps) {
     chaosGame.runSteps(steps);
-    chaosGameView.setImage(imageFactory.createImage(chaosGame.getCanvas()));
   }
 
   /**
@@ -83,22 +84,12 @@ public class ChaosGameController {
     return chaosGameView.getLayout();
   }
 
-  /**
-   * Method for setting the Chaos Game model for the controller.
-   *
-   * @param chaosGame the Chaos Game model to set.
-   */
-  public void setChaosGame(ChaosGame chaosGame) {
-    this.chaosGame = chaosGame;
-    refreshImage();
+  @Override
+  public void updateDescription(ChaosGameDescription description) {
   }
 
-  /**
-   * Method for refreshing the image of the Chaos Game view.
-   */
-  public void refreshImage() {
-    chaosGameView.setImage(imageFactory.createImage(chaosGame.getCanvas()));
+  @Override
+  public void updateCanvas(ChaosCanvas canvas) {
+    chaosGameView.setImage(imageFactory.createImage(canvas));
   }
-
-
 }
