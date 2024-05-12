@@ -100,14 +100,6 @@ public class MainController {
     modifyDescriptionController.setDescriptionSize(currentWidth-200, currentHeight-135);
   }
 
-  /**
-   * Method for getting the current description of the Chaos Game.
-   *
-   * @return the current description of the Chaos Game.
-   */
-  public ChaosGameDescription getCurrentDescription() {
-    return currentDescription;
-  }
 
 
 }

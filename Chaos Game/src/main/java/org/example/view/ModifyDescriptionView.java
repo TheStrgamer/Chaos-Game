@@ -1,16 +1,11 @@
 package org.example.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.UnaryOperator;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.controller.MainController;
@@ -46,6 +41,14 @@ public class ModifyDescriptionView implements PageViewInterface {
     this.layout = createLayout();
 
   }
+  /**
+   * Method for getting the layout of the Modify Description page.
+   *
+   * @return the layout of the Modify Description page.
+   */
+  public VBox getLayout() {
+    return createLayout();
+  }
 
   /**
    * Method for creating the layout of the Modify Description page.
@@ -54,10 +57,30 @@ public class ModifyDescriptionView implements PageViewInterface {
    */
   private VBox createLayout() {
     VBox layout = new VBox();
-    HBox buttonLayout = new HBox();
-    Button toChaosGame = new Button("To Chaos Game");
-
     HBox content = new HBox();
+    HBox buttonLayout = createButtonLayout();
+    VBox readAndWrite = createSideBar();
+
+
+    editDescription = new VBox();
+    Label editDescriptionLabel = new Label("Current description: ");
+    descriptionList = createDescriptionList();
+    editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
+
+    content.getChildren().addAll(readAndWrite, editDescription);
+    layout.getChildren().addAll(buttonLayout, content);
+
+    //Style
+    buttonLayout.setStyle(
+        "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
+    editDescription.setStyle("-fx-font-size: 25px;");
+    editDescription.setStyle(
+        "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
+
+    return layout;
+  }
+
+  private VBox createSideBar() {
     VBox readAndWrite = new VBox();
 
     Label descriptionLabel = new Label("Description: ");
@@ -67,39 +90,22 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
     saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
+    readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
+
+    return readAndWrite;
+  }
+  private HBox createButtonLayout() {
+    HBox buttonLayout = new HBox();
+    Button toChaosGame = new Button("To Chaos Game");
+    buttonLayout.getChildren().addAll(toChaosGame);
+
     toChaosGame.setOnAction(event -> {
       modifyDescriptionController.createDescription();
       mainController.switchToChaosGameView();
     });
 
-    editDescription = new VBox();
-    Label editDescriptionLabel = new Label("Current description: ");
-    descriptionList = createDescriptionList();
-    editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
+    return buttonLayout;
 
-    content.getChildren().addAll(readAndWrite, editDescription);
-
-    buttonLayout.getChildren().addAll(toChaosGame);
-    layout.getChildren().addAll(buttonLayout, content);
-
-    //Style
-    buttonLayout.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
-    editDescription.setStyle("-fx-font-size: 25px;");
-    readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
-    editDescription.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
-
-    return layout;
-  }
-
-  /**
-   * Method for getting the layout of the Modify Description page.
-   *
-   * @return the layout of the Modify Description page.
-   */
-  public VBox getLayout() {
-    return createLayout();
   }
 
 
@@ -286,5 +292,8 @@ public class ModifyDescriptionView implements PageViewInterface {
     descriptionList = createDescriptionList();
     editDescription.getChildren().add(descriptionList);
   }
+
+
+
 }
 

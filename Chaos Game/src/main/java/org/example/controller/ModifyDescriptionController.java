@@ -94,6 +94,9 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     System.out.println("Save to file");
   }
 
+  /**
+   * Method for adding a new empty transform to the description.
+   */
   public void addTransform() {
     if (currentDescription.getTransformType().equals("Julia")) {
       transforms.add(new JuliaTransform(new Complex(0, 0), 1));
@@ -104,22 +107,43 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     createDescription();
   }
 
+  /**
+   * Method for getting what type of transform the description is using.
+   * @return the type of transform.
+   */
   public String getTransformType() {
     return currentDescription.getTransformType();
   }
 
+  /**
+   * Method for getting the minimum coordinates of the description.
+   * @return the minimum coordinates.
+   */
   public String getMinCoords() {
     return minCoords.toString();
   }
 
+  /**
+   * Method for getting the maximum coordinates of the description.
+   * @return the maximum coordinates.
+   */
   public String getMaxCoords() {
     return maxCoords.toString();
   }
 
+  /**
+   * Method for getting the transforms of the description.
+   * @return the transforms.
+   */
   public List<String> getTransforms() {
     return currentDescription.getTransformsAsStringList();
   }
 
+  /**
+   * Method for changing the size of the description list.
+   * @param width the width of the description list.
+   * @param height the height of the description list.
+   */
   public void setDescriptionSize(int width, int height) {
     modifyDescriptionView.changeDescriptionListScale(width, height);
   }
@@ -149,6 +173,10 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   }
 
+  /**
+   * Method for creating a new description from the current values.
+   * If the description is the same as the current description, nothing happens.
+   */
   public void createDescription() {
     ChaosGameDescription description = new ChaosGameDescription(minCoords, maxCoords, transforms);
     if (currentDescription.equals(description)) {
@@ -157,6 +185,13 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     mainController.setCurrentDescription(description);
   }
 
+  /**
+   * Method for setting the minimum coordinates of the description.
+   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   *
+   * @param X0 the x-coordinate of the minimum coordinates.
+   * @param X1 the y-coordinate of the minimum coordinates.
+   */
   public void setMinCoords(String X0, String X1) {
     if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
       return;
@@ -169,6 +204,13 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
   }
 
+  /**
+   * Method for setting the maximum coordinates of the description.
+   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   *
+   * @param X0 the x-coordinate of the maximum coordinates.
+   * @param X1 the y-coordinate of the maximum coordinates.
+   */
   public void setMaxCoords(String X0, String X1) {
     if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
       return;
@@ -184,6 +226,14 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
   }
 
+  /**
+   * Method for setting the coordinates of a Julia transform.
+   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   *
+   * @param index the index of the transform.
+   * @param real the real part of the complex number.
+   * @param imaginary the imaginary part of the complex number.
+   */
   public void setJuliaTransforms(int index, String real, String imaginary) {
     if (!Stream.of(real, imaginary).allMatch(this::stringIsValidNumber)) {
       return;
@@ -202,6 +252,18 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     transforms.set(index + 1, newTransform2);
   }
 
+  /**
+   * Method for setting the coordinates of an Affine transform.
+   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   *
+   * @param index the index of the transform.
+   * @param a00 the a00 value of the matrix.
+   * @param a01 the a01 value of the matrix.
+   * @param a10 the a10 value of the matrix.
+   * @param a11 the a11 value of the matrix.
+   * @param a the x-coordinate of the vector.
+   * @param b the y-coordinate of the vector.
+   */
   public void setAffineTransforms(int index, String a00, String a01, String a10, String a11,
       String a, String b) {
     if (!Stream.of(a00, a01, a10, a11, a, b).allMatch(this::stringIsValidNumber)) {
