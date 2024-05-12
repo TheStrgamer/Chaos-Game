@@ -134,6 +134,10 @@ public class ChaosGameDescription {
     return transformsAsString;
   }
 
+  public List<Transform2D> getTransformsAsList() {
+    return new ArrayList<>(this.transforms);
+  }
+
   /**
    * Returns a string representation of the ChaosGameDescription object.
    *
