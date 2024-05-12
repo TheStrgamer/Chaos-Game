@@ -27,12 +27,11 @@ public class ModifyDescriptionView implements PageViewInterface {
   private final MainController mainController;
 
   private ListView<VBox> descriptionList = new ListView<>();
+  private VBox editDescription;
 
   private VBox layout;
 
-  private List<TextField> minCoords = new ArrayList<>();
-  private List<TextField> maxCoords = new ArrayList<>();
-  private List<TextField> transforms = new ArrayList<>();
+
 
   /**
    * Constructor for the ModifyDescriptionView class.
@@ -68,14 +67,17 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
     saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
-    toChaosGame.setOnAction(event -> mainController.switchToChaosGameView());
+    toChaosGame.setOnAction(event -> {
+      modifyDescriptionController.createDescription();
+      mainController.switchToChaosGameView();
+    });
 
-    VBox description = new VBox();
-    Label editDescription = new Label("Current description: ");
+    editDescription = new VBox();
+    Label editDescriptionLabel = new Label("Current description: ");
     descriptionList = createDescriptionList();
-    description.getChildren().addAll(editDescription, descriptionList);
+    editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
 
-    content.getChildren().addAll(readAndWrite, description);
+    content.getChildren().addAll(readAndWrite, editDescription);
 
     buttonLayout.getChildren().addAll(toChaosGame);
     layout.getChildren().addAll(buttonLayout, content);
@@ -85,7 +87,7 @@ public class ModifyDescriptionView implements PageViewInterface {
         "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
     editDescription.setStyle("-fx-font-size: 25px;");
     readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
-    description.setStyle(
+    editDescription.setStyle(
         "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
 
     return layout;
@@ -102,9 +104,6 @@ public class ModifyDescriptionView implements PageViewInterface {
 
 
   private ListView<VBox> createDescriptionList() {
-    minCoords.clear();
-    maxCoords.clear();
-    transforms.clear();
     ListView<VBox> desctiptionListView = new ListView<>();
 
     VBox minCoords = vector2DToHBox("Min Coords: ", modifyDescriptionController.getMinCoords());
@@ -129,6 +128,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     }
 
     VBox addTransform = new VBox();
+
     Button addTransformButton = new Button("Add Transform");
     addTransformButton.setOnAction(event -> modifyDescriptionController.addTransform());
     addTransform.getChildren().add(addTransformButton);
@@ -282,7 +282,9 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   public void updateDescriptionList() {
+    editDescription.getChildren().remove(descriptionList);
     descriptionList = createDescriptionList();
+    editDescription.getChildren().add(descriptionList);
   }
 }
 

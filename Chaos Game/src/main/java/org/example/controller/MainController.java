@@ -45,7 +45,7 @@ public class MainController {
     chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
 
     chaosGameController = new ChaosGameController(this, chaosGame);
-    modifyDescriptionController = new ModifyDescriptionController(this);
+    modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 

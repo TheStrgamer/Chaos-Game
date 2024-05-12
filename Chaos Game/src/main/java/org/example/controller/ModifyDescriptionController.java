@@ -28,6 +28,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   private final ModifyDescriptionView modifyDescriptionView;
 
   private final ChaosGameDescriptionFactory chaosGameDescriptionFactory;
+  private ChaosGameDescription currentDescription;
 
   private Vector2D minCoords;
   private Vector2D maxCoords;
@@ -56,11 +57,13 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    * @param mainController the main controller for the application. Used for switching between
    *                       views.
    */
-  public ModifyDescriptionController(MainController mainController) {
+  public ModifyDescriptionController(MainController mainController, ChaosGameDescription description) {
     this.mainController = mainController;
-    minCoords = mainController.getCurrentDescription().getMinCoords();
-    maxCoords = mainController.getCurrentDescription().getMaxCoords();
-    transforms = mainController.getCurrentDescription().getTransformsAsList();
+    this.currentDescription = description;
+
+    minCoords = description.getMinCoords();
+    maxCoords = description.getMaxCoords();
+    transforms = description.getTransformsAsList();
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     modifyDescriptionView = new ModifyDescriptionView(this, mainController);
   }
@@ -92,24 +95,29 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   public void addTransform() {
-    System.out.println("Add transform");
+    if (currentDescription.getTransformType().equals("Julia")) {
+      transforms.add(new JuliaTransform(new Complex(0, 0), 1));
+      transforms.add(new JuliaTransform(new Complex(0, 0), -1));
+    } else {
+      transforms.add(new AffineTransform2D(new Matrix2x2(1, 0, 0, 1), new Vector2D(0, 0)));
+    }
+    createDescription();
   }
 
   public String getTransformType() {
-    return mainController.getCurrentDescription().getTransformType();
+    return currentDescription.getTransformType();
   }
 
   public String getMinCoords() {
-    return mainController.getCurrentDescription().getMinCoords().toString();
+    return minCoords.toString();
   }
 
   public String getMaxCoords() {
-    return mainController.getCurrentDescription().getMaxCoords().toString();
+    return maxCoords.toString();
   }
 
   public List<String> getTransforms() {
-    List<String> transforms = new ArrayList<>();
-    return mainController.getCurrentDescription().getTransformsAsStringList();
+    return currentDescription.getTransformsAsStringList();
   }
 
   public void setDescriptionSize(int width, int height) {
@@ -124,6 +132,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    */
   @Override
   public void updateDescription(ChaosGameDescription description) {
+    currentDescription = description;
     minCoords = description.getMinCoords();
     maxCoords = description.getMaxCoords();
     transforms = description.getTransformsAsList();
@@ -142,6 +151,9 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   public void createDescription() {
     ChaosGameDescription description = new ChaosGameDescription(minCoords, maxCoords, transforms);
+    if (currentDescription.equals(description)) {
+      return;
+    }
     mainController.setCurrentDescription(description);
   }
 
@@ -151,8 +163,10 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
-    minCoords = new Vector2D(x0, x1);
-    createDescription();
+    Vector2D newMinCoords = new Vector2D(x0, x1);
+    if (minCoords.equals(newMinCoords)) {
+      return;
+    }
   }
 
   public void setMaxCoords(String X0, String X1) {
@@ -164,8 +178,10 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     if (x0 >= maxCoords.getX0() || x1 >= maxCoords.getX1()) {
       return;
     }
-    maxCoords = new Vector2D(x0, x1);
-    createDescription();
+    Vector2D newMaxCoords = new Vector2D(x0, x1);
+    if (maxCoords.equals(newMaxCoords)) {
+      return;
+    }
   }
 
   public void setJuliaTransforms(int index, String real, String imaginary) {
@@ -173,9 +189,17 @@ public class ModifyDescriptionController implements ChaosGameObserver {
       return;
     }
     Complex c = new Complex(Double.parseDouble(real), Double.parseDouble(imaginary));
-    transforms.set(index, new JuliaTransform(c, 1));
-    transforms.set(index + 1, new JuliaTransform(c, -1));
-    createDescription();
+
+    JuliaTransform newTransform1 = new JuliaTransform(c, 1);
+    if (newTransform1.equals(transforms.get(index))) {
+      return;
+    }
+    JuliaTransform newTransform2 = new JuliaTransform(c, -1);
+    if (newTransform2.equals(transforms.get(index + 1))) {
+      return;
+    }
+    transforms.set(index, newTransform1);
+    transforms.set(index + 1, newTransform2);
   }
 
   public void setAffineTransforms(int index, String a00, String a01, String a10, String a11,
@@ -188,8 +212,11 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(a00), Double.parseDouble(a01),
         Double.parseDouble(a10), Double.parseDouble(a11));
     Vector2D vector = new Vector2D(Double.parseDouble(a), Double.parseDouble(b));
-    transforms.set(index, new AffineTransform2D(matrix, vector));
-    createDescription();
+    AffineTransform2D newTransform = new AffineTransform2D(matrix, vector);
+    if (newTransform.equals(transforms.get(index))) {
+      return;
+    }
+    transforms.set(index, newTransform);
   }
 
 
