@@ -20,7 +20,7 @@ public class ChaosGame {
   private int canvasWidth;
   private int canvasHeight;
 
-  private List<ChaosGameObserver> observers = new ArrayList<>();
+  private final List<ChaosGameObserver> observers = new ArrayList<>();
 
   /**
    * Verifies that the given width and height are positive. Throws an IllegalArgumentException if
@@ -126,6 +126,8 @@ public class ChaosGame {
    */
   public void setDescription(ChaosGameDescription description) {
     verifyNotNullDescription(description);
+    currentPoint.setX0(0);
+    currentPoint.setX1(0);
     this.description = description;
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
