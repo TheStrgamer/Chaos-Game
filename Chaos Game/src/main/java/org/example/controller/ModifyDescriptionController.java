@@ -2,6 +2,7 @@ package org.example.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import javafx.scene.layout.VBox;
 import org.example.model.ChaosCanvas;
 import org.example.model.ChaosGameDescription;
@@ -34,21 +35,26 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
 
   /**
-   * Verifies that the given string is a valid number. Throws an IllegalArgumentException if the given string fails to parse as a double.
+   * Verifies that the given string is a valid number.
+   *
    * @param number the string to verify.
+   * @return true if the string is a valid number, false otherwise.
    */
-  private void verifyStringIsValidNumber(String number) {
+  private boolean stringIsValidNumber(String number) {
     try {
       Double.parseDouble(number);
+      return true;
     } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Invalid number");
+      return false;
     }
+
   }
 
   /**
    * Constructor for the ModifyDescriptionController class.
    *
-   * @param mainController the main controller for the application. Used for switching between views.
+   * @param mainController the main controller for the application. Used for switching between
+   *                       views.
    */
   public ModifyDescriptionController(MainController mainController) {
     this.mainController = mainController;
@@ -87,7 +93,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   public void addTransform() {
     System.out.println("Add transform");
-    }
+  }
 
   public String getTransformType() {
     return mainController.getCurrentDescription().getTransformType();
@@ -113,6 +119,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   /**
    * Method for listening to changes in the description of the Chaos Game.
+   *
    * @param description the description of the Chaos Game.
    */
   @Override
@@ -125,6 +132,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   /**
    * Method for listening to changes in the canvas of the Chaos Game.
+   *
    * @param canvas the canvas of the Chaos Game.
    */
   @Override
@@ -133,40 +141,45 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   public void createDescription() {
-    System.out.println(minCoords);
-    System.out.println(maxCoords);
     ChaosGameDescription description = new ChaosGameDescription(minCoords, maxCoords, transforms);
     mainController.setCurrentDescription(description);
   }
+
   public void setMinCoords(String X0, String X1) {
-    verifyStringIsValidNumber(X0);
-    verifyStringIsValidNumber(X1);
+    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+      return;
+    }
     minCoords = new Vector2D(Double.parseDouble(X0), Double.parseDouble(X1));
     createDescription();
   }
+
   public void setMaxCoords(String X0, String X1) {
-    verifyStringIsValidNumber(X0);
-    verifyStringIsValidNumber(X1);
+    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+      return;
+    }
     maxCoords = new Vector2D(Double.parseDouble(X0), Double.parseDouble(X1));
     createDescription();
   }
-  public void setJuliaTransforms(int index, String X0, String X1) {
-    verifyStringIsValidNumber(X0);
-    verifyStringIsValidNumber(X1);
-    Complex c = new Complex(Double.parseDouble(X0), Double.parseDouble(X1));
+
+  public void setJuliaTransforms(int index, String real, String imaginary) {
+    if (!Stream.of(real, imaginary).allMatch(this::stringIsValidNumber)) {
+      return;
+    }
+    Complex c = new Complex(Double.parseDouble(real), Double.parseDouble(imaginary));
     transforms.set(index, new JuliaTransform(c, 1));
     transforms.set(index + 1, new JuliaTransform(c, -1));
     createDescription();
   }
-  public void setAffineTransforms(int index, String a00, String a01, String a10, String a11, String a, String b) {
-    verifyStringIsValidNumber(a00);
-    verifyStringIsValidNumber(a01);
-    verifyStringIsValidNumber(a10);
-    verifyStringIsValidNumber(a11);
-    verifyStringIsValidNumber(a);
-    verifyStringIsValidNumber(b);
 
-    Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(a00), Double.parseDouble(a01), Double.parseDouble(a10), Double.parseDouble(a11));
+  public void setAffineTransforms(int index, String a00, String a01, String a10, String a11,
+      String a, String b) {
+    if (!Stream.of(a00, a01, a10, a11, a, b).allMatch(this::stringIsValidNumber)) {
+      return;
+    }
+
+
+    Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(a00), Double.parseDouble(a01),
+        Double.parseDouble(a10), Double.parseDouble(a11));
     Vector2D vector = new Vector2D(Double.parseDouble(a), Double.parseDouble(b));
     transforms.set(index, new AffineTransform2D(matrix, vector));
     createDescription();

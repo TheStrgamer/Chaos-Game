@@ -2,12 +2,15 @@ package org.example.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.controller.MainController;
@@ -147,10 +150,11 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox vBox = new VBox();
     HBox content = new HBox();
     Label label = new Label(name);
+
     TextField X0 = new TextField();
     TextField Y0 = new TextField();
     String[] split = vector.split(",");
-    X0.setText(split[0]);
+    X0.setText((split[0]));
     Y0.setText(split[1]);
 
     X0.setStyle("-fx-pref-width: 80px;");
@@ -158,6 +162,9 @@ public class ModifyDescriptionView implements PageViewInterface {
     content.setStyle("-fx-spacing: 10px;");
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+      if (X0.getText().isEmpty() || Y0.getText().isEmpty()) {
+        return;
+      }
       switch (name) {
         case "Min Coords: ":
           modifyDescriptionController.setMinCoords(X0.getText(), Y0.getText());
@@ -208,6 +215,10 @@ public class ModifyDescriptionView implements PageViewInterface {
     title.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+      if (a00.getText().isEmpty() || a01.getText().isEmpty() || a10.getText().isEmpty()
+          || a11.getText().isEmpty() || a.getText().isEmpty() || b.getText().isEmpty()) {
+        return;
+      }
       modifyDescriptionController.setAffineTransforms(index, a00.getText(), a01.getText(),
           a10.getText(), a11.getText(), a.getText(), b.getText());
     };
@@ -241,28 +252,31 @@ public class ModifyDescriptionView implements PageViewInterface {
     return vBox;
   }
 
-  private VBox juliaTransformToHBox(String vector, int index) {
+  private VBox juliaTransformToHBox(String transform, int index) {
     VBox vBox = new VBox();
     HBox content = new HBox();
     Label label = new Label("Transform: ");
-    TextField X0 = new TextField();
-    TextField Y0 = new TextField();
-    String[] split = vector.split(",");
-    X0.setText(split[0]);
-    Y0.setText(split[1]);
+    TextField real = new TextField();
+    TextField imaginary = new TextField();
+    String[] split = transform.split(",");
+    real.setText(split[0]);
+    imaginary.setText(split[1]);
 
-    X0.setStyle("-fx-pref-width: 80px;");
-    Y0.setStyle("-fx-pref-width: 80px;");
+    real.setStyle("-fx-pref-width: 80px;");
+    imaginary.setStyle("-fx-pref-width: 80px;");
     content.setStyle("-fx-spacing: 10px;");
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
-      modifyDescriptionController.setJuliaTransforms(index, X0.getText(), Y0.getText());
+      if (real.getText().isEmpty() || imaginary.getText().isEmpty()) {
+        return;
+      }
+      modifyDescriptionController.setJuliaTransforms(index, real.getText(), imaginary.getText());
     };
 
-    X0.textProperty().addListener(listener);
-    Y0.textProperty().addListener(listener);
+    real.textProperty().addListener(listener);
+    imaginary.textProperty().addListener(listener);
 
-    content.getChildren().addAll(X0, Y0);
+    content.getChildren().addAll(real, imaginary);
     vBox.getChildren().addAll(label, content);
     return vBox;
   }
