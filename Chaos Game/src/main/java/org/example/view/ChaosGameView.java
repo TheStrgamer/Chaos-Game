@@ -53,7 +53,7 @@ public class ChaosGameView implements PageViewInterface {
     VBox layout = new VBox();
 
     HBox buttonLayout = new HBox();
-    HBox imageView = new HBox();
+    HBox imageViewHBox = new HBox();
     iterationsField = new TextField();
     iterationsField.setPromptText("Iterations");
     iterationsField.setText("1000000");
@@ -85,8 +85,8 @@ public class ChaosGameView implements PageViewInterface {
 
     buttonLayout.getChildren()
         .addAll(iterationsField, runButton, descriptionComboBox, randomButtonLayout, toModifyDescription);
-    imageView.getChildren().add(this.imageView);
-    layout.getChildren().addAll(buttonLayout, imageView);
+    imageViewHBox.getChildren().add(this.imageView);
+    layout.getChildren().addAll(buttonLayout, imageViewHBox);
 
     //Style
     buttonLayout.setStyle(
@@ -95,7 +95,7 @@ public class ChaosGameView implements PageViewInterface {
     randomJulia.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
     randomAffine.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
 
-    imageView.setStyle("-fx-alignment: center;");
+    imageViewHBox.setStyle("-fx-alignment: center;");
     return layout;
   }
 
