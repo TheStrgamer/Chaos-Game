@@ -1,8 +1,10 @@
-package org.example.model;
+package org.example.model.factory;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.math.Vector2D;
 
 
 /**

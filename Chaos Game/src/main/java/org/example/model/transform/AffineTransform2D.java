@@ -1,4 +1,7 @@
-package org.example.model;
+package org.example.model.transform;
+
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>AffineTransform2D</h1>

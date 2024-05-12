@@ -1,8 +1,11 @@
-package org.example.model;
+package org.example.model.chaosGame;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.example.model.observer.ChaosGameObserver;
+import org.example.model.transform.Transform2D;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>ChaosGame</h1>

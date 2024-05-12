@@ -2,12 +2,12 @@ package org.example.controller;
 
 
 import javafx.scene.layout.VBox;
-import org.example.model.ChaosCanvas;
-import org.example.model.ChaosGame;
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosGame.ChaosGame;
 
-import org.example.model.ChaosGameDescription;
-import org.example.model.ChaosGameObserver;
-import org.example.model.ImageFactory;
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.observer.ChaosGameObserver;
+import org.example.model.factory.ImageFactory;
 import org.example.view.ChaosGameView;
 
 /**

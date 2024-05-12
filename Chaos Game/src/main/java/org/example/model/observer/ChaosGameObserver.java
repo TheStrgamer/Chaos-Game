@@ -1,4 +1,7 @@
-package org.example.model;
+package org.example.model.observer;
+
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosGame.ChaosGameDescription;
 
 public interface ChaosGameObserver {
 

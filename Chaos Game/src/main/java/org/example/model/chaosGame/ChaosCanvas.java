@@ -1,4 +1,8 @@
-package org.example.model;
+package org.example.model.chaosGame;
+
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>ChaosCanvas</h1>

@@ -1,12 +1,10 @@
 package org.example.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.scene.layout.VBox;
-import org.example.model.ChaosCanvas;
-import org.example.model.ChaosGameDescription;
-import org.example.model.ChaosGameDescriptionFactory;
-import org.example.model.ChaosGameObserver;
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.factory.ChaosGameDescriptionFactory;
+import org.example.model.observer.ChaosGameObserver;
 import org.example.view.ModifyDescriptionView;
 
 /**
