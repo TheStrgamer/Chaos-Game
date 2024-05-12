@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.scene.layout.VBox;
@@ -27,7 +26,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   private final MainController mainController;
   private final ModifyDescriptionView modifyDescriptionView;
 
-  private final ChaosGameDescriptionFactory chaosGameDescriptionFactory;
   private ChaosGameDescription currentDescription;
 
   private Vector2D minCoords;
@@ -64,7 +62,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     minCoords = description.getMinCoords();
     maxCoords = description.getMaxCoords();
     transforms = description.getTransformsAsList();
-    chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     modifyDescriptionView = new ModifyDescriptionView(this, mainController);
   }
 
@@ -187,7 +184,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   /**
    * Method for setting the minimum coordinates of the description.
-   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   * If the given coordinates are invalid, nothing happens.
    *
    * @param X0 the x-coordinate of the minimum coordinates.
    * @param X1 the y-coordinate of the minimum coordinates.
@@ -202,6 +199,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     if (minCoords.equals(newMinCoords)) {
       return;
     }
+    minCoords = newMinCoords;
   }
 
   /**
@@ -224,6 +222,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     if (maxCoords.equals(newMaxCoords)) {
       return;
     }
+    maxCoords = newMaxCoords;
   }
 
   /**

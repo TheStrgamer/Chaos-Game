@@ -98,10 +98,9 @@ public class JuliaTransform implements Transform2D {
    */
   @Override
   public boolean equals(Transform2D transform) {
-    if (transform == null || !(transform instanceof JuliaTransform)) {
+    if (!(transform instanceof JuliaTransform juliaTransform)) {
       return false;
     }
-    JuliaTransform juliaTransform = (JuliaTransform) transform;
     return point.equals(juliaTransform.point) && sign == juliaTransform.sign;
   }
 

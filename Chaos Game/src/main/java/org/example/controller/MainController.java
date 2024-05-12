@@ -21,7 +21,7 @@ public class MainController {
   private ChaosGameDescription currentDescription;
   private final ChaosGame chaosGame;
 
-  private Stage stage;
+  private final Stage stage;
 
   private final int originalWidth = 800;
   private final int originalHeight = 600;

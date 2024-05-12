@@ -20,11 +20,10 @@ public class ChaosGameView implements PageViewInterface {
   private final ChaosGameController chaosGameController;
   private final MainController mainController;
 
-  private VBox layout;
-  private ImageView imageView;
+  private final ImageView imageView;
   private TextField iterationsField;
 
-  private ComboBox<String> descriptionComboBox;
+  private final ComboBox<String> descriptionComboBox;
 
 
   /**
@@ -40,7 +39,6 @@ public class ChaosGameView implements PageViewInterface {
     this.descriptionComboBox = new ComboBox<>();
     initializeComboBox();
     imageView.setStyle("-fx-alignment: center;");
-    this.layout = createLayout();
 
   }
 

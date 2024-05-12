@@ -74,10 +74,9 @@ public class AffineTransform2D implements Transform2D {
     if (this == transform) {
       return true;
     }
-    if (!(transform instanceof AffineTransform2D)) {
+    if (!(transform instanceof AffineTransform2D affineTransform)) {
       return false;
     }
-    AffineTransform2D affineTransform = (AffineTransform2D) transform;
     return matrix.equals(affineTransform.matrix) && vector.equals(affineTransform.vector);
   }
 
