@@ -149,7 +149,9 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
       return;
     }
-    minCoords = new Vector2D(Double.parseDouble(X0), Double.parseDouble(X1));
+    double x0 = Double.parseDouble(X0);
+    double x1 = Double.parseDouble(X1);
+    minCoords = new Vector2D(x0, x1);
     createDescription();
   }
 
@@ -157,7 +159,12 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
       return;
     }
-    maxCoords = new Vector2D(Double.parseDouble(X0), Double.parseDouble(X1));
+    double x0 = Double.parseDouble(X0);
+    double x1 = Double.parseDouble(X1);
+    if (x0 >= maxCoords.getX0() || x1 >= maxCoords.getX1()) {
+      return;
+    }
+    maxCoords = new Vector2D(x0, x1);
     createDescription();
   }
 
