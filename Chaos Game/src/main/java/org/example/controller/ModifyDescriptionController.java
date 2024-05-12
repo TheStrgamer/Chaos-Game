@@ -267,8 +267,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     if (!Stream.of(a00, a01, a10, a11, a, b).allMatch(this::stringIsValidNumber)) {
       return;
     }
-
-
     Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(a00), Double.parseDouble(a01),
         Double.parseDouble(a10), Double.parseDouble(a11));
     Vector2D vector = new Vector2D(Double.parseDouble(a), Double.parseDouble(b));
@@ -277,6 +275,35 @@ public class ModifyDescriptionController implements ChaosGameObserver {
       return;
     }
     transforms.set(index, newTransform);
+  }
+
+  /**
+   * Method for removing an affine transform from the description.
+   * If the index is invalid, nothing happens.
+   *
+   * @param index the index of the transform to remove.
+   */
+  public void removeAffineTransform(int index) {
+    if (index < 0 || index >= transforms.size()) {
+      return;
+    }
+    transforms.remove(index);
+    createDescription();
+  }
+
+  /**
+   * Method for removing a Julia transform from the description.
+   * If the index is invalid, nothing happens.
+   *
+   * @param index the index of the transform to remove.
+   */
+  public void removeJuliaTransform(int index) {
+    if (index < 0 || index >= transforms.size()) {
+      return;
+    }
+    transforms.remove(index);
+    transforms.remove(index);
+    createDescription();
   }
 
 

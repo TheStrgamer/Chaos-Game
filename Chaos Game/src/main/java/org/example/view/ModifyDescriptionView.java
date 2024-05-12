@@ -1,6 +1,7 @@
 package org.example.view;
 
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -25,8 +26,6 @@ public class ModifyDescriptionView implements PageViewInterface {
   private VBox editDescription;
 
 
-
-
   /**
    * Constructor for the ModifyDescriptionView class.
    *
@@ -39,6 +38,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     this.mainController = mainController;
 
   }
+
   /**
    * Method for getting the layout of the Modify Description page.
    *
@@ -56,22 +56,20 @@ public class ModifyDescriptionView implements PageViewInterface {
   private VBox createLayout() {
     VBox layout = new VBox();
     HBox content = new HBox();
-    HBox buttonLayout = createButtonLayout();
-    VBox readAndWrite = createSideBar();
-
+    HBox topBar = createButtonLayout();
+    VBox sideBar = createSideBar();
 
     editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");
     descriptionList = createDescriptionList();
     editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
 
-    content.getChildren().addAll(readAndWrite, editDescription);
-    layout.getChildren().addAll(buttonLayout, content);
+    content.getChildren().addAll(sideBar, editDescription);
+    layout.getChildren().addAll(topBar, content);
 
     //Style
-    buttonLayout.setStyle(
+    topBar.setStyle(
         "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
-    editDescription.setStyle("-fx-font-size: 25px;");
     editDescription.setStyle(
         "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
 
@@ -92,6 +90,7 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     return readAndWrite;
   }
+
   private HBox createButtonLayout() {
     HBox buttonLayout = new HBox();
     Button toChaosGame = new Button("To Chaos Game");
@@ -127,13 +126,13 @@ public class ModifyDescriptionView implements PageViewInterface {
       for (String transform : modifyDescriptionController.getTransforms()) {
         VBox julia = juliaTransformToHBox(transform, index);
         desctiptionListView.getItems().add(julia);
-        index+=2;
+        index += 2;
       }
     }
 
     VBox addTransform = new VBox();
-
     Button addTransformButton = new Button("Add Transform");
+
     addTransformButton.setOnAction(event -> modifyDescriptionController.addTransform());
     addTransform.getChildren().add(addTransformButton);
     desctiptionListView.getItems().add(addTransform);
@@ -191,9 +190,11 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   private VBox affineTransformToHBox(String transform, int index) {
-    VBox vBox = new VBox();
+    VBox row = new VBox();
     HBox content = new HBox();
+
     Label title = new Label("Transform: ");
+    String[] split = transform.split(",");
 
     TextField a00 = new TextField();
     TextField a01 = new TextField();
@@ -201,7 +202,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     TextField a11 = new TextField();
     TextField a = new TextField();
     TextField b = new TextField();
-    String[] split = transform.split(",");
+
     a00.setText(split[0].trim());
     a01.setText(split[1].trim());
     a10.setText(split[2].trim());
@@ -216,7 +217,8 @@ public class ModifyDescriptionView implements PageViewInterface {
     a.setStyle("-fx-pref-width: 80px;");
     b.setStyle("-fx-pref-width: 80px;");
 
-    title.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+    title.setAlignment(Pos.CENTER_LEFT);
+    content.setAlignment(Pos.CENTER);
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
       if (a00.getText().isEmpty() || a01.getText().isEmpty() || a10.getText().isEmpty()
@@ -235,8 +237,8 @@ public class ModifyDescriptionView implements PageViewInterface {
     b.textProperty().addListener(listener);
 
     VBox matrixCol1 = new VBox();
-    matrixCol1.getChildren().addAll(a00, a10);
     VBox matrixCol2 = new VBox();
+    matrixCol1.getChildren().addAll(a00, a10);
     matrixCol2.getChildren().addAll(a01, a11);
 
     Label plus = new Label("+");
@@ -244,31 +246,45 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox vector = new VBox();
     vector.getChildren().addAll(a, b);
 
+    Button removeTransform = new Button("Remove Transform");
+    removeTransform.setOnAction(event -> modifyDescriptionController.removeAffineTransform(index));
+
+
     matrixCol1.setStyle("-fx-spacing: 8px;");
     matrixCol2.setStyle("-fx-spacing: 8px;");
     vector.setStyle("-fx-spacing: 8px;");
     content.setStyle("-fx-spacing:8px;");
     plus.setStyle("-fx-font-size: 20px;");
+    removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #b25151; width: 90px;");
 
-    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector);
-    vBox.getChildren().addAll(title, content);
 
-    return vBox;
+    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector, removeTransform);
+    row.getChildren().addAll(title, content);
+
+    return row;
   }
 
   private VBox juliaTransformToHBox(String transform, int index) {
-    VBox vBox = new VBox();
+    VBox row = new VBox();
     HBox content = new HBox();
+
     Label label = new Label("Transform: ");
+    String[] split = transform.split(",");
     TextField real = new TextField();
     TextField imaginary = new TextField();
-    String[] split = transform.split(",");
+
     real.setText(split[0]);
     imaginary.setText(split[1]);
+
+    Button removeTransform = new Button("Remove Transform");
+    removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
 
     real.setStyle("-fx-pref-width: 80px;");
     imaginary.setStyle("-fx-pref-width: 80px;");
     content.setStyle("-fx-spacing: 10px;");
+    removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #b25151; width: 90px;");
+
+
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
       if (real.getText().isEmpty() || imaginary.getText().isEmpty()) {
@@ -280,9 +296,9 @@ public class ModifyDescriptionView implements PageViewInterface {
     real.textProperty().addListener(listener);
     imaginary.textProperty().addListener(listener);
 
-    content.getChildren().addAll(real, imaginary);
-    vBox.getChildren().addAll(label, content);
-    return vBox;
+    content.getChildren().addAll(real, imaginary, removeTransform);
+    row.getChildren().addAll(label, content);
+    return row;
   }
 
   public void updateDescriptionList() {
@@ -290,7 +306,6 @@ public class ModifyDescriptionView implements PageViewInterface {
     descriptionList = createDescriptionList();
     editDescription.getChildren().add(descriptionList);
   }
-
 
 
 }
