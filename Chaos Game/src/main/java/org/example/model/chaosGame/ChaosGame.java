@@ -174,6 +174,14 @@ public class ChaosGame {
   }
 
   /**
+   * Clears the canvas of this chaos game. Notifies all observers that the canvas has changed.
+   */
+  public void clearCanvas() {
+    canvas.clear();
+    notifyCanvasChanged();
+  }
+
+  /**
    * Runs the chaos game for the given number of steps. Notifies all observers that the canvas has
    * changed after all steps have been run.
    *

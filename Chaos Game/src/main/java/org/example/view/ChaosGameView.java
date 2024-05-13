@@ -21,7 +21,7 @@ public class ChaosGameView implements PageViewInterface {
   private final MainController mainController;
 
   private final ImageView imageView;
-  private TextField iterationsField;
+  private final TextField iterationsField;
 
   private final ComboBox<String> descriptionComboBox;
 
@@ -39,6 +39,9 @@ public class ChaosGameView implements PageViewInterface {
     this.descriptionComboBox = new ComboBox<>();
     initializeComboBox();
     imageView.setStyle("-fx-alignment: center;");
+    iterationsField = new TextField();
+    iterationsField.setPromptText("Iterations");
+    iterationsField.setText("1000000");
 
   }
 
@@ -50,13 +53,30 @@ public class ChaosGameView implements PageViewInterface {
   private VBox createLayout() {
     VBox layout = new VBox();
 
-    HBox buttonLayout = new HBox();
+    HBox buttonLayout = createTopBarLayout();
     HBox imageViewHBox = new HBox();
-    iterationsField = new TextField();
-    iterationsField.setPromptText("Iterations");
-    iterationsField.setText("1000000");
+
+    imageViewHBox.getChildren().add(this.imageView);
+    layout.getChildren().addAll(buttonLayout, imageViewHBox);
+
+    //Style
+    imageViewHBox.setStyle("-fx-alignment: center;");
+    return layout;
+  }
+
+  /**
+   * Method for creating the top bar layout of the Chaos Game page.
+   *
+   * @return the layout of the Chaos Game page.
+   */
+  private HBox createTopBarLayout() {
+
+    HBox buttonLayout = new HBox();
     Button runButton = new Button("Run");
     runButton.setOnAction(event -> chaosGameController.runIterations(iterationsField.getText()));
+
+    Button clearButton = new Button("Clear");
+    clearButton.setOnAction(event -> chaosGameController.clearCanvas());
 
     VBox randomButtonLayout = new VBox();
     Button randomJulia = new Button("Random Julia Set");
@@ -76,25 +96,18 @@ public class ChaosGameView implements PageViewInterface {
 
     randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
 
-
-
     Button toModifyDescription = new Button("Modify/Save/Load Description");
     toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
 
     buttonLayout.getChildren()
-        .addAll(iterationsField, runButton, descriptionComboBox, randomButtonLayout, toModifyDescription);
-    imageViewHBox.getChildren().add(this.imageView);
-    layout.getChildren().addAll(buttonLayout, imageViewHBox);
-
-    //Style
-    buttonLayout.setStyle(
-        "-fx-alignment: center; -fx-spacing: 5px; -fx-background-color: #8f8f8f; -fx-padding: 5px; -fx-pref-height: 60px;");
-
+        .addAll(iterationsField, runButton, descriptionComboBox, clearButton, randomButtonLayout,
+            toModifyDescription);
     randomJulia.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
     randomAffine.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
+    buttonLayout.setStyle(
+        "-fx-alignment: center; -fx-spacing: 5px; -fx-background-color: #b2b2b2; -fx-padding: 5px; -fx-pref-height: 60px; -fx-border-width: 0 0 2 0; -fx-border-color: #9b9b9b; -fx-border-style: solid;");
 
-    imageViewHBox.setStyle("-fx-alignment: center;");
-    return layout;
+    return buttonLayout;
   }
 
   /**
@@ -122,11 +135,14 @@ public class ChaosGameView implements PageViewInterface {
   private void initializeComboBox() {
     descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
-        .addAll("Barnsley", "Sierpinski", "Julia", "Julia2", "Julia3", "Diamond", "Plant", "Flower");
+        .addAll("Sierpinski", "Barnsley", "Julia", "Julia2", "Julia3", "Diamond", "Plant",
+            "Flower");
     descriptionComboBox.setOnAction(
         event -> {
           if (descriptionComboBox.getValue() != null) {
-            mainController.setCurrentDescription(descriptionComboBox.getValue());}});
+            mainController.setCurrentDescription(descriptionComboBox.getValue());
+          }
+        });
 
   }
 

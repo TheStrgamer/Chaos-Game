@@ -91,6 +91,10 @@ public class ChaosGameController implements ChaosGameObserver {
     chaosGameView.setComboBoxEmpty();
   }
 
+  public void clearCanvas() {
+    chaosGame.clearCanvas();
+  }
+
   @Override
   public void updateDescription(ChaosGameDescription description) {
   }

@@ -130,6 +130,27 @@ class ChaosGameTest {
     }
 
 
+    @Test
+    @DisplayName("clearCanvas clears the canvas")
+    void testClearCanvasClearsCanvas() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(50, 0)));
+        ChaosGameDescription description = new ChaosGameDescription(new Vector2D(0,0), new Vector2D(100,100),transforms );
+        ChaosGame chaosGame = new ChaosGame(description, 100,100);
+
+        chaosGame.getCanvas().setPixel(new Vector2D(0,100), 5);
+        assertEquals(chaosGame.getCanvas().getPixelFromCanvas(new Vector2D(0,0)), 5);
+
+        chaosGame.clearCanvas();
+
+        assertEquals(chaosGame.getCanvas().getPixelFromCanvas(new Vector2D(0,0)), 0);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+
 
 
 
