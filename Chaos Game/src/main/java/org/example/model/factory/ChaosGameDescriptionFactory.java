@@ -98,7 +98,14 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform2);
     transforms.add(transform3);
     transforms.add(transform4);
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    List<Integer> weights = new ArrayList<>();
+    weights.add(1);
+    weights.add(65);
+    weights.add(12);
+    weights.add(12);
+
+
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
   /**
@@ -179,8 +186,6 @@ public class ChaosGameDescriptionFactory {
       AffineTransform2D transform = new AffineTransform2D(matrix, vector);
       transforms.add(transform);
     }
-    System.out.println();
-    System.out.println(new ChaosGameDescription(minCoords, maxCoords, transforms));
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
@@ -230,7 +235,10 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform1);
     transforms.add(transform2);
 
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    List<Integer> weights = new ArrayList<>();
+    weights.add(8);
+    weights.add(5);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
   /**
