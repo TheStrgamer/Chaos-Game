@@ -1,6 +1,7 @@
 package org.example.model.chaosGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.transform.JuliaTransform;
@@ -18,6 +19,7 @@ public class ChaosGameDescription {
   private final Vector2D minCoords;
   private final Vector2D maxCoords;
   List<Transform2D> transforms;
+  List<Integer> weights;
 
   /**
    * Verifies that the given Vector2D object is not null.
@@ -28,6 +30,19 @@ public class ChaosGameDescription {
   private void verifyNotNullVector(Vector2D vector) {
     if (vector == null) {
       throw new IllegalArgumentException("Vector cannot be null");
+    }
+  }
+
+  /**
+   * Verifies that the given index is within the bounds of the given size.
+   *
+   * @param index is the index to verify.
+   * @param size is the size to verify.
+   * @throws IllegalArgumentException if the given index is out of bounds.
+   */
+  private void verifyWithinBounds(int index, int size) {
+    if (index < 0 || index >= size) {
+      throw new IllegalArgumentException("Index out of bounds");
     }
   }
 
@@ -61,6 +76,26 @@ public class ChaosGameDescription {
       verifyNotNullTransform(listTransform);
     }
   }
+  /**
+   * Verifies that the given list of integers is not null, not empty and does not contain any null
+   * objects.
+   *
+   * @param weights a list of transforms2D objects.
+   * @throws IllegalArgumentException if the list is null, empty of contains null objects.
+   */
+  private void verifyWeightsNotNullAndNotEmpty(List<Integer> weights) {
+    if (weights == null) {
+      throw new IllegalArgumentException("List cannot be null");
+    }
+    if (weights.isEmpty()) {
+      throw new IllegalArgumentException("List cannot be empty");
+    }
+    for (Integer weight : weights) {
+      if (weight == null) {
+        throw new IllegalArgumentException("Objects in Transform2D list cannot be null");
+      }
+    }
+  }
 
   /**
    * Constructs a new ChaosGameDescription object with the given minimum and maximum coordinates, as
@@ -81,6 +116,33 @@ public class ChaosGameDescription {
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
+    this.weights =  Collections.nCopies(transforms.size(), 1);
+
+  }
+
+  /**
+   * Constructs a new ChaosGameDescription object with the given minimum and maximum coordinates, as
+   * well as a list of transforms, and a list of weights.
+   *
+   * @param minCoords  is the minimum coordinates to use.
+   * @param maxCoords  is the maximum coordinates to use.
+   * @param transforms is the list of transforms to use.
+   * @param weights is the list of weights to use.
+   * @throws IllegalArgumentException if the given minimum or maximum coordinates are null, if the
+   *                                  given list of transforms is null, empty or contains null
+   *                                  objects
+   */
+  public ChaosGameDescription(Vector2D minCoords, Vector2D maxCoords,
+      List<Transform2D> transforms, List<Integer> weights) {
+    verifyNotNullVector(minCoords);
+    verifyNotNullVector(maxCoords);
+    verifyListNotNullAndNotEmpty(transforms);
+    verifyWeightsNotNullAndNotEmpty(weights);
+    this.minCoords = minCoords;
+    this.maxCoords = maxCoords;
+    this.transforms = transforms;
+    this.weights =  weights;
+
   }
 
   /**
@@ -123,6 +185,10 @@ public class ChaosGameDescription {
     }
   }
 
+  /**
+   * Returns a list of string representations of the transforms.
+   * @return a list of string representations of the transforms.
+   */
   public List<String> getTransformsAsStringList() {
     List<String> transformsAsString = new ArrayList<>();
 
@@ -163,6 +229,72 @@ public class ChaosGameDescription {
     return true;
   }
 
+  /**
+   * Returns the weight of the transform at the given index.
+   * Throws an IllegalArgumentException if the index is out of bounds.
+   *
+   * @param index the index of the transform.
+   * @return the weight of the transform.
+   */
+  public int getWeight(int index) {
+    verifyWithinBounds(index, weights.size());
+    return weights.get(index);
+  }
+
+  /**
+   * Sets the weight of the transform at the given index.
+   * Throws an IllegalArgumentException if the index is out of bounds.
+   *
+   * @param index the index of the transform.
+   * @param weight the weight of the transform.
+   */
+  public void setWeight(int index, int weight) {
+    verifyWithinBounds(index, weights.size());
+    weights.set(index, weight);
+  }
+
+  /**
+   * Returns the sum of the weights of all the transforms.
+   *
+   * @return the sum of the weights of all the transforms.
+   */
+  public int sumOfWeights() {
+    int sum = 0;
+    for (int weight : weights) {
+      sum += weight;
+    }
+    return sum;
+  }
+
+  /**
+   * Returns the sum of the weights of all the transforms below the given index.
+   *
+   * @param index the index of the transform.
+   * @return the sum of the weights of all the transforms below the given index.
+   */
+  public int sumOfWeightsBelowIndex(int index) {
+    int sum = 0;
+    for (int i = 0; i < index; i++) {
+      sum += getWeight(i);
+    }
+    return sum;
+  }
+
+  public Transform2D getTransformWithWeight(int index) {
+    verifyWithinBounds(index, sumOfWeights());
+    for (int i = 0; i < transforms.size(); i++) {
+      if (index < sumOfWeightsBelowIndex(i + 1)) {
+        return transforms.get(i);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns a list of the transforms as a list.
+   *
+   * @return a list of the transforms as a list.
+   */
   public List<Transform2D> getTransformsAsList() {
     return new ArrayList<>(this.transforms);
   }
