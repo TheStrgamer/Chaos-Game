@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.chaosGame;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.util.Scanner;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.math.Complex;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.math.Matrix2x2;
+import org.example.model.transform.Transform2D;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>ChaosGameFileHandler</h1>

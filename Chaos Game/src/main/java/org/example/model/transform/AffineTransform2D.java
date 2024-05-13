@@ -1,4 +1,7 @@
-package org.example.model;
+package org.example.model.transform;
+
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>AffineTransform2D</h1>
@@ -62,6 +65,19 @@ public class AffineTransform2D implements Transform2D {
   public Vector2D transform(Vector2D vector) {
     verifyVectorNotNull(vector);
     return matrix.multiply(vector).add(this.vector);
+  }
+
+  /**
+   * Checks if the given AffineTransform2D object has the same values as this AffineTransform2D
+   * @param transform the object to compare
+   * @return true if the given AffineTransform2D object has the same values as this AffineTransform2D
+   */
+  @Override
+  public boolean equals(Transform2D transform) {
+    if (!(transform instanceof AffineTransform2D affineTransform)) {
+      return false;
+    }
+    return matrix.equals(affineTransform.matrix) && vector.equals(affineTransform.vector);
   }
 
   /**

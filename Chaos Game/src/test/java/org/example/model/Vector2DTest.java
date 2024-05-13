@@ -2,6 +2,8 @@ package org.example.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.model.math.Complex;
+import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -145,6 +147,53 @@ class Vector2DTest {
       try {
         Vector2D vector = new Vector2D(1, 2);
         assertEquals("1.0, 2.0", vector.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns true when vectors are equal")
+    void testEqualsReturnsTrueWhenVectorsAreEqual() {
+      try {
+        Vector2D vector1 = new Vector2D(1, 2);
+        Vector2D vector2 = new Vector2D(1, 2);
+        assertTrue(vector1.equals(vector2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when vectors are not equal")
+    void testEqualsReturnsFalseWhenVectorsAreNotEqual() {
+      try {
+        Vector2D vector1 = new Vector2D(1, 2);
+        Vector2D vector2 = new Vector2D(3, 4);
+        assertFalse(vector1.equals(vector2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when comparing to complex number")
+    void testEqualsReturnsFalseWhenComparingToComplex() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        Complex complex = new Complex(1, 2);
+        assertFalse(vector.equals(complex));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when comparing to null")
+    void testEqualsReturnsFalseWhenComparingToNull() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        assertFalse(vector.equals(null));
       } catch (Exception e) {
         fail("An exception was thrown");
       }

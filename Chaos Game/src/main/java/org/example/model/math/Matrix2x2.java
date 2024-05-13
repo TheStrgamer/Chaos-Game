@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.math;
 
 /**
  * <h1>Matrix2x2</h1>
@@ -52,6 +52,20 @@ public class Matrix2x2 {
     double x1 = a10 * vector.getX0() + a11 * vector.getX1();
 
     return new Vector2D(x0, x1);
+  }
+
+  /**
+   * Checks if the given matrix object has the same values as this matrix.
+   *
+   * @param matrix the matrix to compare
+   * @return true if the given matrix has the same values as this matrix, false otherwise
+   */
+  public boolean equals(Matrix2x2 matrix) {
+    if (matrix == null) {
+      return false;
+    }
+    return this.a00 == matrix.a00 && this.a01 == matrix.a01 && this.a10 == matrix.a10
+        && this.a11 == matrix.a11;
   }
 
   /**
