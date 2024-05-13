@@ -114,7 +114,12 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   private ChaosGameDescription createJuliaDescription() {
-    return generateJulia(new Complex(-0.74543, 0.11301));
+    ChaosGameDescription description = generateJulia(new Complex(-0.74543, 0.11301));
+    List<Integer> weights = new ArrayList<>();
+    weights.add(1);
+    weights.add(5);
+    description.setWeights(weights);
+    return description;
   }
 
   /**
@@ -282,6 +287,7 @@ public class ChaosGameDescriptionFactory {
     //TODO find a way to calculate min and max coords
     Vector2D minCoords = new Vector2D(-1.6, -1.2);
     Vector2D maxCoords = new Vector2D(1.6, 1.2);
+
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 

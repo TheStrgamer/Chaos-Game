@@ -311,16 +311,45 @@ public class ModifyDescriptionView implements PageViewInterface {
     real.setText(split[0]);
     imaginary.setText(split[1]);
 
-    content.getChildren().addAll(real, imaginary);
+
+    VBox rightSide = new VBox();
+    HBox weightBox = new HBox();
+
+    Label weightLabel = new Label("Weight: ");
+    Label positiveWeightLabel = new Label("Pos: ");
+    TextField positiveWeight = new TextField();
+    Label negativeWeightLabel = new Label("Neg: ");
+    TextField negativeWeight = new TextField();
+    positiveWeight.setText(split[2]);
+    negativeWeight.setText(split[3]);
+
+    positiveWeight.textProperty().addListener((observable, oldValue, newValue) -> {
+      modifyDescriptionController.setWeight(index, positiveWeight.getText().trim());
+    });
+    negativeWeight.textProperty().addListener((observable, oldValue, newValue) -> {
+      modifyDescriptionController.setWeight(index + 1, negativeWeight.getText().trim());
+    });
+
+    weightBox.getChildren().addAll(weightLabel, positiveWeightLabel, positiveWeight, negativeWeightLabel,
+        negativeWeight);
+    rightSide.getChildren().add(weightBox);
+
     if (removable) {
       Button removeTransform = new Button("Remove Transform");
       removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
       removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
-      content.getChildren().add(removeTransform);
+      rightSide.getChildren().add(removeTransform);
     }
     real.setStyle("-fx-pref-width: 80px;");
     imaginary.setStyle("-fx-pref-width: 80px;");
     content.setStyle("-fx-spacing: 10px;");
+    rightSide.setStyle("-fx-spacing: 4px;");
+    weightBox.setStyle("-fx-spacing: 4px;");
+    positiveWeight.setStyle("-fx-pref-width: 40px; -fx-pref-height: 10px;  -fx-font-size: 8px;");
+    negativeWeight.setStyle("-fx-pref-width: 40px; -fx-pref-height: 10px;  -fx-font-size: 8px;");
+    positiveWeightLabel.setStyle("-fx-font-size: 10px;");
+    negativeWeightLabel.setStyle("-fx-font-size: 10px;");
+    weightLabel.setStyle("-fx-font-size: 10px;");
 
 
 
@@ -334,6 +363,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     real.textProperty().addListener(listener);
     imaginary.textProperty().addListener(listener);
 
+    content.getChildren().addAll(real, imaginary, rightSide);
     titleBox.getChildren().add(title);
     row.getChildren().addAll(titleBox, content);
     return row;

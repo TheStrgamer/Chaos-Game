@@ -196,7 +196,7 @@ public class ChaosGameDescription {
 
     if (getTransformType().equals("Julia")) {
       for (int i = 0; i < transforms.size(); i += 2) {
-        transformsAsString.add(transforms.get(i).toString() + ", " + weights.get(i));
+        transformsAsString.add(transforms.get(i).toString() + ", " + weights.get(i) + ", " + weights.get(i + 1));
       }
     } else {
       for (Transform2D transform : transforms) {
@@ -253,6 +253,29 @@ public class ChaosGameDescription {
   public void setWeight(int index, int weight) {
     verifyWithinBounds(index, weights.size());
     weights.set(index, weight);
+    for (int i = 0; i < weights.size(); i++) {
+      System.out.println(weights.get(i));
+    }
+  }
+
+  /**
+   * Sets the weights of the transforms, replacing the current list of weights.
+   * Throws an IllegalArgumentException if the list of weights is null, empty or contains null objects.
+   *
+   * @param weights the list of weights.
+   */
+  public void setWeights(List<Integer> weights) {
+    verifyWeightsNotNullAndNotEmpty(weights);
+    this.weights = weights;
+  }
+
+  /**
+   * Returns the list of weights of the transforms.
+   *
+   * @return the list of weights of the transforms.
+   */
+  public List<Integer> getWeights() {
+    return new ArrayList<>(this.weights);
   }
 
   /**
@@ -282,6 +305,12 @@ public class ChaosGameDescription {
     return sum;
   }
 
+  /**
+   * Returns the transform with the given index, taking into account the weight of the transform.
+   *
+   * @param index the weight of the transform.
+   * @return the transform with the given weight.
+   */
   public Transform2D getTransformWithWeight(int index) {
     verifyWithinBounds(index, sumOfWeights());
     for (int i = 0; i < transforms.size(); i++) {
