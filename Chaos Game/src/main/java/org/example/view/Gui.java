@@ -2,19 +2,16 @@ package org.example.view;
 
 import org.example.controller.ChaosGameController;
 import org.example.model.*;
-
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
+ * <h1>Gui</h1>
  * The GUI class for the Chaos Game program. it displays information to the user in a menu system.
  */
 public class Gui {
 
-  private ChaosGameController chaosGameController;
-  private Scanner scanner;
+  private final ChaosGameController chaosGameController;
+  private final Scanner scanner;
   private ChaosGameDescription chaosGameDescription;
   private int runSteps;
 

@@ -7,6 +7,7 @@ import org.example.model.ChaosGameFileHandler;
 import java.util.Scanner;
 
 /**
+ * <h1>ChaosGameController</h1>
  * The controller class for the Chaos Game program. it contains the methods that the user can
  * interact with in the terminal.
  */
@@ -14,6 +15,9 @@ public class ChaosGameController {
 
   ChaosGameFileHandler chaosGameFileHandler;
 
+  /**
+   * Constructor for the ChaosGameController class. it initializes the ChaosGameFileHandler object.
+   */
   public ChaosGameController() {
     chaosGameFileHandler = new ChaosGameFileHandler();
   }
@@ -26,7 +30,7 @@ public class ChaosGameController {
    */
 
   public int getValidInput(Scanner scanner) {
-    int input = 0;
+    int input;
     System.out.println("Enter here: ");
     while (true) {
       scanner.hasNextInt();
