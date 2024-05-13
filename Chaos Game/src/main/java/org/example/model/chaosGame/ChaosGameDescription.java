@@ -139,6 +139,35 @@ public class ChaosGameDescription {
   }
 
   /**
+   * Checks if the given ChaosGameDescription object has the same values as this ChaosGameDescription.
+   *
+   * @param description the ChaosGameDescription to compare
+   * @return true if the given ChaosGameDescription has the same values as this ChaosGameDescription,
+   * false otherwise
+   */
+  public boolean equals(ChaosGameDescription description) {
+    if (description == null) {
+      return false;
+    }
+    if (!minCoords.equals(description.minCoords) || !maxCoords.equals(description.maxCoords)) {
+      return false;
+    }
+    if (transforms.size() != description.transforms.size()) {
+      return false;
+    }
+    for (int i = 0; i < transforms.size(); i++) {
+      if (!transforms.get(i).equals(description.transforms.get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public List<Transform2D> getTransformsAsList() {
+    return new ArrayList<>(this.transforms);
+  }
+
+  /**
    * Returns a string representation of the ChaosGameDescription object.
    *
    * @return a string representation of the ChaosGameDescription object.

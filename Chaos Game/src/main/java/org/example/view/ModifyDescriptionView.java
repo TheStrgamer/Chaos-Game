@@ -1,5 +1,8 @@
 package org.example.view;
 
+import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -12,31 +15,39 @@ import org.example.controller.ModifyDescriptionController;
 
 /**
  * <h1>ModifyDescriptionView</h1>
- * The view class for the Modify Description page of the application.
- * Responsible for displaying the Modify Description page.
- * Implements the PageView interface.
+ * The view class for the Modify Description page of the application. Responsible for displaying the
+ * Modify Description page. Implements the PageView interface.
  */
 public class ModifyDescriptionView implements PageViewInterface {
 
   private final ModifyDescriptionController modifyDescriptionController;
   private final MainController mainController;
 
-  private VBox layout;
-
+  private ListView<VBox> descriptionList = new ListView<>();
+  private VBox editDescription;
 
 
   /**
    * Constructor for the ModifyDescriptionView class.
    *
    * @param modifyDescriptionController the controller for the Modify Description page.
-   * @param mainController             the main controller for the application.
+   * @param mainController              the main controller for the application.
    */
   public ModifyDescriptionView(ModifyDescriptionController modifyDescriptionController,
       MainController mainController) {
     this.modifyDescriptionController = modifyDescriptionController;
     this.mainController = mainController;
-    this.layout = createLayout();
 
+  }
+
+  /**
+>>>>>>> Chaos Game/src/main/java/org/example/view/ModifyDescriptionView.java
+   * Method for getting the layout of the Modify Description page.
+   *
+   * @return the layout of the Modify Description page.
+   */
+  public VBox getLayout() {
+    return createLayout();
   }
 
   /**
@@ -46,10 +57,28 @@ public class ModifyDescriptionView implements PageViewInterface {
    */
   private VBox createLayout() {
     VBox layout = new VBox();
-    HBox buttonLayout = new HBox();
-    Button toChaosGame = new Button("To Chaos Game");
-
     HBox content = new HBox();
+    HBox topBar = createButtonLayout();
+    VBox sideBar = createSideBar();
+
+    editDescription = new VBox();
+    Label editDescriptionLabel = new Label("Current description: ");
+    descriptionList = createDescriptionList();
+    editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
+
+    content.getChildren().addAll(sideBar, editDescription);
+    layout.getChildren().addAll(topBar, content);
+
+    //Style
+    topBar.setStyle(
+        "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
+    editDescription.setStyle(
+        "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
+
+    return layout;
+  }
+
+  private VBox createSideBar() {
     VBox readAndWrite = new VBox();
 
     Label descriptionLabel = new Label("Description: ");
@@ -59,26 +88,248 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
     saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
-    toChaosGame.setOnAction(event -> mainController.switchToChaosGameView());
+    readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
 
-    content.getChildren().addAll(readAndWrite);
+    return readAndWrite;
+  }
+
+  private HBox createButtonLayout() {
+    HBox buttonLayout = new HBox();
+    Button toChaosGame = new Button("To Chaos Game");
     buttonLayout.getChildren().addAll(toChaosGame);
-    layout.getChildren().addAll(buttonLayout, content);
 
-    //Style
-    buttonLayout.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
+    toChaosGame.setOnAction(event -> {
+      modifyDescriptionController.createDescription();
+      mainController.switchToChaosGameView();
+    });
 
-    return layout;
+    return buttonLayout;
+
   }
 
-  /**
-   * Method for getting the layout of the Modify Description page.
-   *
-   * @return the layout of the Modify Description page.
-   */
-  public VBox getLayout() {
-    return createLayout();
+
+  private ListView<VBox> createDescriptionList() {
+    ListView<VBox> desctiptionListView = new ListView<>();
+
+    VBox minCoords = vector2DToHBox("Min Coords: ", modifyDescriptionController.getMinCoords());
+    VBox maxCoords = vector2DToHBox("Max Coords: ", modifyDescriptionController.getMaxCoords());
+
+    desctiptionListView.getItems().addAll(minCoords, maxCoords);
+    int index = 0;
+    List<String> transforms = modifyDescriptionController.getTransforms();
+    if (modifyDescriptionController.getTransformType().equals("Affine")) {
+      for (String transform : transforms) {
+        VBox affine = affineTransformToHBox(transform, index, transforms.size() > 1);
+        desctiptionListView.getItems().add(affine);
+        index++;
+      }
+    } else {
+      for (String transform : transforms) {
+        VBox julia = juliaTransformToHBox(transform, index, transforms.size() > 1);
+        desctiptionListView.getItems().add(julia);
+        index += 2;
+      }
+    }
+
+    VBox addTransform = new VBox();
+    HBox addTransformButtonBox = new HBox();
+    Button addTransformButton = new Button("Add Transform");
+    addTransformButtonBox.setAlignment(Pos.CENTER);
+    addTransformButtonBox.getChildren().add(addTransformButton);
+
+    addTransformButton.setOnAction(event -> modifyDescriptionController.addTransform());
+    addTransform.getChildren().add(addTransformButtonBox);
+    desctiptionListView.getItems().add(addTransform);
+
+    desctiptionListView.setPrefSize(600, 500);
+    desctiptionListView.setStyle(
+        "-fx-background-color: #bfbfbf; -fx-alignment: center; -fx-spacing: 10px;");
+
+    return desctiptionListView;
+
   }
+
+  public void changeDescriptionListScale(int width, int height) {
+    descriptionList.setPrefSize(width, height);
+  }
+
+  private VBox vector2DToHBox(String name, String vector) {
+    VBox vBox = new VBox();
+    HBox content = new HBox();
+    HBox nameLabelBox = new HBox();
+    Label nameLabel = new Label(name);
+
+    TextField X0 = new TextField();
+    TextField Y0 = new TextField();
+    String[] split = vector.split(",");
+    X0.setText((split[0]));
+    Y0.setText(split[1]);
+
+    nameLabelBox.setAlignment(Pos.CENTER);
+    content.setAlignment(Pos.CENTER);
+
+    X0.setStyle("-fx-pref-width: 80px;");
+    Y0.setStyle("-fx-pref-width: 80px;");
+    content.setStyle("-fx-spacing: 10px;");
+
+    ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+      if (X0.getText().isEmpty() || Y0.getText().isEmpty()) {
+        return;
+      }
+      switch (name) {
+        case "Min Coords: ":
+          modifyDescriptionController.setMinCoords(X0.getText(), Y0.getText());
+          break;
+        case "Max Coords: ":
+          modifyDescriptionController.setMaxCoords(X0.getText(), Y0.getText());
+          break;
+        default:
+          System.out.println("Error in vector2DToHBox");
+          break;
+      }
+    };
+
+    X0.textProperty().addListener(listener);
+    Y0.textProperty().addListener(listener);
+
+    nameLabelBox.getChildren().add(nameLabel);
+    content.getChildren().addAll(X0, Y0);
+    vBox.getChildren().addAll(nameLabelBox, content);
+    return vBox;
+  }
+
+  private VBox affineTransformToHBox(String transform, int index, boolean removable) {
+    VBox row = new VBox();
+    HBox content = new HBox();
+
+    HBox titleBox = new HBox();
+    Label title = new Label("Transform: ");
+    String[] split = transform.split(",");
+
+    TextField a00 = new TextField();
+    TextField a01 = new TextField();
+    TextField a10 = new TextField();
+    TextField a11 = new TextField();
+    TextField a = new TextField();
+    TextField b = new TextField();
+
+    a00.setText(split[0].trim());
+    a01.setText(split[1].trim());
+    a10.setText(split[2].trim());
+    a11.setText(split[3].trim());
+    a.setText(split[4].trim());
+    b.setText(split[5].trim());
+
+    a00.setStyle("-fx-pref-width: 80px;");
+    a01.setStyle("-fx-pref-width: 80px;");
+    a10.setStyle("-fx-pref-width: 80px;");
+    a11.setStyle("-fx-pref-width: 80px;");
+    a.setStyle("-fx-pref-width: 80px;");
+    b.setStyle("-fx-pref-width: 80px;");
+
+    titleBox.setAlignment(Pos.CENTER);
+    content.setAlignment(Pos.CENTER);
+
+    ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+      if (a00.getText().isEmpty() || a01.getText().isEmpty() || a10.getText().isEmpty()
+          || a11.getText().isEmpty() || a.getText().isEmpty() || b.getText().isEmpty()) {
+        return;
+      }
+      modifyDescriptionController.setAffineTransforms(index, a00.getText(), a01.getText(),
+          a10.getText(), a11.getText(), a.getText(), b.getText());
+    };
+
+    a00.textProperty().addListener(listener);
+    a01.textProperty().addListener(listener);
+    a10.textProperty().addListener(listener);
+    a11.textProperty().addListener(listener);
+    a.textProperty().addListener(listener);
+    b.textProperty().addListener(listener);
+
+    VBox matrixCol1 = new VBox();
+    VBox matrixCol2 = new VBox();
+    matrixCol1.getChildren().addAll(a00, a10);
+    matrixCol2.getChildren().addAll(a01, a11);
+
+    Label plus = new Label("+");
+
+    VBox vector = new VBox();
+    vector.getChildren().addAll(a, b);
+
+    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector);
+
+    if (removable) {
+      Button removeTransform = new Button("Remove Transform");
+      removeTransform.setOnAction(
+          event -> modifyDescriptionController.removeAffineTransform(index));
+      removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
+
+      content.getChildren().add(removeTransform);
+    }
+
+    matrixCol1.setStyle("-fx-spacing: 8px;");
+    matrixCol2.setStyle("-fx-spacing: 8px;");
+    vector.setStyle("-fx-spacing: 8px;");
+    content.setStyle("-fx-spacing:8px;");
+    plus.setStyle("-fx-font-size: 20px;");
+
+    titleBox.getChildren().add(title);
+    row.getChildren().addAll(titleBox, content);
+
+    return row;
+  }
+
+  private VBox juliaTransformToHBox(String transform, int index, boolean removable) {
+    VBox row = new VBox();
+    HBox content = new HBox();
+
+    HBox titleBox = new HBox();
+    Label title = new Label("Transform: ");
+    String[] split = transform.split(",");
+    TextField real = new TextField();
+    TextField imaginary = new TextField();
+
+    titleBox.setAlignment(Pos.CENTER);
+    content.setAlignment(Pos.CENTER);
+
+    real.setText(split[0]);
+    imaginary.setText(split[1]);
+
+    content.getChildren().addAll(real, imaginary);
+    if (removable) {
+      Button removeTransform = new Button("Remove Transform");
+      removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
+      removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
+      content.getChildren().add(removeTransform);
+    }
+    real.setStyle("-fx-pref-width: 80px;");
+    imaginary.setStyle("-fx-pref-width: 80px;");
+    content.setStyle("-fx-spacing: 10px;");
+
+
+
+    ChangeListener<String> listener = (observable, oldValue, newValue) -> {
+      if (real.getText().isEmpty() || imaginary.getText().isEmpty()) {
+        return;
+      }
+      modifyDescriptionController.setJuliaTransforms(index, real.getText(), imaginary.getText());
+    };
+
+    real.textProperty().addListener(listener);
+    imaginary.textProperty().addListener(listener);
+
+    titleBox.getChildren().add(title);
+    row.getChildren().addAll(titleBox, content);
+    return row;
+  }
+
+  public void updateDescriptionList() {
+    if (editDescription == null || !editDescription.getChildren().contains(descriptionList)) {return;}
+    editDescription.getChildren().remove(descriptionList);
+    descriptionList = createDescriptionList();
+    editDescription.getChildren().add(descriptionList);
+  }
+
 
 }
+

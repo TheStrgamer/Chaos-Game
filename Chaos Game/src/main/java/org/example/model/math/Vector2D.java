@@ -110,6 +110,19 @@ public class Vector2D {
     return new Vector2D(newX0, newX1);
   }
 
+  /**
+   * Checks if the given vector object has the same values as this vector.
+   *
+   * @param vector the vector to compare
+   * @return true if the given vector has the same values as this vector, false otherwise
+   */
+  public boolean equals(Vector2D vector) {
+    if (vector == null) {
+      return false;
+    }
+    return x0 == vector.getX0() && x1 == vector.getX1();
+  }
+
   public String toString() {
     return x0 + ", " + x1;
   }

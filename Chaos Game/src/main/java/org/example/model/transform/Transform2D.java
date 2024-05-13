@@ -10,4 +10,6 @@ import org.example.model.math.Vector2D;
 public interface Transform2D {
 
   Vector2D transform(Vector2D vector);
+
+  boolean equals(Transform2D transform);
 }

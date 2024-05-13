@@ -92,6 +92,22 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
+   * Checks if the given Julia transformation object has the same values as this Julia
+   * transformation.
+   *
+   * @param transform the Julia transformation to compare
+   * @return true if the given Julia transformation has the same values as this Julia transformation,
+   * false otherwise
+   */
+  @Override
+  public boolean equals(Transform2D transform) {
+    if (!(transform instanceof JuliaTransform juliaTransform)) {
+      return false;
+    }
+    return point.equals(juliaTransform.point) && sign == juliaTransform.sign;
+  }
+
+  /**
    * Returns a string representation of the Julia transformation with the sign.
    *
    * @return a string representation of the Julia transformation

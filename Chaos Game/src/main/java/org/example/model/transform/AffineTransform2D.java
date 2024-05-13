@@ -68,6 +68,22 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
+   * Checks if the given AffineTransform2D object has the same values as this AffineTransform2D
+   * @param transform the object to compare
+   * @return true if the given AffineTransform2D object has the same values as this AffineTransform2D
+   */
+  @Override
+  public boolean equals(Transform2D transform) {
+    if (this == transform) {
+      return true;
+    }
+    if (!(transform instanceof AffineTransform2D affineTransform)) {
+      return false;
+    }
+    return matrix.equals(affineTransform.matrix) && vector.equals(affineTransform.vector);
+  }
+
+  /**
    * Returns a string representation of this AffineTransform2D object.
    * @return a string representation of this AffineTransform2D object
    */

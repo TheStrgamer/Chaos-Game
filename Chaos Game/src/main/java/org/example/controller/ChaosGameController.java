@@ -84,6 +84,13 @@ public class ChaosGameController implements ChaosGameObserver {
     return chaosGameView.getLayout();
   }
 
+  /**
+   * Method for setting the combo box to empty.
+   */
+  public void setComboBoxEmpty() {
+    chaosGameView.setComboBoxEmpty();
+  }
+
   @Override
   public void updateDescription(ChaosGameDescription description) {
   }

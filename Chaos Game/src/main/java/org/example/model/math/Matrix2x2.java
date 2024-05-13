@@ -55,6 +55,20 @@ public class Matrix2x2 {
   }
 
   /**
+   * Checks if the given matrix object has the same values as this matrix.
+   *
+   * @param matrix the matrix to compare
+   * @return true if the given matrix has the same values as this matrix, false otherwise
+   */
+  public boolean equals(Matrix2x2 matrix) {
+    if (matrix == null) {
+      return false;
+    }
+    return this.a00 == matrix.a00 && this.a01 == matrix.a01 && this.a10 == matrix.a10
+        && this.a11 == matrix.a11;
+  }
+
+  /**
    * Returns a string representation of this matrix.
    *
    * @return a string representation of this matrix

@@ -21,7 +21,7 @@ public class MainController {
   private ChaosGameDescription currentDescription;
   private final ChaosGame chaosGame;
 
-  private Stage stage;
+  private final Stage stage;
 
   private final int originalWidth = 800;
   private final int originalHeight = 600;
@@ -29,8 +29,6 @@ public class MainController {
   private int currentWidth = 800;
   private int currentHeight = 600;
 
-  private int imageWidth = 800;
-  private int imageHeight = 500;
 
   /**
    * Constructor for the MainController class.
@@ -42,10 +40,10 @@ public class MainController {
     stage.setTitle("Chaos Game");
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
-    chaosGame = new ChaosGame(currentDescription, imageWidth, imageHeight);
+    chaosGame = new ChaosGame(currentDescription, currentWidth-30, currentHeight-100);
 
     chaosGameController = new ChaosGameController(this, chaosGame);
-    modifyDescriptionController = new ModifyDescriptionController(this);
+    modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 
@@ -72,12 +70,14 @@ public class MainController {
 
   /**
    * method for setting the current description of the Chaos Game.
+   * sets the change description combobox empty.
    *
    * @param description the description to set as the current description.
    */
   public void setCurrentDescription(ChaosGameDescription description) {
     currentDescription = description;
     chaosGame.setDescription(currentDescription);
+    chaosGameController.setComboBoxEmpty();
   }
 
   /**
@@ -91,22 +91,17 @@ public class MainController {
   }
 
 
+  /**
+   * Method changing the scale of the canvas and the description view.
+   *
+   */
   private void changeScale(int width, int height) {
-    this.imageWidth = width-30;
-    this.imageHeight = height - 100;
     this.currentWidth = width;
     this.currentHeight = height;
-    chaosGame.setCanvasSize(imageWidth, imageHeight);
+    chaosGame.setCanvasSize(currentWidth-30, currentHeight-100);
+    modifyDescriptionController.setDescriptionSize(currentWidth-200, currentHeight-135);
   }
 
-  /**
-   * Method for getting the current description of the Chaos Game.
-   *
-   * @return the current description of the Chaos Game.
-   */
-  public ChaosGameDescription getCurrentDescription() {
-    return currentDescription;
-  }
 
 
 }
