@@ -3,15 +3,16 @@ package org.example.controller;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.scene.layout.VBox;
-import org.example.model.ChaosCanvas;
-import org.example.model.ChaosGameDescription;
-import org.example.model.ChaosGameObserver;
-import org.example.model.Complex;
-import org.example.model.JuliaTransform;
-import org.example.model.AffineTransform2D;
-import org.example.model.Matrix2x2;
-import org.example.model.Transform2D;
-import org.example.model.Vector2D;
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.math.Complex;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
+import org.example.model.observer.ChaosGameObserver;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
+
 import org.example.view.ModifyDescriptionView;
 
 /**
