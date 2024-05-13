@@ -40,8 +40,7 @@ public class ChaosGameView implements PageViewInterface {
     initializeComboBox();
     imageView.setStyle("-fx-alignment: center;");
     iterationsField = new TextField();
-    iterationsField.setPromptText("Iterations");
-    iterationsField.setText("1000000");
+    initializeIterationsField();
 
   }
 
@@ -144,6 +143,17 @@ public class ChaosGameView implements PageViewInterface {
           }
         });
 
+  }
+
+  private TextField initializeIterationsField() {
+    iterationsField.setPromptText("Iterations");
+    iterationsField.setText("1000000");
+    iterationsField.setStyle("-fx-pref-width: 100px;");
+    iterationsField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (!newValue.matches("\\d*")) {
+        iterationsField.setText(oldValue);
+      }});
+    return iterationsField;
   }
 
 
