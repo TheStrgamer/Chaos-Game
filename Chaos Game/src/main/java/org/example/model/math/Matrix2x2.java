@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.math;
 
 /**
  * <h1>Matrix2x2</h1>

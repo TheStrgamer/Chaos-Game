@@ -2,6 +2,7 @@ package org.example.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

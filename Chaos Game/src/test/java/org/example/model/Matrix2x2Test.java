@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

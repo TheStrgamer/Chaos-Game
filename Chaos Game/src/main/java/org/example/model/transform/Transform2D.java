@@ -1,4 +1,6 @@
-package org.example.model;
+package org.example.model.transform;
+
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>Transform2D</h1>

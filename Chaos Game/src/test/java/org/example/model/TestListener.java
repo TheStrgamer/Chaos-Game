@@ -1,5 +1,9 @@
 package org.example.model;
 
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.observer.ChaosGameObserver;
+
 /**
  * <h1>TestObserver</h1>
  * A class that implements the ChaosGameObserver interface for testing purposes.

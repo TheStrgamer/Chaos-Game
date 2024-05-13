@@ -1,10 +1,16 @@
 package org.example.model;
 
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.math.Complex;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,6 +173,41 @@ public class ChaosGameDescriptionTest {
             new Vector2D(3, 4),
             transforms);
         assertEquals("Julia", chaosGameDescription.getTransformType());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("getTransformsAsStringList returns the correct string with julia transform")
+    void testGetTransformsAsStringListReturnsString() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        List<String> expectedList = new ArrayList<>();
+        expectedList.add("1.0, 3.0");
+        assertEquals(expectedList, chaosGameDescription.getTransformsAsStringList());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("getTransformsAsStringList returns the correct string with affine transform")
+    void testGetTransformsAsStringListReturnsStringWithAffine() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new AffineTransform2D(new Matrix2x2(1, 2, 3, 4), new Vector2D(1, 2)));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        List<String> expectedList = new ArrayList<>();
+        expectedList.add("1.0, 2.0, 3.0, 4.0, 1.0, 2.0");
+        assertEquals(expectedList, chaosGameDescription.getTransformsAsStringList());
       } catch (Exception e) {
         fail("An exception was thrown");
       }

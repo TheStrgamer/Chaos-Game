@@ -41,6 +41,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
+>>>>>>> Chaos Game/src/main/java/org/example/view/ModifyDescriptionView.java
    * Method for getting the layout of the Modify Description page.
    *
    * @return the layout of the Modify Description page.

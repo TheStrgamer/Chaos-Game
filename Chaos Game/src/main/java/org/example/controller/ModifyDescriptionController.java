@@ -166,7 +166,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    */
   @Override
   public void updateCanvas(ChaosCanvas canvas) {
-
   }
 
   /**

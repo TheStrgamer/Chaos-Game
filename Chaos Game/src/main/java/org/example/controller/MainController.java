@@ -2,9 +2,9 @@ package org.example.controller;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.model.ChaosGame;
-import org.example.model.ChaosGameDescription;
-import org.example.model.ChaosGameDescriptionFactory;
+import org.example.model.chaosGame.ChaosGame;
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
 /**

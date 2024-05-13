@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.math;
 
 /**
  * <h1>Vector2D</h1>
