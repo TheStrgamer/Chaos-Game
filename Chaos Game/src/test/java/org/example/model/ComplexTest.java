@@ -164,6 +164,53 @@ class ComplexTest {
         fail("An exception was thrown");
       }
     }
+
+    @Test
+    @DisplayName("equals method returns true when complex numbers are equal")
+    void testEqualsReturnsTrueWithEqualValues() {
+      try {
+        Complex complex1 = new Complex(1, 2);
+        Complex complex2 = new Complex(1, 2);
+        assertTrue(complex1.equals(complex2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when complex numbers are not equal")
+    void testEqualsReturnsFalseWithDifferentComplex() {
+      try {
+        Complex complex1 = new Complex(1, 2);
+        Complex complex2 = new Complex(3, 4);
+        assertFalse(complex1.equals(complex2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when comparing to null")
+      void testEqualsReturnsFalseWithNull() {
+      try {
+        Complex complex = new Complex(1, 2);
+        assertFalse(complex.equals(null));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when comparing to a vector")
+    void testEqualsReturnsFalseWithVector() {
+      try {
+        Complex complex = new Complex(1, 2);
+        Vector2D vector = new Vector2D(3, 4);
+        assertFalse(complex.equals(vector));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
   }
 
   @Nested

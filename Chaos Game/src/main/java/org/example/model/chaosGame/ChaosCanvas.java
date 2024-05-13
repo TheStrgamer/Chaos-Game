@@ -139,7 +139,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Sets the pixel value at the given point to 1. Does nothing if the point is not within the
+   * Sets the pixel value at the given point to 255. Does nothing if the point is not within the
    * parameters.
    *
    * @param point the point to set the pixel value at
@@ -154,9 +154,8 @@ public class ChaosCanvas {
   }
 
   /**
-   * Adds the given value to the current pixel value at the given point. If the pixel value is less
-   * than 150, the value is multiplied by 10,to make the pixel value increase faster. Does nothing
-   * if the point is not within the parameters.
+   * Adds the given value to the current pixel value at the given point. Does nothing if the point
+   * is not within the parameters.
    *
    * @param point the point to set the pixel value at
    * @param value the value to add

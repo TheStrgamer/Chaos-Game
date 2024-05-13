@@ -82,6 +82,19 @@ public class Complex extends Vector2D {
   }
 
   /**
+   * Checks if the given complex number has the same values as this complex number.
+   *
+   * @param vector the vector to compare
+   */
+  @Override
+  public boolean equals(Vector2D vector) {
+    if (!(vector instanceof Complex complex)) {
+      return false;
+    }
+    return getReal() == complex.getReal() && getImaginary() == complex.getImaginary();
+  }
+
+  /**
    * Returns the square root of this complex number.
    */
   public Complex sqrt() {

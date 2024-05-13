@@ -117,7 +117,7 @@ public class Vector2D {
    * @return true if the given vector has the same values as this vector, false otherwise
    */
   public boolean equals(Vector2D vector) {
-    if (vector == null) {
+    if ((vector instanceof Complex complex) || vector == null) {
       return false;
     }
     return x0 == vector.getX0() && x1 == vector.getX1();

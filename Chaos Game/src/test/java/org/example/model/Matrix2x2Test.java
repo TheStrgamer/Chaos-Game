@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class Matrix2x2Test {
@@ -66,6 +68,42 @@ public class Matrix2x2Test {
         fail("An exception was thrown");
       }
     }
+
+    @Test
+    @DisplayName("equals method returns true when matrices are equal")
+    void testEqualsReturnsTrueWhenMatricesAreEqual() {
+      try {
+        Matrix2x2 matrix1 = new Matrix2x2(1, 2, 3, 4);
+        Matrix2x2 matrix2 = new Matrix2x2(1, 2, 3, 4);
+        assertTrue(matrix1.equals(matrix2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when matrices are not equal")
+    void testEqualsReturnsFalseWhenMatricesAreNotEqual() {
+      try {
+        Matrix2x2 matrix1 = new Matrix2x2(1, 2, 3, 4);
+        Matrix2x2 matrix2 = new Matrix2x2(5, 6, 7, 8);
+        assertFalse(matrix1.equals(matrix2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when comparing to null")
+    void testEqualsReturnsFalseWhenComparingToNull() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        assertFalse(matrix.equals(null));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
   }
 
   @Nested

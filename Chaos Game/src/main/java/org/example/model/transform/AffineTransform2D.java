@@ -74,9 +74,6 @@ public class AffineTransform2D implements Transform2D {
    */
   @Override
   public boolean equals(Transform2D transform) {
-    if (this == transform) {
-      return true;
-    }
     if (!(transform instanceof AffineTransform2D affineTransform)) {
       return false;
     }

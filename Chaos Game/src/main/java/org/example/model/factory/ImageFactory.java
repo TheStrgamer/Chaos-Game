@@ -44,6 +44,7 @@ public class ImageFactory {
           } else {
             int argb = canvas.getPixelFromCanvas(new Vector2D(i, j));
             writer.setArgb(i, j, (argb << 24));
+
           }
         }
       }

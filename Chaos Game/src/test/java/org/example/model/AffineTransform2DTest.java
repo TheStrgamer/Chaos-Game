@@ -2,9 +2,11 @@ package org.example.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
 import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -77,6 +79,61 @@ class AffineTransform2DTest {
         AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
             new Vector2D(5, 6));
         assertEquals("1.0, 2.0, 3.0, 4.0, 5.0, 6.0", affineTransform2D.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns true when values are equal")
+    void testEqualsReturnsTrue() {
+      try {
+        AffineTransform2D affineTransform2D1 = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        AffineTransform2D affineTransform2D2 = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        assertTrue(affineTransform2D1.equals(affineTransform2D2));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns false when vectors are not equal")
+    void testEqualsReturnsFalse() {
+      try {
+        AffineTransform2D affineTransform2D1 = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        AffineTransform2D affineTransform2D2 = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(7, 8));
+        assertFalse(affineTransform2D1.equals(affineTransform2D2));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns false when matrices are not equal")
+    void testEqualsReturnsFalseWhenMatricesAreNotEqual() {
+      try {
+        AffineTransform2D affineTransform2D1 = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        AffineTransform2D affineTransform2D2 = new AffineTransform2D(new Matrix2x2(5, 6, 7, 8),
+            new Vector2D(5, 6));
+        assertFalse(affineTransform2D1.equals(affineTransform2D2));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns false when comparing to a julia transformation")
+    void testEqualsReturnsFalseWhenComparingToJuliaTransform() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        assertFalse(affineTransform2D.equals(juliaTransform));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }

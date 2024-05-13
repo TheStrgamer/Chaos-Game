@@ -21,7 +21,7 @@ public class ImageFactoryTest {
   @BeforeAll
   static void init() {
     factory = new ImageFactory();
-    canvas = new ChaosCanvas(100, 100, new Vector2D(0,0), new Vector2D(1,1));
+    canvas = new ChaosCanvas(10, 10, new Vector2D(0,0), new Vector2D(10,10));
 
   }
 
@@ -53,11 +53,19 @@ public class ImageFactoryTest {
     @DisplayName("createImage returns an image with the correct width and height")
     void testCreateImageReturnsImageWithCorrectWidthAndHeight() {
       Image image = factory.createImage(canvas);
-      assertEquals(image.getWidth(), 100);
-      assertEquals(image.getHeight(), 100);
+      assertEquals(image.getWidth(), 10);
+      assertEquals(image.getHeight(), 10);
     }
 
+    @Test
+    @DisplayName("createImage sets the correct color for a pixel")
+    void testCreateImageSetsCorrectColorForPixel() {
+      canvas.setPixel(new Vector2D(0, 10));
+      Image image = factory.createImage(canvas);
+      assertEquals(0xFF000000,image.getPixelReader().getArgb(0, 0) );
+      assertEquals(0x00000000,image.getPixelReader().getArgb(1, 1));
 
+    }
 
   }
 
