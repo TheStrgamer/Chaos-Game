@@ -1,5 +1,6 @@
 package org.example.view;
 
+import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -113,28 +114,30 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox maxCoords = vector2DToHBox("Max Coords: ", modifyDescriptionController.getMaxCoords());
 
     desctiptionListView.getItems().addAll(minCoords, maxCoords);
-
+    int index = 0;
+    List<String> transforms = modifyDescriptionController.getTransforms();
     if (modifyDescriptionController.getTransformType().equals("Affine")) {
-      int index = 0;
-      for (String transform : modifyDescriptionController.getTransforms()) {
-        VBox affine = affineTransformToHBox(transform, index);
+      for (String transform : transforms) {
+        VBox affine = affineTransformToHBox(transform, index, transforms.size() > 1);
         desctiptionListView.getItems().add(affine);
         index++;
       }
     } else {
-      int index = 0;
-      for (String transform : modifyDescriptionController.getTransforms()) {
-        VBox julia = juliaTransformToHBox(transform, index);
+      for (String transform : transforms) {
+        VBox julia = juliaTransformToHBox(transform, index, transforms.size() > 1);
         desctiptionListView.getItems().add(julia);
         index += 2;
       }
     }
 
     VBox addTransform = new VBox();
+    HBox addTransformButtonBox = new HBox();
     Button addTransformButton = new Button("Add Transform");
+    addTransformButtonBox.setAlignment(Pos.CENTER);
+    addTransformButtonBox.getChildren().add(addTransformButton);
 
     addTransformButton.setOnAction(event -> modifyDescriptionController.addTransform());
-    addTransform.getChildren().add(addTransformButton);
+    addTransform.getChildren().add(addTransformButtonBox);
     desctiptionListView.getItems().add(addTransform);
 
     desctiptionListView.setPrefSize(600, 500);
@@ -152,13 +155,17 @@ public class ModifyDescriptionView implements PageViewInterface {
   private VBox vector2DToHBox(String name, String vector) {
     VBox vBox = new VBox();
     HBox content = new HBox();
-    Label label = new Label(name);
+    HBox nameLabelBox = new HBox();
+    Label nameLabel = new Label(name);
 
     TextField X0 = new TextField();
     TextField Y0 = new TextField();
     String[] split = vector.split(",");
     X0.setText((split[0]));
     Y0.setText(split[1]);
+
+    nameLabelBox.setAlignment(Pos.CENTER);
+    content.setAlignment(Pos.CENTER);
 
     X0.setStyle("-fx-pref-width: 80px;");
     Y0.setStyle("-fx-pref-width: 80px;");
@@ -176,7 +183,7 @@ public class ModifyDescriptionView implements PageViewInterface {
           modifyDescriptionController.setMaxCoords(X0.getText(), Y0.getText());
           break;
         default:
-          // Handle default case if needed
+          System.out.println("Error in vector2DToHBox");
           break;
       }
     };
@@ -184,15 +191,17 @@ public class ModifyDescriptionView implements PageViewInterface {
     X0.textProperty().addListener(listener);
     Y0.textProperty().addListener(listener);
 
+    nameLabelBox.getChildren().add(nameLabel);
     content.getChildren().addAll(X0, Y0);
-    vBox.getChildren().addAll(label, content);
+    vBox.getChildren().addAll(nameLabelBox, content);
     return vBox;
   }
 
-  private VBox affineTransformToHBox(String transform, int index) {
+  private VBox affineTransformToHBox(String transform, int index, boolean removable) {
     VBox row = new VBox();
     HBox content = new HBox();
 
+    HBox titleBox = new HBox();
     Label title = new Label("Transform: ");
     String[] split = transform.split(",");
 
@@ -217,7 +226,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     a.setStyle("-fx-pref-width: 80px;");
     b.setStyle("-fx-pref-width: 80px;");
 
-    title.setAlignment(Pos.CENTER_LEFT);
+    titleBox.setAlignment(Pos.CENTER);
     content.setAlignment(Pos.CENTER);
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
@@ -246,43 +255,55 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox vector = new VBox();
     vector.getChildren().addAll(a, b);
 
-    Button removeTransform = new Button("Remove Transform");
-    removeTransform.setOnAction(event -> modifyDescriptionController.removeAffineTransform(index));
+    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector);
 
+    if (removable) {
+      Button removeTransform = new Button("Remove Transform");
+      removeTransform.setOnAction(
+          event -> modifyDescriptionController.removeAffineTransform(index));
+      removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
+
+      content.getChildren().add(removeTransform);
+    }
 
     matrixCol1.setStyle("-fx-spacing: 8px;");
     matrixCol2.setStyle("-fx-spacing: 8px;");
     vector.setStyle("-fx-spacing: 8px;");
     content.setStyle("-fx-spacing:8px;");
     plus.setStyle("-fx-font-size: 20px;");
-    removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #b25151; width: 90px;");
 
-
-    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector, removeTransform);
-    row.getChildren().addAll(title, content);
+    titleBox.getChildren().add(title);
+    row.getChildren().addAll(titleBox, content);
 
     return row;
   }
 
-  private VBox juliaTransformToHBox(String transform, int index) {
+  private VBox juliaTransformToHBox(String transform, int index, boolean removable) {
     VBox row = new VBox();
     HBox content = new HBox();
 
-    Label label = new Label("Transform: ");
+    HBox titleBox = new HBox();
+    Label title = new Label("Transform: ");
     String[] split = transform.split(",");
     TextField real = new TextField();
     TextField imaginary = new TextField();
 
+    titleBox.setAlignment(Pos.CENTER);
+    content.setAlignment(Pos.CENTER);
+
     real.setText(split[0]);
     imaginary.setText(split[1]);
 
-    Button removeTransform = new Button("Remove Transform");
-    removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
-
+    content.getChildren().addAll(real, imaginary);
+    if (removable) {
+      Button removeTransform = new Button("Remove Transform");
+      removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
+      removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
+      content.getChildren().add(removeTransform);
+    }
     real.setStyle("-fx-pref-width: 80px;");
     imaginary.setStyle("-fx-pref-width: 80px;");
     content.setStyle("-fx-spacing: 10px;");
-    removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #b25151; width: 90px;");
 
 
 
@@ -296,12 +317,13 @@ public class ModifyDescriptionView implements PageViewInterface {
     real.textProperty().addListener(listener);
     imaginary.textProperty().addListener(listener);
 
-    content.getChildren().addAll(real, imaginary, removeTransform);
-    row.getChildren().addAll(label, content);
+    titleBox.getChildren().add(title);
+    row.getChildren().addAll(titleBox, content);
     return row;
   }
 
   public void updateDescriptionList() {
+    if (editDescription == null || !editDescription.getChildren().contains(descriptionList)) {return;}
     editDescription.getChildren().remove(descriptionList);
     descriptionList = createDescriptionList();
     editDescription.getChildren().add(descriptionList);
