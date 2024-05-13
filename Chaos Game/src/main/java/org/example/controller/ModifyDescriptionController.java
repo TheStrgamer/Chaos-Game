@@ -306,5 +306,19 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     createDescription();
   }
 
+  /**
+   * Method for setting the weight of a transform at the given index.
+   */
+  public void setWeight(int index, String weight) {
+    if (!stringIsValidNumber(weight)) {
+      return;
+    }
+    int newWeight = Integer.parseInt(weight);
+    if (newWeight < 0) {
+      return;
+    }
+    currentDescription.setWeight(index, newWeight);
+  }
+
 
 }

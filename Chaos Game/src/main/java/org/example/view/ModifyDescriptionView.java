@@ -256,7 +256,19 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox vector = new VBox();
     vector.getChildren().addAll(a, b);
 
-    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector);
+    VBox rightSide = new VBox();
+    HBox weightBox = new HBox();
+    Label weightLabel = new Label("Weight: ");
+    TextField weight = new TextField();
+    weight.setText(split[6].trim());
+    weight.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (weight.getText().isEmpty()) {
+        return;
+      }
+      modifyDescriptionController.setWeight(index, weight.getText());
+    });
+    weightBox.getChildren().addAll(weightLabel, weight);
+    rightSide.getChildren().add(weightBox);
 
     if (removable) {
       Button removeTransform = new Button("Remove Transform");
@@ -264,7 +276,7 @@ public class ModifyDescriptionView implements PageViewInterface {
           event -> modifyDescriptionController.removeAffineTransform(index));
       removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
 
-      content.getChildren().add(removeTransform);
+      rightSide.getChildren().add(removeTransform);
     }
 
     matrixCol1.setStyle("-fx-spacing: 8px;");
@@ -272,7 +284,11 @@ public class ModifyDescriptionView implements PageViewInterface {
     vector.setStyle("-fx-spacing: 8px;");
     content.setStyle("-fx-spacing:8px;");
     plus.setStyle("-fx-font-size: 20px;");
+    weight.setStyle("-fx-pref-width: 40px;");
+    rightSide.setStyle("-fx-spacing: 8px;");
+    weightLabel.setStyle("-fx-font-size: 10px;");
 
+    content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector, rightSide);
     titleBox.getChildren().add(title);
     row.getChildren().addAll(titleBox, content);
 

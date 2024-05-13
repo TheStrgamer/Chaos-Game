@@ -1,7 +1,6 @@
 package org.example.model.chaosGame;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.transform.JuliaTransform;
@@ -116,7 +115,10 @@ public class ChaosGameDescription {
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
-    this.weights =  Collections.nCopies(transforms.size(), 1);
+    this.weights =  new ArrayList<>();
+    for (int i = 0; i < transforms.size(); i++) {
+      weights.add(1);
+    }
 
   }
 
@@ -194,11 +196,11 @@ public class ChaosGameDescription {
 
     if (getTransformType().equals("Julia")) {
       for (int i = 0; i < transforms.size(); i += 2) {
-        transformsAsString.add(transforms.get(i).toString());
+        transformsAsString.add(transforms.get(i).toString() + ", " + weights.get(i));
       }
     } else {
       for (Transform2D transform : transforms) {
-        transformsAsString.add(transform.toString());
+        transformsAsString.add(transform.toString()+ ", " + weights.get(transforms.indexOf(transform)));
       }
     }
     return transformsAsString;
