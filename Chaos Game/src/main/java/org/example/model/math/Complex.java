@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.math;
 
 /**
  * <h1>Complex</h1>
@@ -82,6 +82,19 @@ public class Complex extends Vector2D {
   }
 
   /**
+   * Checks if the given complex number has the same values as this complex number.
+   *
+   * @param vector the vector to compare
+   */
+  @Override
+  public boolean equals(Vector2D vector) {
+    if (!(vector instanceof Complex complex)) {
+      return false;
+    }
+    return getReal() == complex.getReal() && getImaginary() == complex.getImaginary();
+  }
+
+  /**
    * Returns the square root of this complex number.
    */
   public Complex sqrt() {
@@ -89,7 +102,7 @@ public class Complex extends Vector2D {
     double imaginary = getImaginary();
     double r = Math.sqrt(real * real + imaginary * imaginary);
     double newReal = Math.sqrt((r + real) / 2);
-    double newImaginary = Math.sqrt((r - real) / 2);
+    double newImaginary = Math.sqrt((r - real) / 2) * Math.signum(imaginary);
 
     return new Complex(newReal, newImaginary);
   }

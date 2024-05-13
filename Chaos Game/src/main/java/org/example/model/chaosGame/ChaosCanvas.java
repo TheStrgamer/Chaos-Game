@@ -1,4 +1,8 @@
-package org.example.model;
+package org.example.model.chaosGame;
+
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>ChaosCanvas</h1>
@@ -29,8 +33,8 @@ public class ChaosCanvas {
   }
 
   /**
-   * Verifies that the given point is within the given parameters. Throws an IllegalArgumentException
-   * if the given point is not within the given parameters.
+   * Verifies that the given point is within the given parameters. Throws an
+   * IllegalArgumentException if the given point is not within the given parameters.
    *
    * @param point the point to verify
    * @throws IllegalArgumentException if the given point is not within the given parameters
@@ -39,8 +43,14 @@ public class ChaosCanvas {
   private void verifyPointWithinParameters(Vector2D point) {
     if (point.getX0() < minCoords.getX0() || point.getX0() > maxCoords.getX0() ||
         point.getX1() < minCoords.getX1() || point.getX1() > maxCoords.getX1()) {
-      throw new IllegalArgumentException("Point is not within the given parameters");
+      throw new IllegalArgumentException(
+          "Point " + point + " is not within the given parameters " + minCoords + " " + maxCoords);
     }
+  }
+
+  private boolean pointWithinParameters(Vector2D point) {
+    return !(point.getX0() < minCoords.getX0()) && !(point.getX0() > maxCoords.getX0()) &&
+        !(point.getX1() < minCoords.getX1()) && !(point.getX1() > maxCoords.getX1());
   }
 
   /**
@@ -118,16 +128,51 @@ public class ChaosCanvas {
   }
 
   /**
-   * Sets the pixel value at the given point to 1.
+   * Returns the pixel value at the given point. Used to create image from canvas
+   *
+   * @param pixel the point to get the pixel value at
+   * @return the pixel value
+   */
+  public int getPixelFromCanvas(Vector2D pixel) {
+    verifyNotNull(pixel);
+    return canvas[(int) pixel.getX0()][(int) pixel.getX1()];
+  }
+
+  /**
+   * Sets the pixel value at the given point to 255. Does nothing if the point is not within the
+   * parameters.
    *
    * @param point the point to set the pixel value at
    */
   public void setPixel(Vector2D point) {
     verifyNotNull(point);
-    verifyPointWithinParameters(point);
-
+    if (!pointWithinParameters(point)) {
+      return;
+    }
     Vector2D indices = transformCoords(point);
-    canvas[(int) indices.getX1()][(int) indices.getX0()] = 1;
+    canvas[(int) indices.getX1()][(int) indices.getX0()] = 255;
+  }
+
+  /**
+   * Adds the given value to the current pixel value at the given point. Does nothing if the point
+   * is not within the parameters.
+   *
+   * @param point the point to set the pixel value at
+   * @param value the value to add
+   */
+  public void setPixel(Vector2D point, int value) {
+    verifyNotNull(point);
+    if (!pointWithinParameters(point)) {
+      return;
+    }
+    Vector2D indices = transformCoords(point);
+
+    int newValue = getPixel(point) + value;
+    if (newValue >= 255) {
+      newValue = 255;
+    }
+    canvas[(int) indices.getX1()][(int) indices.getX0()] = newValue;
+
   }
 
   /**
@@ -172,6 +217,14 @@ public class ChaosCanvas {
     verifyNotNull(coord);
     verifyPointWithinParameters(coord);
     return transformCoordsToIndices.transform(coord);
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
   }
 
   public String getInfoString() {

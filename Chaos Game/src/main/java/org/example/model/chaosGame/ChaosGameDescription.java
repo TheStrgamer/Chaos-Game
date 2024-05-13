@@ -1,6 +1,11 @@
-package org.example.model;
+package org.example.model.chaosGame;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
+import org.example.model.math.Vector2D;
 
 /**
  * <h1>ChaosGameDescription</h1>
@@ -116,6 +121,50 @@ public class ChaosGameDescription {
     } else {
       throw new IllegalArgumentException("Invalid transform type");
     }
+  }
+
+  public List<String> getTransformsAsStringList() {
+    List<String> transformsAsString = new ArrayList<>();
+
+    if (getTransformType().equals("Julia")) {
+      for (int i = 0; i < transforms.size(); i += 2) {
+        transformsAsString.add(transforms.get(i).toString());
+      }
+    } else {
+      for (Transform2D transform : transforms) {
+        transformsAsString.add(transform.toString());
+      }
+    }
+    return transformsAsString;
+  }
+
+  /**
+   * Checks if the given ChaosGameDescription object has the same values as this ChaosGameDescription.
+   *
+   * @param description the ChaosGameDescription to compare
+   * @return true if the given ChaosGameDescription has the same values as this ChaosGameDescription,
+   * false otherwise
+   */
+  public boolean equals(ChaosGameDescription description) {
+    if (description == null) {
+      return false;
+    }
+    if (!minCoords.equals(description.minCoords) || !maxCoords.equals(description.maxCoords)) {
+      return false;
+    }
+    if (transforms.size() != description.transforms.size()) {
+      return false;
+    }
+    for (int i = 0; i < transforms.size(); i++) {
+      if (!transforms.get(i).equals(description.transforms.get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public List<Transform2D> getTransformsAsList() {
+    return new ArrayList<>(this.transforms);
   }
 
   /**

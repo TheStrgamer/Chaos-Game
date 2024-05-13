@@ -2,6 +2,11 @@ package org.example.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.model.math.Complex;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -98,6 +103,53 @@ class JuliaTransformTest {
       try {
         JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
         assertEquals("1.0, 2.0", juliaTransform.toString());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns true when objects are equal")
+    void testEqualsReturnsTrueWhenObjectsAreEqual() {
+      try {
+        JuliaTransform juliaTransform1 = new JuliaTransform(new Complex(1, 2), 1);
+        JuliaTransform juliaTransform2 = new JuliaTransform(new Complex(1, 2), 1);
+        assertTrue(juliaTransform1.equals(juliaTransform2));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns false when the signs are not equal")
+    void testEqualsReturnsFalseWhenSignsAreNotEqual() {
+      try {
+        JuliaTransform juliaTransform1 = new JuliaTransform(new Complex(1, 2), 1);
+        JuliaTransform juliaTransform2 = new JuliaTransform(new Complex(1, 2), -1);
+        assertFalse(juliaTransform1.equals(juliaTransform2));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("equals returns false when comparing to affine transformation")
+    void testEqualsReturnsFalseWhenComparingToAffineTransform() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        AffineTransform2D affineTransform = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4), new Vector2D(5, 6));
+        assertFalse(juliaTransform.equals(affineTransform));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+    @Test
+    @DisplayName("equals returns false when the complex numbers are not equal")
+    void testEqualsReturnsFalseWhenComplexNumbersAreNotEqual() {
+      try {
+        JuliaTransform juliaTransform1 = new JuliaTransform(new Complex(1, 2), 1);
+        JuliaTransform juliaTransform2 = new JuliaTransform(new Complex(2, 1), 1);
+        assertFalse(juliaTransform1.equals(juliaTransform2));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }

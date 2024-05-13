@@ -1,14 +1,22 @@
 package org.example.model;
 
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.math.Complex;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class ChaosGameDescriptionTest {
@@ -167,6 +175,173 @@ public class ChaosGameDescriptionTest {
             new Vector2D(3, 4),
             transforms);
         assertEquals("Julia", chaosGameDescription.getTransformType());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("getTransformsAsStringList returns the correct string with julia transform")
+    void testGetTransformsAsStringListReturnsString() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        List<String> expectedList = new ArrayList<>();
+        expectedList.add("1.0, 3.0");
+        assertEquals(expectedList, chaosGameDescription.getTransformsAsStringList());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns true when objects are equal")
+    void testEqualsReturnsTrueWithEqualObjects() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription1 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        assertTrue(chaosGameDescription1.equals(chaosGameDescription2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when minVectors are not equal")
+    void testEqualsReturnsFalseWithDifferentMinVectors() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription1 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(2, 2),
+            new Vector2D(3, 4),
+            transforms);
+        assertFalse(chaosGameDescription1.equals(chaosGameDescription2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when maxVectors are not equal")
+    void testEqualsReturnsFalseWithDifferentMaxVectors() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription1 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(4, 4),
+            transforms);
+        assertFalse(chaosGameDescription1.equals(chaosGameDescription2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when transforms are not equal")
+    void testEqualsReturnsFalseWithDifferentTransforms() {
+      try {
+        List<Transform2D> transforms1 = new ArrayList<>();
+        transforms1.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms1.add(new JuliaTransform(new Complex(1, 3), -1));
+        List<Transform2D> transforms2 = new ArrayList<>();
+        transforms2.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms2.add(new JuliaTransform(new Complex(1, 3), 1));
+        ChaosGameDescription chaosGameDescription1 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms1);
+        ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms2);
+        assertFalse(chaosGameDescription1.equals(chaosGameDescription2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when ammount of transforms are not equal")
+    void testEqualsReturnsFalseWithDifferentAmountOfTransforms() {
+      try {
+        List<Transform2D> transforms1 = new ArrayList<>();
+        transforms1.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms1.add(new JuliaTransform(new Complex(1, 3), -1));
+        List<Transform2D> transforms2 = new ArrayList<>();
+        transforms2.add(new JuliaTransform(new Complex(1, 3), 1));
+        ChaosGameDescription chaosGameDescription1 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms1);
+        ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms2);
+        assertFalse(chaosGameDescription1.equals(chaosGameDescription2));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("equals method returns false when comparing to null")
+    void testEqualsReturnsFalseWithNull() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        assertFalse(chaosGameDescription.equals(null));
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("getTransformsAsList returns the correct list with julia transform")
+    void testGetTransformsAsListReturnsList() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        assertEquals(transforms, chaosGameDescription.getTransformsAsList());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("getTransformsAsStringList returns the correct string with affine transform")
+    void testGetTransformsAsStringListReturnsStringWithAffine() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new AffineTransform2D(new Matrix2x2(1, 2, 3, 4), new Vector2D(1, 2)));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms);
+        List<String> expectedList = new ArrayList<>();
+        expectedList.add("1.0, 2.0, 3.0, 4.0, 1.0, 2.0");
+        assertEquals(expectedList, chaosGameDescription.getTransformsAsStringList());
       } catch (Exception e) {
         fail("An exception was thrown");
       }

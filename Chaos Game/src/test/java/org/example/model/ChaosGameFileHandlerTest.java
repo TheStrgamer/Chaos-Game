@@ -4,6 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosGame.ChaosGameFileHandler;
+import org.example.model.math.Complex;
+import org.example.model.math.Matrix2x2;
+import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

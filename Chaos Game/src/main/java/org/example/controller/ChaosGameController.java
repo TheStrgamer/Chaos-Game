@@ -1,141 +1,106 @@
 package org.example.controller;
 
-import org.example.model.ChaosGame;
-import org.example.model.ChaosGameDescription;
-import org.example.model.ChaosGameFileHandler;
 
-import java.util.Scanner;
+import javafx.scene.layout.VBox;
+import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosGame.ChaosGame;
+
+import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.observer.ChaosGameObserver;
+import org.example.model.factory.ImageFactory;
+import org.example.view.ChaosGameView;
 
 /**
  * <h1>ChaosGameController</h1>
- * The controller class for the Chaos Game program. it contains the methods that the user can
- * interact with in the terminal.
+ * The controller class for the Chaos Game page of the application. It handles the logic for the
+ * Chaos Game page, and is responsible for running the Chaos Game.
  */
-public class ChaosGameController {
+public class ChaosGameController implements ChaosGameObserver {
 
-  ChaosGameFileHandler chaosGameFileHandler;
+  private final ChaosGame chaosGame;
+  private final ChaosGameView chaosGameView;
+
+  private final MainController mainController;
+
+  private final ImageFactory imageFactory;
 
   /**
-   * Constructor for the ChaosGameController class. it initializes the ChaosGameFileHandler object.
+   * Constructor for the ChaosGameController class.
+   *
+   * @param mainController the main controller for the application. Used for switching between
+   *                       views.
+   * @param chaosGame      the Chaos Game model for the application.
    */
-  public ChaosGameController() {
-    chaosGameFileHandler = new ChaosGameFileHandler();
+  public ChaosGameController(MainController mainController, ChaosGame chaosGame) {
+    this.mainController = mainController;
+    this.chaosGame = chaosGame;
+    this.chaosGameView = new ChaosGameView(this, mainController);
+    this.imageFactory = new ImageFactory();
+
   }
 
   /**
-   * Method that gets the user input, verifies it and returns it.
+   * Method for running the Chaos Game for a given number of iterations.
    *
-   * @param scanner is the scanner object that reads the input.
-   * @return the integer value of the user input.
+   * @param iterations string representation of the number of iterations to run the Chaos Game for.
    */
-
-  public int getValidInput(Scanner scanner) {
-    int input;
-    System.out.println("Enter here: ");
-    while (true) {
-      scanner.hasNextInt();
-      try {
-        input = scanner.nextInt();
-        break;
-      } catch (Exception e) {
-        System.out.println("Error: "+ e.getMessage());
-        scanner.next();
-      }
-    }
-    return input;
+  public void runIterations(String iterations) {
+    int steps = getIterations(iterations);
+    chaosGame.runSteps(steps);
   }
 
   /**
-   * Method that reads a description from a file. it also needs the user to enter the path to the
-   * file.
+   * Method for running the Chaos Game for a given number of iterations.
    *
-   * @return the ChaosGameDescription object that was read from the file.
+   * @param steps the number of iterations to run the Chaos Game for.
    */
-  public ChaosGameDescription userReadFromFile() {
-    Scanner scanner = new Scanner(System.in);
-    ChaosGameDescription description;
-    String inputPath;
-    System.out.println("Enter the text file you want to read from (Chaos Game/chaosFiles/...): ");
-    while (true) {
-      scanner.hasNextLine();
-      try {
-        inputPath = scanner.nextLine();
-        description = chaosGameFileHandler.readFromFile("Chaos Game/chaosFiles/" + inputPath);
-        if (description != null) {
-          return description;
-        }
-      } catch (Exception e) {
-        System.out.println("Error: "+ e.getMessage());
-      }
-    }
+  public void runIterations(int steps) {
+    chaosGame.runSteps(steps);
   }
 
   /**
-   * Method that writes a description to a file. it also needs the user to enter the path to the
-   * file.
+   * Method for converting a string representation of the number of iterations to an integer. Sets
+   * the number of iterations to a default value if the string cannot be converted to an integer.
    *
-   * @param description is the ChaosGameDescription object that is to be written to the file.
+   * @param iterations the string representation of the number of iterations.
+   * @return the number of iterations to run the Chaos Game for.
    */
-  public void userWriteToFile(ChaosGameDescription description) {
-    Scanner scanner = new Scanner(System.in);
-    String writePath;
-    System.out.println(
-        "Enter the name of the file you want to write in (Chaos Game/chaosFiles/...): ");
-    while (true) {
-      scanner.hasNextLine();
-      try {
-        writePath = scanner.nextLine();
-        chaosGameFileHandler.writeToFile(description, "Chaos Game/chaosFiles/" + writePath);
-        break;
-      } catch (Exception e) {
-        System.out.println("Error: "+ e.getMessage());
-      }
-    }
-  }
-
-  /**
-   * Method that gets the number of iterations the user wants to run. Method also verifies the
-   * input.
-   *
-   * @return the number of iterations the user wants to run.
-   */
-
-  public int userSetIterations() {
-    Scanner scanner = new Scanner(System.in);
-    int iterations;
-    System.out.println("Enter the number of iterations you want to run: ");
-    while (true) {
-      scanner.hasNextInt();
-      try {
-        iterations = scanner.nextInt();
-        if (iterations > 0) {
-          return iterations;
-        } else {
-          System.out.println("Error: Enter a positive integer!");
-        }
-      } catch (Exception e) {
-        System.out.println("Error: "+ e.getMessage());
-        scanner.next();
-      }
-    }
-  }
-
-  /**
-   * Method that prints the ASCII fractal to the terminal.
-   *
-   * @param description is the ChaosGameDescription object to be used to print the fractal.
-   * @param runSteps    is the number of iterations the fractal to be run.
-   */
-  public void userPrintAsciiFractal(ChaosGameDescription description, int runSteps) {
-
+  public int getIterations(String iterations) {
+    int defaultIterations = 0;
+    int minIterations = 0;
     try {
-      ChaosGame chaosGame = new ChaosGame(description, 60, 60);
-      chaosGame.runSteps(runSteps);
-      System.out.println(chaosGame.getCanvas().toString());
-    } catch (Exception e) {
-      System.out.println("Error: Unable to print ASCII fractal!");
-      System.out.println("Message: "+ e.getMessage());
-
+      return Math.max(Integer.parseInt(iterations), minIterations);
+    } catch (NumberFormatException e) {
+      System.out.println(e.getMessage());
+      return defaultIterations;
     }
+  }
+
+  /**
+   * Method for getting the layout of the Chaos Game view.
+   * @return the layout of the Chaos Game view.
+   */
+  public VBox getLayout() {
+    return chaosGameView.getLayout();
+  }
+
+  /**
+   * Method for setting the combo box to empty.
+   */
+  public void setComboBoxEmpty() {
+    chaosGameView.setComboBoxEmpty();
+  }
+
+  public void clearCanvas() {
+    chaosGame.clearCanvas();
+  }
+
+  @Override
+  public void updateDescription(ChaosGameDescription description) {
+  }
+
+  @Override
+  public void updateCanvas(ChaosCanvas canvas) {
+    chaosGameView.setImage(imageFactory.createImage(canvas));
   }
 }
