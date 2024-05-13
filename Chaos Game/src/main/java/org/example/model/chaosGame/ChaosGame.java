@@ -191,8 +191,8 @@ public class ChaosGame {
     verifyStepsMoreThanZero(steps);
     for (int i = 0; i < steps; i++) {
       try {
-        int randomInt = random.nextInt(description.getTransforms().size());
-        Transform2D transform = description.getTransforms().get(randomInt);
+        int randomInt = random.nextInt(description.sumOfWeights());
+        Transform2D transform = description.getTransformWithWeight(randomInt);
         Vector2D tmp = transform.transform(currentPoint);
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
