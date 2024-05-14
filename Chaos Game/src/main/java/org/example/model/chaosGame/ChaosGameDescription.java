@@ -176,6 +176,10 @@ public class ChaosGameDescription {
     return transforms;
   }
 
+  /**
+   * Returns the type of transform in the ChaosGameDescription.
+   * @return the type of transform in the ChaosGameDescription.
+   */
   public String getTransformType() {
     Transform2D transform = transforms.get(0);
     if (transform instanceof AffineTransform2D) {
@@ -298,6 +302,7 @@ public class ChaosGameDescription {
    * @return the sum of the weights of all the transforms below the given index.
    */
   public int sumOfWeightsBelowIndex(int index) {
+    verifyWithinBounds(index, weights.size()+1);
     int sum = 0;
     for (int i = 0; i < index; i++) {
       sum += getWeight(i);

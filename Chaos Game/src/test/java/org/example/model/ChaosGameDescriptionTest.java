@@ -321,11 +321,13 @@ public class ChaosGameDescriptionTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
             new Vector2D(3, 4),
             transforms);
-        String expectedString = "Julia    #Transform type\n" +
-            "1.0, 2.0    #minimum coordinates\n" +
-            "3.0, 4.0    #maximum coordinates\n" +
-            "1.0, 3.0    #transform\n" +
-            "2.0, 4.0    #transform\n";
+        String expectedString = """
+            Julia    #Transform type
+            1.0, 2.0    #minimum coordinates
+            3.0, 4.0    #maximum coordinates
+            1.0, 3.0    #transform
+            2.0, 4.0    #transform
+            """;
         assertEquals(expectedString, chaosGameDescription.toString());
       } catch (Exception e) {
         fail("An exception was thrown with the message " + e.getMessage());
@@ -341,10 +343,12 @@ public class ChaosGameDescriptionTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
             new Vector2D(3, 4),
             transforms);
-        String expectedString = "Affine    #Transform type\n" +
-            "1.0, 2.0    #minimum coordinates\n" +
-            "3.0, 4.0    #maximum coordinates\n" +
-            "1.0, 2.0, 3.0, 4.0, 1.0, 2.0    #transform\n";
+        String expectedString = """
+            Affine    #Transform type
+            1.0, 2.0    #minimum coordinates
+            3.0, 4.0    #maximum coordinates
+            1.0, 2.0, 3.0, 4.0, 1.0, 2.0    #transform
+            """;
         assertEquals(expectedString, chaosGameDescription.toString());
       } catch (Exception e) {
         fail("An exception was thrown with the message " + e.getMessage());
@@ -624,6 +628,137 @@ public class ChaosGameDescriptionTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
             new Vector2D(3, 4),
             null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "List cannot be null");
+      }
+    }
+
+    @Test
+    @DisplayName("getWeight throws IllegalArgumentException when index is out of bounds")
+    void getWeightThrowsExceptionOnOutOfBoundsIndex() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        List<Integer> weights = new ArrayList<>();
+        weights.add(5);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms, weights);
+        chaosGameDescription.getWeight(1);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Index out of bounds");
+      }
+    }
+
+    @Test
+    @DisplayName("setWeight throws IllegalArgumentException when index is out of bounds")
+    void setWeightThrowsExceptionOnOutOfBoundsIndex() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), 1));
+        List<Integer> weights = new ArrayList<>();
+        weights.add(5);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms, weights);
+        chaosGameDescription.setWeight(1, 10);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Index out of bounds");
+      }
+    }
+
+    @Test
+    @DisplayName("sumOfWeightsBelowIndex throws IllegalArgumentException when index is out of bounds")
+    void sumOfWeightsBelowIndexThrowsExceptionOnOutOfBoundsIndex() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 4), 1));
+
+        List<Integer> weights = new ArrayList<>();
+        weights.add(5);
+        weights.add(4);
+        weights.add(4);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms, weights);
+        chaosGameDescription.sumOfWeightsBelowIndex(4);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Index out of bounds");
+      }
+    }
+
+    @Test
+    @DisplayName("setWeights throws IllegalArgumentException when given list is empty")
+    void setWeightsThrowsExceptionOnEmptyList() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 4), 1));
+
+        List<Integer> weights = new ArrayList<>();
+        weights.add(5);
+        weights.add(4);
+        weights.add(4);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms, weights);
+        chaosGameDescription.setWeights(new ArrayList<>());
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "List cannot be empty");
+      }
+    }
+
+    @Test
+    @DisplayName("setWeights throws IllegalArgumentException when given list contains a null object")
+    void setWeightsThrowsExceptionOnNullInList() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 4), 1));
+
+        List<Integer> weights = new ArrayList<>();
+        weights.add(5);
+        weights.add(4);
+        weights.add(4);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms, weights);
+        List<Integer> newWeights = new ArrayList<>();
+        newWeights.add(10);
+        newWeights.add(null);
+        chaosGameDescription.setWeights(newWeights);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Objects in Transform2D list cannot be null");
+      }
+    }
+
+    @Test
+    @DisplayName("setWeights throws IllegalArgumentException when given list is null")
+    void setWeightsThrowsExceptionOnListNull() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        transforms.add(new JuliaTransform(new Complex(1, 4), 1));
+
+        List<Integer> weights = new ArrayList<>();
+        weights.add(5);
+        weights.add(4);
+        weights.add(4);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4),
+            transforms, weights);
+        chaosGameDescription.setWeights(null);
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "List cannot be null");
