@@ -50,6 +50,15 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
+   * Method for running the Chaos Game for a set number of iterations.
+   *
+   * @param iterations the number of iterations to run the Chaos Game for.
+   */
+  public void runIterations(int iterations) {
+    chaosGame.runSteps(iterations);
+  }
+
+  /**
    * Method for converting a string representation of the number of iterations to an integer. Sets
    * the number of iterations to a default value if the string cannot be converted to an integer.
    *
@@ -120,13 +129,15 @@ public class ChaosGameController implements ChaosGameObserver {
 
   /**
    * Updates the canvas size of the Chaos Game. If auto run is true, it runst the chaos game.
-   * @param width the width
+   *
+   * @param width  the width
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
     chaosGame.setCanvasSize(width, height);
     if (autoRunOnDescriptionChange) {
-      runIterations();
+      runIterations(steps/5);
+
     }
   }
 
