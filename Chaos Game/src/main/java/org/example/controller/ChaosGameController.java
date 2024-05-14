@@ -24,6 +24,9 @@ public class ChaosGameController implements ChaosGameObserver {
 
   private final ImageFactory imageFactory;
 
+  private boolean autoRunOnDescriptionChange = false;
+  private int steps;
+
   /**
    * Constructor for the ChaosGameController class.
    *
@@ -40,21 +43,10 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Method for running the Chaos Game for a given number of iterations.
+   * Method for running the Chaos Game for a set number of iterations.
    *
-   * @param iterations string representation of the number of iterations to run the Chaos Game for.
    */
-  public void runIterations(String iterations) {
-    int steps = getIterations(iterations);
-    chaosGame.runSteps(steps);
-  }
-
-  /**
-   * Method for running the Chaos Game for a given number of iterations.
-   *
-   * @param steps the number of iterations to run the Chaos Game for.
-   */
-  public void runIterations(int steps) {
+  public void runIterations() {
     chaosGame.runSteps(steps);
   }
 
@@ -91,12 +83,45 @@ public class ChaosGameController implements ChaosGameObserver {
     chaosGameView.setComboBoxEmpty();
   }
 
+  /**
+   * Method for clearing the canvas of the Chaos Game.
+   */
   public void clearCanvas() {
     chaosGame.clearCanvas();
   }
 
+  /**
+   * Method for setting the auto run on description change.
+   *
+   * @param autoRun true if the Chaos Game should run automatically when the description changes,
+   *                false otherwise.
+   */
+  public void setAutoRun(boolean autoRun) {
+    this.autoRunOnDescriptionChange = autoRun;
+  }
+
+  /**
+   * Method for setting the number of steps to run the Chaos Game.
+   *
+   * @param steps the number of steps to run the Chaos Game.
+   */
+  public void setSteps(int steps) {
+    this.steps = steps;
+  }
+  /**
+   * Method for setting the number of steps to run the Chaos Game.
+   *
+   * @param stepsString the number of steps to run the Chaos Game.
+   */
+  public void setSteps(String stepsString) {
+    this.steps = getIterations(stepsString);
+  }
+
   @Override
   public void updateDescription(ChaosGameDescription description) {
+    if (autoRunOnDescriptionChange) {
+      runIterations();
+    }
   }
 
   @Override

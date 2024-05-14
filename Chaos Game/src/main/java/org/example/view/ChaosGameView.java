@@ -1,6 +1,7 @@
 package org.example.view;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -72,10 +73,13 @@ public class ChaosGameView implements PageViewInterface {
 
     HBox buttonLayout = new HBox();
     Button runButton = new Button("Run");
-    runButton.setOnAction(event -> chaosGameController.runIterations(iterationsField.getText()));
+    runButton.setOnAction(event -> chaosGameController.runIterations());
 
     Button clearButton = new Button("Clear");
     clearButton.setOnAction(event -> chaosGameController.clearCanvas());
+
+    CheckBox autoRunOnDescriptionChange = new CheckBox("Auto run ");
+    autoRunOnDescriptionChange.setOnAction(event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
     VBox randomButtonLayout = new VBox();
     Button randomJulia = new Button("Random Julia Set");
@@ -83,14 +87,12 @@ public class ChaosGameView implements PageViewInterface {
         event -> {
           mainController.setCurrentDescription("JuliaRandom");
           setComboBoxEmpty();
-          chaosGameController.runIterations(iterationsField.getText());
         });
     Button randomAffine = new Button("Random Affine Set");
     randomAffine.setOnAction(
         event -> {
           mainController.setCurrentDescription("AffineRandom");
           setComboBoxEmpty();
-          chaosGameController.runIterations(iterationsField.getText());
         });
 
     randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
@@ -99,7 +101,7 @@ public class ChaosGameView implements PageViewInterface {
     toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
 
     buttonLayout.getChildren()
-        .addAll(iterationsField, runButton, descriptionComboBox, clearButton, randomButtonLayout,
+        .addAll(iterationsField, runButton, clearButton, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
             toModifyDescription);
     randomJulia.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
     randomAffine.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
@@ -145,15 +147,17 @@ public class ChaosGameView implements PageViewInterface {
 
   }
 
-  private TextField initializeIterationsField() {
+  private void initializeIterationsField() {
     iterationsField.setPromptText("Iterations");
     iterationsField.setText("1000000");
     iterationsField.setStyle("-fx-pref-width: 100px;");
     iterationsField.textProperty().addListener((observable, oldValue, newValue) -> {
       if (!newValue.matches("\\d*")) {
         iterationsField.setText(oldValue);
-      }});
-    return iterationsField;
+      }
+      chaosGameController.setSteps(iterationsField.getText());
+    });
+    chaosGameController.setSteps(iterationsField.getText());
   }
 
 
