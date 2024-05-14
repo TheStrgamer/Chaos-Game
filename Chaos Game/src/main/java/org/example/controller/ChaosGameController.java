@@ -44,7 +44,6 @@ public class ChaosGameController implements ChaosGameObserver {
 
   /**
    * Method for running the Chaos Game for a set number of iterations.
-   *
    */
   public void runIterations() {
     chaosGame.runSteps(steps);
@@ -70,6 +69,7 @@ public class ChaosGameController implements ChaosGameObserver {
 
   /**
    * Method for getting the layout of the Chaos Game view.
+   *
    * @return the layout of the Chaos Game view.
    */
   public VBox getLayout() {
@@ -108,6 +108,7 @@ public class ChaosGameController implements ChaosGameObserver {
   public void setSteps(int steps) {
     this.steps = steps;
   }
+
   /**
    * Method for setting the number of steps to run the Chaos Game.
    *
@@ -115,6 +116,18 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void setSteps(String stepsString) {
     this.steps = getIterations(stepsString);
+  }
+
+  /**
+   * Updates the canvas size of the Chaos Game. If auto run is true, it runst the chaos game.
+   * @param width the width
+   * @param height the height
+   */
+  public void setCanvasSize(int width, int height) {
+    chaosGame.setCanvasSize(width, height);
+    if (autoRunOnDescriptionChange) {
+      runIterations();
+    }
   }
 
   @Override
