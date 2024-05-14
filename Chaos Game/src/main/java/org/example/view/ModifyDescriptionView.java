@@ -26,7 +26,6 @@ public class ModifyDescriptionView implements PageViewInterface {
   private ListView<VBox> descriptionList = new ListView<>();
   private VBox editDescription;
 
-
   /**
    * Constructor for the ModifyDescriptionView class.
    *
@@ -37,6 +36,8 @@ public class ModifyDescriptionView implements PageViewInterface {
       MainController mainController) {
     this.modifyDescriptionController = modifyDescriptionController;
     this.mainController = mainController;
+
+
 
   }
 
@@ -159,11 +160,10 @@ public class ModifyDescriptionView implements PageViewInterface {
     HBox nameLabelBox = new HBox();
     Label nameLabel = new Label(name);
 
-    TextField X0 = new TextField();
-    TextField Y0 = new TextField();
     String[] split = vector.split(",");
-    X0.setText((split[0]));
-    Y0.setText(split[1]);
+
+    TextField X0 = createNumberField(split[0]);
+    TextField Y0 = createNumberField(split[1]);
 
     nameLabelBox.setAlignment(Pos.CENTER);
     content.setAlignment(Pos.CENTER);
@@ -188,9 +188,9 @@ public class ModifyDescriptionView implements PageViewInterface {
           break;
       }
     };
-
     X0.textProperty().addListener(listener);
     Y0.textProperty().addListener(listener);
+
 
     nameLabelBox.getChildren().add(nameLabel);
     content.getChildren().addAll(X0, Y0);
@@ -206,26 +206,12 @@ public class ModifyDescriptionView implements PageViewInterface {
     Label title = new Label("Transform: ");
     String[] split = transform.split(",");
 
-    TextField a00 = new TextField();
-    TextField a01 = new TextField();
-    TextField a10 = new TextField();
-    TextField a11 = new TextField();
-    TextField a = new TextField();
-    TextField b = new TextField();
-
-    a00.setText(split[0].trim());
-    a01.setText(split[1].trim());
-    a10.setText(split[2].trim());
-    a11.setText(split[3].trim());
-    a.setText(split[4].trim());
-    b.setText(split[5].trim());
-
-    a00.setStyle("-fx-pref-width: 80px;");
-    a01.setStyle("-fx-pref-width: 80px;");
-    a10.setStyle("-fx-pref-width: 80px;");
-    a11.setStyle("-fx-pref-width: 80px;");
-    a.setStyle("-fx-pref-width: 80px;");
-    b.setStyle("-fx-pref-width: 80px;");
+    TextField a00 = createNumberField(split[0]);
+    TextField a01 = createNumberField(split[1]);
+    TextField a10 = createNumberField(split[2]);
+    TextField a11 = createNumberField(split[3]);
+    TextField a = createNumberField(split[4]);
+    TextField b = createNumberField(split[5]);
 
     titleBox.setAlignment(Pos.CENTER);
     content.setAlignment(Pos.CENTER);
@@ -286,27 +272,22 @@ public class ModifyDescriptionView implements PageViewInterface {
     HBox titleBox = new HBox();
     Label title = new Label("Transform: ");
     String[] split = transform.split(",");
-    TextField real = new TextField();
-    TextField imaginary = new TextField();
+
+    TextField real = createNumberField(split[0]);
+    TextField imaginary = createNumberField(split[1]);
 
     titleBox.setAlignment(Pos.CENTER);
     content.setAlignment(Pos.CENTER);
 
-    real.setText(split[0]);
-    imaginary.setText(split[1]);
-
     content.getChildren().addAll(real, imaginary);
+
     if (removable) {
       Button removeTransform = new Button("Remove Transform");
       removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
       removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
       content.getChildren().add(removeTransform);
     }
-    real.setStyle("-fx-pref-width: 80px;");
-    imaginary.setStyle("-fx-pref-width: 80px;");
     content.setStyle("-fx-spacing: 10px;");
-
-
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
       if (real.getText().isEmpty() || imaginary.getText().isEmpty()) {
@@ -328,6 +309,23 @@ public class ModifyDescriptionView implements PageViewInterface {
     editDescription.getChildren().remove(descriptionList);
     descriptionList = createDescriptionList();
     editDescription.getChildren().add(descriptionList);
+  }
+
+  /**
+   * Method for creating a text field that only accepts numbers and periods.
+   * @return the created text field.
+   */
+  private TextField createNumberField(String text) {
+    TextField field = new TextField();
+    field.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
+      if (!event.getCharacter().matches("[0-9.]")) {
+        event.consume();
+      }
+    });
+    field.setText(text.trim());
+    field.setStyle("-fx-pref-width: 80px;");
+
+    return field;
   }
 
 
