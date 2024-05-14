@@ -150,10 +150,23 @@ public class ModifyDescriptionView implements PageViewInterface {
 
   }
 
+  /**
+   * Method for changing the scale of the description list.
+   *
+   * @param width  the new width of the description list.
+   * @param height the new height of the description list.
+   */
   public void changeDescriptionListScale(int width, int height) {
     descriptionList.setPrefSize(width, height);
   }
 
+  /**
+   * Method for converting a vector to a HBox used in the ui to allow for editing.
+   *
+   * @param name   the name of the vector.
+   * @param vector the vector to convert.
+   * @return the HBox containing the vector.
+   */
   private VBox vector2DToHBox(String name, String vector) {
     VBox vBox = new VBox();
     HBox content = new HBox();
@@ -304,6 +317,9 @@ public class ModifyDescriptionView implements PageViewInterface {
     return row;
   }
 
+  /**
+   * Method for updating the description list. It updates based on the current description.
+   */
   public void updateDescriptionList() {
     if (editDescription == null || !editDescription.getChildren().contains(descriptionList)) {return;}
     editDescription.getChildren().remove(descriptionList);

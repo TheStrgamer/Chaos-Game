@@ -219,14 +219,28 @@ public class ChaosCanvas {
     return transformCoordsToIndices.transform(coord);
   }
 
+  /**
+   * Returns the width of the canvas.
+   *
+   * @return the width of the canvas
+   */
   public int getWidth() {
     return width;
   }
 
+  /**
+   * Returns the height of the canvas.
+   *
+   * @return the height of the canvas
+   */
   public int getHeight() {
     return height;
   }
 
+  /**
+   * Returns a string with the details of the canvas. These include dimensions and coordinates.
+   * @return the details of the canvas
+   */
   public String getInfoString() {
     return "ChaosCanvas{" +
         "width=" + width +

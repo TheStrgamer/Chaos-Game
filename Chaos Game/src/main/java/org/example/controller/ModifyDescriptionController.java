@@ -54,6 +54,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    *
    * @param mainController the main controller for the application. Used for switching between
    *                       views.
+   * @param description    the description of the Chaos Game.
    */
   public ModifyDescriptionController(MainController mainController, ChaosGameDescription description) {
     this.mainController = mainController;

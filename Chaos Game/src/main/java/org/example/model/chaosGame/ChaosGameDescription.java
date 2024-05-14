@@ -112,6 +112,11 @@ public class ChaosGameDescription {
     return transforms;
   }
 
+  /**
+   * Returns a string representation of the type of transform used in the description.
+   *
+   * @return the type of transform.
+   */
   public String getTransformType() {
     Transform2D transform = transforms.get(0);
     if (transform instanceof AffineTransform2D) {
@@ -123,6 +128,11 @@ public class ChaosGameDescription {
     }
   }
 
+  /**
+   * Returns the list of transforms as a list of strings.
+   *
+   * @return a list of strings.
+   */
   public List<String> getTransformsAsStringList() {
     List<String> transformsAsString = new ArrayList<>();
 
@@ -163,6 +173,11 @@ public class ChaosGameDescription {
     return true;
   }
 
+  /**
+   * Returns the list of transforms in the description.
+   *
+   * @return a list of transforms.
+   */
   public List<Transform2D> getTransformsAsList() {
     return new ArrayList<>(this.transforms);
   }

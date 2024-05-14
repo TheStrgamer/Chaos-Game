@@ -129,10 +129,16 @@ public class ChaosGameView implements PageViewInterface {
     imageView.setImage(image);
   }
 
+  /**
+   * Method for setting the combo box to empty.
+   */
   public void setComboBoxEmpty() {
     descriptionComboBox.setValue(null);
   }
 
+  /**
+   * Method for initializing the combo box.
+   */
   private void initializeComboBox() {
     descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
@@ -147,6 +153,9 @@ public class ChaosGameView implements PageViewInterface {
 
   }
 
+  /**
+   * Method for initializing the iterations field.
+   */
   private void initializeIterationsField() {
     iterationsField.setPromptText("Iterations");
     iterationsField.setText("1000000");
