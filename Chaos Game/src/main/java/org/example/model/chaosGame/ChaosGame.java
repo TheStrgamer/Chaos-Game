@@ -189,9 +189,10 @@ public class ChaosGame {
    */
   public void runSteps(int steps) {
     verifyStepsMoreThanZero(steps);
+    int sumOfWeights = description.sumOfWeights();
     for (int i = 0; i < steps; i++) {
       try {
-        int randomInt = random.nextInt(description.sumOfWeights());
+        int randomInt = random.nextInt(sumOfWeights);
         Transform2D transform = description.getTransformWithWeight(randomInt);
         Vector2D tmp = transform.transform(currentPoint);
         currentPoint.setX0(tmp.getX0());

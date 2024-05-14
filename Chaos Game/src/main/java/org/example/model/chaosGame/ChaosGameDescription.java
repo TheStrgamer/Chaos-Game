@@ -1,7 +1,11 @@
 package org.example.model.chaosGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.transform.JuliaTransform;
 import org.example.model.transform.Transform2D;
@@ -19,6 +23,7 @@ public class ChaosGameDescription {
   private final Vector2D maxCoords;
   List<Transform2D> transforms;
   List<Integer> weights;
+  int weightSum;
 
   /**
    * Verifies that the given Vector2D object is not null.
@@ -36,7 +41,7 @@ public class ChaosGameDescription {
    * Verifies that the given index is within the bounds of the given size.
    *
    * @param index is the index to verify.
-   * @param size is the size to verify.
+   * @param size  is the size to verify.
    * @throws IllegalArgumentException if the given index is out of bounds.
    */
   private void verifyWithinBounds(int index, int size) {
@@ -75,6 +80,7 @@ public class ChaosGameDescription {
       verifyNotNullTransform(listTransform);
     }
   }
+
   /**
    * Verifies that the given list of integers is not null, not empty and does not contain any null
    * objects.
@@ -115,10 +121,9 @@ public class ChaosGameDescription {
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
-    this.weights =  new ArrayList<>();
-    for (int i = 0; i < transforms.size(); i++) {
-      weights.add(1);
-    }
+    this.weights = new ArrayList<>(Collections.nCopies(transforms.size(), 1));
+    calculateWeightSum();
+
 
   }
 
@@ -129,7 +134,7 @@ public class ChaosGameDescription {
    * @param minCoords  is the minimum coordinates to use.
    * @param maxCoords  is the maximum coordinates to use.
    * @param transforms is the list of transforms to use.
-   * @param weights is the list of weights to use.
+   * @param weights    is the list of weights to use.
    * @throws IllegalArgumentException if the given minimum or maximum coordinates are null, if the
    *                                  given list of transforms is null, empty or contains null
    *                                  objects
@@ -143,7 +148,8 @@ public class ChaosGameDescription {
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
-    this.weights =  weights;
+    this.weights = weights;
+    calculateWeightSum();
 
   }
 
@@ -178,6 +184,7 @@ public class ChaosGameDescription {
 
   /**
    * Returns the type of transform in the ChaosGameDescription.
+   *
    * @return the type of transform in the ChaosGameDescription.
    */
   public String getTransformType() {
@@ -193,6 +200,7 @@ public class ChaosGameDescription {
 
   /**
    * Returns a list of string representations of the transforms.
+   *
    * @return a list of string representations of the transforms.
    */
   public List<String> getTransformsAsStringList() {
@@ -211,11 +219,12 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Checks if the given ChaosGameDescription object has the same values as this ChaosGameDescription.
+   * Checks if the given ChaosGameDescription object has the same values as this
+   * ChaosGameDescription.
    *
    * @param description the ChaosGameDescription to compare
-   * @return true if the given ChaosGameDescription has the same values as this ChaosGameDescription,
-   * false otherwise
+   * @return true if the given ChaosGameDescription has the same values as this
+   * ChaosGameDescription, false otherwise
    */
   public boolean equals(ChaosGameDescription description) {
     if (description == null) {
@@ -236,8 +245,8 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Returns the weight of the transform at the given index.
-   * Throws an IllegalArgumentException if the index is out of bounds.
+   * Returns the weight of the transform at the given index. Throws an IllegalArgumentException if
+   * the index is out of bounds.
    *
    * @param index the index of the transform.
    * @return the weight of the transform.
@@ -248,29 +257,28 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Sets the weight of the transform at the given index.
-   * Throws an IllegalArgumentException if the index is out of bounds.
+   * Sets the weight of the transform at the given index. Throws an IllegalArgumentException if the
+   * index is out of bounds.
    *
-   * @param index the index of the transform.
+   * @param index  the index of the transform.
    * @param weight the weight of the transform.
    */
   public void setWeight(int index, int weight) {
     verifyWithinBounds(index, weights.size());
     weights.set(index, weight);
-    for (int i = 0; i < weights.size(); i++) {
-      System.out.println(weights.get(i));
-    }
+    calculateWeightSum();
   }
 
   /**
-   * Sets the weights of the transforms, replacing the current list of weights.
-   * Throws an IllegalArgumentException if the list of weights is null, empty or contains null objects.
+   * Sets the weights of the transforms, replacing the current list of weights. Throws an
+   * IllegalArgumentException if the list of weights is null, empty or contains null objects.
    *
    * @param weights the list of weights.
    */
   public void setWeights(List<Integer> weights) {
     verifyWeightsNotNullAndNotEmpty(weights);
     this.weights = weights;
+    calculateWeightSum();
   }
 
   /**
@@ -288,12 +296,16 @@ public class ChaosGameDescription {
    * @return the sum of the weights of all the transforms.
    */
   public int sumOfWeights() {
-    int sum = 0;
-    for (int weight : weights) {
-      sum += weight;
-    }
-    return sum;
+    return weightSum;
   }
+
+  /**
+   * Recalculates the sum of the weights of all the transforms.
+   */
+  private void calculateWeightSum() {
+    weightSum = weights.stream().mapToInt(Integer::intValue).sum();
+  }
+
 
   /**
    * Returns the sum of the weights of all the transforms below the given index.
@@ -317,7 +329,7 @@ public class ChaosGameDescription {
    * @return the transform with the given weight.
    */
   public Transform2D getTransformWithWeight(int index) {
-    verifyWithinBounds(index, sumOfWeights());
+    verifyWithinBounds(index, weightSum);
     for (int i = 0; i < transforms.size(); i++) {
       if (index < sumOfWeightsBelowIndex(i + 1)) {
         return transforms.get(i);
