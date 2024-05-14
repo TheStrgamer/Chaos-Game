@@ -140,59 +140,7 @@ public class ChaosGameDescriptionFactory {
     return generateJulia(new Complex(0.42428198918101634, 0.14423276134020324));
   }
 
-  /**
-   * Creates a ChaosGameDescription object with randomly generated julia transforms. It can have up to 2 transforms.
-   *
-   * @return the ChaosGameDescription object.
-   */
-  private ChaosGameDescription createJuliaRandomDescription() {
-    Random random = new Random();
-    int transformCount = random.nextInt(2) + 1;
-    Complex[] complexes = new Complex[transformCount];
-    for (int i = 0; i < transformCount; i++) {
-      double real = random.nextDouble() * 3 - 1.5;
-      real = Math.round(real * 10000.0) / 10000.0;
-      double imaginary = random.nextDouble() * 3 - 1.5;
-      imaginary = Math.round(imaginary * 10000.0) / 10000.0;
-      complexes[i] = new Complex(real, imaginary);
-    }
-    return generateJulia(complexes);
-  }
 
-  /**
-   * Creates a ChaosGameDescription object with randomly generated affine transforms. It can have 2-4 transforms.
-   *
-   * @return the ChaosGameDescription object.
-   */
-  private ChaosGameDescription createAffineRandomDescription() {
-    Vector2D minCoords = new Vector2D(-6, -6);
-    Vector2D maxCoords = new Vector2D(6, 6);
-    List<Transform2D> transforms = new ArrayList<>();
-
-    Random random = new Random();
-    int transformCount = random.nextInt(3) + 2;
-    for (int i = 0; i < transformCount; i++) {
-      double a = random.nextDouble() * 2 - 1;
-      double b = random.nextDouble() * 2 - 1;
-      double c = random.nextDouble() * 2 - 1;
-      double d = random.nextDouble() * 2 - 1;
-      double e = random.nextDouble() * 4 - 2;
-      double f = random.nextDouble() * 4 - 2;
-
-      a = Math.round(a * 10000.0) / 10000.0;
-      b = Math.round(b * 10000.0) / 10000.0;
-      c = Math.round(c * 10000.0) / 10000.0;
-      d = Math.round(d * 10000.0) / 10000.0;
-      e = Math.round(e * 10000.0) / 10000.0;
-      f = Math.round(f * 10000.0) / 10000.0;
-
-      Matrix2x2 matrix = new Matrix2x2(a, b, c, d);
-      Vector2D vector = new Vector2D(e, f);
-      AffineTransform2D transform = new AffineTransform2D(matrix, vector);
-      transforms.add(transform);
-    }
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
-  }
 
   /**
    * Creates a ChaosGameDescription object with affine transforms. This description has been named "Diamond".
@@ -313,6 +261,60 @@ public class ChaosGameDescriptionFactory {
     Vector2D maxCoords = new Vector2D(1.6, 1.4);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
+  /**
+   * Creates a ChaosGameDescription object with randomly generated julia transforms. It can have up to 2 transforms.
+   *
+   * @return the ChaosGameDescription object.
+   */
+  private ChaosGameDescription createJuliaRandomDescription() {
+    Random random = new Random();
+    int transformCount = random.nextInt(2) + 1;
+    Complex[] complexes = new Complex[transformCount];
+    for (int i = 0; i < transformCount; i++) {
+      double real = random.nextDouble() * 3 - 1.5;
+      real = Math.round(real * 10000.0) / 10000.0;
+      double imaginary = random.nextDouble() * 3 - 1.5;
+      imaginary = Math.round(imaginary * 10000.0) / 10000.0;
+      complexes[i] = new Complex(real, imaginary);
+    }
+    return generateJulia(complexes);
+  }
 
+  /**
+   * Creates a ChaosGameDescription object with randomly generated affine transforms. It can have 2-4 transforms.
+   *
+   * @return the ChaosGameDescription object.
+   */
+  private ChaosGameDescription createAffineRandomDescription() {
+    Vector2D minCoords = new Vector2D(-6, -6);
+    Vector2D maxCoords = new Vector2D(6, 6);
+    List<Transform2D> transforms = new ArrayList<>();
+    List<Integer> weights = new ArrayList<>();
+
+    Random random = new Random();
+    int transformCount = random.nextInt(3) + 2;
+    for (int i = 0; i < transformCount; i++) {
+      double a = random.nextDouble() * 2 - 1;
+      double b = random.nextDouble() * 2 - 1;
+      double c = random.nextDouble() * 2 - 1;
+      double d = random.nextDouble() * 2 - 1;
+      double e = random.nextDouble() * 4 - 2;
+      double f = random.nextDouble() * 4 - 2;
+
+      a = Math.round(a * 10000.0) / 10000.0;
+      b = Math.round(b * 10000.0) / 10000.0;
+      c = Math.round(c * 10000.0) / 10000.0;
+      d = Math.round(d * 10000.0) / 10000.0;
+      e = Math.round(e * 10000.0) / 10000.0;
+      f = Math.round(f * 10000.0) / 10000.0;
+
+      Matrix2x2 matrix = new Matrix2x2(a, b, c, d);
+      Vector2D vector = new Vector2D(e, f);
+      AffineTransform2D transform = new AffineTransform2D(matrix, vector);
+      transforms.add(transform);
+      weights.add(random.nextInt(3)+1);
+    }
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
+  }
 
 }
