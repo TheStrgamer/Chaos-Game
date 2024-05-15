@@ -29,6 +29,9 @@ public class MainController {
   private int currentWidth = 800;
   private int currentHeight = 600;
 
+  private final int minCanvasWidth = 200;
+  private final int minCanvasHeight = 200;
+
 
   /**
    * Constructor for the MainController class.
@@ -40,15 +43,27 @@ public class MainController {
     stage.setTitle("Chaos Game");
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
-    chaosGame = new ChaosGame(currentDescription, currentWidth-30, currentHeight-100);
+    chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
 
     chaosGameController = new ChaosGameController(this, chaosGame);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 
-    stage.widthProperty().addListener((obs, oldVal, newVal) -> changeScale(newVal.intValue(), currentHeight));
-    stage.heightProperty().addListener((obs, oldVal, newVal) -> changeScale(currentWidth, newVal.intValue()));
+    stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+      if (newVal.intValue() < minCanvasWidth) {
+        stage.setWidth(minCanvasWidth);
+        return;
+      }
+      changeScale(newVal.intValue(), currentHeight);
+    });
+    stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+      if (newVal.intValue() < minCanvasHeight) {
+        stage.setHeight(minCanvasHeight);
+        return;
+      }
+      changeScale(currentWidth, newVal.intValue());
+    });
   }
 
 
@@ -69,8 +84,8 @@ public class MainController {
   }
 
   /**
-   * method for setting the current description of the Chaos Game.
-   * sets the change description combobox empty.
+   * method for setting the current description of the Chaos Game. sets the change description
+   * combobox empty.
    *
    * @param description the description to set as the current description.
    */
@@ -93,15 +108,12 @@ public class MainController {
 
   /**
    * Method changing the scale of the canvas and the description view.
-   *
    */
   private void changeScale(int width, int height) {
     this.currentWidth = width;
     this.currentHeight = height;
-    chaosGame.setCanvasSize(currentWidth-30, currentHeight-100);
-    modifyDescriptionController.setDescriptionSize(currentWidth-200, currentHeight-135);
+    chaosGameController.setCanvasSize(currentWidth - 30, currentHeight - 100);
+    modifyDescriptionController.setDescriptionSize(currentWidth - 200, currentHeight - 135);
   }
-
-
 
 }

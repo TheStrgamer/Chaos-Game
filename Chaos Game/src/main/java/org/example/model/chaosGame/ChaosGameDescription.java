@@ -183,9 +183,9 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Returns the type of transform in the ChaosGameDescription.
+   * Returns a string representation of the type of transform used in the description.
    *
-   * @return the type of transform in the ChaosGameDescription.
+   * @return the type of transform.
    */
   public String getTransformType() {
     Transform2D transform = transforms.get(0);
@@ -201,7 +201,7 @@ public class ChaosGameDescription {
   /**
    * Returns a list of string representations of the transforms.
    *
-   * @return a list of string representations of the transforms.
+   * @return a list of the transforms.
    */
   public List<String> getTransformsAsStringList() {
     List<String> transformsAsString = new ArrayList<>();
@@ -339,9 +339,9 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Returns a list of the transforms as a list.
+   * Returns the list of transforms in the description.
    *
-   * @return a list of the transforms as a list.
+   * @return a list of transforms.
    */
   public List<Transform2D> getTransformsAsList() {
     return new ArrayList<>(this.transforms);

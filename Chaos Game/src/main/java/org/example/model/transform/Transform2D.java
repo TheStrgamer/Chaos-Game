@@ -9,7 +9,19 @@ import org.example.model.math.Vector2D;
  */
 public interface Transform2D {
 
+  /**
+   * Transforms the given vector.
+   *
+   * @param vector the vector to transform
+   * @return the transformed vector
+   */
   Vector2D transform(Vector2D vector);
 
+  /**
+   * Checks if the given transform is equal to this transform.
+   *
+   * @param transform the transform to check
+   * @return true if the given transform is equal to this transform, false otherwise
+   */
   boolean equals(Transform2D transform);
 }

@@ -55,6 +55,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    *
    * @param mainController the main controller for the application. Used for switching between
    *                       views.
+   * @param description    the description of the Chaos Game.
    */
   public ModifyDescriptionController(MainController mainController,
       ChaosGameDescription description) {
@@ -94,7 +95,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for adding a new empty transform to the description.
+   * Method for adding a new empty transform to the description. If the current description is using
+   * julia transforms, it adds two transforms, one for each sign value.
    */
   public void addTransform() {
     if (currentDescription.getTransformType().equals("Julia")) {

@@ -24,6 +24,9 @@ public class ChaosGameController implements ChaosGameObserver {
 
   private final ImageFactory imageFactory;
 
+  private boolean autoRunOnDescriptionChange = false;
+  private int steps;
+
   /**
    * Constructor for the ChaosGameController class.
    *
@@ -40,22 +43,19 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Method for running the Chaos Game for a given number of iterations.
-   *
-   * @param iterations string representation of the number of iterations to run the Chaos Game for.
+   * Method for running the Chaos Game for a set number of iterations.
    */
-  public void runIterations(String iterations) {
-    int steps = getIterations(iterations);
+  public void runIterations() {
     chaosGame.runSteps(steps);
   }
 
   /**
-   * Method for running the Chaos Game for a given number of iterations.
+   * Method for running the Chaos Game for a set number of iterations.
    *
-   * @param steps the number of iterations to run the Chaos Game for.
+   * @param iterations the number of iterations to run the Chaos Game for.
    */
-  public void runIterations(int steps) {
-    chaosGame.runSteps(steps);
+  public void runIterations(int iterations) {
+    chaosGame.runSteps(iterations);
   }
 
   /**
@@ -78,6 +78,7 @@ public class ChaosGameController implements ChaosGameObserver {
 
   /**
    * Method for getting the layout of the Chaos Game view.
+   *
    * @return the layout of the Chaos Game view.
    */
   public VBox getLayout() {
@@ -91,12 +92,60 @@ public class ChaosGameController implements ChaosGameObserver {
     chaosGameView.setComboBoxEmpty();
   }
 
+  /**
+   * Method for clearing the canvas of the Chaos Game.
+   */
   public void clearCanvas() {
     chaosGame.clearCanvas();
   }
 
+  /**
+   * Method for setting the auto run on description change.
+   *
+   * @param autoRun true if the Chaos Game should run automatically when the description changes,
+   *                false otherwise.
+   */
+  public void setAutoRun(boolean autoRun) {
+    this.autoRunOnDescriptionChange = autoRun;
+  }
+
+  /**
+   * Method for setting the number of steps to run the Chaos Game.
+   *
+   * @param steps the number of steps to run the Chaos Game.
+   */
+  public void setSteps(int steps) {
+    this.steps = steps;
+  }
+
+  /**
+   * Method for setting the number of steps to run the Chaos Game.
+   *
+   * @param stepsString the number of steps to run the Chaos Game.
+   */
+  public void setSteps(String stepsString) {
+    this.steps = getIterations(stepsString);
+  }
+
+  /**
+   * Updates the canvas size of the Chaos Game. If auto run is true, it runst the chaos game.
+   *
+   * @param width  the width
+   * @param height the height
+   */
+  public void setCanvasSize(int width, int height) {
+    chaosGame.setCanvasSize(width, height);
+    if (autoRunOnDescriptionChange) {
+      runIterations(steps/5);
+
+    }
+  }
+
   @Override
   public void updateDescription(ChaosGameDescription description) {
+    if (autoRunOnDescriptionChange) {
+      runIterations();
+    }
   }
 
   @Override
