@@ -154,10 +154,10 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   private VBox vector2DToHBox(String name, String vector) {
-    VBox vBox = new VBox();
-    HBox content = new HBox();
+    VBox nameAndContentBox = new VBox();
     HBox nameLabelBox = new HBox();
     Label nameLabel = new Label(name);
+    HBox content = new HBox();
 
     TextField X0 = new TextField();
     TextField Y0 = new TextField();
@@ -194,8 +194,8 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     nameLabelBox.getChildren().add(nameLabel);
     content.getChildren().addAll(X0, Y0);
-    vBox.getChildren().addAll(nameLabelBox, content);
-    return vBox;
+    nameAndContentBox.getChildren().addAll(nameLabelBox, content);
+    return nameAndContentBox;
   }
 
   private VBox affineTransformToHBox(String transform, int index, boolean removable) {
@@ -259,14 +259,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox rightSide = new VBox();
     HBox weightBox = new HBox();
     Label weightLabel = new Label("Weight: ");
-    TextField weight = new TextField();
-    weight.setText(split[6].trim());
-    weight.textProperty().addListener((observable, oldValue, newValue) -> {
-      if (weight.getText().isEmpty()) {
-        return;
-      }
-      modifyDescriptionController.setWeight(index, weight.getText());
-    });
+    TextField weight = createWeightField(split[6].trim(), index);
     weightBox.getChildren().addAll(weightLabel, weight);
     rightSide.getChildren().add(weightBox);
 
@@ -317,18 +310,9 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     Label weightLabel = new Label("Weight: ");
     Label positiveWeightLabel = new Label("Pos: ");
-    TextField positiveWeight = new TextField();
+    TextField positiveWeight = createWeightField(split[2].trim(), index);
     Label negativeWeightLabel = new Label("Neg: ");
-    TextField negativeWeight = new TextField();
-    positiveWeight.setText(split[2]);
-    negativeWeight.setText(split[3]);
-
-    positiveWeight.textProperty().addListener((observable, oldValue, newValue) -> {
-      modifyDescriptionController.setWeight(index, positiveWeight.getText().trim());
-    });
-    negativeWeight.textProperty().addListener((observable, oldValue, newValue) -> {
-      modifyDescriptionController.setWeight(index + 1, negativeWeight.getText().trim());
-    });
+    TextField negativeWeight = createWeightField(split[3].trim(), index + 1);
 
     weightBox.getChildren().addAll(weightLabel, positiveWeightLabel, positiveWeight, negativeWeightLabel,
         negativeWeight);
@@ -374,6 +358,34 @@ public class ModifyDescriptionView implements PageViewInterface {
     editDescription.getChildren().remove(descriptionList);
     descriptionList = createDescriptionList();
     editDescription.getChildren().add(descriptionList);
+  }
+
+  /**
+   * Method for creating a textfield for the weight of a transform. Adds event listener that updates weights.
+   * @param text the text to set in the textfield.
+   * @param index the index of the transform in the list of transforms.
+   * @return the textfield for the weight of a transform.
+   */
+  public TextField createWeightField(String text, int index) {
+    TextField weight = new TextField();
+    weight.setText(text);
+    weight.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue.isEmpty()) {
+        return;
+      }
+      if (Integer.parseInt(newValue) == 0) {
+        weight.setText(oldValue);
+        return;
+      }
+      modifyDescriptionController.setWeight(index, newValue);
+    });
+    weight.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
+      if (!event.getCharacter().matches("[0-9]")) {
+        event.consume();
+      }
+    });
+
+    return weight;
   }
 
 
