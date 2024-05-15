@@ -72,3 +72,8 @@ HBox {
   -fx-font-size: 10px;
 }
 
+ColorPicker {
+  -fx-pref-width: 30px;
+
+}
+

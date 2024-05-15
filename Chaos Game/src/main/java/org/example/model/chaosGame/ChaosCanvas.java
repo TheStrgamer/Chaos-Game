@@ -168,9 +168,8 @@ public class ChaosCanvas {
     Vector2D indices = transformCoords(point);
 
     int newValue = getPixel(point) + value;
-    if (newValue >= 255) {
-      newValue = 255;
-    }
+    newValue = Math.min(newValue,755);
+
     canvas[(int) indices.getX1()][(int) indices.getX0()] = newValue;
 
   }

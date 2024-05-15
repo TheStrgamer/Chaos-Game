@@ -2,6 +2,7 @@ package org.example.view;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -81,6 +82,10 @@ public class ChaosGameView implements PageViewInterface {
     CheckBox autoRunOnDescriptionChange = new CheckBox("Auto run ");
     autoRunOnDescriptionChange.setOnAction(event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
+    colorPicker.setValue(javafx.scene.paint.Color.BLACK);
+
     VBox randomButtonLayout = new VBox();
     Button randomJulia = new Button("Random Julia Set");
     randomJulia.setOnAction(
@@ -101,7 +106,7 @@ public class ChaosGameView implements PageViewInterface {
     toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
 
     topBar.getChildren()
-        .addAll(iterationsField, runButton, clearButton, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
+        .addAll(iterationsField, runButton, clearButton,colorPicker, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
             toModifyDescription);
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
