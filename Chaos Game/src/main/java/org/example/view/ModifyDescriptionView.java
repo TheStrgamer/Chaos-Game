@@ -168,7 +168,7 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @return the HBox containing the vector.
    */
   private VBox vector2DToHBox(String name, String vector) {
-    VBox nameAndContentBox = new VBox();
+    VBox row = new VBox();
     HBox nameLabelBox = new HBox();
     Label nameLabel = new Label(name);
     HBox content = new HBox();
@@ -207,8 +207,8 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     nameLabelBox.getChildren().add(nameLabel);
     content.getChildren().addAll(X0, Y0);
-    nameAndContentBox.getChildren().addAll(nameLabelBox, content);
-    return nameAndContentBox;
+    row.getChildren().addAll(nameLabelBox, content);
+    return row;
   }
 
   private VBox affineTransformToHBox(String transform, int index, boolean removable) {
@@ -301,8 +301,6 @@ public class ModifyDescriptionView implements PageViewInterface {
     titleBox.setAlignment(Pos.CENTER);
     content.setAlignment(Pos.CENTER);
 
-    content.getChildren().addAll(real, imaginary);
-
     VBox rightSide = new VBox();
     HBox weightBox = new HBox();
 
@@ -392,7 +390,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   private TextField createNumberField(String text) {
     TextField field = new TextField();
     field.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
-      if (!event.getCharacter().matches("[0-9.]")) {
+      if (!event.getCharacter().matches("[0-9.-]")) {
         event.consume();
       }
     });
