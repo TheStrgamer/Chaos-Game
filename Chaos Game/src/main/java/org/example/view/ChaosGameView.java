@@ -40,7 +40,6 @@ public class ChaosGameView implements PageViewInterface {
     this.imageView = new ImageView();
     this.descriptionComboBox = new ComboBox<>();
     initializeComboBox();
-    imageView.setStyle("-fx-alignment: center;");
     iterationsField = new TextField();
     initializeIterationsField();
     layout = createLayout();
@@ -53,17 +52,15 @@ public class ChaosGameView implements PageViewInterface {
    * @return the layout of the Chaos Game page.
    */
   private VBox createLayout() {
-    System.out.println("I AM BORN");
     VBox layout = new VBox();
 
-    HBox buttonLayout = createTopBarLayout();
+    HBox topBar = createTopBarLayout();
     HBox imageViewHBox = new HBox();
 
     imageViewHBox.getChildren().add(this.imageView);
-    layout.getChildren().addAll(buttonLayout, imageViewHBox);
+    layout.getChildren().addAll(topBar, imageViewHBox);
 
-    //Style
-    imageViewHBox.setStyle("-fx-alignment: center;");
+    imageViewHBox.getStyleClass().add("imageView");
     return layout;
   }
 
@@ -74,7 +71,7 @@ public class ChaosGameView implements PageViewInterface {
    */
   private HBox createTopBarLayout() {
 
-    HBox buttonLayout = new HBox();
+    HBox topBar = new HBox();
     Button runButton = new Button("Run");
     runButton.setOnAction(event -> chaosGameController.runIterations());
 
@@ -103,15 +100,14 @@ public class ChaosGameView implements PageViewInterface {
     Button toModifyDescription = new Button("Modify/Save/Load Description");
     toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
 
-    buttonLayout.getChildren()
+    topBar.getChildren()
         .addAll(iterationsField, runButton, clearButton, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
             toModifyDescription);
-    randomJulia.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
-    randomAffine.setStyle("-fx-pref-width: 125px; -fx-font-size: 10px;");
-    buttonLayout.setStyle(
-        "-fx-alignment: center; -fx-spacing: 5px; -fx-background-color: #b2b2b2; -fx-padding: 5px; -fx-pref-height: 60px; -fx-border-width: 0 0 2 0; -fx-border-color: #9b9b9b; -fx-border-style: solid;");
+    randomJulia.getStyleClass().add("randomButton");
+    randomAffine.getStyleClass().add("randomButton");
+    topBar.getStyleClass().add("topBar");
 
-    return buttonLayout;
+    return topBar;
   }
 
   /**
@@ -165,7 +161,7 @@ public class ChaosGameView implements PageViewInterface {
   private void initializeIterationsField() {
     iterationsField.setPromptText("Iterations");
     iterationsField.setText("1000000");
-    iterationsField.setStyle("-fx-pref-width: 100px;");
+    iterationsField.getStyleClass().add("iterationsField");
     iterationsField.textProperty().addListener((observable, oldValue, newValue) -> {
       if (!newValue.matches("\\d*")) {
         iterationsField.setText(oldValue);

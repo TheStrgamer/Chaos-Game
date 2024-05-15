@@ -73,6 +73,11 @@ public class MainController {
     scenes = new ArrayList<>();
     scenes.add(new Scene(chaosGameController.getLayout(), originalWidth, originalHeight));
     scenes.add(new Scene(modifyDescriptionController.getLayout(), originalWidth, originalHeight));
+
+    scenes.get(0).getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
+    scenes.get(1).getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
   }
 
 
@@ -97,6 +102,7 @@ public class MainController {
    */
   private void switchToSceneView(int index) {
     stage.setScene(scenes.get(index));
+    stage.show();
   }
 
   /**

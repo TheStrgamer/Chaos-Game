@@ -44,8 +44,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
->>>>>>> Chaos Game/src/main/java/org/example/view/ModifyDescriptionView.java
-   * Method for getting the layout of the Modify Description page.
+   * the layout of the Modify Description page.
    *
    * @return the layout of the Modify Description page.
    */
@@ -53,7 +52,9 @@ public class ModifyDescriptionView implements PageViewInterface {
     if (layout == null) {
       layout = createLayout();
     }
-    return layout;
+    VBox newLayout = new VBox();
+    newLayout.getChildren().add(layout);
+    return newLayout;
   }
 
   /**
@@ -69,21 +70,24 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");
-    descriptionList = createDescriptionList();
+    fillDescriptionList();
     editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
 
     content.getChildren().addAll(sideBar, editDescription);
     layout.getChildren().addAll(topBar, content);
 
     //Style
-    topBar.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px;  -fx-padding: 10px; -fx-background-color: #8f8f8f;");
-    editDescription.setStyle(
-        "-fx-alignment: center; -fx-spacing: 10px; -fx-background-color: #bfbfbf;");
+    topBar.getStyleClass().add("topBar");
+    editDescription.getStyleClass().add("editDescription");
 
     return layout;
   }
 
+  /**
+   * Method for creating the sidebar of the Modify Description page.
+   *
+   * @return the sidebar of the Modify Description page.
+   */
   private VBox createSideBar() {
     VBox readAndWrite = new VBox();
 
@@ -94,11 +98,16 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
     saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
-    readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
+    readAndWrite.getStyleClass().add("sideBar");
 
     return readAndWrite;
   }
 
+  /**
+   * Method for creating the button layout of the Modify Description page.
+   *
+   * @return the button layout of the Modify Description page.
+   */
   private HBox createButtonLayout() {
     HBox buttonLayout = new HBox();
     Button toChaosGame = new Button("To Chaos Game");
@@ -113,26 +122,28 @@ public class ModifyDescriptionView implements PageViewInterface {
 
   }
 
-
-  private ListView<VBox> createDescriptionList() {
-    ListView<VBox> desctiptionListView = new ListView<>();
-
+  /**
+   * Method for filling the description listview with input fields for editing the current description.
+   *
+   */
+  private void fillDescriptionList() {
+    descriptionList.getItems().clear();
     VBox minCoords = vector2DToHBox("Min Coords: ", modifyDescriptionController.getMinCoords());
     VBox maxCoords = vector2DToHBox("Max Coords: ", modifyDescriptionController.getMaxCoords());
 
-    desctiptionListView.getItems().addAll(minCoords, maxCoords);
+    descriptionList.getItems().addAll(minCoords, maxCoords);
     int index = 0;
     List<String> transforms = modifyDescriptionController.getTransforms();
     if (modifyDescriptionController.getTransformType().equals("Affine")) {
       for (String transform : transforms) {
         VBox affine = affineTransformToHBox(transform, index, transforms.size() > 1);
-        desctiptionListView.getItems().add(affine);
+        descriptionList.getItems().add(affine);
         index++;
       }
     } else {
       for (String transform : transforms) {
         VBox julia = juliaTransformToHBox(transform, index, transforms.size() > 1);
-        desctiptionListView.getItems().add(julia);
+        descriptionList.getItems().add(julia);
         index += 2;
       }
     }
@@ -140,18 +151,13 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox addTransform = new VBox();
     HBox addTransformButtonBox = new HBox();
     Button addTransformButton = new Button("Add Transform");
-    addTransformButtonBox.setAlignment(Pos.CENTER);
     addTransformButtonBox.getChildren().add(addTransformButton);
 
     addTransformButton.setOnAction(event -> modifyDescriptionController.addTransform());
     addTransform.getChildren().add(addTransformButtonBox);
-    desctiptionListView.getItems().add(addTransform);
+    descriptionList.getItems().add(addTransform);
 
-    desctiptionListView.setPrefSize(600, 500);
-    desctiptionListView.setStyle(
-        "-fx-background-color: #bfbfbf; -fx-alignment: center; -fx-spacing: 10px;");
-
-    return desctiptionListView;
+    descriptionList.getStyleClass().add("descriptionList");
 
   }
 
@@ -162,7 +168,6 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param height the new height of the description list.
    */
   public void changeDescriptionListScale(int width, int height) {
-    descriptionList.setPrefSize(width, height);
   }
 
   /**
@@ -183,8 +188,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     TextField X0 = createNumberField(split[0]);
     TextField Y0 = createNumberField(split[1]);
 
-    nameLabelBox.setAlignment(Pos.CENTER);
-    content.setAlignment(Pos.CENTER);
+    content.getStyleClass().add("content");
 
     X0.setStyle("-fx-pref-width: 80px;");
     Y0.setStyle("-fx-pref-width: 80px;");
@@ -271,7 +275,7 @@ public class ModifyDescriptionView implements PageViewInterface {
       Button removeTransform = new Button("Remove Transform");
       removeTransform.setOnAction(
           event -> modifyDescriptionController.removeAffineTransform(index));
-      removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
+      removeTransform.getStyleClass().add("removeTransform");
 
       rightSide.getChildren().add(removeTransform);
     }
@@ -292,6 +296,13 @@ public class ModifyDescriptionView implements PageViewInterface {
     return row;
   }
 
+  /**
+   * Method for converting a julia transform to a HBox used in the ui to allow for editing.
+   * @param transform the transform to convert.
+   * @param index the index of the transform in the list of transforms.
+   * @param removable if the transform is removable.
+   * @return the VBox containing the julia transform.
+   */
   private VBox juliaTransformToHBox(String transform, int index, boolean removable) {
     VBox row = new VBox();
     HBox content = new HBox();
@@ -303,36 +314,24 @@ public class ModifyDescriptionView implements PageViewInterface {
     TextField real = createNumberField(split[0]);
     TextField imaginary = createNumberField(split[1]);
 
-    titleBox.setAlignment(Pos.CENTER);
-    content.setAlignment(Pos.CENTER);
-
     VBox rightSide = new VBox();
     HBox weightBox = new HBox();
 
-    Label weightLabel = new Label("Weight: ");
-    Label positiveWeightLabel = new Label("Pos: ");
+    Label weightLabel = new Label("Weight +/-: ");
     TextField positiveWeight = createWeightField(split[2].trim(), index);
-    Label negativeWeightLabel = new Label("Neg: ");
     TextField negativeWeight = createWeightField(split[3].trim(), index + 1);
 
-    weightBox.getChildren().addAll(weightLabel, positiveWeightLabel, positiveWeight, negativeWeightLabel,
-        negativeWeight);
+    weightBox.getChildren()
+        .addAll(weightLabel, positiveWeight, negativeWeight);
     rightSide.getChildren().add(weightBox);
 
     if (removable) {
       Button removeTransform = new Button("Remove Transform");
       removeTransform.setOnAction(event -> modifyDescriptionController.removeJuliaTransform(index));
-      removeTransform.setStyle("-fx-font-size: 10px; -fx-background-color: #cb7f7f; width: 90px;");
+      removeTransform.getStyleClass().add("removeTransform");
       rightSide.getChildren().add(removeTransform);
     }
-    content.setStyle("-fx-spacing: 10px;");
-    rightSide.setStyle("-fx-spacing: 4px;");
-    weightBox.setStyle("-fx-spacing: 4px;");
-    positiveWeight.setStyle("-fx-pref-width: 40px; -fx-pref-height: 10px;  -fx-font-size: 8px;");
-    negativeWeight.setStyle("-fx-pref-width: 40px; -fx-pref-height: 10px;  -fx-font-size: 8px;");
-    positiveWeightLabel.setStyle("-fx-font-size: 10px;");
-    negativeWeightLabel.setStyle("-fx-font-size: 10px;");
-    weightLabel.setStyle("-fx-font-size: 10px;");
+    content.getStyleClass().add("content");
 
     ChangeListener<String> listener = (observable, oldValue, newValue) -> {
       if (real.getText().isEmpty() || imaginary.getText().isEmpty()) {
@@ -354,15 +353,14 @@ public class ModifyDescriptionView implements PageViewInterface {
    * Method for updating the description list. It updates based on the current description.
    */
   public void updateDescriptionList() {
-    if (editDescription == null || !editDescription.getChildren().contains(descriptionList)) {return;}
-    editDescription.getChildren().remove(descriptionList);
-    descriptionList = createDescriptionList();
-    editDescription.getChildren().add(descriptionList);
+    fillDescriptionList();
   }
 
   /**
-   * Method for creating a textfield for the weight of a transform. Adds event listener that updates weights.
-   * @param text the text to set in the textfield.
+   * Method for creating a textfield for the weight of a transform. Adds event listener that updates
+   * weights.
+   *
+   * @param text  the text to set in the textfield.
    * @param index the index of the transform in the list of transforms.
    * @return the textfield for the weight of a transform.
    */
@@ -384,12 +382,14 @@ public class ModifyDescriptionView implements PageViewInterface {
         event.consume();
       }
     });
+    weight.getStyleClass().add("weight");
 
     return weight;
   }
 
   /**
    * Method for creating a text field that only accepts numbers and periods.
+   *
    * @return the created text field.
    */
   private TextField createNumberField(String text) {
@@ -400,8 +400,6 @@ public class ModifyDescriptionView implements PageViewInterface {
       }
     });
     field.setText(text.trim());
-    field.setStyle("-fx-pref-width: 80px;");
-
     return field;
   }
 

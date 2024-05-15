@@ -1,0 +1,74 @@
+
+.topBar {
+  -fx-alignment: center;
+  -fx-spacing: 5px;
+  -fx-background-color: #b2b2b2;
+  -fx-padding: 5px;
+  -fx-pref-height: 60px;
+  -fx-border-width: 0 0 2 0;
+  -fx-border-color: #9b9b9b;
+  -fx-border-style: solid;
+}
+
+.sideBar {
+  -fx-alignment: center;
+  -fx-spacing: 10px;
+  -fx-background-color: #bfbfbf;
+}
+
+.editDescription {
+  -fx-alignment: center;
+  -fx-spacing: 10px;
+  -fx-background-color: #bfbfbf;
+}
+
+.descriptionList {
+  -fx-pref-width: 600px;
+  -fx-pref-height: 500px;
+  -fx-background-color: #bfbfbf;
+  -fx-alignment: center;
+  -fx-spacing: 10px;
+}
+
+TextField {
+  -fx-pref-width: 60px;
+}
+
+.content {
+  -fx-spacing: 10px;
+  -fx-alignment: center;
+}
+
+HBox {
+  -fx-spacing: 6px;
+  -fx-alignment: center;
+}
+
+.removeTransform {
+  -fx-font-size: 10px;
+  -fx-background-color: #cb7f7f;
+  width: 90px;
+}
+
+.plus {
+  -fx-font-size: 20px;
+}
+
+.weight {
+  -fx-font-size: 10px;
+  -fx-pref-width: 35px;
+}
+
+.imageView {
+  -fx-alignment: center;
+}
+
+.iterationsField {
+  -fx-pref-width: 100px;
+}
+
+.randomButton {
+  -fx-pref-width: 125px;
+  -fx-font-size: 10px;
+}
+
