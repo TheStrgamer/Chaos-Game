@@ -88,6 +88,7 @@ public class ChaosGameView implements PageViewInterface {
           mainController.setCurrentDescription("JuliaRandom");
           setComboBoxEmpty();
         });
+
     Button randomAffine = new Button("Random Affine Set");
     randomAffine.setOnAction(
         event -> {
@@ -97,12 +98,13 @@ public class ChaosGameView implements PageViewInterface {
 
     randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
 
-    Button toModifyDescription = new Button("Modify/Save/Load Description");
+    Button toModifyDescription = new Button("Modify Description");
     toModifyDescription.setOnAction(event -> mainController.openModifyPopup());
 
     topBar.getChildren()
         .addAll(iterationsField, runButton, clearButton, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
             toModifyDescription);
+
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
     topBar.getStyleClass().add("topBar");
@@ -132,14 +134,14 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
-   * Method for setting the combo box to empty.
+   * Sets the combo box to empty.
    */
   public void setComboBoxEmpty() {
     descriptionComboBox.setValue(null);
   }
 
   /**
-   * Method for initializing the combo box.
+   * Initializes the combo box.
    */
   private void initializeComboBox() {
     descriptionComboBox.setValue("Sierpinski");
@@ -156,7 +158,7 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
-   * Method for initializing the iterations field.
+   * Initializes the iterations field.
    */
   private void initializeIterationsField() {
     iterationsField.setPromptText("Iterations");

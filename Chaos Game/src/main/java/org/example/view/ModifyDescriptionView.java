@@ -1,12 +1,9 @@
 package org.example.view;
 
-import java.awt.event.KeyListener;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 
 import java.util.List;
-import javafx.beans.value.ChangeListener;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -29,8 +26,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   private final MainController mainController;
   private VBox layout;
 
-  private ListView<VBox> descriptionList = new ListView<>();
-  private VBox editDescription;
+  private final ListView<VBox> descriptionList = new ListView<>();
 
   /**
    * Constructor for the ModifyDescriptionView class.
@@ -70,7 +66,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox layout = new VBox();
     HBox content = new HBox();
 
-    editDescription = new VBox();
+    VBox editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");
     fillDescriptionList();
     editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
@@ -85,8 +81,8 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Method for filling the description listview with input fields for editing the current description.
-   *
+   * Method for filling the description listview with input fields for editing the current
+   * description.
    */
   private void fillDescriptionList() {
     descriptionList.getItems().clear();
@@ -111,7 +107,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     }
 
     VBox addTransform = new VBox();
-    HBox addTransformButtonBox = new HBox();
+    HBox addTransformButtonBox = new HBox(new Button("Add Transform"));
     Button addTransformButton = new Button("Add Transform");
     addTransformButtonBox.getChildren().add(addTransformButton);
 
@@ -119,6 +115,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     addTransform.getChildren().add(addTransformButtonBox);
     descriptionList.getItems().add(addTransform);
 
+    //Style
     descriptionList.getStyleClass().add("descriptionList");
 
   }
@@ -132,8 +129,7 @@ public class ModifyDescriptionView implements PageViewInterface {
    */
   private VBox vector2DToHBox(String name, String vector) {
     VBox row = new VBox();
-    HBox nameLabelBox = new HBox();
-    Label nameLabel = new Label(name);
+    HBox nameLabelBox = new HBox(new Label(name));
     HBox content = new HBox();
 
     String[] split = vector.split(",");
@@ -141,7 +137,6 @@ public class ModifyDescriptionView implements PageViewInterface {
     TextField X0 = createNumberField(split[0]);
     TextField Y0 = createNumberField(split[1]);
 
-    content.getStyleClass().add("content");
 
     EventHandler<KeyEvent> listener = event -> {
       if (X0.getText().isEmpty() || Y0.getText().isEmpty()) {
@@ -164,16 +159,21 @@ public class ModifyDescriptionView implements PageViewInterface {
     X0.setOnKeyPressed(listener);
     Y0.setOnKeyPressed(listener);
 
-    nameLabelBox.getChildren().add(nameLabel);
     content.getChildren().addAll(X0, Y0);
     row.getChildren().addAll(nameLabelBox, content);
+
+    //Style
+    content.getStyleClass().add("content");
+
     return row;
   }
 
   /**
-   * Creates a VBox that represents an affine transform in the UI. The transform can be edited, and deleted.
+   * Creates a VBox that represents an affine transform in the UI. The transform can be edited, and
+   * deleted.
+   *
    * @param transform the transform to convert.
-   * @param index the index of the transform in the list of transforms.
+   * @param index     the index of the transform in the list of transforms.
    * @param removable if the transform is removable.
    * @return the VBox containing the affine transform.
    */
@@ -181,10 +181,9 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox row = new VBox();
     HBox content = new HBox();
 
-    HBox titleBox = new HBox();
-    Label title = new Label("Transform: ");
-    String[] split = transform.split(",");
+    HBox titleBox = new HBox(new Label("Transform: "));
 
+    String[] split = transform.split(",");
     TextField a00 = createNumberField(split[0]);
     TextField a01 = createNumberField(split[1]);
     TextField a10 = createNumberField(split[2]);
@@ -210,24 +209,19 @@ public class ModifyDescriptionView implements PageViewInterface {
     a.setOnKeyPressed(listener);
     b.setOnKeyPressed(listener);
 
-    VBox matrixCol1 = new VBox();
-    VBox matrixCol2 = new VBox();
-    matrixCol1.getChildren().addAll(a00, a10);
-    matrixCol2.getChildren().addAll(a01, a11);
+    VBox matrixCol1 = new VBox(a00, a10);
+    VBox matrixCol2 = new VBox(a01, a11);
 
     Label plus = new Label("+");
 
-    VBox vector = new VBox();
-    vector.getChildren().addAll(a, b);
+    VBox vector = new VBox(a, b);
 
-    VBox rightSide = new VBox();
-    HBox weightBox = new HBox();
+
     Label weightLabel = new Label("Weight: ");
     TextField weight = createWeightField(split[6].trim(), index);
+    HBox weightBox = new HBox(weightLabel, weight);
 
-    weightBox.getChildren().addAll(weightLabel, weight);
-    rightSide.getChildren().add(weightBox);
-
+    VBox rightSide = new VBox(weightBox);
     if (removable) {
       Button removeTransform = new Button("Remove Transform");
       removeTransform.setOnAction(
@@ -236,20 +230,20 @@ public class ModifyDescriptionView implements PageViewInterface {
 
       rightSide.getChildren().add(removeTransform);
     }
-
-    plus.getStyleClass().add("plus");
-
     content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector, rightSide);
-    titleBox.getChildren().add(title);
     row.getChildren().addAll(titleBox, content);
+
+    //Style
+    plus.getStyleClass().add("plus");
 
     return row;
   }
 
   /**
    * Method for converting a julia transform to a HBox used in the ui to allow for editing.
+   *
    * @param transform the transform to convert.
-   * @param index the index of the transform in the list of transforms.
+   * @param index     the index of the transform in the list of transforms.
    * @param removable if the transform is removable.
    * @return the VBox containing the julia transform.
    */
@@ -257,23 +251,20 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox row = new VBox();
     HBox content = new HBox();
 
-    HBox titleBox = new HBox();
-    Label title = new Label("Transform: ");
+    HBox titleBox = new HBox(new Label("Transform: "));
     String[] split = transform.split(",");
 
     TextField real = createNumberField(split[0]);
     TextField imaginary = createNumberField(split[1]);
 
-    VBox rightSide = new VBox();
-    HBox weightBox = new HBox();
+
 
     Label weightLabel = new Label("Weight +/-: ");
     TextField positiveWeight = createWeightField(split[2].trim(), index);
     TextField negativeWeight = createWeightField(split[3].trim(), index + 1);
 
-    weightBox.getChildren()
-        .addAll(weightLabel, positiveWeight, negativeWeight);
-    rightSide.getChildren().add(weightBox);
+    HBox weightBox = new HBox(weightLabel, positiveWeight, negativeWeight);
+    VBox rightSide = new VBox(weightBox);
 
     if (removable) {
       Button removeTransform = new Button("Remove Transform");
@@ -281,7 +272,6 @@ public class ModifyDescriptionView implements PageViewInterface {
       removeTransform.getStyleClass().add("removeTransform");
       rightSide.getChildren().add(removeTransform);
     }
-    content.getStyleClass().add("content");
 
     EventHandler<KeyEvent> listener = event -> {
       if (real.getText().isEmpty() || imaginary.getText().isEmpty()) {
@@ -296,20 +286,23 @@ public class ModifyDescriptionView implements PageViewInterface {
     imaginary.setOnKeyPressed(listener);
 
     content.getChildren().addAll(real, imaginary, rightSide);
-    titleBox.getChildren().add(title);
     row.getChildren().addAll(titleBox, content);
+
+    //Style
+    content.getStyleClass().add("content");
+
     return row;
   }
 
   /**
-   * Method for updating the description list. It updates based on the current description.
+   * Updates the description list. It updates based on the current description.
    */
   public void updateDescriptionList() {
     fillDescriptionList();
   }
 
   /**
-   * Method for creating a textfield for the weight of a transform. Adds event listener that updates
+   * Creates a textfield for the weight of a transform. Adds event listener that updates
    * weights.
    *
    * @param text  the text to set in the textfield.
@@ -319,19 +312,21 @@ public class ModifyDescriptionView implements PageViewInterface {
   public TextField createWeightField(String text, int index) {
     TextField weight = new TextField();
     weight.setText(text);
-    weight.setOnAction(event -> modifyDescriptionController.setWeight(index,weight.getText()));
+    weight.setOnAction(event -> modifyDescriptionController.setWeight(index, weight.getText()));
     weight.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
       if (!event.getCharacter().matches("[0-9]")) {
         event.consume();
       }
     });
+
+    //Style
     weight.getStyleClass().add("weight");
 
     return weight;
   }
 
   /**
-   * Method for creating a text field that only accepts numbers and periods.
+   * Creates a text field that only accepts numbers and periods.
    *
    * @return the created text field.
    */

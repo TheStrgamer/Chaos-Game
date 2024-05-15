@@ -1,7 +1,6 @@
 package org.example.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
@@ -24,8 +23,6 @@ public class MainController {
   private ChaosGameDescription currentDescription;
   private final ChaosGame chaosGame;
 
-  private final Stage stage;
-
   private final int originalWidth = 800;
   private final int originalHeight = 600;
 
@@ -44,7 +41,6 @@ public class MainController {
    * @param stage the primary stage for the application.
    */
   public MainController(Stage stage) {
-    this.stage = stage;
     stage.setTitle("Chaos Game");
 
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
@@ -54,6 +50,7 @@ public class MainController {
     chaosGameController = new ChaosGameController(this, chaosGame);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     popupController = new PopupController();
+
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 
@@ -72,25 +69,20 @@ public class MainController {
       changeScale(currentWidth, newVal.intValue());
     });
     chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
-    chaosGameScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-  }
-
-  /**
-   * Method for switching to the Chaos Game view.
-   */
-  public void switchToChaosGameView() {
     stage.setScene(chaosGameScene);
+    chaosGameScene.getStylesheets().add(
+        Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
   }
 
   /**
-   * Method for switching to the Modify Description view.
+   * Opens the modify description popup.
    */
   public void openModifyPopup() {
-    popupController.showPopup(modifyDescriptionController.getLayout(), 350, 400);
+    popupController.showPopup(modifyDescriptionController.getLayout(), 375, 500);
   }
 
   /**
-   * method for setting the current description of the Chaos Game. sets the change description
+   * Sets the current description of the Chaos Game. sets the change description
    * combobox empty.
    *
    * @param description the description to set as the current description.
@@ -102,7 +94,7 @@ public class MainController {
   }
 
   /**
-   * Method for setting the current description of the Chaos Game from a string.
+   * Sets the current description of the Chaos Game from a string.
    *
    * @param description the name of the description to set as the current description.
    */
@@ -113,7 +105,7 @@ public class MainController {
 
 
   /**
-   * Method changing the scale of the canvas and the description view.
+   * Changes the scale of the canvas and the description view.
    */
   private void changeScale(int width, int height) {
     this.currentWidth = width;
