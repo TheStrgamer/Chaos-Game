@@ -20,6 +20,7 @@ public class ChaosGameView implements PageViewInterface {
 
   private final ChaosGameController chaosGameController;
   private final MainController mainController;
+  private VBox layout;
 
   private final ImageView imageView;
   private final TextField iterationsField;
@@ -42,6 +43,7 @@ public class ChaosGameView implements PageViewInterface {
     imageView.setStyle("-fx-alignment: center;");
     iterationsField = new TextField();
     initializeIterationsField();
+    layout = createLayout();
 
   }
 
@@ -51,6 +53,7 @@ public class ChaosGameView implements PageViewInterface {
    * @return the layout of the Chaos Game page.
    */
   private VBox createLayout() {
+    System.out.println("I AM BORN");
     VBox layout = new VBox();
 
     HBox buttonLayout = createTopBarLayout();
@@ -117,7 +120,10 @@ public class ChaosGameView implements PageViewInterface {
    * @return the layout of the Chaos Game page.
    */
   public VBox getLayout() {
-    return createLayout();
+    if (layout == null) {
+      layout = createLayout();
+    }
+    return layout;
   }
 
   /**

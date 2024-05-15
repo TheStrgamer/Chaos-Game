@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
@@ -32,6 +34,8 @@ public class MainController {
   private final int minCanvasWidth = 200;
   private final int minCanvasHeight = 200;
 
+  List<Scene> scenes;
+
 
   /**
    * Constructor for the MainController class.
@@ -41,6 +45,7 @@ public class MainController {
   public MainController(Stage stage) {
     this.stage = stage;
     stage.setTitle("Chaos Game");
+
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
@@ -64,6 +69,10 @@ public class MainController {
       }
       changeScale(currentWidth, newVal.intValue());
     });
+
+    scenes = new ArrayList<>();
+    scenes.add(new Scene(chaosGameController.getLayout(), originalWidth, originalHeight));
+    scenes.add(new Scene(modifyDescriptionController.getLayout(), originalWidth, originalHeight));
   }
 
 
@@ -71,16 +80,23 @@ public class MainController {
    * Method for switching to the Chaos Game view.
    */
   public void switchToChaosGameView() {
-    Scene scene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
-    stage.setScene(scene);
+    switchToSceneView(0);
   }
 
   /**
    * Method for switching to the Modify Description view.
    */
   public void switchToDescriptionView() {
-    Scene scene = new Scene(modifyDescriptionController.getLayout(), originalWidth, originalHeight);
-    stage.setScene(scene);
+    switchToSceneView(1);
+  }
+
+  /**
+   * Method for switching to a specific scene.
+   *
+   * @param index the index of the scene to switch to.
+   */
+  private void switchToSceneView(int index) {
+    stage.setScene(scenes.get(index));
   }
 
   /**

@@ -22,6 +22,7 @@ public class ModifyDescriptionView implements PageViewInterface {
 
   private final ModifyDescriptionController modifyDescriptionController;
   private final MainController mainController;
+  private VBox layout;
 
   private ListView<VBox> descriptionList = new ListView<>();
   private VBox editDescription;
@@ -36,6 +37,7 @@ public class ModifyDescriptionView implements PageViewInterface {
       MainController mainController) {
     this.modifyDescriptionController = modifyDescriptionController;
     this.mainController = mainController;
+    layout = createLayout();
 
 
 
@@ -48,7 +50,10 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @return the layout of the Modify Description page.
    */
   public VBox getLayout() {
-    return createLayout();
+    if (layout == null) {
+      layout = createLayout();
+    }
+    return layout;
   }
 
   /**
