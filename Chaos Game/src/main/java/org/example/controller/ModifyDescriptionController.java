@@ -145,17 +145,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for changing the size of the description list.
-   *
-   * @param width  the width of the description list.
-   * @param height the height of the description list.
-   */
-  public void setDescriptionSize(int width, int height) {
-    modifyDescriptionView.changeDescriptionListScale(width, height);
-  }
-
-
-  /**
    * Method for listening to changes in the description of the Chaos Game.
    *
    * @param description the description of the Chaos Game.
@@ -219,6 +208,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
       return;
     }
     minCoords = newMinCoords;
+    createDescription();
   }
 
   /**
@@ -242,6 +232,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
       return;
     }
     maxCoords = newMaxCoords;
+    createDescription();
   }
 
   /**
@@ -268,6 +259,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
     transforms.set(index, newTransform1);
     transforms.set(index + 1, newTransform2);
+    createDescription();
   }
 
   /**
@@ -295,6 +287,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
       return;
     }
     transforms.set(index, newTransform);
+    createDescription();
   }
 
   /**

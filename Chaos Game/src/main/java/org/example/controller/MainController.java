@@ -18,6 +18,7 @@ public class MainController {
 
   private final ChaosGameController chaosGameController;
   private final ModifyDescriptionController modifyDescriptionController;
+  private final PopupController popupController;
   private final ChaosGameDescriptionFactory chaosGameDescriptionFactory;
 
   private ChaosGameDescription currentDescription;
@@ -34,7 +35,7 @@ public class MainController {
   private final int minCanvasWidth = 200;
   private final int minCanvasHeight = 200;
 
-  List<Scene> scenes;
+  Scene chaosGameScene;
 
 
   /**
@@ -52,6 +53,7 @@ public class MainController {
 
     chaosGameController = new ChaosGameController(this, chaosGame);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
+    popupController = new PopupController();
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 
@@ -69,40 +71,22 @@ public class MainController {
       }
       changeScale(currentWidth, newVal.intValue());
     });
-
-    scenes = new ArrayList<>();
-    scenes.add(new Scene(chaosGameController.getLayout(), originalWidth, originalHeight));
-    scenes.add(new Scene(modifyDescriptionController.getLayout(), originalWidth, originalHeight));
-
-    scenes.get(0).getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-
-    scenes.get(1).getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-
+    chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
+    chaosGameScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
   }
-
 
   /**
    * Method for switching to the Chaos Game view.
    */
   public void switchToChaosGameView() {
-    switchToSceneView(0);
+    stage.setScene(chaosGameScene);
   }
 
   /**
    * Method for switching to the Modify Description view.
    */
-  public void switchToDescriptionView() {
-    switchToSceneView(1);
-  }
-
-  /**
-   * Method for switching to a specific scene.
-   *
-   * @param index the index of the scene to switch to.
-   */
-  private void switchToSceneView(int index) {
-    stage.setScene(scenes.get(index));
-    stage.show();
+  public void openModifyPopup() {
+    popupController.showPopup(modifyDescriptionController.getLayout(), 350, 400);
   }
 
   /**
@@ -135,7 +119,6 @@ public class MainController {
     this.currentWidth = width;
     this.currentHeight = height;
     chaosGameController.setCanvasSize(currentWidth - 30, currentHeight - 100);
-    modifyDescriptionController.setDescriptionSize(currentWidth - 200, currentHeight - 135);
   }
 
 }

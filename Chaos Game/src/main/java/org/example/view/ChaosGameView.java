@@ -98,7 +98,7 @@ public class ChaosGameView implements PageViewInterface {
     randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
 
     Button toModifyDescription = new Button("Modify/Save/Load Description");
-    toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
+    toModifyDescription.setOnAction(event -> mainController.openModifyPopup());
 
     topBar.getChildren()
         .addAll(iterationsField, runButton, clearButton, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
