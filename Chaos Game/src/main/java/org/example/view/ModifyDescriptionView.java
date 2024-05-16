@@ -65,7 +65,6 @@ public class ModifyDescriptionView implements PageViewInterface {
   private VBox createLayout() {
     VBox layout = new VBox();
     HBox content = new HBox();
-    HBox topBar = createButtonLayout();
 
     VBox editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");

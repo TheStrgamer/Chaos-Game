@@ -38,8 +38,8 @@
 }
 
 .descriptionList {
-  -fx-pref-width: 600px;
-  -fx-pref-height: 500px;
+  -fx-pref-width: 800px;
+  -fx-pref-height: 800px;
   -fx-background-color: #bfbfbf;
   -fx-alignment: center;
   -fx-spacing: 10px;

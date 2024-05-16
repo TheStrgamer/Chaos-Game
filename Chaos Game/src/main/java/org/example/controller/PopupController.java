@@ -31,9 +31,30 @@ public class PopupController {
       popupStage.close();
     }
     Scene popupScene = new Scene(layout, width, height);
+    setSceneSizeLimit(popupScene, width, (int) (height*0.75));
     popupScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
     popupStage.setScene(popupScene);
     popupStage.show();
+  }
+
+  /**
+   * Method for setting the minimum size of a scene.
+   *
+   * @param scene the scene to set the minimum size for.
+   * @param minWidth the minimum width of the scene.
+   * @param minHeight the minimum height of the scene.
+   */
+  private void setSceneSizeLimit(Scene scene, int minWidth, int minHeight) {
+    scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+      if (newVal.intValue() < minWidth) {
+        scene.getWindow().setWidth(minWidth);
+      }
+    });
+    scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+      if (newVal.intValue() < minHeight) {
+        scene.getWindow().setHeight(minHeight);
+      }
+    });
   }
 
 }

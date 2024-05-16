@@ -35,7 +35,7 @@ public class ChaosGameView implements PageViewInterface {
 
   private final ComboBox<String> descriptionComboBox;
 
-  private List<VBox> extraElements = new ArrayList<>();
+  private final List<VBox> extraElements = new ArrayList<>();
 
   private HBox topBar;
   private VBox sideBar;
@@ -136,12 +136,12 @@ public class ChaosGameView implements PageViewInterface {
     Button newAffine = createButton("New Affine", event -> {
       mainController.setCurrentDescription("EmptyAffine");
       setComboBoxEmpty();
-      mainController.switchToDescriptionView();
+      mainController.openModifyPopup();
     });
     Button newJulia = createButton("New Julia", event -> {
       mainController.setCurrentDescription("EmptyJulia");
       setComboBoxEmpty();
-      mainController.switchToDescriptionView();
+      mainController.openModifyPopup();
     });
     VBox newJuliaAffine = new VBox(newAffine, newJulia);
     newAffine.getStyleClass().add("newButton");
@@ -156,9 +156,7 @@ public class ChaosGameView implements PageViewInterface {
 
     Button saveImage = new Button("Save Image");
 
-    Button burgerMenu = createButton("☰", event -> {
-      sideBar.setVisible(!sideBar.isVisible());
-    });
+    Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()));
     burgerMenu.getStyleClass().add("burgerMenuButton");
 
     extraElements.add(randomButtonLayout);
