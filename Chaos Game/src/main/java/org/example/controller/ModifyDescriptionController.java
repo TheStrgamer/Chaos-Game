@@ -203,6 +203,9 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
+    if (x0 >= maxCoords.getX0() || x1 >= maxCoords.getX1()) {
+      return;
+    }
     Vector2D newMinCoords = new Vector2D(x0, x1);
     if (minCoords.equals(newMinCoords)) {
       return;
@@ -224,7 +227,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
-    if (x0 < minCoords.getX0() || x1 < minCoords.getX1()) {
+    if (x0 <= minCoords.getX0() || x1 <= minCoords.getX1()) {
       return;
     }
     Vector2D newMaxCoords = new Vector2D(x0, x1);
