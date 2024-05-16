@@ -31,8 +31,8 @@ public class MainController {
   private int currentWidth = 800;
   private int currentHeight = 600;
 
-  private final int minCanvasWidth = 200;
-  private final int minCanvasHeight = 200;
+  private final int minCanvasWidth = 600;
+  private final int minCanvasHeight = 350;
 
   List<Scene> scenes;
 
@@ -92,7 +92,10 @@ public class MainController {
    * Method for switching to the Modify Description view.
    */
   public void switchToDescriptionView() {
-    switchToSceneView(1);
+    Scene scene = new Scene(modifyDescriptionController.getLayout(), originalWidth, originalHeight);
+    scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+    stage.setScene(scene);
+
   }
 
   /**
@@ -137,5 +140,10 @@ public class MainController {
     chaosGameController.setCanvasSize(currentWidth, currentHeight);
     modifyDescriptionController.setDescriptionSize(currentWidth - 200, currentHeight - 100);
   }
+
+  public int getCurrentWidth() {
+    return currentWidth;
+  }
+
 
 }

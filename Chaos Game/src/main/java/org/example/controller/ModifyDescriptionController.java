@@ -151,7 +151,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    * @param height the height of the description list.
    */
   public void setDescriptionSize(int width, int height) {
-    modifyDescriptionView.changeDescriptionListScale(width, height);
+    modifyDescriptionView.changeDescriptionListScale(width-200, height-100);
   }
 
 

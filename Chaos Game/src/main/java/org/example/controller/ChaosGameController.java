@@ -28,7 +28,7 @@ public class ChaosGameController implements ChaosGameObserver {
   private boolean autoRunOnDescriptionChange = false;
   private int steps;
 
-  private Color color = new Color(0, 0, 0, 1);
+  private Color color = new Color(1, 0, 0, 1);
 
   /**
    * Constructor for the ChaosGameController class.
@@ -148,11 +148,11 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
-    chaosGame.setCanvasSize(width-30, height-150);
+    chaosGame.setCanvasSize(width-30, height-75);
     if (autoRunOnDescriptionChange) {
       runIterations(steps/5);
-
     }
+    chaosGameView.adjustButtonLayout(width);
   }
 
   /**

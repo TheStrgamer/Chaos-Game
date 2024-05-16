@@ -83,7 +83,16 @@ HBox {
 }
 
 .randomButton {
-  -fx-pref-width: 125px;
+  -fx-pref-width: 100px;
+  -fx-font-size: 10px;
+}
+.newButton {
+  -fx-pref-width: 80px;
+  -fx-font-size: 10px;
+}
+
+.saveLoadButton {
+  -fx-pref-width: 100px;
   -fx-font-size: 10px;
 }
 
@@ -110,5 +119,6 @@ ComboBox {
 Button:hover {
   -fx-background-color: #dddddd;
 }
+
 
 

@@ -66,14 +66,13 @@ public class ModifyDescriptionView implements PageViewInterface {
     VBox layout = new VBox();
     HBox content = new HBox();
     HBox topBar = createButtonLayout();
-    VBox sideBar = createSideBar();
 
     editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");
     fillDescriptionList();
     editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
 
-    content.getChildren().addAll(sideBar, editDescription);
+    content.getChildren().add(editDescription);
     layout.getChildren().addAll(topBar, content);
 
     //Style
@@ -83,25 +82,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     return layout;
   }
 
-  /**
-   * Method for creating the sidebar of the Modify Description page.
-   *
-   * @return the sidebar of the Modify Description page.
-   */
-  private VBox createSideBar() {
-    VBox readAndWrite = new VBox();
 
-    Label descriptionLabel = new Label("Description: ");
-    Button readFromFile = new Button("Read description from file");
-    Button saveToFile = new Button("Save current description");
-    readAndWrite.getChildren().addAll(descriptionLabel, readFromFile, saveToFile);
-
-    readFromFile.setOnAction(event -> modifyDescriptionController.readFromFile());
-    saveToFile.setOnAction(event -> modifyDescriptionController.saveToFile());
-    readAndWrite.getStyleClass().add("sideBar");
-
-    return readAndWrite;
-  }
 
   /**
    * Method for creating the button layout of the Modify Description page.
