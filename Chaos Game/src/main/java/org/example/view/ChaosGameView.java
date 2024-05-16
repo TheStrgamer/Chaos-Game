@@ -53,7 +53,7 @@ public class ChaosGameView implements PageViewInterface {
     this.imageView = new ImageView();
     this.descriptionComboBox = new ComboBox<>();
     initializeComboBox();
-    iterationsField = new TextField();
+    iterationsField = new WeightAndIterationsField("1000000");
     initializeIterationsField();
     layout = createLayout();
     createExtraUiElements();
@@ -68,6 +68,7 @@ public class ChaosGameView implements PageViewInterface {
    */
   private VBox createLayout() {
     VBox layout = new VBox();
+    layout.getStyleClass().add("chaosGameLayout");
 
     sideBar = new VBox();
     sideBar.getStyleClass().add("sideBar");
@@ -96,7 +97,6 @@ public class ChaosGameView implements PageViewInterface {
 
     Button clearButton = createButton("Clear", event -> chaosGameController.clearCanvas());
 
-
     Label autoRunLabel = new Label("Auto Run:");
     CheckBox autoRunOnDescriptionChange = new CheckBox();
     autoRunOnDescriptionChange.setOnAction(
@@ -107,13 +107,14 @@ public class ChaosGameView implements PageViewInterface {
     colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
     colorPicker.setValue(Color.RED);
 
-
-    topBar.getChildren().addAll(iterationsField, runButton, clearButton, autoRunLabel, autoRunOnDescriptionChange, colorLabel, colorPicker,
-        descriptionComboBox);
+    topBar.getChildren()
+        .addAll(iterationsField, runButton, clearButton, autoRunLabel, autoRunOnDescriptionChange,
+            descriptionComboBox, colorLabel, colorPicker
+            );
   }
 
   /**
-   * Fills the extra UI elements with buttons that can be in topbar, or in sidebar, depending on the
+   * Fills the extra UI elements with buttons that can be in topBar, or in sideBar, depending on the
    * width of the window.
    */
   public void createExtraUiElements() {
@@ -218,14 +219,8 @@ public class ChaosGameView implements PageViewInterface {
    */
   private void initializeIterationsField() {
     iterationsField.setPromptText("Iterations");
-    iterationsField.setText("1000000");
     iterationsField.getStyleClass().add("iterationsField");
-    iterationsField.textProperty().addListener((observable, oldValue, newValue) -> {
-      if (!newValue.matches("\\d*")) {
-        iterationsField.setText(oldValue);
-      }
-      chaosGameController.setSteps(iterationsField.getText());
-    });
+    iterationsField.textProperty().addListener((observable, oldValue, newValue) -> chaosGameController.setSteps(iterationsField.getText()));
     chaosGameController.setSteps(iterationsField.getText());
   }
 

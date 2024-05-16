@@ -59,9 +59,9 @@ public class ChaosGame {
    * @param steps the steps to verify
    * @throws IllegalArgumentException if the given steps is less than or equal to zero
    */
-  private void verifyStepsMoreThanZero(int steps) {
-    if (steps <= 0) {
-      throw new IllegalArgumentException("Steps need to be more than 0");
+  private void verifyStepsPositive(int steps) {
+    if (steps < 0) {
+      throw new IllegalArgumentException("Steps need to be more than or equal to 0");
     }
   }
 
@@ -188,7 +188,7 @@ public class ChaosGame {
    * @param steps is the number of steps to run.
    */
   public void runSteps(int steps) {
-    verifyStepsMoreThanZero(steps);
+    verifyStepsPositive(steps);
     int sumOfWeights = description.sumOfWeights();
     for (int i = 0; i < steps; i++) {
       try {

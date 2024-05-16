@@ -134,8 +134,8 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     String[] split = vector.split(",");
 
-    TextField X0 = createNumberField(split[0]);
-    TextField Y0 = createNumberField(split[1]);
+    TextField X0 = new DoubleNumberField(split[0]);
+    TextField Y0 = new DoubleNumberField(split[1]);
 
 
     EventHandler<KeyEvent> listener = event -> {
@@ -184,12 +184,12 @@ public class ModifyDescriptionView implements PageViewInterface {
     HBox titleBox = new HBox(new Label("Transform: "));
 
     String[] split = transform.split(",");
-    TextField a00 = createNumberField(split[0]);
-    TextField a01 = createNumberField(split[1]);
-    TextField a10 = createNumberField(split[2]);
-    TextField a11 = createNumberField(split[3]);
-    TextField a = createNumberField(split[4]);
-    TextField b = createNumberField(split[5]);
+    TextField a00 = new DoubleNumberField(split[0]);
+    TextField a01 = new DoubleNumberField(split[1]);
+    TextField a10 = new DoubleNumberField(split[2]);
+    TextField a11 = new DoubleNumberField(split[3]);
+    TextField a = new DoubleNumberField(split[4]);
+    TextField b = new DoubleNumberField(split[5]);
 
     EventHandler<KeyEvent> listener = event -> {
       if (a00.getText().isEmpty() || a01.getText().isEmpty() || a10.getText().isEmpty()
@@ -254,8 +254,8 @@ public class ModifyDescriptionView implements PageViewInterface {
     HBox titleBox = new HBox(new Label("Transform: "));
     String[] split = transform.split(",");
 
-    TextField real = createNumberField(split[0]);
-    TextField imaginary = createNumberField(split[1]);
+    TextField real = new DoubleNumberField(split[0]);
+    TextField imaginary = new DoubleNumberField(split[1]);
 
 
 
@@ -302,43 +302,21 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Creates a textfield for the weight of a transform. Adds event listener that updates
-   * weights.
+   * Creates a TextField for the weight of a transform. Adds event listener that updates
+   * weights. Uses the WeightAndIterationsField class.
    *
-   * @param text  the text to set in the textfield.
+   * @param text  the text to set in the TextField.
    * @param index the index of the transform in the list of transforms.
-   * @return the textfield for the weight of a transform.
+   * @return the TextField for the weight of a transform.
    */
   public TextField createWeightField(String text, int index) {
-    TextField weight = new TextField();
-    weight.setText(text);
+    TextField weight = new WeightAndIterationsField(text.trim());
     weight.setOnAction(event -> modifyDescriptionController.setWeight(index, weight.getText()));
-    weight.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
-      if (!event.getCharacter().matches("[0-9]")) {
-        event.consume();
-      }
-    });
 
     //Style
     weight.getStyleClass().add("weight");
 
     return weight;
-  }
-
-  /**
-   * Creates a text field that only accepts numbers and periods.
-   *
-   * @return the created text field.
-   */
-  private TextField createNumberField(String text) {
-    TextField field = new TextField();
-    field.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
-      if (!event.getCharacter().matches("[0-9.-]")) {
-        event.consume();
-      }
-    });
-    field.setText(text.trim());
-    return field;
   }
 
 

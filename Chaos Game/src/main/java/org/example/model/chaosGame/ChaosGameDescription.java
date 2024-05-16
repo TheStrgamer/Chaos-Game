@@ -3,7 +3,6 @@ package org.example.model.chaosGame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.example.model.transform.AffineTransform2D;
@@ -208,11 +207,13 @@ public class ChaosGameDescription {
 
     if (getTransformType().equals("Julia")) {
       for (int i = 0; i < transforms.size(); i += 2) {
-        transformsAsString.add(transforms.get(i).toString() + ", " + weights.get(i) + ", " + weights.get(i + 1));
+        transformsAsString.add(
+            transforms.get(i).toString() + ", " + weights.get(i) + ", " + weights.get(i + 1));
       }
     } else {
       for (Transform2D transform : transforms) {
-        transformsAsString.add(transform.toString()+ ", " + weights.get(transforms.indexOf(transform)));
+        transformsAsString.add(
+            transform.toString() + ", " + weights.get(transforms.indexOf(transform)));
       }
     }
     return transformsAsString;
@@ -236,12 +237,8 @@ public class ChaosGameDescription {
     if (transforms.size() != description.transforms.size()) {
       return false;
     }
-    for (int i = 0; i < transforms.size(); i++) {
-      if (!transforms.get(i).equals(description.transforms.get(i))) {
-        return false;
-      }
-    }
-    return true;
+    return IntStream.range(0, transforms.size())
+        .allMatch(i -> transforms.get(i).equals(description.transforms.get(i)));
   }
 
   /**
@@ -314,7 +311,7 @@ public class ChaosGameDescription {
    * @return the sum of the weights of all the transforms below the given index.
    */
   public int sumOfWeightsBelowIndex(int index) {
-    verifyWithinBounds(index, weights.size()+1);
+    verifyWithinBounds(index, weights.size() + 1);
     int sum = 0;
     for (int i = 0; i < index; i++) {
       sum += getWeight(i);
@@ -353,12 +350,11 @@ public class ChaosGameDescription {
    * @return a string representation of the ChaosGameDescription object.
    */
   public String toString() {
-    StringBuilder result = new StringBuilder(getTransformType() + "    #Transform type\n");
-    result.append(minCoords).append("    #minimum coordinates\n");
-    result.append(maxCoords).append("    #maximum coordinates\n");
-    for (Transform2D transform : transforms) {
-      result.append(transform).append("    #transform\n");
-    }
-    return result.toString();
+    return String.format("%s    #Transform type\n", getTransformType())
+        + String.format("%s    #minimum coordinates\n", minCoords)
+        + String.format("%s    #maximum coordinates\n", maxCoords)
+        + transforms.stream()
+        .map(transform -> transform.toString() + "    #transform\n")
+        .collect(Collectors.joining());
   }
 }

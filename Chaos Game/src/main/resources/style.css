@@ -1,4 +1,7 @@
-
+.chaosGameLayout
+{
+  -fx-alignment: top-center;
+}
 .topBar {
   -fx-alignment: center;
   -fx-spacing: 5px;
@@ -45,7 +48,7 @@
   -fx-spacing: 10px;
 }
 
-TextField {
+TextField, DoubleNumberField {
   -fx-pref-width: 60px;
 }
 
@@ -56,6 +59,9 @@ TextField {
 
 HBox {
   -fx-spacing: 6px;
+  -fx-alignment: center;
+}
+VBox {
   -fx-alignment: center;
 }
 
