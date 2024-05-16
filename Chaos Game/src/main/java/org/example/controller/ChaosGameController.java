@@ -2,6 +2,7 @@ package org.example.controller;
 
 
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.chaosGame.ChaosGame;
 
@@ -26,6 +27,8 @@ public class ChaosGameController implements ChaosGameObserver {
 
   private boolean autoRunOnDescriptionChange = false;
   private int steps;
+
+  private Color color = new Color(1, 0, 0, 1);
 
   /**
    * Constructor for the ChaosGameController class.
@@ -119,6 +122,17 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
+   * Method for setting the color of the Chaos Game.
+   *
+   * @param color the color to set.
+   */
+  public void setColor(Color color) {
+    this.color = color;
+    refreshImage();
+  }
+
+
+  /**
    * Method for setting the number of steps to run the Chaos Game.
    *
    * @param stepsString the number of steps to run the Chaos Game.
@@ -134,13 +148,25 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
-    chaosGame.setCanvasSize(width, height);
+    chaosGame.setCanvasSize(width-30, height-75);
     if (autoRunOnDescriptionChange) {
       runIterations(steps/5);
-
     }
+    chaosGameView.adjustButtonLayout(width);
   }
 
+  /**
+   * Refreshes the image of the Chaos Game. Used when the canvas is updated, or the color is changed.
+   */
+  private void refreshImage() {
+    chaosGameView.setImage(imageFactory.createImage(chaosGame.getCanvas(),color));
+  }
+
+  /**
+   * Updates the description of the Chaos Game.
+   *
+   * @param description the new description.
+   */
   @Override
   public void updateDescription(ChaosGameDescription description) {
     if (autoRunOnDescriptionChange) {
@@ -148,8 +174,13 @@ public class ChaosGameController implements ChaosGameObserver {
     }
   }
 
+  /**
+   * Updates the canvas of the Chaos Game.
+   *
+   * @param canvas the new canvas.
+   */
   @Override
   public void updateCanvas(ChaosCanvas canvas) {
-    chaosGameView.setImage(imageFactory.createImage(canvas));
+    chaosGameView.setImage(imageFactory.createImage(canvas,color));
   }
 }

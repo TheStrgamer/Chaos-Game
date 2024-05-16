@@ -198,7 +198,7 @@ public class ChaosGame {
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint, 5);
+        canvas.setPixel(currentPoint, 10);
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }

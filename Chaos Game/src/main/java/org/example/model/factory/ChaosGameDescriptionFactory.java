@@ -34,8 +34,11 @@ public class ChaosGameDescriptionFactory {
       case "Diamond" -> createDiamondDescription();
       case "Plant" -> createPlantDescription();
       case "Flower" -> createFlowerDescription();
+      case "Snake" -> createSnakeDescription();
       case "JuliaRandom" -> createJuliaRandomDescription();
       case "AffineRandom" -> createAffineRandomDescription();
+      case "EmptyAffine" -> createEmptyAffineDescription();
+      case "EmptyJulia" -> createEmptyJuliaDescription();
       default -> throw new IllegalArgumentException("Invalid description type");
     };
   }
@@ -219,6 +222,35 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Snake".
+   *
+   * @return the ChaosGameDescription object.
+   */
+  public ChaosGameDescription createSnakeDescription() {
+    Vector2D minCoords = new Vector2D(-1, -6);
+    Vector2D maxCoords = new Vector2D(3, 0);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Matrix2x2 matrix1 = new Matrix2x2(-0.99, -0.04, 0.29, 0.71);
+    Vector2D vector1 = new Vector2D(1.35, -1.90);
+    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
+
+    Matrix2x2 matrix2 = new Matrix2x2(-0.58, -0.51, 0.05, 0.5);
+    Vector2D vector2 = new Vector2D(-0.09, -0.07);
+    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
+
+    Matrix2x2 matrix3 = new Matrix2x2(0.79, 0.53, -0.41, 0.20);
+    Vector2D vector3 = new Vector2D(1.78, -1.93);
+    AffineTransform2D transform3 = new AffineTransform2D(matrix3, vector3);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+    transforms.add(transform3);
+
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  /**
    * Generates a ChaosGameDescription with a julia transform for the given complex number.
    *
    * @param c is the complex number to use.
@@ -317,4 +349,37 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
+  /**
+   * Creates an empty affine description, with default values.
+   * @return the ChaosGameDescription object.
+   */
+  public ChaosGameDescription createEmptyAffineDescription() {
+    Vector2D minCoords = new Vector2D(-1, -1);
+    Vector2D maxCoords = new Vector2D(1, 1);
+    Matrix2x2 matrix = new Matrix2x2(1, 0, 0, 1);
+    Vector2D vector = new Vector2D(0, 0);
+    AffineTransform2D transform = new AffineTransform2D(matrix, vector);
+    List<Transform2D> transforms = new ArrayList<>();
+    transforms.add(transform);
+    List<Integer> weights = new ArrayList<>();
+    weights.add(1);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
+  }
+
+  /**
+   * Creates an empty julia description, with default values.
+   * @return the ChaosGameDescription object.
+   */
+  public ChaosGameDescription createEmptyJuliaDescription() {
+    Vector2D minCoords = new Vector2D(-1, -1);
+    Vector2D maxCoords = new Vector2D(1, 1);
+    Complex c = new Complex(0, 0);
+    JuliaTransform transformPos = new JuliaTransform(c, 1);
+    JuliaTransform transformNeg = new JuliaTransform(c, -1);
+    List<Transform2D> transforms = new ArrayList<>(List.of(transformPos, transformNeg));
+    List<Integer> weights = new ArrayList<>();
+    weights.add(1);
+    weights.add(1);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
+  }
 }

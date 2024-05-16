@@ -65,6 +65,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   private VBox createLayout() {
     VBox layout = new VBox();
     HBox content = new HBox();
+    HBox topBar = createButtonLayout();
 
     VBox editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");
@@ -81,7 +82,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Method for filling the description listview with input fields for editing the current
+   * Fills the description listview with input fields for editing the current
    * description.
    */
   private void fillDescriptionList() {
@@ -107,7 +108,7 @@ public class ModifyDescriptionView implements PageViewInterface {
     }
 
     VBox addTransform = new VBox();
-    HBox addTransformButtonBox = new HBox(new Button("Add Transform"));
+    HBox addTransformButtonBox = new HBox();
     Button addTransformButton = new Button("Add Transform");
     addTransformButtonBox.getChildren().add(addTransformButton);
 

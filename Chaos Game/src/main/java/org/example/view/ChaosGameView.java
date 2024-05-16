@@ -1,13 +1,21 @@
 package org.example.view;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import org.example.controller.MainController;
 import org.example.controller.ChaosGameController;
 
@@ -27,6 +35,11 @@ public class ChaosGameView implements PageViewInterface {
 
   private final ComboBox<String> descriptionComboBox;
 
+  private List<VBox> extraElements = new ArrayList<>();
+
+  private HBox topBar;
+  private VBox sideBar;
+
 
   /**
    * Constructor for the ChaosGameView class.
@@ -43,21 +56,30 @@ public class ChaosGameView implements PageViewInterface {
     iterationsField = new TextField();
     initializeIterationsField();
     layout = createLayout();
+    createExtraUiElements();
 
   }
 
   /**
-   * Method for creating the layout of the Chaos Game page.
+   * Creates the layout of the Chaos Game page. The layout consists of a top bar, an image view, and
+   * a sidebar that can be toggled on or off.
    *
    * @return the layout of the Chaos Game page.
    */
   private VBox createLayout() {
     VBox layout = new VBox();
 
-    HBox topBar = createTopBarLayout();
-    HBox imageViewHBox = new HBox();
+    sideBar = new VBox();
+    sideBar.getStyleClass().add("sideBar");
+    sideBar.setVisible(false);
+    topBar = new HBox();
+    topBar.getStyleClass().add("topBar");
+    fillTopBarDefaultElements();
 
-    imageViewHBox.getChildren().add(this.imageView);
+    AnchorPane imageViewHBox = new AnchorPane();
+    AnchorPane.setRightAnchor(sideBar, 0.0);
+
+    imageViewHBox.getChildren().addAll(this.imageView, sideBar);
     layout.getChildren().addAll(topBar, imageViewHBox);
 
     imageViewHBox.getStyleClass().add("imageView");
@@ -65,51 +87,87 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
-   * Method for creating the top bar layout of the Chaos Game page.
-   *
-   * @return the layout of the Chaos Game page.
+   * Fills the top bar with default elements. These elements are always in the top bar, regardless
+   * of the width of the window.
    */
-  private HBox createTopBarLayout() {
+  private void fillTopBarDefaultElements() {
 
-    HBox topBar = new HBox();
-    Button runButton = new Button("Run");
-    runButton.setOnAction(event -> chaosGameController.runIterations());
+    Button runButton = createButton("Run", event -> chaosGameController.runIterations());
 
-    Button clearButton = new Button("Clear");
-    clearButton.setOnAction(event -> chaosGameController.clearCanvas());
+    Button clearButton = createButton("Clear", event -> chaosGameController.clearCanvas());
 
-    CheckBox autoRunOnDescriptionChange = new CheckBox("Auto run ");
-    autoRunOnDescriptionChange.setOnAction(event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
-    VBox randomButtonLayout = new VBox();
-    Button randomJulia = new Button("Random Julia Set");
-    randomJulia.setOnAction(
-        event -> {
-          mainController.setCurrentDescription("JuliaRandom");
-          setComboBoxEmpty();
-        });
+    Label autoRunLabel = new Label("Auto Run:");
+    CheckBox autoRunOnDescriptionChange = new CheckBox();
+    autoRunOnDescriptionChange.setOnAction(
+        event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
-    Button randomAffine = new Button("Random Affine Set");
-    randomAffine.setOnAction(
-        event -> {
-          mainController.setCurrentDescription("AffineRandom");
-          setComboBoxEmpty();
-        });
+    Label colorLabel = new Label("Color:");
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
+    colorPicker.setValue(Color.RED);
 
-    randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
 
-    Button toModifyDescription = new Button("Modify Description");
-    toModifyDescription.setOnAction(event -> mainController.openModifyPopup());
+    topBar.getChildren().addAll(iterationsField, runButton, clearButton, autoRunLabel, autoRunOnDescriptionChange, colorLabel, colorPicker,
+        descriptionComboBox);
+  }
 
-    topBar.getChildren()
-        .addAll(iterationsField, runButton, clearButton, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
-            toModifyDescription);
+  /**
+   * Fills the extra UI elements with buttons that can be in topbar, or in sidebar, depending on the
+   * width of the window.
+   */
+  public void createExtraUiElements() {
 
+    Button randomJulia = createButton("Random Julia", event -> {
+      mainController.setCurrentDescription("JuliaRandom");
+      setComboBoxEmpty();
+    });
+    Button randomAffine = createButton("Random Affine", event -> {
+      mainController.setCurrentDescription("AffineRandom");
+      setComboBoxEmpty();
+    });
+    VBox randomButtonLayout = new VBox(randomJulia, randomAffine);
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
-    topBar.getStyleClass().add("topBar");
 
-    return topBar;
+    Button toModifyDescription = createButton("Modify Description",
+        event -> mainController.openModifyPopup());
+
+    Button newAffine = createButton("New Affine", event -> {
+      mainController.setCurrentDescription("EmptyAffine");
+      setComboBoxEmpty();
+      mainController.switchToDescriptionView();
+    });
+    Button newJulia = createButton("New Julia", event -> {
+      mainController.setCurrentDescription("EmptyJulia");
+      setComboBoxEmpty();
+      mainController.switchToDescriptionView();
+    });
+    VBox newJuliaAffine = new VBox(newAffine, newJulia);
+    newAffine.getStyleClass().add("newButton");
+    newJulia.getStyleClass().add("newButton");
+
+    Button saveDescription = new Button("Save Description");
+    Button loadDescription = new Button("Load Description");
+
+    VBox saveLoadLayout = new VBox(saveDescription, loadDescription);
+    saveDescription.getStyleClass().add("saveLoadButton");
+    loadDescription.getStyleClass().add("saveLoadButton");
+
+    Button saveImage = new Button("Save Image");
+
+    Button burgerMenu = createButton("☰", event -> {
+      sideBar.setVisible(!sideBar.isVisible());
+    });
+    burgerMenu.getStyleClass().add("burgerMenuButton");
+
+    extraElements.add(randomButtonLayout);
+    extraElements.add(new VBox(toModifyDescription));
+    extraElements.add(newJuliaAffine);
+    extraElements.add(saveLoadLayout);
+    extraElements.add(new VBox(saveImage));
+    extraElements.add(new VBox(burgerMenu));
+
   }
 
   /**
@@ -125,7 +183,7 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
-   * Method for setting the image of the Chaos Game page.
+   * Sets the image of the Chaos Game page.
    *
    * @param image the image to set.
    */
@@ -147,7 +205,7 @@ public class ChaosGameView implements PageViewInterface {
     descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
         .addAll("Sierpinski", "Barnsley", "Julia", "Julia2", "Julia3", "Diamond", "Plant",
-            "Flower");
+            "Flower", "Snake");
     descriptionComboBox.setOnAction(
         event -> {
           if (descriptionComboBox.getValue() != null) {
@@ -171,6 +229,70 @@ public class ChaosGameView implements PageViewInterface {
       chaosGameController.setSteps(iterationsField.getText());
     });
     chaosGameController.setSteps(iterationsField.getText());
+  }
+
+  /**
+   * Method for creating a button with the given text and event handler.
+   *
+   * @param text         the text of the button.
+   * @param eventHandler the event handler of the button.
+   * @return the created button.
+   */
+  private Button createButton(String text, EventHandler<ActionEvent> eventHandler) {
+    Button button = new Button(text);
+    button.setOnAction(eventHandler);
+    return button;
+  }
+
+  /**
+   * Adjusts which buttons are in the top bar and which are in the sidebar depending on the width of
+   * the window.
+   *
+   * @param width the width of the window.
+   */
+  public void adjustButtonLayout(int width) {
+    clearBars();
+    fillTopBarDefaultElements();
+    sideBar.setVisible(false);
+
+    int widthPerElement = 90;
+    int defaultElementsCount = 7;
+    boolean shouldAddSideBar = false;
+
+    for (int i = 0; i < extraElements.size() - 1; i++) {
+      if (shouldAddToTopBar(i, width, widthPerElement, defaultElementsCount)) {
+        topBar.getChildren().add(extraElements.get(i));
+      } else {
+        shouldAddSideBar = true;
+        sideBar.getChildren().add(extraElements.get(i));
+      }
+    }
+    if (shouldAddSideBar) {
+      topBar.getChildren().add(extraElements.get(extraElements.size() - 1));
+    }
+  }
+
+  /**
+   * Clears the top bar and the sidebar.
+   */
+  private void clearBars() {
+    topBar.getChildren().clear();
+    sideBar.getChildren().clear();
+  }
+
+  /**
+   * Checks if an element should be added to the top bar. If not, it should be added to the
+   * sidebar.
+   *
+   * @param index                the index of the element
+   * @param width                the width of the window
+   * @param widthPerElement      the width per element
+   * @param defaultElementsCount the number of default elements in the top bar
+   * @return true if the element should be added to the top bar, false otherwise
+   */
+  private boolean shouldAddToTopBar(int index, int width, int widthPerElement,
+      int defaultElementsCount) {
+    return widthPerElement * (index + defaultElementsCount + 1) < width;
   }
 
 

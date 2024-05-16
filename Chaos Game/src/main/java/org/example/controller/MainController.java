@@ -29,8 +29,8 @@ public class MainController {
   private int currentWidth = 800;
   private int currentHeight = 600;
 
-  private final int minCanvasWidth = 200;
-  private final int minCanvasHeight = 200;
+  private final int minCanvasWidth = 600;
+  private final int minCanvasHeight = 350;
 
   Scene chaosGameScene;
 
@@ -110,7 +110,9 @@ public class MainController {
   private void changeScale(int width, int height) {
     this.currentWidth = width;
     this.currentHeight = height;
-    chaosGameController.setCanvasSize(currentWidth - 30, currentHeight - 100);
+    chaosGameController.setCanvasSize(currentWidth, currentHeight);
+    modifyDescriptionController.setDescriptionSize(currentWidth - 200, currentHeight - 100);
   }
+
 
 }
