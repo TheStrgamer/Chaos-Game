@@ -48,6 +48,12 @@ public class ChaosCanvas {
     }
   }
 
+  /**
+   * Returns true if the given point is within the given parameters, and false otherwise.
+   *
+   * @param point the point to check
+   * @return true if the given point is within the given parameters, and false otherwise
+   */
   private boolean pointWithinParameters(Vector2D point) {
     return !(point.getX0() < minCoords.getX0()) && !(point.getX0() > maxCoords.getX0()) &&
         !(point.getX1() < minCoords.getX1()) && !(point.getX1() > maxCoords.getX1());

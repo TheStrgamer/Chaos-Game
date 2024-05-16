@@ -6,6 +6,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
@@ -27,6 +28,9 @@ public class ChaosGameView implements PageViewInterface {
   private final TextField iterationsField;
 
   private final ComboBox<String> descriptionComboBox;
+
+  private HBox topBar;
+  private VBox sideBar;
 
 
   /**
@@ -55,14 +59,50 @@ public class ChaosGameView implements PageViewInterface {
   private VBox createLayout() {
     VBox layout = new VBox();
 
-    HBox topBar = createTopBarLayout();
-    HBox imageViewHBox = new HBox();
+    sideBar = createSideBar();
+    sideBar.setVisible(false);
+    topBar = createTopBarLayout();
 
-    imageViewHBox.getChildren().add(this.imageView);
+    AnchorPane imageViewHBox = new AnchorPane();
+    AnchorPane.setRightAnchor(sideBar, 0.0);
+
+    imageViewHBox.getChildren().addAll(this.imageView, sideBar);
     layout.getChildren().addAll(topBar, imageViewHBox);
 
     imageViewHBox.getStyleClass().add("imageView");
     return layout;
+  }
+
+  /**
+   * Method for creating the bottom bar layout of the Chaos Game page.
+   *
+   * @return the layout of the Chaos Game page.
+   */
+  private VBox createSideBar() {
+
+    Button toModifyDescription = new Button("Modify Description");
+    toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
+
+    Button newAffine = new Button("New Affine");
+    newAffine.setOnAction(event -> {
+      mainController.setCurrentDescription("EmptyAffine");
+      setComboBoxEmpty();
+      mainController.switchToDescriptionView();
+    });
+    Button newJulia = new Button("New Julia");
+    newJulia.setOnAction(event -> {
+      mainController.setCurrentDescription("EmptyJulia");
+      setComboBoxEmpty();
+      mainController.switchToDescriptionView();
+    });
+
+    Button saveDescription = new Button("Save Description");
+    Button loadDescription = new Button("Load Description");
+    Button saveImage = new Button("Save Image");
+    VBox bottomBar = new VBox(toModifyDescription, newAffine, newJulia, saveDescription,
+        loadDescription, saveImage);
+    bottomBar.getStyleClass().add("sideBar");
+    return bottomBar;
   }
 
   /**
@@ -80,7 +120,8 @@ public class ChaosGameView implements PageViewInterface {
     clearButton.setOnAction(event -> chaosGameController.clearCanvas());
 
     CheckBox autoRunOnDescriptionChange = new CheckBox("Auto run ");
-    autoRunOnDescriptionChange.setOnAction(event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
+    autoRunOnDescriptionChange.setOnAction(
+        event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
     ColorPicker colorPicker = new ColorPicker();
     colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
@@ -102,12 +143,14 @@ public class ChaosGameView implements PageViewInterface {
 
     randomButtonLayout.getChildren().addAll(randomJulia, randomAffine);
 
-    Button toModifyDescription = new Button("Modify/Save/Load Description");
-    toModifyDescription.setOnAction(event -> mainController.switchToDescriptionView());
+    Button burgerMenu = new Button("☰");
+    burgerMenu.setOnAction(event -> sideBar.setVisible(!sideBar.isVisible()));
+    burgerMenu.getStyleClass().add("burgerMenuButton");
 
     topBar.getChildren()
-        .addAll(iterationsField, runButton, clearButton,colorPicker, autoRunOnDescriptionChange, descriptionComboBox, randomButtonLayout,
-            toModifyDescription);
+        .addAll(iterationsField, runButton, clearButton, colorPicker, autoRunOnDescriptionChange,
+            descriptionComboBox, randomButtonLayout, burgerMenu);
+
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
     topBar.getStyleClass().add("topBar");
@@ -150,7 +193,7 @@ public class ChaosGameView implements PageViewInterface {
     descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
         .addAll("Sierpinski", "Barnsley", "Julia", "Julia2", "Julia3", "Diamond", "Plant",
-            "Flower");
+            "Flower", "Snake");
     descriptionComboBox.setOnAction(
         event -> {
           if (descriptionComboBox.getValue() != null) {

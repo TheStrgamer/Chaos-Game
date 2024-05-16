@@ -148,7 +148,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
-    chaosGame.setCanvasSize(width, height);
+    chaosGame.setCanvasSize(width-30, height-150);
     if (autoRunOnDescriptionChange) {
       runIterations(steps/5);
 

@@ -134,8 +134,8 @@ public class MainController {
   private void changeScale(int width, int height) {
     this.currentWidth = width;
     this.currentHeight = height;
-    chaosGameController.setCanvasSize(currentWidth - 30, currentHeight - 100);
-    modifyDescriptionController.setDescriptionSize(currentWidth - 200, currentHeight - 135);
+    chaosGameController.setCanvasSize(currentWidth, currentHeight);
+    modifyDescriptionController.setDescriptionSize(currentWidth - 200, currentHeight - 100);
   }
 
 }

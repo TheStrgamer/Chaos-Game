@@ -9,6 +9,21 @@
   -fx-border-color: #9b9b9b;
   -fx-border-style: solid;
 }
+.sideBar {
+  -fx-alignment: top-center;
+  -fx-spacing: 5px;
+  -fx-background-color: #b2b2b2;
+  -fx-padding: 5px;
+  -fx-pref-height: 60px;
+  -fx-border-width: 0 0 2 2;
+  -fx-border-color: #9b9b9b;
+  -fx-border-style: solid;
+  -fx-min-height: 250px;
+  -fx-min-width: 150px;
+}
+.burgerMenuButton {
+  -fx-font-size: 20px;
+}
 
 .sideBar {
   -fx-alignment: center;
@@ -74,6 +89,26 @@ HBox {
 
 ColorPicker {
   -fx-pref-width: 30px;
+  -fx-background-color: #d5d5d5;
+  -fx-border-radius: 0;
+  -fx-content-display: graphic-only;
 
 }
+
+Button {
+  -fx-font-size: 11px;
+  -fx-background-color: #cfcfcf;
+  -fx-border-width: 1px;
+}
+
+ComboBox {
+  -fx-pref-width: 100px;
+  -fx-background-color: #d5d5d5;
+  -fx-border-radius: 0;
+}
+
+Button:hover {
+  -fx-background-color: #dddddd;
+}
+
 
