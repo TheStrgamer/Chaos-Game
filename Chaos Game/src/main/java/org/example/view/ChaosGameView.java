@@ -170,7 +170,7 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
-   * Method for getting the layout of the Chaos Game page.
+   * Returns the layout of the Chaos Game page.
    *
    * @return the layout of the Chaos Game page.
    */
@@ -225,7 +225,7 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
-   * Method for creating a button with the given text and event handler.
+   * Creates a button with the given text and event handler.
    *
    * @param text         the text of the button.
    * @param eventHandler the event handler of the button.

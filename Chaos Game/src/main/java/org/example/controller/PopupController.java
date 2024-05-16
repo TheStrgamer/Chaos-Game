@@ -20,7 +20,7 @@ public class PopupController {
   }
 
   /**
-   * Method for showing a popup window.
+   * Shows a popup window in the popup stage. Only one popup window can be shown at a time.
    *
    * @param layout the layout of the popup window.
    * @param width the width of the popup window.
@@ -38,7 +38,7 @@ public class PopupController {
   }
 
   /**
-   * Method for setting the minimum size of a scene.
+   * Sets the minimum size of the popup scene.
    *
    * @param scene the scene to set the minimum size for.
    * @param minWidth the minimum width of the scene.

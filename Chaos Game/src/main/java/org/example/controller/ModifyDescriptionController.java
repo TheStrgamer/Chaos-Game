@@ -69,7 +69,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the layout of the Modify Description page.
+   * Returns the layout of the Modify Description page.
    *
    * @return the layout of the Modify Description page.
    */
@@ -79,7 +79,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
 
   /**
-   * Method for reading a description from a file.
+   * Reads a description from a file.
    */
   public void readFromFile() {
     //TODO
@@ -87,7 +87,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for saving the current description to a file.
+   * Saves the current description to a file.
    */
   public void saveToFile() {
     //TODO
@@ -95,7 +95,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for adding a new empty transform to the description. If the current description is using
+   * Adds a new empty transform to the description. If the current description is using
    * julia transforms, it adds two transforms, one for each sign value.
    */
   public void addTransform() {
@@ -109,7 +109,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting what type of transform the description is using.
+   * Returns what type of transform the description is using.
    *
    * @return the type of transform.
    */
@@ -118,7 +118,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the minimum coordinates of the description.
+   * Returns the minimum coordinates of the description.
    *
    * @return the minimum coordinates.
    */
@@ -127,7 +127,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the maximum coordinates of the description.
+   * Returns the maximum coordinates of the description.
    *
    * @return the maximum coordinates.
    */
@@ -136,7 +136,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the transforms of the description.
+   * Returns the transforms of the description.
    *
    * @return the transforms.
    */
@@ -145,7 +145,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for listening to changes in the description of the Chaos Game.
+   * Listens to changes in the description of the Chaos Game.
    *
    * @param description the description of the Chaos Game.
    */
@@ -159,7 +159,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for listening to changes in the canvas of the Chaos Game.
+   * Listens to changes in the canvas of the Chaos Game.
    *
    * @param canvas the canvas of the Chaos Game.
    */
@@ -168,7 +168,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for creating a new description from the current values. If the description is the same
+   * Creates a new description from the current values. If the description is the same
    * as the current description, nothing happens.
    */
   public void createDescription() {
@@ -191,7 +191,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the minimum coordinates of the description. If the given coordinates are
+   * Sets the minimum coordinates of the description. If the given coordinates are
    * invalid, nothing happens.
    *
    * @param X0 the x-coordinate of the minimum coordinates.
@@ -212,7 +212,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the maximum coordinates of the description. If the given coordinates are
+   * Sets the maximum coordinates of the description. If the given coordinates are
    * invalid or the same as the current coordinates, nothing happens.
    *
    * @param X0 the x-coordinate of the maximum coordinates.
@@ -236,7 +236,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the coordinates of a Julia transform. If the given coordinates are invalid
+   * Sets the coordinates of a Julia transform. If the given coordinates are invalid
    * or the same as the current coordinates, nothing happens.
    *
    * @param index     the index of the transform.
@@ -263,7 +263,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the coordinates of an Affine transform. If the given coordinates are invalid
+   * Sets the coordinates of an Affine transform. If the given coordinates are invalid
    * or the same as the current coordinates, nothing happens.
    *
    * @param index the index of the transform.
@@ -291,7 +291,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for removing an affine transform from the description. If the index is invalid, nothing
+   * Removes an affine transform from the description. If the index is invalid, nothing
    * happens.
    *
    * @param index the index of the transform to remove.
@@ -305,7 +305,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for removing a Julia transform from the description. If the index is invalid, nothing
+   * Removes a Julia transform from the description. If the index is invalid, nothing
    * happens.
    *
    * @param index the index of the transform to remove.
@@ -320,7 +320,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the weight of a transform at the given index.
+   * Sets the weight of a transform at the given index.
    *
    * @param index the index of the transform.
    * @param weight the weight of the transform.

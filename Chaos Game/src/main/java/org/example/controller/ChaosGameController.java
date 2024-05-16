@@ -46,14 +46,14 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Method for running the Chaos Game for a set number of iterations.
+   * Runs the Chaos Game for a set number of iterations.
    */
   public void runIterations() {
     chaosGame.runSteps(steps);
   }
 
   /**
-   * Method for running the Chaos Game for a set number of iterations.
+   * Runs the Chaos Game for a set number of iterations.
    *
    * @param iterations the number of iterations to run the Chaos Game for.
    */
@@ -62,7 +62,7 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Method for converting a string representation of the number of iterations to an integer. Sets
+   * Converts a string representation of the number of iterations to an integer. Sets
    * the number of iterations to a default value if the string cannot be converted to an integer.
    *
    * @param iterations the string representation of the number of iterations.
@@ -80,7 +80,7 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the layout of the Chaos Game view.
+   * Returns the layout of the Chaos Game view.
    *
    * @return the layout of the Chaos Game view.
    */
@@ -89,21 +89,21 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the combo box to empty.
+   * Sets the combo box to empty.
    */
   public void setComboBoxEmpty() {
     chaosGameView.setComboBoxEmpty();
   }
 
   /**
-   * Method for clearing the canvas of the Chaos Game.
+   * Clears the canvas of the Chaos Game.
    */
   public void clearCanvas() {
     chaosGame.clearCanvas();
   }
 
   /**
-   * Method for setting the auto run on description change.
+   * Sets the auto run on description change.
    *
    * @param autoRun true if the Chaos Game should run automatically when the description changes,
    *                false otherwise.
@@ -112,17 +112,9 @@ public class ChaosGameController implements ChaosGameObserver {
     this.autoRunOnDescriptionChange = autoRun;
   }
 
-  /**
-   * Method for setting the number of steps to run the Chaos Game.
-   *
-   * @param steps the number of steps to run the Chaos Game.
-   */
-  public void setSteps(int steps) {
-    this.steps = steps;
-  }
 
   /**
-   * Method for setting the color of the Chaos Game.
+   * Sets the color of the Chaos Game.
    *
    * @param color the color to set.
    */
@@ -131,9 +123,17 @@ public class ChaosGameController implements ChaosGameObserver {
     refreshImage();
   }
 
+  /**
+   * Sets the number of steps to run the Chaos Game.
+   *
+   * @param steps the number of steps to run the Chaos Game.
+   */
+  public void setSteps(int steps) {
+    this.steps = steps;
+  }
 
   /**
-   * Method for setting the number of steps to run the Chaos Game.
+   * Sets the number of steps to run the Chaos Game. Converts the string to an integer.
    *
    * @param stepsString the number of steps to run the Chaos Game.
    */

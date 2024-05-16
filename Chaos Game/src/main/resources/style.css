@@ -1,7 +1,7 @@
-.chaosGameLayout
-{
+.chaosGameLayout {
   -fx-alignment: top-center;
 }
+
 .topBar {
   -fx-alignment: center;
   -fx-spacing: 5px;
@@ -12,6 +12,7 @@
   -fx-border-color: #9b9b9b;
   -fx-border-style: solid;
 }
+
 .sideBar {
   -fx-alignment: top-center;
   -fx-spacing: 5px;
@@ -24,12 +25,12 @@
   -fx-min-height: 250px;
   -fx-min-width: 150px;
 }
+
 .burgerMenuButton {
   -fx-font-size: 20px;
 }
 
 .sideBar {
-  -fx-alignment: center;
   -fx-spacing: 10px;
   -fx-background-color: #bfbfbf;
 }
@@ -61,6 +62,7 @@ HBox {
   -fx-spacing: 6px;
   -fx-alignment: center;
 }
+
 VBox {
   -fx-alignment: center;
 }
@@ -92,6 +94,7 @@ VBox {
   -fx-pref-width: 100px;
   -fx-font-size: 10px;
 }
+
 .newButton {
   -fx-pref-width: 80px;
   -fx-font-size: 10px;

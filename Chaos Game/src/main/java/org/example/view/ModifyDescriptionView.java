@@ -58,7 +58,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Method for creating the layout of the Modify Description page.
+   * Creates the layout of the Modify Description page.
    *
    * @return the layout of the Modify Description page.
    */
@@ -121,7 +121,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Method for converting a vector to a HBox used in the ui to allow for editing.
+   * Converts a vector to a HBox used in the ui to allow for editing.
    *
    * @param name   the name of the vector.
    * @param vector the vector to convert.
@@ -240,7 +240,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Method for converting a julia transform to a HBox used in the ui to allow for editing.
+   * Converts a julia transform to a HBox used in the ui to allow for editing.
    *
    * @param transform the transform to convert.
    * @param index     the index of the transform in the list of transforms.
