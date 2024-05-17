@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -103,7 +104,6 @@ public class ChaosGameView implements PageViewInterface {
     autoRunOnDescriptionChange.setOnAction(
         event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
-
     Label colorLabel = new Label("Color:");
     ColorPicker colorPicker = new ColorPicker();
     colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
@@ -112,7 +112,18 @@ public class ChaosGameView implements PageViewInterface {
     topBar.getChildren()
         .addAll(iterationsField, runButton, clearButton, autoRunLabel, autoRunOnDescriptionChange,
             descriptionComboBox, colorLabel, colorPicker
-            );
+        );
+
+    // Tooltips
+    Tooltip autoRunTooltip = new Tooltip(
+        "Automatically run the Chaos Game when the description is changed.");
+    autoRunOnDescriptionChange.setTooltip(autoRunTooltip);
+    Tooltip iterationsTooltip = new Tooltip("The number of iterations to run the Chaos Game.");
+    iterationsField.setTooltip(iterationsTooltip);
+
+    Tooltip colorTooltip = new Tooltip("The color of the Chaos Game fractal.");
+    colorPicker.setTooltip(colorTooltip);
+
   }
 
   /**
@@ -169,6 +180,24 @@ public class ChaosGameView implements PageViewInterface {
     extraElements.add(new VBox(saveImage));
     extraElements.add(new VBox(burgerMenu));
 
+    // Tooltips
+    Tooltip randomJuliaTooltip = new Tooltip("Generate a random Julia fractal.");
+    randomJulia.setTooltip(randomJuliaTooltip);
+
+    Tooltip randomAffineTooltip = new Tooltip("Generate a random Affine fractal.");
+    randomAffine.setTooltip(randomAffineTooltip);
+
+
+    Tooltip saveDescriptionTooltip = new Tooltip("Save the current description to file.");
+    saveDescription.setTooltip(saveDescriptionTooltip);
+
+    Tooltip loadDescriptionTooltip = new Tooltip("Load a description from file.");
+    loadDescription.setTooltip(loadDescriptionTooltip);
+
+    Tooltip saveImageTooltip = new Tooltip("Save the current image to file.");
+    saveImage.setTooltip(saveImageTooltip);
+
+
   }
 
   /**
@@ -222,7 +251,9 @@ public class ChaosGameView implements PageViewInterface {
   private void initializeIterationsField() {
     iterationsField.setPromptText("Iterations");
     iterationsField.getStyleClass().add("iterationsField");
-    iterationsField.textProperty().addListener((observable, oldValue, newValue) -> chaosGameController.setSteps(iterationsField.getText()));
+    iterationsField.textProperty().addListener(
+        (observable, oldValue, newValue) -> chaosGameController.setSteps(
+            iterationsField.getText()));
     chaosGameController.setSteps(iterationsField.getText());
   }
 
