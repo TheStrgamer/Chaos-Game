@@ -124,6 +124,15 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
+   * Returns the color of the Chaos Game.
+   *
+   * @return the color of the Chaos Game.
+   */
+  public Color getColor() {
+    return color;
+  }
+
+  /**
    * Sets the number of steps to run the Chaos Game.
    *
    * @param steps the number of steps to run the Chaos Game.

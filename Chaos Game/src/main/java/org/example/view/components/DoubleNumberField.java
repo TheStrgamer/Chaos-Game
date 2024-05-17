@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.components;
 
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +16,7 @@ public class DoubleNumberField extends TextField {
    * @param text the text to display in the field.
    */
   public DoubleNumberField(String text) {
-    super(text);
+    super(text.trim());
     this.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
       if (isInvalidInput(event)) {
         event.consume();

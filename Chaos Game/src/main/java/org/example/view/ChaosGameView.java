@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import org.example.controller.MainController;
 import org.example.controller.ChaosGameController;
+import org.example.view.components.WeightAndIterationsField;
 
 /**
  * <h1>ChaosGameView</h1>
@@ -102,10 +103,11 @@ public class ChaosGameView implements PageViewInterface {
     autoRunOnDescriptionChange.setOnAction(
         event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
+
     Label colorLabel = new Label("Color:");
     ColorPicker colorPicker = new ColorPicker();
     colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
-    colorPicker.setValue(Color.RED);
+    colorPicker.setValue(chaosGameController.getColor());
 
     topBar.getChildren()
         .addAll(iterationsField, runButton, clearButton, autoRunLabel, autoRunOnDescriptionChange,

@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.controller.MainController;
 import org.example.controller.ModifyDescriptionController;
+import org.example.view.components.DoubleNumberField;
+import org.example.view.components.WeightAndIterationsField;
 
 /**
  * <h1>ModifyDescriptionView</h1>
@@ -260,8 +262,8 @@ public class ModifyDescriptionView implements PageViewInterface {
 
 
     Label weightLabel = new Label("Weight +/-: ");
-    TextField positiveWeight = createWeightField(split[2].trim(), index);
-    TextField negativeWeight = createWeightField(split[3].trim(), index + 1);
+    TextField positiveWeight = createWeightField(split[2], index);
+    TextField negativeWeight = createWeightField(split[3], index + 1);
 
     HBox weightBox = new HBox(weightLabel, positiveWeight, negativeWeight);
     VBox rightSide = new VBox(weightBox);
