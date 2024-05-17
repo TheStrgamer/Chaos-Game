@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.example.model.chaosGame.ChaosGameDescription;
 import org.example.model.chaosGame.ChaosGameFileHandler;
+import org.example.model.exceptions.MissingDataException;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
@@ -236,10 +237,14 @@ class ChaosGameFileHandlerTest {
       try {
         ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
         ChaosGameDescription description = chaosGameFileHandler.readFromFile(
-            "src/test/resources/testfiles/testFileInvalidTransformType.txt");
+            "src/test/resources/testfiles/testFileNoType.txt");
         fail("An exception was not thrown");
+      } catch (MissingDataException e) {
+        assertEquals(
+            "Invalid transform type",
+            e.getMessage());
       } catch (Exception e) {
-        assertEquals("Invalid transform type", e.getMessage());
+        fail("An exception was thrown with the message: " + e.getMessage());
       }
     }
 
@@ -255,6 +260,41 @@ class ChaosGameFileHandlerTest {
         assertEquals("Non-double value found in the file", e.getMessage());
       }
     }
+
+    @Test
+    @DisplayName("readFromFile throws MissingDataException with no transform values")
+    void testReadFromFileThrowsMissingDataExceptionWithNoTransformValues() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "src/test/resources/testfiles/testFileNoTransforms.txt");
+        fail("An exception was not thrown");
+      } catch (MissingDataException e) {
+        assertEquals(
+            "Description file is missing transform data, and cannot be used to create a ChaosGameDescription.",
+            e.getMessage());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("readFromFile throws MissingDataException with no coords")
+    void testReadFromFileThrowsMissingDataExceptionWithNoCoords() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "src/test/resources/testfiles/testFileNoCoords.txt");
+        fail("An exception was not thrown");
+      } catch (MissingDataException e) {
+        assertEquals(
+            "Description file is missing coordinate data, and cannot be used to create a ChaosGameDescription.",
+            e.getMessage());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
 
   }
 }
