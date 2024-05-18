@@ -23,9 +23,6 @@ public class MainController {
   private ChaosGameDescription currentDescription;
   private final ChaosGame chaosGame;
 
-  private final int originalWidth = 800;
-  private final int originalHeight = 600;
-
   private int currentWidth = 800;
   private int currentHeight = 600;
 
@@ -54,6 +51,22 @@ public class MainController {
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 
+    int originalWidth = 800;
+    int originalHeight = 600;
+    chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
+    stage.setScene(chaosGameScene);
+    setStageListeners(stage);
+
+    chaosGameScene.getStylesheets().add(
+        Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+  }
+
+  /**
+   * Sets the stage listeners for the primary stage.
+   *
+   * @param stage the primary stage for the application.
+   */
+  private void setStageListeners(Stage stage) {
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
       if (newVal.intValue() < minCanvasWidth) {
         stage.setWidth(minCanvasWidth);
@@ -68,10 +81,7 @@ public class MainController {
       }
       changeScale(currentWidth, newVal.intValue());
     });
-    chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
-    stage.setScene(chaosGameScene);
-    chaosGameScene.getStylesheets().add(
-        Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+    stage.setOnCloseRequest(e -> popupController.closePopup());
   }
 
   /**

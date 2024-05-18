@@ -7,6 +7,7 @@ import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.chaosGame.ChaosGame;
 
 import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
 import org.example.model.factory.ImageFactory;
 import org.example.view.ChaosGameView;
@@ -157,7 +158,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
-    chaosGame.setCanvasSize(width-30, height-75);
+    chaosGame.setCanvasSize(width-30, height-100);
     if (autoRunOnDescriptionChange) {
       runIterations(steps/5);
     }
@@ -170,6 +171,26 @@ public class ChaosGameController implements ChaosGameObserver {
   private void refreshImage() {
     chaosGameView.setImage(imageFactory.createImage(chaosGame.getCanvas(),color));
   }
+
+  /**
+   * Changes the zoom of the Chaos Game.
+   *
+   * @param multiplier the multiplier to change the zoom by.
+   */
+  public void changeZoom(double multiplier) {
+    chaosGame.changeZoom(multiplier);
+  }
+
+  /**
+   * Moves the canvas of the Chaos Game.
+   *
+   * @param x0 the x-coordinate to move the canvas by.
+   * @param x1 the y-coordinate to move the canvas by.
+   */
+  public void moveCanvas(double x0, double x1) {
+    chaosGame.moveCanvas(new Vector2D(x0, x1));
+  }
+
 
   /**
    * Updates the description of the Chaos Game.

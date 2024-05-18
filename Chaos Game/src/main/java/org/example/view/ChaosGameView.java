@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -34,11 +35,13 @@ public class ChaosGameView implements PageViewInterface {
   private final ImageView imageView;
   private final TextField iterationsField;
   private final ComboBox<String> descriptionComboBox;
+  private final CheckBox autoRunOnDescriptionChange;
 
   private final List<VBox> extraElements = new ArrayList<>();
 
   private HBox topBar;
   private VBox sideBar;
+  private HBox zoomHBox;
 
 
   /**
@@ -55,6 +58,9 @@ public class ChaosGameView implements PageViewInterface {
     initializeComboBox();
     iterationsField = new WeightAndIterationsField("1000000");
     initializeIterationsField();
+    autoRunOnDescriptionChange = new CheckBox();
+    initializeAutoRunOnDescriptionChange();
+
     layout = createLayout();
     createExtraUiElements();
 
@@ -77,14 +83,53 @@ public class ChaosGameView implements PageViewInterface {
     topBar.getStyleClass().add("topBar");
     fillTopBarDefaultElements();
 
+    zoomHBox = new HBox();
+    fillZoomHBox();
+    TitledPane zoomPane = new TitledPane("Zoom", zoomHBox);
+
     AnchorPane imageViewHBox = new AnchorPane();
     AnchorPane.setRightAnchor(sideBar, 0.0);
+    AnchorPane.setLeftAnchor(zoomPane, 0.0);
 
-    imageViewHBox.getChildren().addAll(this.imageView, sideBar);
+    imageViewHBox.getChildren().addAll(this.imageView, sideBar, zoomPane);
     layout.getChildren().addAll(topBar, imageViewHBox);
 
     imageViewHBox.getStyleClass().add("imageView");
     return layout;
+  }
+
+  /**
+   * Fills the zoom HBox with buttons that control the zoom and movement of the image.
+   */
+  private void fillZoomHBox() {
+    Button zoomInButton = createButton("+", event -> chaosGameController.changeZoom(-0.1),
+        "zoomButton");
+    Button zoomOutButton = createButton("-", event -> chaosGameController.changeZoom(0.1),
+        "zoomButton");
+    Button moveLeftButton = createButton("←", event -> chaosGameController.moveCanvas(5, 0),
+        "moveButtonLeftRight");
+    Button moveRightButton = createButton("→", event -> chaosGameController.moveCanvas(-5, 0),
+        "moveButtonLeftRight");
+    Button moveUpButton = createButton("↑", event -> chaosGameController.moveCanvas(0, -5),
+        "moveButton");
+    Button moveDownButton = createButton("↓", event -> chaosGameController.moveCanvas(0, 5),
+        "moveButton");
+    Button moveUpLeftButton = createButton("↖", event -> chaosGameController.moveCanvas(5, -5),
+        "moveButton");
+    Button moveUpRightButton = createButton("↗", event -> chaosGameController.moveCanvas(-5, -5),
+        "moveButton");
+    Button moveDownLeftButton = createButton("↙", event -> chaosGameController.moveCanvas(5, 5),
+        "moveButton");
+    Button moveDownRightButton = createButton("↘", event -> chaosGameController.moveCanvas(-5, 5),
+        "moveButton");
+
+    zoomHBox.getStyleClass().add("zoomHBox");
+
+    VBox leftColumn = new VBox(moveUpLeftButton, moveLeftButton, moveDownLeftButton);
+    VBox centerColumn = new VBox(moveUpButton, zoomInButton, zoomOutButton, moveDownButton);
+    VBox rightColumn = new VBox(moveUpRightButton, moveRightButton, moveDownRightButton);
+
+    zoomHBox.getChildren().addAll(leftColumn, centerColumn, rightColumn);
   }
 
   /**
@@ -98,9 +143,6 @@ public class ChaosGameView implements PageViewInterface {
     Button clearButton = createButton("Clear", event -> chaosGameController.clearCanvas());
 
     Label autoRunLabel = new Label("Auto Run:");
-    CheckBox autoRunOnDescriptionChange = new CheckBox();
-    autoRunOnDescriptionChange.setOnAction(
-        event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
 
     Label colorLabel = new Label("Color:");
     ColorPicker colorPicker = new ColorPicker();
@@ -133,11 +175,11 @@ public class ChaosGameView implements PageViewInterface {
     Button randomJulia = createButton("Random Julia", event -> {
       mainController.setCurrentDescription("JuliaRandom");
       setComboBoxEmpty();
-    });
+    }, "randomButton");
     Button randomAffine = createButton("Random Affine", event -> {
       mainController.setCurrentDescription("AffineRandom");
       setComboBoxEmpty();
-    });
+    }, "randomButton");
     VBox randomButtonLayout = new VBox(randomJulia, randomAffine);
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
@@ -168,8 +210,8 @@ public class ChaosGameView implements PageViewInterface {
 
     Button saveImage = new Button("Save Image");
 
-    Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()));
-    burgerMenu.getStyleClass().add("burgerMenuButton");
+    Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()),
+        "burgerMenuButton");
 
     extraElements.add(randomButtonLayout);
     extraElements.add(new VBox(toModifyDescription));
@@ -184,7 +226,6 @@ public class ChaosGameView implements PageViewInterface {
 
     Tooltip randomAffineTooltip = new Tooltip("Generate a random Affine fractal.");
     randomAffine.setTooltip(randomAffineTooltip);
-
 
     Tooltip saveDescriptionTooltip = new Tooltip("Save the current description to file.");
     saveDescription.setTooltip(saveDescriptionTooltip);
@@ -256,6 +297,16 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
+   * Initializes the auto run on description change checkbox.
+   */
+  private void initializeAutoRunOnDescriptionChange() {
+    autoRunOnDescriptionChange.setSelected(true);
+    chaosGameController.setAutoRun(true);
+    autoRunOnDescriptionChange.setOnAction(
+        event -> chaosGameController.setAutoRun(autoRunOnDescriptionChange.isSelected()));
+  }
+
+  /**
    * Creates a button with the given text and event handler.
    *
    * @param text         the text of the button.
@@ -265,6 +316,22 @@ public class ChaosGameView implements PageViewInterface {
   private Button createButton(String text, EventHandler<ActionEvent> eventHandler) {
     Button button = new Button(text);
     button.setOnAction(eventHandler);
+    return button;
+  }
+
+  /**
+   * Creates a button with the given text and event handler.
+   *
+   * @param text         the text of the button.
+   * @param eventHandler the event handler of the button.
+   * @param styleClass   the style class of the button.
+   * @return the created button.
+   */
+  private Button createButton(String text, EventHandler<ActionEvent> eventHandler,
+      String styleClass) {
+    Button button = new Button(text);
+    button.setOnAction(eventHandler);
+    button.getStyleClass().add(styleClass);
     return button;
   }
 

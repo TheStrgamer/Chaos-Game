@@ -18,11 +18,12 @@ import org.example.model.math.Vector2D;
  */
 public class ChaosGameDescription {
 
-  private final Vector2D minCoords;
-  private final Vector2D maxCoords;
+  private Vector2D minCoords;
+  private Vector2D maxCoords;
   List<Transform2D> transforms;
   List<Integer> weights;
   int weightSum;
+
 
   /**
    * Verifies that the given Vector2D object is not null.
@@ -122,7 +123,6 @@ public class ChaosGameDescription {
     this.transforms = transforms;
     this.weights = new ArrayList<>(Collections.nCopies(transforms.size(), 1));
     calculateWeightSum();
-
 
   }
 
@@ -356,5 +356,46 @@ public class ChaosGameDescription {
         + transforms.stream()
         .map(transform -> transform.toString() + "    #transform\n")
         .collect(Collectors.joining());
+  }
+
+  /**
+   * Changes the zoom of the description by multiplying the minimum and maximum coordinates by the
+   * given multiplier.
+   *
+   * @param multiplier the multiplier to use.
+   */
+  public void changeZoom(double multiplier) {
+    double xDiff = maxCoords.getX0() - minCoords.getX0();
+    double yDiff = maxCoords.getX1() - minCoords.getX1();
+    Vector2D newDiff = new Vector2D(xDiff * multiplier, yDiff * multiplier);
+
+    minCoords = minCoords.add(new Vector2D(-newDiff.getX0() / 2, -newDiff.getX1() / 2));
+    maxCoords = maxCoords.add(new Vector2D(newDiff.getX0() / 2, newDiff.getX1() / 2));
+    roundCoords();
+  }
+
+  /**
+   * Moves the description based on the given vector in percentage of the min and max coordinates.
+   *
+   * @param vector the vector to move the description by.
+   */
+  public void moveCanvas(Vector2D vector) {
+    double xDiff = maxCoords.getX0() - minCoords.getX0();
+    double yDiff = maxCoords.getX1() - minCoords.getX1();
+    Vector2D newDiff = new Vector2D(xDiff * vector.getX0()/100, yDiff * vector.getX1()/100);
+
+    minCoords = minCoords.add(new Vector2D(-newDiff.getX0(), -newDiff.getX1()));
+    maxCoords = maxCoords.add(new Vector2D(-newDiff.getX0(), -newDiff.getX1()));
+    roundCoords();
+  }
+
+  /**
+   * Rounds the coordinates to 4 decimals.
+   */
+  private void roundCoords() {
+    int amountOfDecimals = 3;
+    int multiplier = (int) Math.pow(10, amountOfDecimals);
+    minCoords = new Vector2D((double) Math.round(minCoords.getX0() * multiplier) / multiplier, (double) Math.round(minCoords.getX1() * multiplier) / multiplier);
+    maxCoords = new Vector2D((double) Math.round(maxCoords.getX0() * multiplier) / multiplier, (double) Math.round(maxCoords.getX1() * multiplier) / multiplier);
   }
 }

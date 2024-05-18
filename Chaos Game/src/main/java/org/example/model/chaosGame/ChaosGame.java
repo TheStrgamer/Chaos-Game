@@ -182,6 +182,28 @@ public class ChaosGame {
   }
 
   /**
+   * Changes the zoom of the canvas.
+   *
+   * @param multiplier the multiplier to change the zoom with.
+   */
+  public void changeZoom(double multiplier) {
+    description.changeZoom(multiplier);
+    setDescription(description);
+  }
+
+  /**
+   * Moves the canvas by the given vector.
+   *
+   * @param vector the vector to move the canvas by.
+   */
+  public void moveCanvas(Vector2D vector) {
+    description.moveCanvas(vector);
+    setDescription(description);
+  }
+
+
+
+  /**
    * Runs the chaos game for the given number of steps. Notifies all observers that the canvas has
    * changed after all steps have been run.
    *
@@ -200,7 +222,7 @@ public class ChaosGame {
 
         canvas.setPixel(currentPoint, 10);
       } catch (Exception e) {
-        System.out.println(e.getMessage());
+        throw new IllegalArgumentException("Invalid description");
       }
     }
     notifyCanvasChanged();

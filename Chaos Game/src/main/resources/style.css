@@ -3,7 +3,7 @@
   -fx-alignment: top-center;
 }
 
-Label, TextField, Button,  ColorPicker, ComboBox, WeightedComboBox, DoubleNumberField {
+Label, TextField, Button, ColorPicker, ComboBox, WeightedComboBox, DoubleNumberField {
   -fx-font-family: "SansSerif";
 }
 
@@ -21,7 +21,9 @@ Label, TextField, Button,  ColorPicker, ComboBox, WeightedComboBox, DoubleNumber
 .sideBar {
   -fx-alignment: top-center;
   -fx-spacing: 5px;
-  -fx-background-color: #b2b2b2;
+  -fx-background-color: #92929288;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
   -fx-padding: 5px;
   -fx-pref-height: 60px;
   -fx-border-width: 0 0 2 2;
@@ -35,15 +37,12 @@ Label, TextField, Button,  ColorPicker, ComboBox, WeightedComboBox, DoubleNumber
   -fx-font-size: 20px;
 }
 
-.sideBar {
-  -fx-spacing: 10px;
-  -fx-background-color: #bfbfbf;
-}
 .unsaved {
   -fx-border-width: 1px;
   -fx-border-color: #ffcc00;
   -fx-border-radius: 5px;
 }
+
 .invalid {
   -fx-border-width: 1px;
   -fx-border-color: #ff0000;
@@ -133,6 +132,9 @@ Button {
   -fx-background-color: #cfcfcf;
   -fx-border-width: 1px;
 }
+Button:hover {
+  -fx-background-color: #dddddd;
+}
 
 ComboBox {
   -fx-pref-width: 100px;
@@ -140,9 +142,66 @@ ComboBox {
   -fx-border-radius: 0;
 }
 
-Button:hover {
+.zoomHBox {
+  -fx-background-color: #92929288;
+  -fx-background-radius: 5px, 5px, 0, 0;
+  -fx-border-radius: 5px, 5px, 0, 0;
+  -fx-border-width: 1px;
+  -fx-border-color: #9b9b9b;
+  -fx-spacing: 0px;
+}
+
+.moveButton {
+  -fx-pref-width: 30px;
+  -fx-pref-height: 20px;
+  -fx-font-size: 10px;
+  -fx-background-color: #cfcfcf;
+  -fx-background-radius: 5px;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-border-color: #9b9b9b;
+}
+.moveButton:hover {
   -fx-background-color: #dddddd;
 }
+.moveButtonLeftRight {
+  -fx-pref-width: 30px;
+  -fx-pref-height: 40px;
+  -fx-font-size: 10px;
+  -fx-background-color: #cfcfcf;
+  -fx-background-radius: 5px;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-border-color: #9b9b9b;
+}
+.moveButtonLeftRight:hover {
+  -fx-background-color: #dddddd;
+}
+
+.zoomButton {
+  -fx-pref-width: 30px;
+  -fx-pref-height: 10px;
+  -fx-font-size: 9px;
+  -fx-background-color: #cfcfcf;
+  -fx-background-radius: 5px;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-border-color: #9b9b9b;
+}
+.zoomButton:hover {
+  -fx-background-color: #dddddd;
+}
+
+TitledPane > .title {
+  -fx-font-size: 12px;
+  -fx-background-color: #bfbfbf88;
+}
+TitledPane > .content {
+  -fx-background-color: #00000000;
+  -fx-background-radius: 5px;
+  -fx-border-width: 0px;
+}
+
 
 
 

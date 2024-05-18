@@ -3,6 +3,7 @@ import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import org.example.view.PageViewInterface;
 
 /**
  * <h1>PopupController</h1>
@@ -38,6 +39,24 @@ public class PopupController {
   }
 
   /**
+   * Shows a popup window in the popup stage. Only one popup window can be shown at a time.
+   *
+   * @param pageView the page view to show in the popup window.
+   * @param width the width of the popup window.
+   * @param height the height of the popup window.
+   */
+  public void showPopup(PageViewInterface pageView, int width, int height) {
+    if (popupStage.isShowing()) {
+      popupStage.close();
+    }
+    Scene popupScene = new Scene(pageView.getLayout(), width, height);
+    setSceneSizeLimit(popupScene, width, (int) (height*0.75));
+    popupScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+    popupStage.setScene(popupScene);
+    popupStage.show();
+  }
+
+  /**
    * Sets the minimum size of the popup scene.
    *
    * @param scene the scene to set the minimum size for.
@@ -55,6 +74,13 @@ public class PopupController {
         scene.getWindow().setHeight(minHeight);
       }
     });
+  }
+
+  /**
+   * Closes the popup window.
+   */
+  public void closePopup() {
+    popupStage.close();
   }
 
 }
