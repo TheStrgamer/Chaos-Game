@@ -16,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import org.example.controller.MainController;
 import org.example.controller.ChaosGameController;
 import org.example.view.components.WeightAndIterationsField;
@@ -34,7 +33,6 @@ public class ChaosGameView implements PageViewInterface {
 
   private final ImageView imageView;
   private final TextField iterationsField;
-
   private final ComboBox<String> descriptionComboBox;
 
   private final List<VBox> extraElements = new ArrayList<>();

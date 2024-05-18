@@ -1,6 +1,7 @@
 package org.example.view;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 
 import java.util.List;
@@ -83,8 +84,7 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Fills the description listview with input fields for editing the current
-   * description.
+   * Fills the description listview with input fields for editing the current description.
    */
   private void fillDescriptionList() {
     descriptionList.getItems().clear();
@@ -139,7 +139,6 @@ public class ModifyDescriptionView implements PageViewInterface {
     TextField X0 = new DoubleNumberField(split[0]);
     TextField Y0 = new DoubleNumberField(split[1]);
 
-
     EventHandler<KeyEvent> listener = event -> {
       if (X0.getText().isEmpty() || Y0.getText().isEmpty()) {
         return;
@@ -147,10 +146,21 @@ public class ModifyDescriptionView implements PageViewInterface {
       if (event.getCode() == KeyCode.ENTER) {
         switch (name) {
           case "Min Coords: ":
+            if (modifyDescriptionController.minCoordsIsValid(X0.getText(), Y0.getText())) {
+              modifyDescriptionController.setMinCoords(X0.getText(), Y0.getText());
+              setCoordFieldsValid(X0, Y0);
+            } else {
+              setCoordFieldsInvalid(X0, Y0, "Min Coords must be less than Max Coords");
+            }
             modifyDescriptionController.setMinCoords(X0.getText(), Y0.getText());
             break;
           case "Max Coords: ":
-            modifyDescriptionController.setMaxCoords(X0.getText(), Y0.getText());
+            if (modifyDescriptionController.maxCoordsIsValid(X0.getText(), Y0.getText())) {
+              modifyDescriptionController.setMaxCoords(X0.getText(), Y0.getText());
+              setCoordFieldsValid(X0, Y0);
+            } else {
+              setCoordFieldsInvalid(X0, Y0, "Max Coords must be greater than Min Coords");
+            }
             break;
           default:
             System.out.println("Error in vector2DToHBox");
@@ -168,6 +178,36 @@ public class ModifyDescriptionView implements PageViewInterface {
     content.getStyleClass().add("content");
 
     return row;
+  }
+
+  /**
+   * Sets the coordinate field styles to valid for better user feedback.
+   *
+   * @param X0 the X0 field.
+   * @param Y0 the Y0 field.
+   */
+
+  private void setCoordFieldsValid(TextField X0, TextField Y0) {
+    X0.getStyleClass().remove("invalid");
+    Y0.getStyleClass().remove("invalid");
+    X0.getStyleClass().remove("unsaved");
+    Y0.getStyleClass().remove("unsaved");
+    X0.setTooltip(null);
+    Y0.setTooltip(null);
+  }
+
+  /**
+   * Sets the coordinate field styles to invalid for better user feedback.
+   *
+   * @param X0      the X0 field.
+   * @param Y0      the Y0 field.
+   * @param tooltip the tooltip to display.
+   */
+  private void setCoordFieldsInvalid(TextField X0, TextField Y0, String tooltip) {
+    X0.getStyleClass().add("invalid");
+    Y0.getStyleClass().add("invalid");
+    X0.setTooltip(new Tooltip(tooltip));
+    Y0.setTooltip(new Tooltip(tooltip));
   }
 
   /**
@@ -218,7 +258,6 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     VBox vector = new VBox(a, b);
 
-
     Label weightLabel = new Label("Weight: ");
     TextField weight = createWeightField(split[6].trim(), index);
     HBox weightBox = new HBox(weightLabel, weight);
@@ -258,8 +297,6 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     TextField real = new DoubleNumberField(split[0]);
     TextField imaginary = new DoubleNumberField(split[1]);
-
-
 
     Label weightLabel = new Label("Weight +/-: ");
     TextField positiveWeight = createWeightField(split[2], index);
@@ -304,8 +341,8 @@ public class ModifyDescriptionView implements PageViewInterface {
   }
 
   /**
-   * Creates a TextField for the weight of a transform. Adds event listener that updates
-   * weights. Uses the WeightAndIterationsField class.
+   * Creates a TextField for the weight of a transform. Adds event listener that updates weights.
+   * Uses the WeightAndIterationsField class.
    *
    * @param text  the text to set in the TextField.
    * @param index the index of the transform in the list of transforms.
@@ -313,7 +350,21 @@ public class ModifyDescriptionView implements PageViewInterface {
    */
   public TextField createWeightField(String text, int index) {
     TextField weight = new WeightAndIterationsField(text.trim());
-    weight.setOnAction(event -> modifyDescriptionController.setWeight(index, weight.getText()));
+
+    weight.textProperty().addListener((observable, oldValue, newValue) -> {
+      weight.getStyleClass().add("unsaved");
+      String tooltipText = "Press Enter to save changes";
+      if (weight.getText().isEmpty()) {
+        tooltipText = "Type a number and press Enter to save changes";
+      }
+      weight.setTooltip(new Tooltip(tooltipText));
+
+    });
+    weight.setOnAction(event -> {
+      modifyDescriptionController.setWeight(index, weight.getText());
+      weight.getStyleClass().remove("unsaved");
+      weight.setTooltip(null);
+    });
 
     //Style
     weight.getStyleClass().add("weight");

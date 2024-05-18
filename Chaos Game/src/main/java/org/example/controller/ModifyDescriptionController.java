@@ -51,6 +51,36 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
+   * checks if the given minCoords are valid, and if they are smaller than the maxCoords.
+   * @param X0 the x0 value
+   * @param X1 the x1 value
+   * @return true if the values are valid, false otherwise.
+   */
+  public boolean minCoordsIsValid(String X0, String X1) {
+    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+      return false;
+    }
+    double x0 = Double.parseDouble(X0);
+    double x1 = Double.parseDouble(X1);
+    return x0 < maxCoords.getX0() && x1 < maxCoords.getX1();
+  }
+
+  /**
+   * checks if the given maxCoords are valid, and if they are larger than the minCoords.
+   * @param X0 the x0 value
+   * @param X1 the x1 value
+   * @return true if the values are valid, false otherwise.
+   */
+  public boolean maxCoordsIsValid(String X0, String X1) {
+    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+      return false;
+    }
+    double x0 = Double.parseDouble(X0);
+    double x1 = Double.parseDouble(X1);
+    return x0 > minCoords.getX0() && x1 > minCoords.getX1();
+  }
+
+  /**
    * Constructor for the ModifyDescriptionController class.
    *
    * @param mainController the main controller for the application. Used for switching between
@@ -191,50 +221,28 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Sets the minimum coordinates of the description. If the given coordinates are
-   * invalid, nothing happens.
+   * Sets the minimum coordinates of the description.
    *
    * @param X0 the x-coordinate of the minimum coordinates.
    * @param X1 the y-coordinate of the minimum coordinates.
    */
   public void setMinCoords(String X0, String X1) {
-    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
-      return;
-    }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
-    if (x0 >= maxCoords.getX0() || x1 >= maxCoords.getX1()) {
-      return;
-    }
-    Vector2D newMinCoords = new Vector2D(x0, x1);
-    if (minCoords.equals(newMinCoords)) {
-      return;
-    }
-    minCoords = newMinCoords;
+    minCoords = new Vector2D(x0, x1);
     createDescription();
   }
 
   /**
-   * Sets the maximum coordinates of the description. If the given coordinates are
-   * invalid or the same as the current coordinates, nothing happens.
+   * Sets the maximum coordinates of the description.
    *
    * @param X0 the x-coordinate of the maximum coordinates.
    * @param X1 the y-coordinate of the maximum coordinates.
    */
   public void setMaxCoords(String X0, String X1) {
-    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
-      return;
-    }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
-    if (x0 <= minCoords.getX0() || x1 <= minCoords.getX1()) {
-      return;
-    }
-    Vector2D newMaxCoords = new Vector2D(x0, x1);
-    if (maxCoords.equals(newMaxCoords)) {
-      return;
-    }
-    maxCoords = newMaxCoords;
+    maxCoords = new Vector2D(x0, x1);
     createDescription();
   }
 
