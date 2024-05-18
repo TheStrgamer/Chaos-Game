@@ -3,6 +3,10 @@
   -fx-alignment: top-center;
 }
 
+Label, TextField, Button,  ColorPicker, ComboBox, WeightedComboBox, DoubleNumberField {
+  -fx-font-family: "SansSerif";
+}
+
 .topBar {
   -fx-alignment: center;
   -fx-spacing: 5px;

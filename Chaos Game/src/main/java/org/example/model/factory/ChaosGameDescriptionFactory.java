@@ -371,8 +371,8 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   public ChaosGameDescription createEmptyJuliaDescription() {
-    Vector2D minCoords = new Vector2D(-1, -1);
-    Vector2D maxCoords = new Vector2D(1, 1);
+    Vector2D minCoords = new Vector2D(-1.6, -1.2);
+    Vector2D maxCoords = new Vector2D(1.6, 1.2);
     Complex c = new Complex(0, 0);
     JuliaTransform transformPos = new JuliaTransform(c, 1);
     JuliaTransform transformNeg = new JuliaTransform(c, -1);
