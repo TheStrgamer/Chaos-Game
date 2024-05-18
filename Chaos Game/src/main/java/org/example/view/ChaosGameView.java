@@ -2,6 +2,7 @@ package org.example.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,6 +44,18 @@ public class ChaosGameView implements PageViewInterface {
   private HBox topBar;
   private VBox sideBar;
   private HBox zoomHBox;
+
+  private Button zoomInButton;
+  private Button zoomOutButton;
+  private Button moveLeftButton;
+  private Button moveRightButton;
+  private Button moveUpButton;
+  private Button moveDownButton;
+  private Button runButton;
+  private Button clearButton;
+  private Button randomJulia;
+  private Button randomAffine;
+  private Button toModifyDescription;
 
 
   /**
@@ -102,17 +116,17 @@ public class ChaosGameView implements PageViewInterface {
    * Fills the zoom HBox with buttons that control the zoom and movement of the image.
    */
   private void fillZoomHBox() {
-    Button zoomInButton = createButton("+", event -> chaosGameController.changeZoom(-0.1),
+    zoomInButton = createButton("+", event -> chaosGameController.changeZoom(-0.1),
         "zoomButton");
-    Button zoomOutButton = createButton("-", event -> chaosGameController.changeZoom(0.1),
+    zoomOutButton = createButton("-", event -> chaosGameController.changeZoom(0.1),
         "zoomButton");
-    Button moveLeftButton = createButton("←", event -> chaosGameController.moveCanvas(5, 0),
+    moveLeftButton = createButton("←", event -> chaosGameController.moveCanvas(5, 0),
         "moveButtonLeftRight");
-    Button moveRightButton = createButton("→", event -> chaosGameController.moveCanvas(-5, 0),
+    moveRightButton = createButton("→", event -> chaosGameController.moveCanvas(-5, 0),
         "moveButtonLeftRight");
-    Button moveUpButton = createButton("↑", event -> chaosGameController.moveCanvas(0, -5),
+    moveUpButton = createButton("↑", event -> chaosGameController.moveCanvas(0, -5),
         "moveButton");
-    Button moveDownButton = createButton("↓", event -> chaosGameController.moveCanvas(0, 5),
+    moveDownButton = createButton("↓", event -> chaosGameController.moveCanvas(0, 5),
         "moveButton");
     Button moveUpLeftButton = createButton("↖", event -> chaosGameController.moveCanvas(5, -5),
         "moveButton");
@@ -130,6 +144,8 @@ public class ChaosGameView implements PageViewInterface {
     VBox rightColumn = new VBox(moveUpRightButton, moveRightButton, moveDownRightButton);
 
     zoomHBox.getChildren().addAll(leftColumn, centerColumn, rightColumn);
+
+
   }
 
   /**
@@ -138,9 +154,9 @@ public class ChaosGameView implements PageViewInterface {
    */
   private void fillTopBarDefaultElements() {
 
-    Button runButton = createButton("Run", event -> chaosGameController.runIterations());
+    runButton = createButton("Run", event -> chaosGameController.runIterations());
 
-    Button clearButton = createButton("Clear", event -> chaosGameController.clearCanvas());
+    clearButton = createButton("Clear", event -> chaosGameController.clearCanvas());
 
     Label autoRunLabel = new Label("Auto Run:");
 
@@ -172,11 +188,11 @@ public class ChaosGameView implements PageViewInterface {
    */
   public void createExtraUiElements() {
 
-    Button randomJulia = createButton("Random Julia", event -> {
+    randomJulia = createButton("Random Julia", event -> {
       mainController.setCurrentDescription("JuliaRandom");
       setComboBoxEmpty();
     }, "randomButton");
-    Button randomAffine = createButton("Random Affine", event -> {
+    randomAffine = createButton("Random Affine", event -> {
       mainController.setCurrentDescription("AffineRandom");
       setComboBoxEmpty();
     }, "randomButton");
@@ -184,7 +200,7 @@ public class ChaosGameView implements PageViewInterface {
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
 
-    Button toModifyDescription = createButton("Modify Description",
+    toModifyDescription = createButton("Modify Description",
         event -> mainController.openModifyPopup());
 
     Button newAffine = createButton("New Affine", event -> {
@@ -274,7 +290,7 @@ public class ChaosGameView implements PageViewInterface {
     descriptionComboBox.setValue("Sierpinski");
     descriptionComboBox.getItems()
         .addAll("Sierpinski", "Barnsley", "Julia", "Julia2", "Julia3", "Diamond", "Plant",
-            "Flower", "Snake");
+            "Flower", "Snake", "Spine");
     descriptionComboBox.setOnAction(
         event -> {
           if (descriptionComboBox.getValue() != null) {
@@ -386,5 +402,27 @@ public class ChaosGameView implements PageViewInterface {
     return widthPerElement * (index + defaultElementsCount + 1) < width;
   }
 
+  /**
+   * Sets the key listeners for core buttons in the Chaos Game page.
+   *
+   * @param scene the scene to set the key listeners on.
+   */
+  public void setKeyListeners(Scene scene) {
+    scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+      switch (event.getCode()) {
+        case PLUS -> zoomInButton.fire();
+        case MINUS -> zoomOutButton.fire();
+        case A -> moveLeftButton.fire();
+        case D -> moveRightButton.fire();
+        case W -> moveUpButton.fire();
+        case S -> moveDownButton.fire();
+        case R -> runButton.fire();
+        case C -> clearButton.fire();
+        case M -> toModifyDescription.fire();
+        case J -> randomJulia.fire();
+        case K -> randomAffine.fire();
+      }
+    });
+  }
 
 }

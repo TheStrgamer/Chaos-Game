@@ -18,8 +18,8 @@ import org.example.model.math.Vector2D;
  */
 public class ChaosGameDescription {
 
-  private Vector2D minCoords;
-  private Vector2D maxCoords;
+  private final Vector2D minCoords;
+  private final Vector2D maxCoords;
   List<Transform2D> transforms;
   List<Integer> weights;
   int weightSum;
@@ -369,9 +369,11 @@ public class ChaosGameDescription {
     double yDiff = maxCoords.getX1() - minCoords.getX1();
     Vector2D newDiff = new Vector2D(xDiff * multiplier, yDiff * multiplier);
 
-    minCoords = minCoords.add(new Vector2D(-newDiff.getX0() / 2, -newDiff.getX1() / 2));
-    maxCoords = maxCoords.add(new Vector2D(newDiff.getX0() / 2, newDiff.getX1() / 2));
-    roundCoords();
+    minCoords.setX0(minCoords.getX0() - newDiff.getX0() / 2);
+    minCoords.setX1(minCoords.getX1() - newDiff.getX1() / 2);
+    maxCoords.setX0(maxCoords.getX0() + newDiff.getX0() / 2);
+    maxCoords.setX1(maxCoords.getX1() + newDiff.getX1() / 2);
+
   }
 
   /**
@@ -384,8 +386,10 @@ public class ChaosGameDescription {
     double yDiff = maxCoords.getX1() - minCoords.getX1();
     Vector2D newDiff = new Vector2D(xDiff * vector.getX0()/100, yDiff * vector.getX1()/100);
 
-    minCoords = minCoords.add(new Vector2D(-newDiff.getX0(), -newDiff.getX1()));
-    maxCoords = maxCoords.add(new Vector2D(-newDiff.getX0(), -newDiff.getX1()));
+    minCoords.setX0(minCoords.getX0() - newDiff.getX0());
+    minCoords.setX1(minCoords.getX1() - newDiff.getX1());
+    maxCoords.setX0(maxCoords.getX0() - newDiff.getX0());
+    maxCoords.setX1(maxCoords.getX1() - newDiff.getX1());
     roundCoords();
   }
 
@@ -393,9 +397,11 @@ public class ChaosGameDescription {
    * Rounds the coordinates to 4 decimals.
    */
   private void roundCoords() {
-    int amountOfDecimals = 3;
+    int amountOfDecimals = 5;
     int multiplier = (int) Math.pow(10, amountOfDecimals);
-    minCoords = new Vector2D((double) Math.round(minCoords.getX0() * multiplier) / multiplier, (double) Math.round(minCoords.getX1() * multiplier) / multiplier);
-    maxCoords = new Vector2D((double) Math.round(maxCoords.getX0() * multiplier) / multiplier, (double) Math.round(maxCoords.getX1() * multiplier) / multiplier);
+    minCoords.setX0((double) Math.round(minCoords.getX0() * multiplier) / multiplier);
+    minCoords.setX1((double) Math.round(minCoords.getX1() * multiplier) / multiplier);
+    maxCoords.setX0((double) Math.round(maxCoords.getX0() * multiplier) / multiplier);
+    maxCoords.setX1((double) Math.round(maxCoords.getX1() * multiplier) / multiplier);
   }
 }

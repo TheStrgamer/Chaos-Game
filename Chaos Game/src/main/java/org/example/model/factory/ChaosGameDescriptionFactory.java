@@ -35,6 +35,7 @@ public class ChaosGameDescriptionFactory {
       case "Plant" -> createPlantDescription();
       case "Flower" -> createFlowerDescription();
       case "Snake" -> createSnakeDescription();
+      case "Spine" -> createSpineDescription();
       case "JuliaRandom" -> createJuliaRandomDescription();
       case "AffineRandom" -> createAffineRandomDescription();
       case "EmptyAffine" -> createEmptyAffineDescription();
@@ -103,7 +104,7 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform4);
     List<Integer> weights = new ArrayList<>();
     weights.add(1);
-    weights.add(65);
+    weights.add(85);
     weights.add(12);
     weights.add(12);
 
@@ -155,19 +156,23 @@ public class ChaosGameDescriptionFactory {
     Vector2D maxCoords = new Vector2D(1.25, .5);
     List<Transform2D> transforms = new ArrayList<>();
 
-    Matrix2x2 matrix1 = new Matrix2x2(-0.03535949538401151, -0.4532831417408121, 0.6116778800475406, -0.3032324309903214);
-    Vector2D vector1 = new Vector2D( 0.07659661687866781, -0.7402694095766407 );
+    Matrix2x2 matrix1 = new Matrix2x2(-0.035359, -0.45328, 0.61167, -0.30323);
+    Vector2D vector1 = new Vector2D( 0.0765966, -0.740269 );
     AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
 
-    Matrix2x2 matrix2 = new Matrix2x2(0.8752702951432678, -0.9741038761368701, 0.9323165704394973, -0.2067485177080317);
-    Vector2D vector2 = new Vector2D( 0.0674954419906022, -0.5411159639984362 );
+    Matrix2x2 matrix2 = new Matrix2x2(0.875270, -0.97410, 0.9323, -0.2067);
+    Vector2D vector2 = new Vector2D( 0.067495, -0.54111 );
     AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
 
 
     transforms.add(transform1);
     transforms.add(transform2);
 
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    List<Integer> weights = new ArrayList<>();
+    weights.add(1);
+    weights.add(5);
+
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
   /**
@@ -248,6 +253,34 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform3);
 
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+
+  /**
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Spine".
+   *
+   * @return the ChaosGameDescription object.
+   */
+  public ChaosGameDescription createSpineDescription() {
+    Vector2D minCoords = new Vector2D(-3.5, -7.9);
+    Vector2D maxCoords = new Vector2D(8.5, 3.8);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    Matrix2x2 matrix1 = new Matrix2x2(0.94, 0.25, -0.17, 0.73);
+    Vector2D vector1 = new Vector2D(1.9, -0.80);
+    AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
+
+    Matrix2x2 matrix2 = new Matrix2x2(-0.13, 0.38, -0.66, -0.57);
+    Vector2D vector2 = new Vector2D(0.37, 0.04);
+    AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
+
+    List<Integer> weights = new ArrayList<>();
+    weights.add(3);
+    weights.add(1);
+
+    return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
   /**

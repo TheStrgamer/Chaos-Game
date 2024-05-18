@@ -23,6 +23,8 @@ public class ChaosGame {
   private int canvasWidth;
   private int canvasHeight;
 
+  double zoom = 1.0;
+
   private final List<ChaosGameObserver> observers = new ArrayList<>();
 
   /**
@@ -134,6 +136,21 @@ public class ChaosGame {
     this.description = description;
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
+    zoom = 1.0;
+
+    notifyDescriptionChanged();
+    notifyCanvasChanged();
+  }
+  /**
+   * Updates the description of this chaos game. The canvas is reset to a new canvas based on the
+   * description. Notifies all observers that the description has changed.
+   *
+   */
+  public void updateDescription() {
+    currentPoint.setX0(0);
+    currentPoint.setX1(0);
+    this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
+        description.getMaxCoords());
     notifyDescriptionChanged();
     notifyCanvasChanged();
   }
@@ -187,8 +204,9 @@ public class ChaosGame {
    * @param multiplier the multiplier to change the zoom with.
    */
   public void changeZoom(double multiplier) {
+    zoom += zoom*multiplier;
     description.changeZoom(multiplier);
-    setDescription(description);
+    updateDescription();
   }
 
   /**
@@ -198,7 +216,8 @@ public class ChaosGame {
    */
   public void moveCanvas(Vector2D vector) {
     description.moveCanvas(vector);
-    setDescription(description);
+    updateDescription();
+
   }
 
 
@@ -212,6 +231,7 @@ public class ChaosGame {
   public void runSteps(int steps) {
     verifyStepsPositive(steps);
     int sumOfWeights = description.sumOfWeights();
+    int value = (int) Math.min(10/zoom+1, 255);
     for (int i = 0; i < steps; i++) {
       try {
         int randomInt = random.nextInt(sumOfWeights);
@@ -220,7 +240,7 @@ public class ChaosGame {
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint, 10);
+        canvas.setPixel(currentPoint, value);
       } catch (Exception e) {
         throw new IllegalArgumentException("Invalid description");
       }

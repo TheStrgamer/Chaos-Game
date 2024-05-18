@@ -56,6 +56,7 @@ public class MainController {
     chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
     stage.setScene(chaosGameScene);
     setStageListeners(stage);
+    chaosGameController.setKeyListeners(chaosGameScene);
 
     chaosGameScene.getStylesheets().add(
         Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());

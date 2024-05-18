@@ -1,6 +1,7 @@
 package org.example.controller;
 
 
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.example.model.chaosGame.ChaosCanvas;
@@ -179,6 +180,15 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void changeZoom(double multiplier) {
     chaosGame.changeZoom(multiplier);
+  }
+
+  /**
+   * Sets the key listeners for the Chaos Game.
+   *
+   * @param scene the scene to set the key listeners for.
+   */
+  public void setKeyListeners(Scene scene) {
+    chaosGameView.setKeyListeners(scene);
   }
 
   /**
