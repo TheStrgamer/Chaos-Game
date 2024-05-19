@@ -65,7 +65,6 @@ public class FileController {
       }
       ChaosGameDescription readDescription = chaosGameFileHandler.readFromFile(path);
       mainController.setCurrentDescription(readDescription);
-      mainController.switchToChaosGameView();
       System.out.println("File read successfully");
     } catch (Exception e) {
       System.out.println("Error reading file");

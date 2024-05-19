@@ -231,6 +231,6 @@ public class ChaosGameController implements ChaosGameObserver {
    * @return the image of the Chaos Game.
    */
   public Image getImage() {
-    return imageFactory.createImage(chaosGame.getCanvas());
+    return imageFactory.createImage(chaosGame.getCanvas(),color);
   }
 }

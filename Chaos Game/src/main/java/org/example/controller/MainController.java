@@ -32,6 +32,7 @@ public class MainController {
   private final int minCanvasWidth = 600;
   private final int minCanvasHeight = 350;
 
+  Stage stage;
   Scene chaosGameScene;
 
 
@@ -41,6 +42,7 @@ public class MainController {
    * @param stage the primary stage for the application.
    */
   public MainController(Stage stage) {
+    this.stage = stage;
     stage.setTitle("Chaos Game");
 
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
