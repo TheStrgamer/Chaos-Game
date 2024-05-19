@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
 import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosGame.ChaosGameFileHandler;
 import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
@@ -19,6 +20,8 @@ public class MainController {
   private final ModifyDescriptionController modifyDescriptionController;
   private final PopupController popupController;
   private final ChaosGameDescriptionFactory chaosGameDescriptionFactory;
+  private final FileController fileController;
+  private final ChaosGameFileHandler chaosGameFileHandler;
 
   private ChaosGameDescription currentDescription;
   private final ChaosGame chaosGame;
@@ -29,6 +32,7 @@ public class MainController {
   private final int minCanvasWidth = 600;
   private final int minCanvasHeight = 350;
 
+  Stage stage;
   Scene chaosGameScene;
 
 
@@ -38,13 +42,16 @@ public class MainController {
    * @param stage the primary stage for the application.
    */
   public MainController(Stage stage) {
+    this.stage = stage;
     stage.setTitle("Chaos Game");
 
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
+    chaosGameFileHandler = new ChaosGameFileHandler();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
 
     chaosGameController = new ChaosGameController(this, chaosGame);
+    fileController = new FileController(this, chaosGameFileHandler);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     popupController = new PopupController();
 
@@ -114,6 +121,24 @@ public class MainController {
     chaosGame.setDescription(currentDescription);
   }
 
+  /**
+   * Method for getting the current description of the Chaos Game.
+   *
+   * @return the current description of the Chaos Game.
+   */
+
+  public ChaosGameDescription getChaosGameDescription() {
+    return chaosGame.getDescription();
+  }
+
+  /**
+   * Method for getting the stage of the application.
+   *
+   * @return the stage of the application.
+   */
+  public Stage getStage() {
+    return this.stage;
+  }
 
   /**
    * Changes the scale of the canvas and the description view.
@@ -124,5 +149,18 @@ public class MainController {
     chaosGameController.setCanvasSize(currentWidth, currentHeight);
   }
 
+  /**
+   * Method for saving the current description to a file.
+   */
+  public void saveToFile() {
+    fileController.writeToFile(currentDescription);
+  }
 
+  public void readFromFile() {
+    fileController.readFromFile();
+  }
+
+  public void saveImageToFile() {
+    fileController.saveImageToFile(chaosGameController.getImage());
+  }
 }

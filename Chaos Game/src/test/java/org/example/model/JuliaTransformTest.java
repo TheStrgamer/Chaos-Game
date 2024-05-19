@@ -70,7 +70,7 @@ class JuliaTransformTest {
 
     @Test
     @DisplayName("Transform method returns opposite result with opposite sign")
-    void testTransformReturnsOppositeResultWithIooisuteSign() {
+    void testTransformReturnsOppositeResultWithOppositeSign() {
       try {
         JuliaTransform juliaTransformPositive = new JuliaTransform(new Complex(0.3, 0.6), 1);
         JuliaTransform juliaTransformNegative = new JuliaTransform(new Complex(0.3, 0.6), -1);
