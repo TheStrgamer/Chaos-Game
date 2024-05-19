@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
 import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosGame.MandelBrot;
 import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
@@ -29,7 +30,7 @@ public class MainController {
   private final int minCanvasWidth = 600;
   private final int minCanvasHeight = 350;
 
-  Scene chaosGameScene;
+  public MandelBrot mandelBrot;
 
 
   /**
@@ -43,6 +44,7 @@ public class MainController {
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
+    mandelBrot = new MandelBrot(currentDescription, currentWidth - 30, currentHeight - 100, 755, 3.0);
 
     chaosGameController = new ChaosGameController(this, chaosGame);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
@@ -50,10 +52,12 @@ public class MainController {
 
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
+    mandelBrot.addObserver(chaosGameController);
 
     int originalWidth = 800;
     int originalHeight = 600;
-    chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth, originalHeight);
+    Scene chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth,
+        originalHeight);
     stage.setScene(chaosGameScene);
     setStageListeners(stage);
     chaosGameController.setKeyListeners(chaosGameScene);

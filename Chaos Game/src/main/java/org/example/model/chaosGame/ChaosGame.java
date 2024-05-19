@@ -137,9 +137,9 @@ public class ChaosGame {
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
     zoom = 1.0;
+    notifyCanvasChanged();
 
     notifyDescriptionChanged();
-    notifyCanvasChanged();
   }
   /**
    * Updates the description of this chaos game. The canvas is reset to a new canvas based on the

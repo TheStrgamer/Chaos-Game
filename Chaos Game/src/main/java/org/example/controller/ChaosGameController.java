@@ -51,7 +51,12 @@ public class ChaosGameController implements ChaosGameObserver {
    * Runs the Chaos Game for a set number of iterations.
    */
   public void runIterations() {
-    chaosGame.runSteps(steps);
+    if (chaosGame.getDescription().getTransformType().equals("Julia")) {
+      mainController.mandelBrot.setDescription(chaosGame.getDescription());
+      mainController.mandelBrot.runSteps(1);
+    } else {
+      chaosGame.runSteps(steps);
+    }
   }
 
   /**
@@ -179,7 +184,10 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param multiplier the multiplier to change the zoom by.
    */
   public void changeZoom(double multiplier) {
-    chaosGame.changeZoom(multiplier);
+    if (chaosGame.getDescription().getTransformType().equals("Julia")) {
+      mainController.mandelBrot.changeZoom(multiplier);
+    } else {
+    chaosGame.changeZoom(multiplier);}
   }
 
   /**
@@ -198,7 +206,11 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param x1 the y-coordinate to move the canvas by.
    */
   public void moveCanvas(double x0, double x1) {
-    chaosGame.moveCanvas(new Vector2D(x0, x1));
+    if (chaosGame.getDescription().getTransformType().equals("Julia")) {
+      mainController.mandelBrot.moveCanvas(new Vector2D(x0, x1));
+    } else {
+      chaosGame.moveCanvas(new Vector2D(x0, x1));
+    }
   }
 
 

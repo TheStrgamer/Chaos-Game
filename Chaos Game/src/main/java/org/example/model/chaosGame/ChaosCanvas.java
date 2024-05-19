@@ -44,7 +44,7 @@ public class ChaosCanvas {
     if (point.getX0() < minCoords.getX0() || point.getX0() > maxCoords.getX0() ||
         point.getX1() < minCoords.getX1() || point.getX1() > maxCoords.getX1()) {
       throw new IllegalArgumentException(
-          "Point " + point + " is not within the given parameters " + minCoords + " " + maxCoords);
+          "Point " + point + " is not within the given parameters " + minCoords + "; " + maxCoords);
     }
   }
 
@@ -177,6 +177,15 @@ public class ChaosCanvas {
     newValue = Math.min(newValue,755);
 
     canvas[(int) indices.getX1()][(int) indices.getX0()] = newValue;
+
+  }
+  public void putPixel(Vector2D point, int value) {
+    verifyNotNull(point);
+    if (!(point.getX0() >= 0 && point.getX0() < height && point.getX1() >= 0 && point.getX1() < width)) {
+      return;
+    }
+
+    canvas[(int) point.getX1()][(int) point.getX0()] = value;
 
   }
 

@@ -126,5 +126,9 @@ public class JuliaTransform implements Transform2D {
     return point.toString();
   }
 
+  public Complex getPoint() {
+    return point;
+  }
+
 
 }
