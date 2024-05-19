@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.scene.layout.VBox;
@@ -50,12 +51,44 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
+   * checks if the given minCoords are valid, and if they are smaller than the maxCoords.
+   * @param X0 the x0 value
+   * @param X1 the x1 value
+   * @return true if the values are valid, false otherwise.
+   */
+  public boolean minCoordsIsValid(String X0, String X1) {
+    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+      return false;
+    }
+    double x0 = Double.parseDouble(X0);
+    double x1 = Double.parseDouble(X1);
+    return x0 < maxCoords.getX0() && x1 < maxCoords.getX1();
+  }
+
+  /**
+   * checks if the given maxCoords are valid, and if they are larger than the minCoords.
+   * @param X0 the x0 value
+   * @param X1 the x1 value
+   * @return true if the values are valid, false otherwise.
+   */
+  public boolean maxCoordsIsValid(String X0, String X1) {
+    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+      return false;
+    }
+    double x0 = Double.parseDouble(X0);
+    double x1 = Double.parseDouble(X1);
+    return x0 > minCoords.getX0() && x1 > minCoords.getX1();
+  }
+
+  /**
    * Constructor for the ModifyDescriptionController class.
    *
    * @param mainController the main controller for the application. Used for switching between
    *                       views.
+   * @param description    the description of the Chaos Game.
    */
-  public ModifyDescriptionController(MainController mainController, ChaosGameDescription description) {
+  public ModifyDescriptionController(MainController mainController,
+      ChaosGameDescription description) {
     this.mainController = mainController;
     this.currentDescription = description;
 
@@ -66,7 +99,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the layout of the Modify Description page.
+   * Returns the layout of the Modify Description page.
    *
    * @return the layout of the Modify Description page.
    */
@@ -75,8 +108,9 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
 
+
   /**
-   * Method for reading a description from a file.
+   * Reads a description from a file.
    */
   public void readFromFile() {
     //TODO
@@ -84,7 +118,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for saving the current description to a file.
+   * Saves the current description to a file.
    */
   public void saveToFile() {
     //TODO
@@ -92,7 +126,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for adding a new empty transform to the description.
+   * Adds a new empty transform to the description. If the current description is using
+   * julia transforms, it adds two transforms, one for each sign value.
    */
   public void addTransform() {
     if (currentDescription.getTransformType().equals("Julia")) {
@@ -105,7 +140,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting what type of transform the description is using.
+   * Returns what type of transform the description is using.
+   *
    * @return the type of transform.
    */
   public String getTransformType() {
@@ -113,7 +149,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the minimum coordinates of the description.
+   * Returns the minimum coordinates of the description.
+   *
    * @return the minimum coordinates.
    */
   public String getMinCoords() {
@@ -121,7 +158,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the maximum coordinates of the description.
+   * Returns the maximum coordinates of the description.
+   *
    * @return the maximum coordinates.
    */
   public String getMaxCoords() {
@@ -129,7 +167,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for getting the transforms of the description.
+   * Returns the transforms of the description.
+   *
    * @return the transforms.
    */
   public List<String> getTransforms() {
@@ -137,17 +176,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for changing the size of the description list.
-   * @param width the width of the description list.
-   * @param height the height of the description list.
-   */
-  public void setDescriptionSize(int width, int height) {
-    modifyDescriptionView.changeDescriptionListScale(width, height);
-  }
-
-
-  /**
-   * Method for listening to changes in the description of the Chaos Game.
+   * Listens to changes in the description of the Chaos Game.
    *
    * @param description the description of the Chaos Game.
    */
@@ -161,7 +190,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for listening to changes in the canvas of the Chaos Game.
+   * Listens to changes in the canvas of the Chaos Game.
    *
    * @param canvas the canvas of the Chaos Game.
    */
@@ -170,11 +199,22 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for creating a new description from the current values.
-   * If the description is the same as the current description, nothing happens.
+   * Creates a new description from the current values. If the description is the same
+   * as the current description, nothing happens.
    */
   public void createDescription() {
-    ChaosGameDescription description = new ChaosGameDescription(minCoords, maxCoords, transforms);
+    List<Integer> weights = new ArrayList<>();
+    for (int i = 0; i < transforms.size(); i++) {
+      if (i < currentDescription.getWeights().size()) {
+        weights.add(currentDescription.getWeights().get(i));
+      } else {
+        weights.add(1);
+      }
+
+    }
+
+    ChaosGameDescription description = new ChaosGameDescription(minCoords, maxCoords, transforms,
+        weights);
     if (currentDescription.equals(description)) {
       return;
     }
@@ -182,54 +222,37 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for setting the minimum coordinates of the description.
-   * If the given coordinates are invalid, nothing happens.
+   * Sets the minimum coordinates of the description.
    *
    * @param X0 the x-coordinate of the minimum coordinates.
    * @param X1 the y-coordinate of the minimum coordinates.
    */
   public void setMinCoords(String X0, String X1) {
-    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
-      return;
-    }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
-    Vector2D newMinCoords = new Vector2D(x0, x1);
-    if (minCoords.equals(newMinCoords)) {
-      return;
-    }
-    minCoords = newMinCoords;
+    minCoords = new Vector2D(x0, x1);
+    createDescription();
   }
 
   /**
-   * Method for setting the maximum coordinates of the description.
-   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   * Sets the maximum coordinates of the description.
    *
    * @param X0 the x-coordinate of the maximum coordinates.
    * @param X1 the y-coordinate of the maximum coordinates.
    */
   public void setMaxCoords(String X0, String X1) {
-    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
-      return;
-    }
     double x0 = Double.parseDouble(X0);
     double x1 = Double.parseDouble(X1);
-    if (x0 < minCoords.getX0() || x1 < minCoords.getX1()) {
-      return;
-    }
-    Vector2D newMaxCoords = new Vector2D(x0, x1);
-    if (maxCoords.equals(newMaxCoords)) {
-      return;
-    }
-    maxCoords = newMaxCoords;
+    maxCoords = new Vector2D(x0, x1);
+    createDescription();
   }
 
   /**
-   * Method for setting the coordinates of a Julia transform.
-   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   * Sets the coordinates of a Julia transform. If the given coordinates are invalid
+   * or the same as the current coordinates, nothing happens.
    *
-   * @param index the index of the transform.
-   * @param real the real part of the complex number.
+   * @param index     the index of the transform.
+   * @param real      the real part of the complex number.
    * @param imaginary the imaginary part of the complex number.
    */
   public void setJuliaTransforms(int index, String real, String imaginary) {
@@ -248,19 +271,20 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     }
     transforms.set(index, newTransform1);
     transforms.set(index + 1, newTransform2);
+    createDescription();
   }
 
   /**
-   * Method for setting the coordinates of an Affine transform.
-   * If the given coordinates are invalid or the same as the current coordinates, nothing happens.
+   * Sets the coordinates of an Affine transform. If the given coordinates are invalid
+   * or the same as the current coordinates, nothing happens.
    *
    * @param index the index of the transform.
-   * @param a00 the a00 value of the matrix.
-   * @param a01 the a01 value of the matrix.
-   * @param a10 the a10 value of the matrix.
-   * @param a11 the a11 value of the matrix.
-   * @param a the x-coordinate of the vector.
-   * @param b the y-coordinate of the vector.
+   * @param a00   the a00 value of the matrix.
+   * @param a01   the a01 value of the matrix.
+   * @param a10   the a10 value of the matrix.
+   * @param a11   the a11 value of the matrix.
+   * @param a     the x-coordinate of the vector.
+   * @param b     the y-coordinate of the vector.
    */
   public void setAffineTransforms(int index, String a00, String a01, String a10, String a11,
       String a, String b) {
@@ -275,11 +299,12 @@ public class ModifyDescriptionController implements ChaosGameObserver {
       return;
     }
     transforms.set(index, newTransform);
+    createDescription();
   }
 
   /**
-   * Method for removing an affine transform from the description.
-   * If the index is invalid, nothing happens.
+   * Removes an affine transform from the description. If the index is invalid, nothing
+   * happens.
    *
    * @param index the index of the transform to remove.
    */
@@ -292,8 +317,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Method for removing a Julia transform from the description.
-   * If the index is invalid, nothing happens.
+   * Removes a Julia transform from the description. If the index is invalid, nothing
+   * happens.
    *
    * @param index the index of the transform to remove.
    */
@@ -304,6 +329,23 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     transforms.remove(index);
     transforms.remove(index);
     createDescription();
+  }
+
+  /**
+   * Sets the weight of a transform at the given index.
+   *
+   * @param index the index of the transform.
+   * @param weight the weight of the transform.
+   */
+  public void setWeight(int index, String weight) {
+    if (!stringIsValidNumber(weight)) {
+      return;
+    }
+    int newWeight = Integer.parseInt(weight);
+    if (newWeight < 0) {
+      return;
+    }
+    currentDescription.setWeight(index, newWeight);
   }
 
 

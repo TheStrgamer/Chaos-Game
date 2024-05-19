@@ -21,7 +21,6 @@ public class App extends Application {
   @Override
   public void start(Stage primaryStage) {
     MainController mainController = new MainController(primaryStage);
-    mainController.switchToChaosGameView();
     primaryStage.setTitle("ChaosGame Application");
     primaryStage.show();
 

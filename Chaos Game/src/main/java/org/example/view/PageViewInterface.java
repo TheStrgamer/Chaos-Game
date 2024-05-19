@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 public interface PageViewInterface {
 
   /**
-   * Method for getting the layout of the view.
+   * Returns the layout of the view.
    *
    * @return the layout of the view.
    */

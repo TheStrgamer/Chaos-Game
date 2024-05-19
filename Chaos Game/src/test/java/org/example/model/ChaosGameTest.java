@@ -209,7 +209,7 @@ class ChaosGameTest {
         chaosGame.runSteps(-100);
         fail("An exception was not thrown");
       } catch (Exception e) {
-        assertEquals(e.getMessage(), "Steps need to be more than 0");
+        assertEquals(e.getMessage(), "Steps need to be more than or equal to 0");
       }
     }
 

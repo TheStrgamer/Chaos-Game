@@ -23,6 +23,8 @@ public class ChaosGame {
   private int canvasWidth;
   private int canvasHeight;
 
+  double zoom = 1.0;
+
   private final List<ChaosGameObserver> observers = new ArrayList<>();
 
   /**
@@ -59,9 +61,9 @@ public class ChaosGame {
    * @param steps the steps to verify
    * @throws IllegalArgumentException if the given steps is less than or equal to zero
    */
-  private void verifyStepsMoreThanZero(int steps) {
-    if (steps <= 0) {
-      throw new IllegalArgumentException("Steps need to be more than 0");
+  private void verifyStepsPositive(int steps) {
+    if (steps < 0) {
+      throw new IllegalArgumentException("Steps need to be more than or equal to 0");
     }
   }
 
@@ -134,6 +136,21 @@ public class ChaosGame {
     this.description = description;
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
+    zoom = 1.0;
+
+    notifyDescriptionChanged();
+    notifyCanvasChanged();
+  }
+  /**
+   * Updates the description of this chaos game. The canvas is reset to a new canvas based on the
+   * description. Notifies all observers that the description has changed.
+   *
+   */
+  public void updateDescription() {
+    currentPoint.setX0(0);
+    currentPoint.setX1(0);
+    this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
+        description.getMaxCoords());
     notifyDescriptionChanged();
     notifyCanvasChanged();
   }
@@ -182,24 +199,50 @@ public class ChaosGame {
   }
 
   /**
+   * Changes the zoom of the canvas.
+   *
+   * @param multiplier the multiplier to change the zoom with.
+   */
+  public void changeZoom(double multiplier) {
+    zoom += zoom*multiplier;
+    description.changeZoom(multiplier);
+    updateDescription();
+  }
+
+  /**
+   * Moves the canvas by the given vector.
+   *
+   * @param vector the vector to move the canvas by.
+   */
+  public void moveCanvas(Vector2D vector) {
+    description.moveCanvas(vector);
+    updateDescription();
+
+  }
+
+
+
+  /**
    * Runs the chaos game for the given number of steps. Notifies all observers that the canvas has
    * changed after all steps have been run.
    *
    * @param steps is the number of steps to run.
    */
   public void runSteps(int steps) {
-    verifyStepsMoreThanZero(steps);
+    verifyStepsPositive(steps);
+    int sumOfWeights = description.sumOfWeights();
+    int value = (int) Math.min(10/zoom+1, 255);
     for (int i = 0; i < steps; i++) {
       try {
-        int randomInt = random.nextInt(description.getTransforms().size());
-        Transform2D transform = description.getTransforms().get(randomInt);
+        int randomInt = random.nextInt(sumOfWeights);
+        Transform2D transform = description.getTransformWithWeight(randomInt);
         Vector2D tmp = transform.transform(currentPoint);
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint, 5);
+        canvas.setPixel(currentPoint, value);
       } catch (Exception e) {
-        System.out.println(e.getMessage());
+        throw new IllegalArgumentException("Invalid description");
       }
     }
     notifyCanvasChanged();

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 import java.util.Scanner;
+import org.example.model.exceptions.DescriptionFileEmptyException;
+import org.example.model.exceptions.MissingDataException;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.math.Complex;
 import org.example.model.transform.JuliaTransform;
@@ -28,7 +30,7 @@ public class ChaosGameFileHandler {
    */
   private void verifyValidTransformType(String transformType) {
     if (!transformType.contains("Affine") && !transformType.contains("Julia")) {
-      throw new IllegalArgumentException("Invalid transform type");
+      throw new MissingDataException("Invalid transform type");
     }
   }
 
@@ -122,16 +124,31 @@ public class ChaosGameFileHandler {
     path = makeValidPath(path);
     verifyValidPath(path);
     try (Scanner scanner = new Scanner(new File(path))) {
+      if (!scanner.hasNextLine()) {
+        throw new DescriptionFileEmptyException("Description file is empty");
+      }
       String transformType = removeCommentsFromString(scanner.nextLine());
       verifyValidTransformType(transformType);
 
-      String minCoords = removeCommentsFromString(scanner.nextLine());
-      Vector2D minCoordsVector = new Vector2D(verifyDouble(minCoords.split(",")[0]),
-          verifyDouble(minCoords.split(",")[1]));
+      if (!scanner.hasNextLine()) {
+        throw new MissingDataException("Description file is missing data");
+      }
+      String[] minCoords = removeCommentsFromString(scanner.nextLine()).split(",");
+      if (minCoords.length != 2) {
+        throw new MissingDataException("Description file is missing coordinate data, and cannot be used to create a ChaosGameDescription.");
+      }
+      Vector2D minCoordsVector = new Vector2D(verifyDouble(minCoords[0]),
+          verifyDouble(minCoords[1]));
 
-      String maxCoords = removeCommentsFromString(scanner.nextLine());
-      Vector2D maxCoordsVector = new Vector2D(verifyDouble(maxCoords.split(",")[0]),
-          verifyDouble(maxCoords.split(",")[1]));
+      if (!scanner.hasNextLine()) {
+        throw new MissingDataException("Description file is missing data");
+      }
+      String[] maxCoords = removeCommentsFromString(scanner.nextLine()).split(",");
+      if (maxCoords.length != 2) {
+        throw new MissingDataException("Description file is missing coordinate data, and cannot be used to create a ChaosGameDescription.");
+      }
+      Vector2D maxCoordsVector = new Vector2D(verifyDouble(maxCoords[0]),
+          verifyDouble(maxCoords[1]));
 
       List<Transform2D> transforms = new ArrayList<>();
 
@@ -144,6 +161,9 @@ public class ChaosGameFileHandler {
         String[] transform = nextLine.split(",");
 
         if (transformType.contains("Affine")) {
+          if (transform.length != 6) {
+            throw new MissingDataException("Invalid transform data");
+          }
           Matrix2x2 matrix = new Matrix2x2(verifyDouble(transform[0]),
               verifyDouble(transform[1]), verifyDouble(transform[2]),
               verifyDouble(transform[3]));
@@ -154,6 +174,9 @@ public class ChaosGameFileHandler {
           transforms.add(new AffineTransform2D(matrix, vector));
 
         } else if (transformType.contains("Julia")) {
+          if (transform.length != 2) {
+            throw new MissingDataException("Invalid transform data");
+          }
           double real = verifyDouble(transform[0]);
           double imaginary = verifyDouble(transform[1]);
           Complex complex = new Complex(real, imaginary);
@@ -161,9 +184,16 @@ public class ChaosGameFileHandler {
           transforms.add(new JuliaTransform(complex, -1));
         }
       }
+      if (transforms.isEmpty()) {
+        throw new MissingDataException("Description file is missing transform data, and cannot be used to create a ChaosGameDescription.");
+      }
       return new ChaosGameDescription(minCoordsVector, maxCoordsVector, transforms);
 
-    } catch (Exception e) {
+    } catch (MissingDataException e) {
+      throw new MissingDataException(e.getMessage());
+    } catch (DescriptionFileEmptyException e) {
+      throw new DescriptionFileEmptyException(e.getMessage());
+    } catch (IOException e) {
       throw new IllegalArgumentException(e.getMessage());
     }
   }

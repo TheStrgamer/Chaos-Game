@@ -96,6 +96,7 @@ public class Complex extends Vector2D {
 
   /**
    * Returns the square root of this complex number.
+   * @return the square root of this complex number
    */
   public Complex sqrt() {
     double real = getReal();
