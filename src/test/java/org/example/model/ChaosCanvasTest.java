@@ -396,7 +396,7 @@ class ChaosCanvasTest {
         chaosCanvas.getPixel(new Vector2D(300, 300));
         fail("An exception was not thrown");
       } catch (Exception e) {
-        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0 200.0, 200.0");
+        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0; 200.0, 200.0");
       }
     }
 
@@ -448,7 +448,7 @@ class ChaosCanvasTest {
         chaosCanvas.transformCoords(new Vector2D(300, 300));
         fail("An exception was not thrown");
       } catch (Exception e) {
-        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0 200.0, 200.0");
+        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0; 200.0, 200.0");
       }
     }
 
@@ -474,7 +474,7 @@ class ChaosCanvasTest {
         chaosCanvas.removePixel(new Vector2D(300, 300));
         fail("An exception was not thrown");
       } catch (Exception e) {
-        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0 200.0, 200.0");
+        assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0; 200.0, 200.0");
       }
     }
 
