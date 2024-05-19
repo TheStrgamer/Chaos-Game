@@ -2,6 +2,7 @@ package org.example.controller;
 
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.example.model.chaosGame.ChaosCanvas;
@@ -325,5 +326,14 @@ public class ChaosGameController implements ChaosGameObserver {
     mandelBrot.setDescription(currentDescription);
     chaosGame.setDescription(currentDescription);
 
+  }
+
+  /**
+   * Method for getting the image of the Chaos Game.
+   *
+   * @return the image of the Chaos Game.
+   */
+  public Image getImage() {
+    return imageFactory.createImage(chaosGame.getCanvas(),color);
   }
 }

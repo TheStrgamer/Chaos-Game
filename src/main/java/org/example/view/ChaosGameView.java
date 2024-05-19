@@ -234,14 +234,14 @@ public class ChaosGameView implements PageViewInterface {
     newAffine.getStyleClass().add("newButton");
     newJulia.getStyleClass().add("newButton");
 
-    Button saveDescription = new Button("Save Description");
-    Button loadDescription = new Button("Load Description");
+    Button saveDescription = createButton("Save Description",
+        event -> mainController.saveToFile(), "saveLoadButton");
+    Button loadDescription = createButton("Load Description",
+        event -> mainController.readFromFile(), "saveLoadButton");
 
     VBox saveLoadLayout = new VBox(saveDescription, loadDescription);
-    saveDescription.getStyleClass().add("saveLoadButton");
-    loadDescription.getStyleClass().add("saveLoadButton");
 
-    Button saveImage = new Button("Save Image");
+    Button saveImage = createButton("Save Image", event -> mainController.saveImageToFile());
 
     Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()),
         "burgerMenuButton");

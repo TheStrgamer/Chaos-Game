@@ -126,8 +126,8 @@ public class ChaosGameDescriptionFactoryTest {
         assertEquals(description.toString(), "Affine    #Transform type\n"
             + "-0.25, -0.75    #minimum coordinates\n"
             + "1.25, 0.5    #maximum coordinates\n"
-            + "-0.03535949538401151, -0.4532831417408121, 0.6116778800475406, -0.3032324309903214, 0.07659661687866781, -0.7402694095766407    #transform\n"
-            + "0.8752702951432678, -0.9741038761368701, 0.9323165704394973, -0.2067485177080317, 0.0674954419906022, -0.5411159639984362    #transform\n");
+            + "-0.035359, -0.45328, 0.61167, -0.30323, 0.0765966, -0.740269    #transform\n"
+            + "0.87527, -0.9741, 0.9323, -0.2067, 0.067495, -0.54111    #transform\n");
 
       } catch (IllegalArgumentException e) {
         fail("Exception thrown");
