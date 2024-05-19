@@ -8,7 +8,7 @@ import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.chaosGame.ChaosGame;
 
 import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.MandelBrot;
+import org.example.model.chaosGame.Mandelbrot;
 import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
 import org.example.model.factory.ImageFactory;
@@ -22,7 +22,7 @@ import org.example.view.ChaosGameView;
 public class ChaosGameController implements ChaosGameObserver {
 
   private final ChaosGame chaosGame;
-  private final MandelBrot mandelBrot;
+  private final Mandelbrot mandelBrot;
   private final ChaosGameView chaosGameView;
 
   private final MainController mainController;
@@ -31,10 +31,15 @@ public class ChaosGameController implements ChaosGameObserver {
 
   private boolean autoRunOnDescriptionChange = false;
   private int steps;
+  private int maxIterations = 255;
+  private double escapeRadius = 3.0;
 
   private Color color = new Color(1, 0, 0, 1);
 
   private ChaosCanvas currentCanvas;
+  private ChaosGameDescription currentDescription;
+
+  private boolean mandelbrotMode = false;
 
   /**
    * Constructor for the ChaosGameController class.
@@ -43,25 +48,63 @@ public class ChaosGameController implements ChaosGameObserver {
    *                       views.
    * @param chaosGame      the Chaos Game model for the application.
    */
-  public ChaosGameController(MainController mainController, ChaosGame chaosGame, MandelBrot mandelBrot) {
+  public ChaosGameController(MainController mainController, ChaosGame chaosGame,
+      Mandelbrot mandelBrot) {
     this.mainController = mainController;
     this.chaosGame = chaosGame;
     this.mandelBrot = mandelBrot;
+    this.currentCanvas = chaosGame.getCanvas();
+    this.currentDescription = chaosGame.getDescription();
     this.chaosGameView = new ChaosGameView(this, mainController);
     this.imageFactory = new ImageFactory();
+  }
 
+  /**
+   * Sets mandelbrotMode to true or false. This is used to determine if the julia set is calculated
+   * with chaos game or mandelbrot.
+   */
+  public void setMandelbrotMode(boolean mode) {
+    this.mandelbrotMode = mode;
+    if (autoRunOnDescriptionChange && getTransformType().equals("Julia")) {
+      runIterations();
+    }
+  }
+
+  /**
+   * Returns the value of mandelbrotMode.
+   *
+   * @return true if the mandelbrot set is calculated, false otherwise.
+   */
+  public boolean getMandelbrotMode() {
+    return this.mandelbrotMode;
+  }
+
+  /**
+   * Checks if the current description is a Julia set and mandelbrotMode is true.
+   *
+   * @return true if the mandelbrot set is calculated, false otherwise.
+   */
+  private boolean isMandelbrotMode() {
+    return (getTransformType().equals("Julia") && mandelbrotMode);
+  }
+
+  /**
+   * Returns the transform type of the current description.
+   *
+   * @return the transform type of the current description.
+   */
+  private String getTransformType() {
+    return currentDescription.getTransformType();
   }
 
   /**
    * Runs the Chaos Game for a set number of iterations.
    */
   public void runIterations() {
-    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
-      mandelBrot.runSteps(1);
-      System.out.println("Julia.");
+    if (isMandelbrotMode()) {
+      mandelBrot.runSteps(maxIterations, escapeRadius);
     } else {
       chaosGame.runSteps(steps);
-      System.out.println("Chaos Game.");
     }
   }
 
@@ -71,17 +114,16 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param iterations the number of iterations to run the Chaos Game for.
    */
   public void runIterations(int iterations) {
-    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
-      mandelBrot.runSteps(1);
-      System.out.println("Julia");
+    if (isMandelbrotMode()) {
+      mandelBrot.runSteps(maxIterations, escapeRadius);
     } else {
       chaosGame.runSteps(iterations);
     }
   }
 
   /**
-   * Converts a string representation of the number of iterations to an integer. Sets
-   * the number of iterations to a default value if the string cannot be converted to an integer.
+   * Converts a string representation of the number of iterations to an integer. Sets the number of
+   * iterations to a default value if the string cannot be converted to an integer.
    *
    * @param iterations the string representation of the number of iterations.
    * @return the number of iterations to run the Chaos Game for.
@@ -118,6 +160,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void clearCanvas() {
     currentCanvas.clear();
+    chaosGameView.setImage(imageFactory.createImage(currentCanvas, color));
   }
 
   /**
@@ -169,25 +212,46 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Updates the canvas size of the Chaos Game. If auto run is true, it runst the chaos game.
+   * Sets the max iterations of the Mandelbrot.
+   *
+   * @param maxIterations the max iterations to set
+   */
+  public void setMaxIterations(int maxIterations) {
+    this.maxIterations = maxIterations;
+  }
+
+
+  /**
+   * Sets the escape radius of the Mandelbrot.
+   *
+   * @param escapeRadius the escape radius to set
+   */
+  public void setEscapeRadius(double escapeRadius) {
+    this.escapeRadius = escapeRadius;
+  }
+
+
+  /**
+   * Updates the canvas size of the Chaos Game. If auto run is true, it runs the chaos game.
    *
    * @param width  the width
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
-    chaosGame.setCanvasSize(width-30, height-100);
-    mandelBrot.setCanvasSize(width, height-60);
+    chaosGame.setCanvasSize(width, height - 60);
+    mandelBrot.setCanvasSize(width, height - 60);
     if (autoRunOnDescriptionChange) {
-      runIterations(steps/5);
+      runIterations(steps / 5);
     }
     chaosGameView.adjustButtonLayout(width);
   }
 
   /**
-   * Refreshes the image of the Chaos Game. Used when the canvas is updated, or the color is changed.
+   * Refreshes the image of the Chaos Game. Used when the canvas is updated, or the color is
+   * changed.
    */
   private void refreshImage() {
-    chaosGameView.setImage(imageFactory.createImage(currentCanvas,color));
+    chaosGameView.setImage(imageFactory.createImage(currentCanvas, color));
   }
 
   /**
@@ -196,10 +260,11 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param multiplier the multiplier to change the zoom by.
    */
   public void changeZoom(double multiplier) {
-    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
+    if (isMandelbrotMode()) {
       mandelBrot.changeZoom(multiplier);
     } else {
-    chaosGame.changeZoom(multiplier);}
+      chaosGame.changeZoom(multiplier);
+    }
   }
 
   /**
@@ -218,7 +283,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param x1 the y-coordinate to move the canvas by.
    */
   public void moveCanvas(double x0, double x1) {
-    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
+    if (isMandelbrotMode()) {
       mandelBrot.moveCanvas(new Vector2D(x0, x1));
     } else {
       chaosGame.moveCanvas(new Vector2D(x0, x1));
@@ -233,6 +298,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   @Override
   public void updateDescription(ChaosGameDescription description) {
+    currentDescription = description;
     if (autoRunOnDescriptionChange) {
       runIterations();
     }
@@ -246,6 +312,18 @@ public class ChaosGameController implements ChaosGameObserver {
   @Override
   public void updateCanvas(ChaosCanvas canvas) {
     currentCanvas = canvas;
-    chaosGameView.setImage(imageFactory.createImage(canvas,color));
+    chaosGameView.setImage(imageFactory.createImage(canvas, color));
+  }
+
+  /**
+   * Sets the description of the Chaos Game.
+   *
+   * @param currentDescription the new description.
+   */
+  public void setDescription(ChaosGameDescription currentDescription) {
+    this.currentDescription = currentDescription;
+    mandelBrot.setDescription(currentDescription);
+    chaosGame.setDescription(currentDescription);
+
   }
 }

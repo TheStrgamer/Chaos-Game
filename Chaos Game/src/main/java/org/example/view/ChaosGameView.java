@@ -10,6 +10,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
@@ -56,6 +57,8 @@ public class ChaosGameView implements PageViewInterface {
   private Button randomJulia;
   private Button randomAffine;
   private Button toModifyDescription;
+
+  private VBox iterationsLayout;
 
 
   /**
@@ -154,6 +157,19 @@ public class ChaosGameView implements PageViewInterface {
    */
   private void fillTopBarDefaultElements() {
 
+    Label mandelbrotModeLabel = new Label("Mandelbrot Mode:");
+    mandelbrotModeLabel.getStyleClass().add("mandelbrotModeLabel");
+    CheckBox mandelbrotMode = new CheckBox();
+    mandelbrotMode.setTooltip(new Tooltip("Toggle weather julia sets are ran as mandelbrot or chaos game"));
+    mandelbrotMode.setSelected(chaosGameController.getMandelbrotMode());
+    mandelbrotMode.setOnAction(event -> {
+      chaosGameController.setMandelbrotMode(mandelbrotMode.isSelected());
+      fillIterationsLayout();
+    });
+
+    iterationsLayout = new VBox();
+    fillIterationsLayout();
+
     runButton = createButton("Run", event -> chaosGameController.runIterations());
 
     clearButton = createButton("Clear", event -> chaosGameController.clearCanvas());
@@ -166,7 +182,8 @@ public class ChaosGameView implements PageViewInterface {
     colorPicker.setValue(chaosGameController.getColor());
 
     topBar.getChildren()
-        .addAll(iterationsField, runButton, clearButton, autoRunLabel, autoRunOnDescriptionChange,
+        .addAll(mandelbrotModeLabel, mandelbrotMode, iterationsLayout, runButton, clearButton,
+            autoRunLabel, autoRunOnDescriptionChange,
             descriptionComboBox, colorLabel, colorPicker
         );
 
@@ -313,6 +330,55 @@ public class ChaosGameView implements PageViewInterface {
   }
 
   /**
+   * Creates a layout for the iterations field.
+   */
+  private void fillIterationsLayout() {
+
+    iterationsLayout.getChildren().clear();
+
+    if (chaosGameController.getMandelbrotMode()) {
+      HBox maxIterationsHBox = new HBox();
+
+      Label maxIterationsLabel = new Label("Max iterations: 255");
+      Slider maxIterationsSlider = new Slider(1, 755, 255);
+      maxIterationsSlider.valueProperty().addListener(
+          (observable, oldValue, newValue) -> {
+            chaosGameController.setMaxIterations(
+                (int) maxIterationsSlider.getValue());
+            maxIterationsLabel.setText("Max iterations: " + (int) maxIterationsSlider.getValue());
+          });
+
+      maxIterationsLabel.getStyleClass().add("mandelbrotLabel");
+      maxIterationsHBox.getChildren().addAll(maxIterationsLabel,
+          maxIterationsSlider);
+
+      HBox escapeRadiusHBox = new HBox();
+      Label escapeRadiusLabel = new Label("Escape radius 3.0:");
+
+      Slider escapeRadiusSlider = new Slider(0, 10, 2);
+      escapeRadiusSlider.valueProperty().addListener(
+          (observable, oldValue, newValue) -> {
+            chaosGameController.setEscapeRadius(
+                escapeRadiusSlider.getValue());
+            escapeRadiusLabel.setText("Escape radius: " + Math.round(escapeRadiusSlider.getValue()*100)/100);
+          });
+
+      escapeRadiusLabel.getStyleClass().add("mandelbrotLabel");
+
+      escapeRadiusHBox.getChildren().addAll(escapeRadiusLabel,
+          escapeRadiusSlider);
+
+      iterationsLayout.getChildren().addAll(maxIterationsHBox, escapeRadiusHBox);
+    } else {
+
+      HBox iterationsHBox = new HBox();
+      iterationsHBox.getChildren().addAll(new Label("Steps:"),
+          iterationsField);
+      iterationsLayout.getChildren().add(iterationsHBox);
+    }
+  }
+
+  /**
    * Initializes the auto run on description change checkbox.
    */
   private void initializeAutoRunOnDescriptionChange() {
@@ -363,7 +429,7 @@ public class ChaosGameView implements PageViewInterface {
     sideBar.setVisible(false);
 
     int widthPerElement = 90;
-    int defaultElementsCount = 7;
+    int defaultElementsCount = 8;
     boolean shouldAddSideBar = false;
 
     for (int i = 0; i < extraElements.size() - 1; i++) {

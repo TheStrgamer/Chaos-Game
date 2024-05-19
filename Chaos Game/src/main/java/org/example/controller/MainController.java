@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
 import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.MandelBrot;
+import org.example.model.chaosGame.Mandelbrot;
 import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
@@ -30,7 +30,7 @@ public class MainController {
   private final int minCanvasWidth = 600;
   private final int minCanvasHeight = 350;
 
-  private MandelBrot mandelBrot;
+  private Mandelbrot mandelBrot;
 
 
   /**
@@ -44,7 +44,7 @@ public class MainController {
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
-    mandelBrot = new MandelBrot(currentDescription, currentWidth - 30, currentHeight - 100, 255, 3.0);
+    mandelBrot = new Mandelbrot(currentDescription, currentWidth - 30, currentHeight - 100, 255, 3.0);
 
     chaosGameController = new ChaosGameController(this, chaosGame, mandelBrot);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
@@ -105,11 +105,7 @@ public class MainController {
    */
   public void setCurrentDescription(ChaosGameDescription description) {
     currentDescription = description;
-    if (currentDescription.getTransformType().equals("Julia")) {
-      mandelBrot.setDescription(currentDescription);
-    } else {
-      chaosGame.setDescription(currentDescription);
-    }
+    chaosGameController.setDescription(currentDescription);
     chaosGameController.setComboBoxEmpty();
   }
 
@@ -120,11 +116,7 @@ public class MainController {
    */
   public void setCurrentDescription(String description) {
     currentDescription = chaosGameDescriptionFactory.createDescription(description);
-    if (currentDescription.getTransformType().equals("Julia")) {
-      mandelBrot.setDescription(currentDescription);
-    } else {
-      chaosGame.setDescription(currentDescription);
-    }
+    chaosGameController.setDescription(currentDescription);
   }
 
 

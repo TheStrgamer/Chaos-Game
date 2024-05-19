@@ -2,28 +2,27 @@ package org.example.model.chaosGame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import org.example.model.math.Complex;
 import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
 import org.example.model.transform.JuliaTransform;
 
-public class MandelBrot  {
+/**
+ * <h1>Mandelbrot</h1>
+ * The Mandelbrot class is used to generate a Mandelbrot set based on a description and a canvas.
+ */
+public class Mandelbrot {
 
 
   private ChaosCanvas canvas;
   private ChaosGameDescription description;
 
-  private final Vector2D currentPoint;
-
-  private final Random random;
-
   private int canvasWidth;
   private int canvasHeight;
 
   double zoom = 1.0;
-  private final int maxIterations;
-  private final double escapeRadius;
+  private int maxIterations;
+  private double escapeRadius;
 
   private double xOffset = 0;
   private double yOffset = 0;
@@ -59,34 +58,36 @@ public class MandelBrot  {
   }
 
   /**
-   * Constructor for MandelBrot, creates an object with the given description, width, height, max
+   * Constructor for Mandelbrot, creates an object with the given description, width, height, max
    * iterations and escape radius.
    *
-   * @param description the description to use
-   * @param width       the width to use
-   * @param height      the height to use
+   * @param description   the description to use
+   * @param width         the width to use
+   * @param height        the height to use
    * @param maxIterations the maximum number of iterations
-   * @param escapeRadius the escape radius
+   * @param escapeRadius  the escape radius
    * @throws IllegalArgumentException if the given width or height is not positive, or if the given
    *                                  description is null
    */
-  public MandelBrot(ChaosGameDescription description, int width, int height,
+  public Mandelbrot(ChaosGameDescription description, int width, int height,
       int maxIterations, double escapeRadius) {
     verifyNotNullDescription(description);
     verifyValidCanvasSize(width, height);
 
     this.canvasWidth = width;
     this.canvasHeight = height;
-    this.currentPoint = new Vector2D(0, 0);
-    this.random = new Random();
     setDescription(description);
     this.maxIterations = maxIterations;
     this.escapeRadius = escapeRadius;
   }
+
+  /**
+   * Sets the description of the Mandelbrot.
+   *
+   * @param description the description to set
+   */
   public void setDescription(ChaosGameDescription description) {
     verifyNotNullDescription(description);
-    currentPoint.setX0(0);
-    currentPoint.setX1(0);
     this.description = description;
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
@@ -130,58 +131,106 @@ public class MandelBrot  {
     }
   }
 
-  public void runSteps(int steps) {
+  /**
+   * Runs the steps of the Mandelbrot.
+   *
+   * @param maxIterations the maximum number of iterations to run
+   */
+  public void runSteps(int maxIterations, double escapeRadius) {
+    this.maxIterations = maxIterations;
+    this.escapeRadius = escapeRadius;
     JuliaTransform transform = (JuliaTransform) description.getTransforms().get(0);
 
     Complex c = transform.getPoint();
     double cx = c.getReal();
     double cy = c.getImaginary();
 
-    for (int i = 0; i < steps; i++) {
-      for (int x = 0; x < canvasWidth; x++) {
-        for (int y = 0; y < canvasHeight; y++) {
-          double zx = xOffset + zoom*(x - (double) canvasWidth / 2) * 4.0 / canvasWidth;
-          double zy = yOffset + zoom*(y - (double) canvasHeight / 2) * 4.0 / canvasWidth;
-          int iteration = 0;
-          while (zx * zx + zy * zy < escapeRadius && iteration < maxIterations) {
-            double xtemp = zx * zx - zy * zy;
-            zy = 2.0 * zx * zy + cy;
-            zx = xtemp+cx;
-            iteration++;
-          }
-
-          Vector2D point = new Vector2D(y,x);
-          if (iteration == maxIterations) {
-            canvas.putPixel(point, 0);
-          } else {
-            double abs_z = zx * zx + zy * zy;
-            int value = (int) (iteration + 1 - Math.log(Math.log(abs_z)) / Math.log(2));
-            double multiplier = Math.pow((double) value /maxIterations, 0.2);
-
-            canvas.putPixel(point, (int) (765-maxIterations*multiplier*5/2));
-          }
-
-        }
+    for (int x0 = 0; x0 < canvasWidth; x0++) {
+      for (int x1 = 0; x1 < canvasHeight; x1++) {
+        calculatePoint(x0, x1, cx, cy);
       }
     }
     notifyCanvasChanged();
 
   }
+
+  /**
+   * Calculates the value of the pixel at the given point, and sets it on the canvas.
+   *
+   * @param x0 the x-coordinate of the point
+   * @param x1 the y-coordinate of the point
+   * @param cx the x-coordinate of the complex number
+   * @param cy the y-coordinate of the complex number
+   */
+  public void calculatePoint(int x0, int x1, double cx, double cy) {
+    double[] coords = scaleCoords(x0, x1);
+    double zx = coords[0];
+    double zy = coords[1];
+
+    int iteration = 0;
+    while (zx * zx + zy * zy < escapeRadius && iteration < this.maxIterations) {
+      double tmp = zx * zx - zy * zy;
+      zy = 2.0 * zx * zy + cy;
+      zx = tmp + cx;
+      iteration++;
+    }
+
+    Vector2D point = new Vector2D(x1, x0);
+    canvas.putPixel(point, calculateValue(iteration, zx, zy));
+  }
+
+  /**
+   * Updates the description of the Mandelbrot.
+   */
   public void updateDescription() {
-    currentPoint.setX0(0);
-    currentPoint.setX1(0);
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
     notifyDescriptionChanged();
     notifyCanvasChanged();
   }
+
+  /**
+   * Scales the coordinates of the given pixel.
+   *
+   * @param x0 the x-coordinate of the pixel
+   * @param x1 the y-coordinate of the pixel
+   * @return the scaled coordinates of the pixel
+   */
+  private double[] scaleCoords(double x0, double x1) {
+    double[] coords = new double[2];
+    coords[0] = xOffset + zoom * (x0 - (double) canvasWidth / 2) * 4.0 / canvasWidth;
+    coords[1] = yOffset + zoom * (x1 - (double) canvasHeight / 2) * 4.0 / canvasWidth;
+    return coords;
+  }
+
+  /**
+   * Calculates the value of the pixel at the given iteration.
+   *
+   * @param iteration the iteration to calculate the value at
+   * @param zx        the x-coordinate of the pixel
+   * @param zy        the y-coordinate of the pixel
+   * @return the value of the pixel at the given iteration
+   */
+  public int calculateValue(int iteration, double zx, double zy) {
+    if (iteration == this.maxIterations) {
+      return 0;
+    } else {
+      double abs_z = zx * zx + zy * zy;
+      int value = (int) (iteration + 1 - Math.log(Math.log(abs_z)) / Math.log(2));
+      double multiplier = Math.pow((double) value / this.maxIterations, 0.2);
+      value = (int) (maxIterations - this.maxIterations * multiplier);
+      int maxColorValue = 755;
+      return (int) ((double)value/maxIterations*maxColorValue);
+    }
+  }
+
   /**
    * Changes the zoom of the canvas.
    *
    * @param multiplier the multiplier to change the zoom with.
    */
   public void changeZoom(double multiplier) {
-    zoom += zoom*multiplier;
+    zoom += zoom * multiplier;
     description.changeZoom(multiplier);
     updateDescription();
   }
@@ -192,8 +241,8 @@ public class MandelBrot  {
    * @param vector the vector to move the canvas by.
    */
   public void moveCanvas(Vector2D vector) {
-    xOffset -= vector.getX0()*zoom/10;
-    yOffset += vector.getX1()*zoom/10;
+    xOffset -= vector.getX0() * zoom / 10;
+    yOffset += vector.getX1() * zoom / 10;
     notifyDescriptionChanged();
   }
 
