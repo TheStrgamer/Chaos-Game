@@ -48,7 +48,7 @@ public class MainController {
 
     chaosGameController = new ChaosGameController(this, chaosGame);
     fileController = new FileController(this, chaosGameFileHandler);
-    modifyDescriptionController = new ModifyDescriptionController(this, currentDescription, fileController);
+    modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
 
@@ -126,5 +126,18 @@ public class MainController {
   }
 
 
+  /**
+   * Method for saving the current description to a file.
+   */
+  public void saveToFile() {
+    fileController.writeToFile(currentDescription);
+  }
 
+  public void readFromFile() {
+    fileController.readFromFile();
+  }
+
+  public void saveImageToFile() {
+    fileController.saveImageToFile(chaosGameController.getImage());
+  }
 }

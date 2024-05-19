@@ -1,20 +1,14 @@
 package org.example.view;
 
-import java.io.File;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import org.example.controller.FileController;
 import org.example.controller.MainController;
 import org.example.controller.ModifyDescriptionController;
 
@@ -27,7 +21,6 @@ public class ModifyDescriptionView implements PageViewInterface {
 
   private final ModifyDescriptionController modifyDescriptionController;
   private final MainController mainController;
-  private final FileController fileController;
 
   private ListView<VBox> descriptionList = new ListView<>();
   private VBox editDescription;
@@ -40,10 +33,9 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param mainController              the main controller for the application.
    */
   public ModifyDescriptionView(ModifyDescriptionController modifyDescriptionController,
-      MainController mainController, FileController fileController) {
+      MainController mainController) {
     this.modifyDescriptionController = modifyDescriptionController;
     this.mainController = mainController;
-    this.fileController = fileController;
 
   }
 
@@ -93,46 +85,8 @@ public class ModifyDescriptionView implements PageViewInterface {
     Button saveToFile = new Button("Save current description");
     readAndWrite.getChildren().addAll(descriptionLabel, readFromFile, saveToFile);
 
-    readFromFile.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        File file = fileChooser.showOpenDialog(mainController.getStage());
-
-        if (file != null) {
-          String filePath = file.getAbsolutePath();
-          fileController.readFromFile(filePath);
-          System.out.println(filePath);
-        } else {
-          System.out.println("File selection cancelled.");
-        }
-      }
-    });
-    saveToFile.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-
-        fileChooser.setTitle("Save description");
-        fileChooser.setInitialFileName("description.txt");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        File file = fileChooser.showSaveDialog(mainController.getStage());
-
-        if (file != null) {
-          String filePath = file.getAbsolutePath();
-          fileController.writeToFile(filePath);
-          System.out.println(filePath);
-        } else {
-          System.out.println("File selection cancelled.");
-        }
-      }
-    });
+    readFromFile.setOnAction(event -> mainController.readFromFile());
+    saveToFile.setOnAction(event -> mainController.saveToFile());
     readAndWrite.setStyle(" -fx-spacing: 10px; -fx-background-color: #8f8f8f; -fx-padding: 10px;");
 
     return readAndWrite;

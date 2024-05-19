@@ -25,7 +25,6 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   private final MainController mainController;
   private final ModifyDescriptionView modifyDescriptionView;
-  private final FileController fileController;
 
   private ChaosGameDescription currentDescription;
 
@@ -56,15 +55,14 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    * @param mainController the main controller for the application. Used for switching between
    *                       views.
    */
-  public ModifyDescriptionController(MainController mainController, ChaosGameDescription description, FileController fileController) {
+  public ModifyDescriptionController(MainController mainController, ChaosGameDescription description) {
     this.mainController = mainController;
     this.currentDescription = description;
-    this.fileController = fileController;
 
     minCoords = description.getMinCoords();
     maxCoords = description.getMaxCoords();
     transforms = description.getTransformsAsList();
-    modifyDescriptionView = new ModifyDescriptionView(this, mainController, fileController);
+    modifyDescriptionView = new ModifyDescriptionView(this, mainController);
   }
 
   /**
