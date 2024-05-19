@@ -8,6 +8,7 @@ import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.chaosGame.ChaosGame;
 
 import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosGame.MandelBrot;
 import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
 import org.example.model.factory.ImageFactory;
@@ -21,6 +22,7 @@ import org.example.view.ChaosGameView;
 public class ChaosGameController implements ChaosGameObserver {
 
   private final ChaosGame chaosGame;
+  private final MandelBrot mandelBrot;
   private final ChaosGameView chaosGameView;
 
   private final MainController mainController;
@@ -32,6 +34,8 @@ public class ChaosGameController implements ChaosGameObserver {
 
   private Color color = new Color(1, 0, 0, 1);
 
+  private ChaosCanvas currentCanvas;
+
   /**
    * Constructor for the ChaosGameController class.
    *
@@ -39,9 +43,10 @@ public class ChaosGameController implements ChaosGameObserver {
    *                       views.
    * @param chaosGame      the Chaos Game model for the application.
    */
-  public ChaosGameController(MainController mainController, ChaosGame chaosGame) {
+  public ChaosGameController(MainController mainController, ChaosGame chaosGame, MandelBrot mandelBrot) {
     this.mainController = mainController;
     this.chaosGame = chaosGame;
+    this.mandelBrot = mandelBrot;
     this.chaosGameView = new ChaosGameView(this, mainController);
     this.imageFactory = new ImageFactory();
 
@@ -51,11 +56,12 @@ public class ChaosGameController implements ChaosGameObserver {
    * Runs the Chaos Game for a set number of iterations.
    */
   public void runIterations() {
-    if (chaosGame.getDescription().getTransformType().equals("Julia")) {
-      mainController.mandelBrot.setDescription(chaosGame.getDescription());
-      mainController.mandelBrot.runSteps(1);
+    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
+      mandelBrot.runSteps(1);
+      System.out.println("Julia.");
     } else {
       chaosGame.runSteps(steps);
+      System.out.println("Chaos Game.");
     }
   }
 
@@ -65,7 +71,12 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param iterations the number of iterations to run the Chaos Game for.
    */
   public void runIterations(int iterations) {
-    chaosGame.runSteps(iterations);
+    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
+      mandelBrot.runSteps(1);
+      System.out.println("Julia");
+    } else {
+      chaosGame.runSteps(iterations);
+    }
   }
 
   /**
@@ -106,7 +117,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * Clears the canvas of the Chaos Game.
    */
   public void clearCanvas() {
-    chaosGame.clearCanvas();
+    currentCanvas.clear();
   }
 
   /**
@@ -165,6 +176,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void setCanvasSize(int width, int height) {
     chaosGame.setCanvasSize(width-30, height-100);
+    mandelBrot.setCanvasSize(width, height-60);
     if (autoRunOnDescriptionChange) {
       runIterations(steps/5);
     }
@@ -175,7 +187,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * Refreshes the image of the Chaos Game. Used when the canvas is updated, or the color is changed.
    */
   private void refreshImage() {
-    chaosGameView.setImage(imageFactory.createImage(chaosGame.getCanvas(),color));
+    chaosGameView.setImage(imageFactory.createImage(currentCanvas,color));
   }
 
   /**
@@ -184,8 +196,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param multiplier the multiplier to change the zoom by.
    */
   public void changeZoom(double multiplier) {
-    if (chaosGame.getDescription().getTransformType().equals("Julia")) {
-      mainController.mandelBrot.changeZoom(multiplier);
+    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
+      mandelBrot.changeZoom(multiplier);
     } else {
     chaosGame.changeZoom(multiplier);}
   }
@@ -206,8 +218,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param x1 the y-coordinate to move the canvas by.
    */
   public void moveCanvas(double x0, double x1) {
-    if (chaosGame.getDescription().getTransformType().equals("Julia")) {
-      mainController.mandelBrot.moveCanvas(new Vector2D(x0, x1));
+    if (mainController.getCurrentDescription().getTransformType().equals("Julia")) {
+      mandelBrot.moveCanvas(new Vector2D(x0, x1));
     } else {
       chaosGame.moveCanvas(new Vector2D(x0, x1));
     }
@@ -233,6 +245,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   @Override
   public void updateCanvas(ChaosCanvas canvas) {
+    currentCanvas = canvas;
     chaosGameView.setImage(imageFactory.createImage(canvas,color));
   }
 }

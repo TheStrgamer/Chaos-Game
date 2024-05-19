@@ -24,6 +24,9 @@ public class MandelBrot  {
   double zoom = 1.0;
   private final int maxIterations;
   private final double escapeRadius;
+
+  private double xOffset = 0;
+  private double yOffset = 0;
   private final List<ChaosGameObserver> observers = new ArrayList<>();
 
 
@@ -87,6 +90,8 @@ public class MandelBrot  {
     this.description = description;
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
         description.getMaxCoords());
+    zoom = 1.0;
+    notifyDescriptionChanged();
   }
 
   /**
@@ -135,8 +140,8 @@ public class MandelBrot  {
     for (int i = 0; i < steps; i++) {
       for (int x = 0; x < canvasWidth; x++) {
         for (int y = 0; y < canvasHeight; y++) {
-          double zx = zoom*(x - (double) canvasWidth / 2) * 4.0 / canvasWidth;
-          double zy = zoom*(y - (double) canvasHeight / 2) * 4.0 / canvasWidth;
+          double zx = xOffset + zoom*(x - (double) canvasWidth / 2) * 4.0 / canvasWidth;
+          double zy = yOffset + zoom*(y - (double) canvasHeight / 2) * 4.0 / canvasWidth;
           int iteration = 0;
           while (zx * zx + zy * zy < escapeRadius && iteration < maxIterations) {
             double xtemp = zx * zx - zy * zy;
@@ -147,14 +152,13 @@ public class MandelBrot  {
 
           Vector2D point = new Vector2D(y,x);
           if (iteration == maxIterations) {
-            canvas.putPixel(point, 755);
+            canvas.putPixel(point, 0);
           } else {
             double abs_z = zx * zx + zy * zy;
             int value = (int) (iteration + 1 - Math.log(Math.log(abs_z)) / Math.log(2));
-            if (value > 700) {
-              value = 700;
-            }
-            canvas.putPixel(point, 350-value/2);
+            double multiplier = Math.pow((double) value /maxIterations, 0.2);
+
+            canvas.putPixel(point, (int) (765-maxIterations*multiplier*5/2));
           }
 
         }
@@ -188,8 +192,17 @@ public class MandelBrot  {
    * @param vector the vector to move the canvas by.
    */
   public void moveCanvas(Vector2D vector) {
-    description.moveCanvas(vector);
-    updateDescription();
+    xOffset -= vector.getX0()*zoom/10;
+    yOffset += vector.getX1()*zoom/10;
+    notifyDescriptionChanged();
+  }
 
+  public void setCanvasSize(int width, int height) {
+    verifyValidCanvasSize(width, height);
+    this.canvas = new ChaosCanvas(width, height, description.getMinCoords(),
+        description.getMaxCoords());
+    this.canvasWidth = width;
+    this.canvasHeight = height;
+    notifyCanvasChanged();
   }
 }

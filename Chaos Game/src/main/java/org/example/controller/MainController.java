@@ -30,7 +30,7 @@ public class MainController {
   private final int minCanvasWidth = 600;
   private final int minCanvasHeight = 350;
 
-  public MandelBrot mandelBrot;
+  private MandelBrot mandelBrot;
 
 
   /**
@@ -44,15 +44,16 @@ public class MainController {
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
-    mandelBrot = new MandelBrot(currentDescription, currentWidth - 30, currentHeight - 100, 755, 3.0);
+    mandelBrot = new MandelBrot(currentDescription, currentWidth - 30, currentHeight - 100, 255, 3.0);
 
-    chaosGameController = new ChaosGameController(this, chaosGame);
+    chaosGameController = new ChaosGameController(this, chaosGame, mandelBrot);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     popupController = new PopupController();
 
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
     mandelBrot.addObserver(chaosGameController);
+    mandelBrot.addObserver(modifyDescriptionController);
 
     int originalWidth = 800;
     int originalHeight = 600;
@@ -104,7 +105,11 @@ public class MainController {
    */
   public void setCurrentDescription(ChaosGameDescription description) {
     currentDescription = description;
-    chaosGame.setDescription(currentDescription);
+    if (currentDescription.getTransformType().equals("Julia")) {
+      mandelBrot.setDescription(currentDescription);
+    } else {
+      chaosGame.setDescription(currentDescription);
+    }
     chaosGameController.setComboBoxEmpty();
   }
 
@@ -115,7 +120,11 @@ public class MainController {
    */
   public void setCurrentDescription(String description) {
     currentDescription = chaosGameDescriptionFactory.createDescription(description);
-    chaosGame.setDescription(currentDescription);
+    if (currentDescription.getTransformType().equals("Julia")) {
+      mandelBrot.setDescription(currentDescription);
+    } else {
+      chaosGame.setDescription(currentDescription);
+    }
   }
 
 
@@ -129,4 +138,12 @@ public class MainController {
   }
 
 
+  /**
+   * Returns the current description of the Chaos Game.
+   *
+   * @return the current description of the Chaos Game.
+   */
+  public ChaosGameDescription getCurrentDescription() {
+    return currentDescription;
+  }
 }
