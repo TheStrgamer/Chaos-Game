@@ -29,6 +29,66 @@ class AffineTransform2DTest {
     }
 
     @Test
+    @DisplayName("Constructor sets the values correctly")
+    void testConstructorSetsValuesCorrectly() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        assertEquals(1, affineTransform2D.getMatrix().getValues()[0]);
+        assertEquals(2, affineTransform2D.getMatrix().getValues()[1]);
+        assertEquals(3, affineTransform2D.getMatrix().getValues()[2]);
+        assertEquals(4, affineTransform2D.getMatrix().getValues()[3]);
+        assertEquals(5, affineTransform2D.getVector().getX0());
+        assertEquals(6, affineTransform2D.getVector().getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor throws no exceptions with valid input")
+    void testDeepCopyConstructorThrowsNoExceptions() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        AffineTransform2D affineTransform2D2 = new AffineTransform2D(affineTransform2D);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor sets the values correctly")
+    void testDeepCopyConstructorSetsValuesCorrectly() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        AffineTransform2D affineTransform2D2 = new AffineTransform2D(affineTransform2D);
+        assertEquals(1, affineTransform2D2.getMatrix().getValues()[0]);
+        assertEquals(2, affineTransform2D2.getMatrix().getValues()[1]);
+        assertEquals(3, affineTransform2D2.getMatrix().getValues()[2]);
+        assertEquals(4, affineTransform2D2.getMatrix().getValues()[3]);
+        assertEquals(5, affineTransform2D2.getVector().getX0());
+        assertEquals(6, affineTransform2D2.getVector().getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor creates a new object")
+    void testDeepCopyConstructorReturnsNewObject() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 2, 3, 4),
+            new Vector2D(5, 6));
+        AffineTransform2D affineTransform2D2 = new AffineTransform2D(affineTransform2D);
+        assertNotEquals(affineTransform2D, affineTransform2D2);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
     @DisplayName("Transform method does not return null")
     void testTransformMethodReturnsValidVector() {
       try {

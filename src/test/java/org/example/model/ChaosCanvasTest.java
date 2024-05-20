@@ -27,6 +27,60 @@ class ChaosCanvasTest {
     }
 
     @Test
+    @DisplayName("Deep copy constructor throws no exceptions with valid input")
+    void testDeepCopyConstructorThrowsNoExceptions() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas2 = new ChaosCanvas(chaosCanvas);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor creates a new object")
+    void testDeepCopyConstructorCreatesNewObject() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas2 = new ChaosCanvas(chaosCanvas);
+        assertNotEquals(chaosCanvas, chaosCanvas2);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Constructor sets the width and height correctly")
+    void testConstructorSetsWidthCorrectly() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        assertEquals(100, chaosCanvas.getWidth());
+        assertEquals(100, chaosCanvas.getHeight());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor sets the width and height correctly")
+    void testDeepCopyConstructorSetsWidthCorrectly() {
+      try {
+        ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
+            new Vector2D(200, 200));
+        ChaosCanvas chaosCanvas2 = new ChaosCanvas(chaosCanvas);
+        assertEquals(100, chaosCanvas2.getWidth());
+        assertEquals(100, chaosCanvas2.getHeight());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+
+
+    @Test
     @DisplayName("getPixel gets the pixel correctly")
     void testGetPixelGetsCorrectly() {
       try {

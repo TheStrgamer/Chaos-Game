@@ -251,7 +251,7 @@ class MandelbrotTest {
         Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription1, 100, 100, 100, 2.0);
         mandelbrot.setDescription(chaosGameDescription2);
 
-        assertEquals(mandelbrot.getDescription(), chaosGameDescription2);
+        assertTrue(mandelbrot.getDescription().equals(chaosGameDescription2));
       } catch (Exception e) {
         fail("setDescription should not throw an exception with valid parameters");
       }

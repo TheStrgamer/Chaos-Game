@@ -46,7 +46,7 @@ public class Matrix2x2 {
    * @param matrix the Matrix2x2 object to copy
    */
   public Matrix2x2(Matrix2x2 matrix) {
-    int[] values = matrix.getValues();
+    double[] values = matrix.getValues();
     this.a00 = values[0];
     this.a01 = values[1];
     this.a10 = values[2];
@@ -87,8 +87,8 @@ public class Matrix2x2 {
    *
    * @return the values of this matrix as an array
    */
-  public int[] getValues() {
-    return new int[]{(int) a00, (int) a01, (int) a10, (int) a11};
+  public double[] getValues() {
+    return new double[]{a00, a01, a10, a11};
   }
 
   /**

@@ -27,6 +27,44 @@ class JuliaTransformTest {
     }
 
     @Test
+    @DisplayName("Constructor sets the values correctly")
+    void testConstructorSetsValuesCorrectly() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        assertEquals(1, juliaTransform.getPoint().getReal());
+        assertEquals(2, juliaTransform.getPoint().getImaginary());
+        assertEquals(1, juliaTransform.getSign());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor throws no exceptions with valid input")
+    void testDeepCopyConstructorThrowsNoExceptions() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        JuliaTransform juliaTransform2 = new JuliaTransform(juliaTransform);
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("Deep copy constructor sets the values correctly")
+    void testDeepCopyConstructorSetsValuesCorrectly() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        JuliaTransform juliaTransform2 = new JuliaTransform(juliaTransform);
+        assertEquals(1, juliaTransform2.getPoint().getReal());
+        assertEquals(2, juliaTransform2.getPoint().getImaginary());
+        assertEquals(1, juliaTransform2.getSign());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
     @DisplayName("Transform method does not return null")
     void testTransformMethodReturnsValidComplex() {
       try {

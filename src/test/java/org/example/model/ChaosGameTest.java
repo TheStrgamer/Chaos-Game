@@ -74,7 +74,7 @@ class ChaosGameTest {
             new Vector2D(100, 100), transforms);
         ChaosGame chaosGame = new ChaosGame(description, 100, 100);
         assertNotNull(chaosGame.getDescription());
-        assertEquals(chaosGame.getDescription(), description);
+        assertTrue(chaosGame.getDescription().equals(description));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }

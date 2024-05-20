@@ -14,7 +14,64 @@ class Vector2DTest {
   @DisplayName("Positive tests")
   class PositiveTests {
 
-    //Todo test tostring
+    @Test
+    @DisplayName("constructor throws no exception with valid parameters")
+    void testConstructorThrowsNoErrorsWithValidParameters() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor throws no exception with valid parameters")
+    void testDeepCopyConstructorThrowsNoErrorsWithValidParameters() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        Vector2D vector2 = new Vector2D(vector);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("constructor sets the values correctly")
+    void testConstructorSetsValuesCorrectly() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        assertEquals(1, vector.getX0());
+        assertEquals(2, vector.getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor sets the values correctly")
+    void testDeepCopyConstructorSetsValuesCorrectly() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        Vector2D vector2 = new Vector2D(vector);
+        assertEquals(1, vector2.getX0());
+        assertEquals(2, vector2.getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor returns a new vector")
+    void testDeepCopyConstructorReturnsNewVector() {
+      try {
+        Vector2D vector = new Vector2D(1, 2);
+        Vector2D vector2 = new Vector2D(vector);
+        assertNotEquals(vector, vector2);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
 
     @Test
     @DisplayName("getX0 returns the x0 value of the vector")

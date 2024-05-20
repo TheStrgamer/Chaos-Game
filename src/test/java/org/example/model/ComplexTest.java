@@ -15,6 +15,64 @@ class ComplexTest {
   class PositiveTests {
 
     @Test
+    @DisplayName("constructor throws no exception with valid parameters")
+    void testConstructorThrowsNoErrorsWithValidParameters() {
+      try {
+        Complex complex = new Complex(1, 2);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor throws no exception with valid parameters")
+    void testDeepCopyConstructorThrowsNoErrorsWithValidParameters() {
+      try {
+        Complex complex = new Complex(1, 2);
+        Complex complex2 = new Complex(complex);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("constructor sets the valuea correctly")
+    void testConstructorSetsRealCorrectly() {
+      try {
+        Complex complex = new Complex(1, 2);
+        assertEquals(1, complex.getReal());
+        assertEquals(2, complex.getImaginary());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor sets the values correctly")
+    void testDeepCopyConstructorSetsValuesCorrectly() {
+      try {
+        Complex complex = new Complex(1, 2);
+        Complex complex2 = new Complex(complex);
+        assertEquals(1, complex2.getReal());
+        assertEquals(2, complex2.getImaginary());
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor returns a new object")
+    void testDeepCopyConstructorReturnsNewObject() {
+      try {
+        Complex complex = new Complex(1, 2);
+        Complex complex2 = new Complex(complex);
+        assertNotEquals(complex, complex2);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
     @DisplayName("getReal returns the real part of the complex number")
     void testGetRealReturnsCorrectValue() {
       try {

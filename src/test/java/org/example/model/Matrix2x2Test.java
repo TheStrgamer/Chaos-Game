@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -16,6 +17,70 @@ public class Matrix2x2Test {
   @Nested
   @DisplayName("Positive tests")
   class PositiveTests {
+
+    @Test
+    @DisplayName("constructor throws no exception with valid parameters")
+    void testConstructorThrowsNoErrorsWithValidParameters() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor throws no exception with valid parameters")
+    void testDeepCopyConstructorThrowsNoErrorsWithValidParameters() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        Matrix2x2 matrix2 = new Matrix2x2(matrix);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("constructor sets the values correctly")
+    void testConstructorSetsValuesCorrectly() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        double[] values = matrix.getValues();
+        assertEquals(1, values[0]);
+        assertEquals(2, values[1]);
+        assertEquals(3, values[2]);
+        assertEquals(4, values[3]);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor sets the values correctly")
+    void testDeepCopyConstructorSetsValuesCorrectly() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        Matrix2x2 matrix2 = new Matrix2x2(matrix);
+        double[] values = matrix2.getValues();
+        assertEquals(1, values[0]);
+        assertEquals(2, values[1]);
+        assertEquals(3, values[2]);
+        assertEquals(4, values[3]);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
+
+    @Test
+    @DisplayName("deep copy constructor returns a new object")
+    void testDeepCopyConstructorReturnsNewObject() {
+      try {
+        Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
+        Matrix2x2 matrix2 = new Matrix2x2(matrix);
+        assertNotEquals(matrix, matrix2);
+      } catch (Exception e) {
+        fail("An exception was thrown");
+      }
+    }
 
     @Test
     @DisplayName("Multiply method returns correct vector")
