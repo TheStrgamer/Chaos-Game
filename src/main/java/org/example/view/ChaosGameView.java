@@ -157,13 +157,13 @@ public class ChaosGameView implements PageViewInterface {
    */
   private void fillTopBarDefaultElements() {
 
-    Label mandelbrotModeLabel = new Label("Mandelbrot Mode:");
-    mandelbrotModeLabel.getStyleClass().add("mandelbrotModeLabel");
-    CheckBox mandelbrotMode = new CheckBox();
-    mandelbrotMode.setTooltip(new Tooltip("Toggle weather julia sets are ran as mandelbrot or chaos game"));
-    mandelbrotMode.setSelected(chaosGameController.getMandelbrotMode());
-    mandelbrotMode.setOnAction(event -> {
-      chaosGameController.setMandelbrotMode(mandelbrotMode.isSelected());
+    Label juliaSetModeLabel = new Label("Julia set Mode:");
+    juliaSetModeLabel.getStyleClass().add("juliaSetModeLabel");
+    CheckBox juliaSetMode = new CheckBox();
+    juliaSetMode.setTooltip(new Tooltip("Toggle weather julia sets are ran as julia set or chaos game"));
+    juliaSetMode.setSelected(chaosGameController.getJuliaSetMode());
+    juliaSetMode.setOnAction(event -> {
+      chaosGameController.setJuliaSetMode(juliaSetMode.isSelected());
       fillIterationsLayout();
     });
 
@@ -182,7 +182,7 @@ public class ChaosGameView implements PageViewInterface {
     colorPicker.setValue(chaosGameController.getColor());
 
     topBar.getChildren()
-        .addAll(mandelbrotModeLabel, mandelbrotMode, iterationsLayout, runButton, clearButton,
+        .addAll(juliaSetModeLabel, juliaSetMode, iterationsLayout, runButton, clearButton,
             autoRunLabel, autoRunOnDescriptionChange,
             descriptionComboBox, colorLabel, colorPicker
         );
@@ -230,7 +230,7 @@ public class ChaosGameView implements PageViewInterface {
       setComboBoxEmpty();
       mainController.openModifyPopup();
     });
-    VBox newJuliaAffine = new VBox(newAffine, newJulia);
+    VBox newJuliaAffine = new VBox(newJulia, newAffine);
     newAffine.getStyleClass().add("newButton");
     newJulia.getStyleClass().add("newButton");
 
@@ -336,7 +336,7 @@ public class ChaosGameView implements PageViewInterface {
 
     iterationsLayout.getChildren().clear();
 
-    if (chaosGameController.getMandelbrotMode()) {
+    if (chaosGameController.getJuliaSetMode()) {
       HBox maxIterationsHBox = new HBox();
 
       Label maxIterationsLabel = new Label("Max iterations: 255");
@@ -348,7 +348,7 @@ public class ChaosGameView implements PageViewInterface {
             maxIterationsLabel.setText("Max iterations: " + (int) maxIterationsSlider.getValue());
           });
 
-      maxIterationsLabel.getStyleClass().add("mandelbrotLabel");
+      maxIterationsLabel.getStyleClass().add("juliaSetLabel");
       maxIterationsHBox.getChildren().addAll(maxIterationsLabel,
           maxIterationsSlider);
 
@@ -363,7 +363,7 @@ public class ChaosGameView implements PageViewInterface {
             escapeRadiusLabel.setText("Escape radius: " + Math.round(escapeRadiusSlider.getValue()*100)/100);
           });
 
-      escapeRadiusLabel.getStyleClass().add("mandelbrotLabel");
+      escapeRadiusLabel.getStyleClass().add("juliaSetLabel");
 
       escapeRadiusHBox.getChildren().addAll(escapeRadiusLabel,
           escapeRadiusSlider);

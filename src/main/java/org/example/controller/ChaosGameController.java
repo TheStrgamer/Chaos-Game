@@ -9,7 +9,7 @@ import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.chaosGame.ChaosGame;
 
 import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.Mandelbrot;
+import org.example.model.chaosGame.JuliaSetGame;
 import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
 import org.example.model.factory.ImageFactory;
@@ -23,7 +23,7 @@ import org.example.view.ChaosGameView;
 public class ChaosGameController implements ChaosGameObserver {
 
   private final ChaosGame chaosGame;
-  private final Mandelbrot mandelBrot;
+  private final JuliaSetGame juliaSetGame;
   private final ChaosGameView chaosGameView;
 
   private final ImageFactory imageFactory;
@@ -37,7 +37,7 @@ public class ChaosGameController implements ChaosGameObserver {
   private ChaosCanvas currentCanvas;
   private ChaosGameDescription currentDescription;
 
-  private boolean mandelbrotMode = false;
+  private boolean juliaSetMode = false;
 
   /**
    * Constructor for the ChaosGameController class.
@@ -47,9 +47,9 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param chaosGame      the Chaos Game model for the application.
    */
   public ChaosGameController(MainController mainController, ChaosGame chaosGame,
-      Mandelbrot mandelBrot) {
+      JuliaSetGame juliaSetGame) {
     this.chaosGame = chaosGame;
-    this.mandelBrot = mandelBrot;
+    this.juliaSetGame = juliaSetGame;
     this.currentCanvas = chaosGame.getCanvas();
     this.currentDescription = chaosGame.getDescription();
     this.chaosGameView = new ChaosGameView(this, mainController);
@@ -57,32 +57,32 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Sets mandelbrotMode to true or false. This is used to determine if the julia set is calculated
-   * with chaos game or mandelbrot.
+   * Sets juliaSetMode to true or false. This is used to determine if the julia set is calculated
+   * with chaos game or juliaSetMode.
    */
-  public void setMandelbrotMode(boolean mode) {
-    this.mandelbrotMode = mode;
+  public void setJuliaSetMode(boolean mode) {
+    this.juliaSetMode = mode;
     if (autoRunOnDescriptionChange && getTransformType().equals("Julia")) {
       runIterations();
     }
   }
 
   /**
-   * Returns the value of mandelbrotMode.
+   * Returns the value of juliaSetMode.
    *
-   * @return true if the mandelbrot set is calculated, false otherwise.
+   * @return true if the juliaSetMode set is calculated, false otherwise.
    */
-  public boolean getMandelbrotMode() {
-    return this.mandelbrotMode;
+  public boolean getJuliaSetMode() {
+    return this.juliaSetMode;
   }
 
   /**
-   * Checks if the current description is a Julia set and mandelbrotMode is true.
+   * Checks if the current description is a Julia set and juliaSetMode is true.
    *
-   * @return true if the mandelbrot set is calculated, false otherwise.
+   * @return true if description is a Julia set and juliaSetMode is true, false otherwise.
    */
-  private boolean isMandelbrotMode() {
-    return (getTransformType().equals("Julia") && mandelbrotMode);
+  private boolean isJuliaSetMode() {
+    return (getTransformType().equals("Julia") && juliaSetMode);
   }
 
   /**
@@ -98,8 +98,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * Runs the Chaos Game for a set number of iterations.
    */
   public void runIterations() {
-    if (isMandelbrotMode()) {
-      mandelBrot.runSteps(maxIterations);
+    if (isJuliaSetMode()) {
+      juliaSetGame.runSteps(maxIterations);
     } else {
       chaosGame.runSteps(steps);
     }
@@ -111,8 +111,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param iterations the number of iterations to run the Chaos Game for.
    */
   public void runIterations(int iterations) {
-    if (isMandelbrotMode()) {
-      mandelBrot.runSteps(maxIterations);
+    if (isJuliaSetMode()) {
+      juliaSetGame.runSteps(maxIterations);
     } else {
       chaosGame.runSteps(iterations);
     }
@@ -209,7 +209,7 @@ public class ChaosGameController implements ChaosGameObserver {
   }
 
   /**
-   * Sets the max iterations of the Mandelbrot.
+   * Sets the max iterations of the Julia set.
    *
    * @param maxIterations the max iterations to set
    */
@@ -219,12 +219,12 @@ public class ChaosGameController implements ChaosGameObserver {
 
 
   /**
-   * Sets the escape radius of the Mandelbrot.
+   * Sets the escape radius of the Julia set.
    *
    * @param escapeRadius the escape radius to set
    */
   public void setEscapeRadius(double escapeRadius) {
-    mandelBrot.setEscapeRadius(escapeRadius);
+    juliaSetGame.setEscapeRadius(escapeRadius);
   }
 
 
@@ -236,7 +236,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void setCanvasSize(int width, int height) {
     chaosGame.setCanvasSize(width, height - 60);
-    mandelBrot.setCanvasSize(width, height - 60);
+    juliaSetGame.setCanvasSize(width, height - 60);
     if (autoRunOnDescriptionChange) {
       runIterations(steps / 5);
     }
@@ -257,8 +257,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param multiplier the multiplier to change the zoom by.
    */
   public void changeZoom(double multiplier) {
-    if (isMandelbrotMode()) {
-      mandelBrot.changeZoom(multiplier);
+    if (isJuliaSetMode()) {
+      juliaSetGame.changeZoom(multiplier);
     } else {
       chaosGame.changeZoom(multiplier);
     }
@@ -280,8 +280,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param x1 the y-coordinate to move the canvas by.
    */
   public void moveCanvas(double x0, double x1) {
-    if (isMandelbrotMode()) {
-      mandelBrot.moveCanvas(new Vector2D(x0, x1));
+    if (isJuliaSetMode()) {
+      juliaSetGame.moveCanvas(new Vector2D(x0, x1));
     } else {
       chaosGame.moveCanvas(new Vector2D(x0, x1));
     }
@@ -320,7 +320,7 @@ public class ChaosGameController implements ChaosGameObserver {
   public void setDescription(ChaosGameDescription currentDescription) {
     this.currentDescription = currentDescription;
     if (currentDescription.getTransformType().equals("Julia")) {
-      mandelBrot.setDescription(currentDescription);
+      juliaSetGame.setDescription(currentDescription);
     }
     chaosGame.setDescription(currentDescription);
 

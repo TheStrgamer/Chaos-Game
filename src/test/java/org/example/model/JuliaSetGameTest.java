@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.Mandelbrot;
+import org.example.model.chaosGame.JuliaSetGame;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class MandelbrotTest {
+class JuliaSetGameTest {
 
   @Nested
   class PositiveTests {
@@ -30,44 +30,44 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
       } catch (Exception e) {
-        fail("Mandelbrot constructor should not throw an exception with valid parameters");
+        fail("Julia set constructor should not throw an exception with valid parameters");
       }
     }
 
     @Test
-    @DisplayName("constructor creates Mandelbrot object")
-    void testConstructorCreatesMandelbrotObject() {
+    @DisplayName("constructor creates Julia set object")
+    void testConstructorCreatesJuliasetObject() {
       try {
         List<Transform2D> transforms = new ArrayList<>();
         transforms.add(new JuliaTransform(new Complex(.7, .1), 1));
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertNotNull(mandelbrot);
+        assertNotNull(juliaSetGame);
       } catch (Exception e) {
-        fail("Mandelbrot constructor should not throw an exception with valid parameters");
+        fail("Julia set constructor should not throw an exception with valid parameters");
       }
     }
 
     @Test
-    @DisplayName("constructor creates Mandelbrot object with correct parameters")
-    void testConstructorCreatesMandelbrotObjectWithCorrectParameters() {
+    @DisplayName("constructor creates Julia set object with correct parameters")
+    void testConstructorCreatesJuliaSetObjectWithCorrectParameters() {
       try {
         List<Transform2D> transforms = new ArrayList<>();
         transforms.add(new JuliaTransform(new Complex(.7, .1), 1));
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertEquals(mandelbrot.getCanvas().getWidth(), 100);
-        assertEquals(mandelbrot.getCanvas().getHeight(), 100);
+        assertEquals(juliaSetGame.getCanvas().getWidth(), 100);
+        assertEquals(juliaSetGame.getCanvas().getHeight(), 100);
       } catch (Exception e) {
-        fail("Mandelbrot constructor should not throw an exception with valid parameters");
+        fail("Julia set constructor should not throw an exception with valid parameters");
       }
     }
 
@@ -80,9 +80,9 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.setCanvasSize(200, 200);
+        juliaSetGame.setCanvasSize(200, 200);
       } catch (Exception e) {
         fail("setCanvasSize should not throw an exception with valid parameters");
       }
@@ -97,15 +97,15 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertEquals(mandelbrot.getCanvas().getWidth(), 100);
-        assertEquals(mandelbrot.getCanvas().getHeight(), 100);
+        assertEquals(juliaSetGame.getCanvas().getWidth(), 100);
+        assertEquals(juliaSetGame.getCanvas().getHeight(), 100);
 
-        mandelbrot.setCanvasSize(200, 200);
+        juliaSetGame.setCanvasSize(200, 200);
 
-        assertEquals(mandelbrot.getCanvas().getWidth(), 200);
-        assertEquals(mandelbrot.getCanvas().getHeight(), 200);
+        assertEquals(juliaSetGame.getCanvas().getWidth(), 200);
+        assertEquals(juliaSetGame.getCanvas().getHeight(), 200);
       } catch (Exception e) {
         fail("setCanvasSize should not throw an exception with valid parameters");
       }
@@ -120,9 +120,9 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.changeZoom(1.0);
+        juliaSetGame.changeZoom(1.0);
       } catch (Exception e) {
         fail("changeZoom should not throw an exception with valid parameters");
       }
@@ -137,13 +137,13 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertEquals(mandelbrot.getZoom(), 1.0);
+        assertEquals(juliaSetGame.getZoom(), 1.0);
 
-        mandelbrot.changeZoom(1.0);
+        juliaSetGame.changeZoom(1.0);
 
-        assertEquals(mandelbrot.getZoom(), 2.0);
+        assertEquals(juliaSetGame.getZoom(), 2.0);
       } catch (Exception e) {
         fail("changeZoom should not throw an exception with valid parameters");
       }
@@ -158,9 +158,9 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.moveCanvas(new Vector2D(1.0, 1.0));
+        juliaSetGame.moveCanvas(new Vector2D(1.0, 1.0));
       } catch (Exception e) {
         fail("moveCanvas should not throw an exception with valid parameters");
       }
@@ -175,15 +175,15 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertEquals(mandelbrot.getxOffset(), 0.0);
-        assertEquals(mandelbrot.getyOffset(), 0.0);
+        assertEquals(juliaSetGame.getxOffset(), 0.0);
+        assertEquals(juliaSetGame.getyOffset(), 0.0);
 
-        mandelbrot.moveCanvas(new Vector2D(1.0, 1.0));
+        juliaSetGame.moveCanvas(new Vector2D(1.0, 1.0));
 
-        assertEquals(mandelbrot.getxOffset(), -.1);
-        assertEquals(mandelbrot.getyOffset(), .1);
+        assertEquals(juliaSetGame.getxOffset(), -.1);
+        assertEquals(juliaSetGame.getyOffset(), .1);
       } catch (Exception e) {
         fail("moveCanvas should not throw an exception with valid parameters");
       }
@@ -198,8 +198,8 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
-        assertEquals(mandelbrot.calculateValue(1, 1, 1), 407);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
+        assertEquals(juliaSetGame.calculateValue(1, 1, 1), 407);
       } catch (Exception e) {
         fail("calculateValue should not throw an exception with valid parameters");
       }
@@ -214,8 +214,8 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
-        mandelbrot.calculatePoint(1, 1, 1.0, 1.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
+        juliaSetGame.calculatePoint(1, 1, 1.0, 1.0);
       } catch (Exception e) {
         fail("calculatePoint should not throw an exception with valid parameters");
       }
@@ -230,8 +230,8 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
-        mandelbrot.runSteps(100);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
+        juliaSetGame.runSteps(100);
       } catch (Exception e) {
         fail("runSteps should not throw an exception with valid parameters");
       }
@@ -248,10 +248,10 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(1, 1),
             new Vector2D(2, 2), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription1, 100, 100, 100, 2.0);
-        mandelbrot.setDescription(chaosGameDescription2);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription1, 100, 100, 100, 2.0);
+        juliaSetGame.setDescription(chaosGameDescription2);
 
-        assertTrue(mandelbrot.getDescription().equals(chaosGameDescription2));
+        assertTrue(juliaSetGame.getDescription().equals(chaosGameDescription2));
       } catch (Exception e) {
         fail("setDescription should not throw an exception with valid parameters");
       }
@@ -268,10 +268,10 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription2 = new ChaosGameDescription(new Vector2D(1, 1),
             new Vector2D(2, 2), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription1, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription1, 100, 100, 100, 2.0);
         TestListener observer = new TestListener();
-        mandelbrot.addObserver(observer);
-        mandelbrot.setDescription(chaosGameDescription2);
+        juliaSetGame.addObserver(observer);
+        juliaSetGame.setDescription(chaosGameDescription2);
 
         assertTrue(observer.isNotifiedDescription());
       } catch (Exception e) {
@@ -288,10 +288,10 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
         TestListener observer = new TestListener();
-        mandelbrot.addObserver(observer);
-        mandelbrot.runSteps(100);
+        juliaSetGame.addObserver(observer);
+        juliaSetGame.runSteps(100);
 
         assertTrue(observer.isNotifiedCanvas());
       } catch (Exception e) {
@@ -308,10 +308,10 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
         TestListener observer = new TestListener();
-        mandelbrot.addObserver(observer);
-        mandelbrot.changeZoom(1.0);
+        juliaSetGame.addObserver(observer);
+        juliaSetGame.changeZoom(1.0);
 
         assertTrue(observer.isNotifiedCanvas());
       } catch (Exception e) {
@@ -328,10 +328,10 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
         TestListener observer = new TestListener();
-        mandelbrot.addObserver(observer);
-        mandelbrot.moveCanvas(new Vector2D(1.0, 1.0));
+        juliaSetGame.addObserver(observer);
+        juliaSetGame.moveCanvas(new Vector2D(1.0, 1.0));
 
         assertTrue(observer.isNotifiedDescription());
       } catch (Exception e) {
@@ -347,11 +347,11 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
         TestListener observer = new TestListener();
-        mandelbrot.addObserver(observer);
-        mandelbrot.removeObserver(observer);
-        mandelbrot.moveCanvas(new Vector2D(1.0, 1.0));
+        juliaSetGame.addObserver(observer);
+        juliaSetGame.removeObserver(observer);
+        juliaSetGame.moveCanvas(new Vector2D(1.0, 1.0));
 
         assertFalse(observer.isNotifiedDescription());
       } catch (Exception e) {
@@ -369,7 +369,7 @@ class MandelbrotTest {
     @DisplayName("constructor throws exception with null ChaosGameDescription")
     void testConstructorThrowsExceptionWithNullChaosGameDescription() {
       try {
-        Mandelbrot mandelbrot = new Mandelbrot(null, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(null, 100, 100, 100, 2.0);
         fail("Constructor should throw an exception with null ChaosGameDescription");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Description cannot be null");
@@ -385,8 +385,8 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, -100, 100, 100, 2.0);
-        fail("Mandelbrot constructor should throw an exception with negative width");
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, -100, 100, 100, 2.0);
+        fail("Julia set constructor should throw an exception with negative width");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
       }
@@ -401,8 +401,8 @@ class MandelbrotTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
 
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, -100, 100, 2.0);
-        fail("Mandelbrot constructor should throw an exception with negative height");
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, -100, 100, 2.0);
+        fail("Julia set constructor should throw an exception with negative height");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
       }
@@ -416,8 +416,8 @@ class MandelbrotTest {
         transforms.add(new JuliaTransform(new Complex(.7, .1), 1));
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, -100, 2.0);
-        fail("Mandelbrot constructor should throw an exception with negative maxIterations");
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, -100, 2.0);
+        fail("Julia set constructor should throw an exception with negative maxIterations");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Max iterations must be positive");
       }
@@ -431,8 +431,8 @@ class MandelbrotTest {
         transforms.add(new JuliaTransform(new Complex(.7, .1), 1));
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, -2.0);
-        fail("Mandelbrot constructor should throw an exception with negative escapeRadius");
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, -2.0);
+        fail("Julia set constructor should throw an exception with negative escapeRadius");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Escape radius must be positive");
       }
@@ -446,8 +446,8 @@ class MandelbrotTest {
         transforms.add(new AffineTransform2D(new Matrix2x2(1, 2, 3, 4), new Vector2D(5, 6)));
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, -2.0);
-        fail("Mandelbrot constructor should throw an exception with negative escapeRadius");
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, -2.0);
+        fail("Julia set constructor should throw an exception with negative escapeRadius");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Description must be of type Julia");
       }
@@ -461,9 +461,9 @@ class MandelbrotTest {
         transforms.add(new JuliaTransform(new Complex(.7, .1), 1));
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms);
-        Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.setDescription(null);
+        juliaSetGame.setDescription(null);
         fail("setDescription should throw an exception with null description");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Description cannot be null");
@@ -484,9 +484,9 @@ class MandelbrotTest {
         ChaosGameDescription juliaDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms2);
 
-        Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(juliaDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.setDescription(affineDescription);
+        juliaSetGame.setDescription(affineDescription);
         fail("setDescription should throw an exception with affine description");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Description must be of type Julia");
@@ -502,9 +502,9 @@ class MandelbrotTest {
         ChaosGameDescription juliaDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms2);
 
-        Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(juliaDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.setCanvasSize(-100, 100);
+        juliaSetGame.setCanvasSize(-100, 100);
         fail("setCanvasSize should throw an exception with negative width");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
@@ -520,8 +520,8 @@ class MandelbrotTest {
         ChaosGameDescription juliaDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms2);
 
-        Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
-        mandelbrot.setCanvasSize(100, -100);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(juliaDescription, 100, 100, 100, 2.0);
+        juliaSetGame.setCanvasSize(100, -100);
         fail("setCanvasSize should throw an exception with negative height");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Width and height must be positive");
@@ -537,9 +537,9 @@ class MandelbrotTest {
         ChaosGameDescription juliaDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms2);
 
-        Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(juliaDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.runSteps(-100);
+        juliaSetGame.runSteps(-100);
         fail("runSteps should throw an exception with negative maxIterations");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Max iterations must be positive");
@@ -555,8 +555,8 @@ class MandelbrotTest {
         ChaosGameDescription juliaDescription = new ChaosGameDescription(new Vector2D(0, 0),
             new Vector2D(1, 1), transforms2);
 
-        Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
-        mandelbrot.setEscapeRadius(-1);
+        JuliaSetGame juliaSetGame = new JuliaSetGame(juliaDescription, 100, 100, 100, 2.0);
+        juliaSetGame.setEscapeRadius(-1);
         fail("setEscapeRadius should throw an exception with negative steps");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Escape radius must be positive");

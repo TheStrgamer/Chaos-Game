@@ -6,10 +6,10 @@ import org.example.model.math.Vector2D;
 import org.example.model.transform.JuliaTransform;
 
 /**
- * <h1>Mandelbrot</h1>
- * The Mandelbrot class is used to generate a Mandelbrot set based on a description and a canvas.
+ * <h1>JuliaSetGame</h1>
+ * The JulisSetGame class is used to generate a Julia set set based on a description and a canvas.
  */
-public class Mandelbrot extends Game {
+public class JuliaSetGame extends Game {
 
   private int maxIterations;
   private double escapeRadius;
@@ -47,7 +47,7 @@ public class Mandelbrot extends Game {
   }
 
   /**
-   * Constructor for Mandelbrot, creates an object with the given description, width, height, max
+   * Constructor for Julia set game, creates an object with the given description, width, height, max
    * iterations and escape radius.
    *
    * @param description   the description to use
@@ -58,7 +58,7 @@ public class Mandelbrot extends Game {
    * @throws IllegalArgumentException if the given width or height is not positive, or if the given
    *                                  description is null
    */
-  public Mandelbrot(ChaosGameDescription description, int width, int height,
+  public JuliaSetGame(ChaosGameDescription description, int width, int height,
       int maxIterations, double escapeRadius) {
     verifyNotNullDescription(description);
     verifyDescriptionJulia(description);
@@ -74,7 +74,7 @@ public class Mandelbrot extends Game {
   }
 
   /**
-   * Sets the description of the Mandelbrot.
+   * Sets the description of the Julia set.
    *
    * @param description the description to set
    */
@@ -90,9 +90,9 @@ public class Mandelbrot extends Game {
   }
 
   /**
-   * Runs the steps of the Mandelbrot.
+   * Runs the julia set for each pixel.
    *
-   * @param maxIterations the maximum number of iterations to run
+   * @param maxIterations the maximum number of iterations to run per pixel
    */
   @Override
   public void runSteps(int maxIterations) {
@@ -147,7 +147,7 @@ public class Mandelbrot extends Game {
   }
 
   /**
-   * Updates the description of the Mandelbrot.
+   * Updates the description of the Julia set.
    */
   public void updateDescription() {
     this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
@@ -215,7 +215,7 @@ public class Mandelbrot extends Game {
 
 
   /**
-   * Returns the zoom level of the mandelbrot.
+   * Returns the zoom level of the Julia set.
    * used for testing purposes
    *
    * @return the zoom level
@@ -225,7 +225,7 @@ public class Mandelbrot extends Game {
   }
 
   /**
-   * Returns the x offset of the mandelbrot.
+   * Returns the x offset of the Julia set.
    * used for testing purposes
    *
    * @return the x offset
@@ -235,7 +235,7 @@ public class Mandelbrot extends Game {
   }
 
   /**
-   * Returns the y offset of the mandelbrot.
+   * Returns the y offset of the Julia set.
    * used for testing purposes
    *
    * @return the y offset

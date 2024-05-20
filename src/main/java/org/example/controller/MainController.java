@@ -5,8 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
 import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.Mandelbrot;
-import org.example.model.chaosGame.ChaosGameFileHandler;
+import org.example.model.chaosGame.JuliaSetGame;
 import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
@@ -46,19 +45,19 @@ public class MainController {
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     ChaosGame chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
-    Mandelbrot mandelBrot = new Mandelbrot(
+    JuliaSetGame juliaSetGame = new JuliaSetGame(
         chaosGameDescriptionFactory.createDescription("EmptyJulia"), currentWidth - 30,
         currentHeight - 100, 255, 3.0);
 
-    chaosGameController = new ChaosGameController(this, chaosGame, mandelBrot);
+    chaosGameController = new ChaosGameController(this, chaosGame, juliaSetGame);
     fileController = new FileController(this);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     popupController = new PopupController();
 
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
-    mandelBrot.addObserver(chaosGameController);
-    mandelBrot.addObserver(modifyDescriptionController);
+    juliaSetGame.addObserver(chaosGameController);
+    juliaSetGame.addObserver(modifyDescriptionController);
 
     int originalWidth = 800;
     int originalHeight = 600;
