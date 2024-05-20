@@ -5,9 +5,18 @@ import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
 
 /**
- * <h1>ChaosCanvas</h1>
+ * <h2>ChaosCanvas</h2>
+ * <p>
  * A class representing a canvas for the chaos game. It has methods for setting and getting pixels
  * and for clearing the canvas.
+ * </p>
+ * <p>
+ * The canvas has a tostring method that returns a ascii representation of the canvas, and a
+ * getInfoString method that returns the details of the canvas.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.2.0
  */
 public class ChaosCanvas {
 

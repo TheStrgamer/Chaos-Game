@@ -4,9 +4,19 @@ import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
 
 /**
- * <h1>AffineTransform2D</h1>
+ * <h2>AffineTransform2D</h2>
+ * <p>
  * A class representing an affine transformation in 2D space. It has a method for transforming a
  * vector using the affine transformation.
+ * The class implements the Transform2D interface.
+ * </p>
+ * <p>
+ * An affine transformation is represented by a 2x2 matrix and a 2D vector, where it transforms
+ * point by multiplying the point by the matrix and adding the vector.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.1.0
  */
 public class AffineTransform2D implements Transform2D {
 
@@ -55,7 +65,9 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
-   * Deep copy constructor for the AffineTransform2D class. Used to create a new AffineTransform2D with the same values as the given transform
+   * Deep copy constructor for the AffineTransform2D class. Used to create a new AffineTransform2D
+   * with the same values as the given transform
+   *
    * @param transform the AffineTransform2D object to copy
    */
   public AffineTransform2D(AffineTransform2D transform) {

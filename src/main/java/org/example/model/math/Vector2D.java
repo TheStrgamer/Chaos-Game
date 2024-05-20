@@ -1,9 +1,17 @@
 package org.example.model.math;
 
 /**
- * <h1>Vector2D</h1>
+ * <h2>Vector2D</h2>
+ * <p>
  * A class representing a 2D vector. It has methods for adding and subtracting vectors, as well as
  * multiplying the vector by a scalar.
+ * </p>
+ * <p>
+ * A 2d vector is represented by two values, which in this class are called x0 and x1.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.1.0
  */
 public class Vector2D {
 
@@ -33,6 +41,7 @@ public class Vector2D {
     setX0(x0);
     setX1(x1);
   }
+
   /**
    * Deep copy constructor for Vector2D class.
    *

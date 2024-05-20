@@ -6,9 +6,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * <h1>DoubleNumberField</h1>
+ * <h2>DoubleNumberField</h2>
+ * <p>
  * Custom TextField that only allows the input of valid double
  * numbers.
+ * </p>
+ * <p>
+ *   If the input is invalid, the field will not accept it and consume the event.
+ *   The field will also display a tooltip to inform the user if the input is not updated.
+ *   </p>
+ * @version 0.4.0
+ * @since 0.4.0
  */
 public class DoubleNumberField extends TextField {
 

@@ -25,9 +25,19 @@ import org.example.controller.ChaosGameController;
 import org.example.view.components.WeightAndIterationsField;
 
 /**
- * <h1>ChaosGameView</h1>
+ * <h2>ChaosGameView</h2>
+ * <p>
  * The view class for the Chaos Game page of the application. Responsible for displaying the Chaos
  * Game page. Implements the PageView interface.
+ * </p>
+ * <p>
+ * The chaos game view is responsible for showing the chaos game fractal and the controls for
+ * changing the values, iterations, and colors of the fractal. The view also contains buttons for
+ * saving and loading the fractal, as well as buttons for generating random fractals.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class ChaosGameView implements PageViewInterface {
 
@@ -160,7 +170,8 @@ public class ChaosGameView implements PageViewInterface {
     Label juliaSetModeLabel = new Label("Julia set Mode:");
     juliaSetModeLabel.getStyleClass().add("juliaSetModeLabel");
     CheckBox juliaSetMode = new CheckBox();
-    juliaSetMode.setTooltip(new Tooltip("Toggle weather julia sets are ran as julia set or chaos game"));
+    juliaSetMode.setTooltip(
+        new Tooltip("Toggle weather julia sets are ran as julia set or chaos game"));
     juliaSetMode.setSelected(chaosGameController.getJuliaSetMode());
     juliaSetMode.setOnAction(event -> {
       chaosGameController.setJuliaSetMode(juliaSetMode.isSelected());
@@ -360,7 +371,8 @@ public class ChaosGameView implements PageViewInterface {
           (observable, oldValue, newValue) -> {
             chaosGameController.setEscapeRadius(
                 escapeRadiusSlider.getValue());
-            escapeRadiusLabel.setText("Escape radius: " + Math.round(escapeRadiusSlider.getValue()*100)/100);
+            escapeRadiusLabel.setText(
+                "Escape radius: " + Math.round(escapeRadiusSlider.getValue() * 100) / 100);
           });
 
       escapeRadiusLabel.getStyleClass().add("juliaSetLabel");

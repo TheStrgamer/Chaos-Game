@@ -1,8 +1,17 @@
 package org.example.model.math;
 
 /**
- * <h1>Matrix2x2</h1>
- * A class representing a 2x2 matrix. It has methods for multiplying the matrix with a vector.
+ * <h2>Matrix2x2</h2>
+ * <p>
+ * A class representing a 2x2 matrix. A matrix is a rectangular array of numbers arranged in rows
+ * and columns.
+ * </p>
+ * <p>
+ * The class provides methods for multiplying the matrix with a vector and checking if two matrices
+ * are equal.
+ * </p>
+ * @version 0.4.0
+ * @since 0.1.0
  */
 public class Matrix2x2 {
 

@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import org.example.model.observer.ChaosGameObserver;
 
+/**
+ * <h2>Game</h2>
+ * <p>
+ * A class that represents a chaos game. It contains the canvas and description of the game, and
+ * notifies observers of changes in the canvas and description.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.4.0
+ */
 abstract class Game {
 
   protected ChaosCanvas canvas;
@@ -11,7 +21,6 @@ abstract class Game {
   protected int canvasWidth;
   protected int canvasHeight;
   protected final List<ChaosGameObserver> observers = new ArrayList<>();
-
   protected double zoom = 1.0;
 
 
@@ -57,6 +66,7 @@ abstract class Game {
 
   /**
    * runs the game with the given parameters
+   * @param steps the number of steps to run
    */
   public abstract void runSteps(int steps);
 

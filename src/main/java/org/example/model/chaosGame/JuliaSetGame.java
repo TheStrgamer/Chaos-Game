@@ -6,8 +6,20 @@ import org.example.model.math.Vector2D;
 import org.example.model.transform.JuliaTransform;
 
 /**
- * <h1>JuliaSetGame</h1>
+ * <h2>JuliaSetGame</h2>
+ * <p>
  * The JulisSetGame class is used to generate a Julia set set based on a description and a canvas.
+ * </p>
+ * <p>
+ * The Julia set game extends the Game class, and is used to calculate the value of each pixel in
+ * the canvas based on the Julia set values
+ * </p>
+ * <p>
+ * The run method is inspired by the pseudocode from <a href="https://en.wikipedia.org/wiki/Julia_set">...</a>
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.4.0
  */
 public class JuliaSetGame extends Game {
 
@@ -16,7 +28,6 @@ public class JuliaSetGame extends Game {
 
   private double xOffset = 0;
   private double yOffset = 0;
-
 
 
   /**
@@ -34,8 +45,8 @@ public class JuliaSetGame extends Game {
   }
 
   /**
-   * Verifies that the given value is positive. Throws an IllegalArgumentException if the given value
-   * is not positive.
+   * Verifies that the given value is positive. Throws an IllegalArgumentException if the given
+   * value is not positive.
    *
    * @param value the value to verify
    * @throws IllegalArgumentException if the given value is not positive
@@ -47,8 +58,8 @@ public class JuliaSetGame extends Game {
   }
 
   /**
-   * Constructor for Julia set game, creates an object with the given description, width, height, max
-   * iterations and escape radius.
+   * Constructor for Julia set game, creates an object with the given description, width, height,
+   * max iterations and escape radius.
    *
    * @param description   the description to use
    * @param width         the width to use
@@ -114,7 +125,10 @@ public class JuliaSetGame extends Game {
   }
 
   /**
-   * Sets escape radius.
+   * Sets escape radius of the Julia set.
+   *
+   * @param escapeRadius the escape radius to set
+   * @throws IllegalArgumentException if the given escape radius is not positive
    */
   public void setEscapeRadius(double escapeRadius) {
     verifyPositiveValue(escapeRadius, "Escape radius");
@@ -215,8 +229,7 @@ public class JuliaSetGame extends Game {
 
 
   /**
-   * Returns the zoom level of the Julia set.
-   * used for testing purposes
+   * Returns the zoom level of the Julia set. used for testing purposes
    *
    * @return the zoom level
    */
@@ -225,8 +238,7 @@ public class JuliaSetGame extends Game {
   }
 
   /**
-   * Returns the x offset of the Julia set.
-   * used for testing purposes
+   * Returns the x offset of the Julia set. used for testing purposes
    *
    * @return the x offset
    */
@@ -235,8 +247,7 @@ public class JuliaSetGame extends Game {
   }
 
   /**
-   * Returns the y offset of the Julia set.
-   * used for testing purposes
+   * Returns the y offset of the Julia set. used for testing purposes
    *
    * @return the y offset
    */

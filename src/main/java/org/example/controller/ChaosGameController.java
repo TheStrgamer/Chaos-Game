@@ -16,9 +16,19 @@ import org.example.model.factory.ImageFactory;
 import org.example.view.ChaosGameView;
 
 /**
- * <h1>ChaosGameController</h1>
+ * <h2>ChaosGameController</h2>
+ * <p>
  * The controller class for the Chaos Game page of the application. It handles the logic for the
  * Chaos Game page, and is responsible for running the Chaos Game.
+ * </p>
+ * <p>
+ * The class implements the ChaosGameObserver interface, and listens for changes in the Chaos Game,
+ * such as updating the image if the canvas is updated, or auto running the Chaos Game if the
+ * description is changed.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class ChaosGameController implements ChaosGameObserver {
 
@@ -45,6 +55,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param mainController the main controller for the application. Used for switching between
    *                       views.
    * @param chaosGame      the Chaos Game model for the application.
+   * @param juliaSetGame   the Julia Set Game model for the application.
    */
   public ChaosGameController(MainController mainController, ChaosGame chaosGame,
       JuliaSetGame juliaSetGame) {
@@ -59,6 +70,8 @@ public class ChaosGameController implements ChaosGameObserver {
   /**
    * Sets juliaSetMode to true or false. This is used to determine if the julia set is calculated
    * with chaos game or juliaSetMode.
+   *
+   * @param mode boolean value to set juliaSetMode to.
    */
   public void setJuliaSetMode(boolean mode) {
     this.juliaSetMode = mode;
@@ -229,7 +242,8 @@ public class ChaosGameController implements ChaosGameObserver {
 
 
   /**
-   * Updates the canvas size of the Chaos Game. If auto run is true, it runs the chaos game.
+   * Updates the canvas size of the Chaos Game. If auto run is true, it runs the chaos game. Runs
+   * the chaos game for a fifth of the steps to reduce choppiness when scaling.
    *
    * @param width  the width
    * @param height the height

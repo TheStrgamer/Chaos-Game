@@ -10,9 +10,14 @@ import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
 /**
- * <h1>MainController</h1>
- * The main controller class for the application. Responsible for creating views and controllers,
- * and switching between the pages.
+ * <h2>MainController</h2>
+ * <p>
+ * The main controller class for the application. Responsible for creating controllers, and
+ * handling communication between them.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class MainController {
 
@@ -102,8 +107,7 @@ public class MainController {
   }
 
   /**
-   * Sets the current description of the Chaos Game. sets the change description
-   * combobox empty.
+   * Sets the current description of the Chaos Game. sets the change description combobox empty.
    *
    * @param description the description to set as the current description.
    */

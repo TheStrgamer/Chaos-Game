@@ -17,10 +17,23 @@ import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
 
 /**
- * <h1>ChaosGameFileHandler</h1>
+ * <h2>ChaosGameFileHandler</h2>
+ * <p>
  * A class that handles reading and writing chaos game descriptions to and from files.
+ * </p>
+ * <p>
+ * The file handler can read descriptions from txt files, and throw exceptions if the file is not found or if the file is not formatted correctly.
+ * </p>
+ * @version 0.4.0
+ * @since 0.2.0
  */
 public class ChaosGameFileHandler {
+
+  /**
+   * Constructor for the ChaosGameFileHandler class.
+   */
+  public ChaosGameFileHandler() {
+  }
 
   /**
    * Verifies that the given transform type is valid.

@@ -17,10 +17,19 @@ import org.example.model.chaosGame.ChaosCanvas;
 import org.example.view.ModifyDescriptionView;
 
 /**
- * <h1>ModifyDescriptionController</h1>
+ * <h2>ModifyDescriptionController</h2>
+ * <p>
  * The controller class for the Modify Description page of the application. It handles the logic for
  * the Modify Description page, and is responsible for choosing and creating descriptions for the
  * Chaos Game.
+ * </p>
+ * <p>
+ * The class implements the ChaosGameObserver interface, and listens for changes in the description
+ * of the Chaos Game.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class ModifyDescriptionController implements ChaosGameObserver {
 
@@ -52,6 +61,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   /**
    * checks if the given minCoords are valid, and if they are smaller than the maxCoords.
+   *
    * @param X0 the x0 value
    * @param X1 the x1 value
    * @return true if the values are valid, false otherwise.
@@ -67,6 +77,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   /**
    * checks if the given maxCoords are valid, and if they are larger than the minCoords.
+   *
    * @param X0 the x0 value
    * @param X1 the x1 value
    * @return true if the values are valid, false otherwise.
@@ -108,26 +119,9 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
 
-
   /**
-   * Reads a description from a file.
-   */
-  public void readFromFile() {
-    //TODO
-    System.out.println("Read from file");
-  }
-
-  /**
-   * Saves the current description to a file.
-   */
-  public void saveToFile() {
-    //TODO
-    System.out.println("Save to file");
-  }
-
-  /**
-   * Adds a new empty transform to the description. If the current description is using
-   * julia transforms, it adds two transforms, one for each sign value.
+   * Adds a new empty transform to the description. If the current description is using julia
+   * transforms, it adds two transforms, one for each sign value.
    */
   public void addTransform() {
     if (currentDescription.getTransformType().equals("Julia")) {
@@ -199,8 +193,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Creates a new description from the current values. If the description is the same
-   * as the current description, nothing happens.
+   * Creates a new description from the current values. If the description is the same as the
+   * current description, nothing happens.
    */
   public void createDescription() {
     List<Integer> weights = new ArrayList<>();
@@ -248,8 +242,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Sets the coordinates of a Julia transform. If the given coordinates are invalid
-   * or the same as the current coordinates, nothing happens.
+   * Sets the coordinates of a Julia transform. If the given coordinates are invalid or the same as
+   * the current coordinates, nothing happens.
    *
    * @param index     the index of the transform.
    * @param real      the real part of the complex number.
@@ -275,8 +269,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Sets the coordinates of an Affine transform. If the given coordinates are invalid
-   * or the same as the current coordinates, nothing happens.
+   * Sets the coordinates of an Affine transform. If the given coordinates are invalid or the same
+   * as the current coordinates, nothing happens.
    *
    * @param index the index of the transform.
    * @param a00   the a00 value of the matrix.
@@ -303,8 +297,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Removes an affine transform from the description. If the index is invalid, nothing
-   * happens.
+   * Removes an affine transform from the description. If the index is invalid, nothing happens.
    *
    * @param index the index of the transform to remove.
    */
@@ -317,8 +310,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
-   * Removes a Julia transform from the description. If the index is invalid, nothing
-   * happens.
+   * Removes a Julia transform from the description. If the index is invalid, nothing happens.
    *
    * @param index the index of the transform to remove.
    */
@@ -334,7 +326,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   /**
    * Sets the weight of a transform at the given index.
    *
-   * @param index the index of the transform.
+   * @param index  the index of the transform.
    * @param weight the weight of the transform.
    */
   public void setWeight(int index, String weight) {

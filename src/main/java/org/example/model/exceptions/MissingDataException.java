@@ -1,9 +1,14 @@
 package org.example.model.exceptions;
 
 /**
- * <h1>MissingDataException</h1>
+ * <h2>MissingDataException</h2>
+ * <p>
  * Exception thrown when the description file is missing data. Used by ChaosGameFileHandler to
  * indicate that the description file does not have enough data to make a description.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.4.0
  */
 public class MissingDataException extends RuntimeException {
 

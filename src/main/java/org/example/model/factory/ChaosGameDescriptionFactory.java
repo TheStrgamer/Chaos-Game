@@ -12,10 +12,27 @@ import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
 
 /**
- * <h1>ChaosGameDescriptionFactory</h1>
+ * <h2>ChaosGameDescriptionFactory</h2>
+ * <p>
  * A factory class that creates ChaosGameDescription objects based on the given type.
+ * </p>
+ * <p>
+ * The factory has methods to create descriptions for the Sierpinski triangle, Barnsley fern, 3
+ * Julia sets, and randomly generated Julia and affine descriptions. It also has descriptions named
+ * diamond, plant, flower, snake, and spine, which are randomly generated affine descriptions.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class ChaosGameDescriptionFactory {
+
+  /**
+   * Constructor for the ChaosGameDescriptionFactory class.
+   */
+  public ChaosGameDescriptionFactory() {
+
+  }
 
 
   /**
@@ -108,12 +125,12 @@ public class ChaosGameDescriptionFactory {
     weights.add(12);
     weights.add(12);
 
-
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
   /**
-   * Creates a ChaosGameDescription object with the julia transform for the complex -0.74543, 0.11301.
+   * Creates a ChaosGameDescription object with the julia transform for the complex -0.74543,
+   * 0.11301.
    *
    * @return the ChaosGameDescription object.
    */
@@ -127,7 +144,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with the julia transform for the complex 0.15546, -0.63690.
+   * Creates a ChaosGameDescription object with the julia transform for the complex 0.15546,
+   * -0.63690.
    *
    * @return the ChaosGameDescription object.
    */
@@ -136,7 +154,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with the julia transform for the complex 0.42428198918101634, 0.14423276134020324.
+   * Creates a ChaosGameDescription object with the julia transform for the complex
+   * 0.42428198918101634, 0.14423276134020324.
    *
    * @return the ChaosGameDescription object.
    */
@@ -145,9 +164,9 @@ public class ChaosGameDescriptionFactory {
   }
 
 
-
   /**
-   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Diamond".
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named
+   * "Diamond".
    *
    * @return the ChaosGameDescription object.
    */
@@ -157,13 +176,12 @@ public class ChaosGameDescriptionFactory {
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(-0.035359, -0.45328, 0.61167, -0.30323);
-    Vector2D vector1 = new Vector2D( 0.0765966, -0.740269 );
+    Vector2D vector1 = new Vector2D(0.0765966, -0.740269);
     AffineTransform2D transform1 = new AffineTransform2D(matrix1, vector1);
 
     Matrix2x2 matrix2 = new Matrix2x2(0.875270, -0.97410, 0.9323, -0.2067);
-    Vector2D vector2 = new Vector2D( 0.067495, -0.54111 );
+    Vector2D vector2 = new Vector2D(0.067495, -0.54111);
     AffineTransform2D transform2 = new AffineTransform2D(matrix2, vector2);
-
 
     transforms.add(transform1);
     transforms.add(transform2);
@@ -176,7 +194,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Plant".
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named
+   * "Plant".
    *
    * @return the ChaosGameDescription object.
    */
@@ -203,7 +222,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Flower".
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named
+   * "Flower".
    *
    * @return the ChaosGameDescription object.
    */
@@ -227,7 +247,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Snake".
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named
+   * "Snake".
    *
    * @return the ChaosGameDescription object.
    */
@@ -256,7 +277,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with affine transforms. This description has been named "Spine".
+   * Creates a ChaosGameDescription object with affine transforms. This description has been named
+   * "Spine".
    *
    * @return the ChaosGameDescription object.
    */
@@ -326,8 +348,10 @@ public class ChaosGameDescriptionFactory {
     Vector2D maxCoords = new Vector2D(1.6, 1.4);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
+
   /**
-   * Creates a ChaosGameDescription object with randomly generated julia transforms. It can have up to 2 transforms.
+   * Creates a ChaosGameDescription object with randomly generated julia transforms. It can have up
+   * to 2 transforms.
    *
    * @return the ChaosGameDescription object.
    */
@@ -346,7 +370,8 @@ public class ChaosGameDescriptionFactory {
   }
 
   /**
-   * Creates a ChaosGameDescription object with randomly generated affine transforms. It can have 2-4 transforms.
+   * Creates a ChaosGameDescription object with randomly generated affine transforms. It can have
+   * 2-4 transforms.
    *
    * @return the ChaosGameDescription object.
    */
@@ -377,13 +402,14 @@ public class ChaosGameDescriptionFactory {
       Vector2D vector = new Vector2D(e, f);
       AffineTransform2D transform = new AffineTransform2D(matrix, vector);
       transforms.add(transform);
-      weights.add(random.nextInt(3)+1);
+      weights.add(random.nextInt(3) + 1);
     }
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
   /**
    * Creates an empty affine description, with default values.
+   *
    * @return the ChaosGameDescription object.
    */
   public ChaosGameDescription createEmptyAffineDescription() {
@@ -401,6 +427,7 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Creates an empty julia description, with default values.
+   *
    * @return the ChaosGameDescription object.
    */
   public ChaosGameDescription createEmptyJuliaDescription() {

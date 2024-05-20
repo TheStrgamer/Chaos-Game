@@ -4,8 +4,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 /**
- * <h1>IntegerField</h1>
+ * <h2>IntegerField</h2>
+ * <p>
  * Custom TextField that only allows the input of valid Integers.
+ * </p>
+ * <p>
+ * If the input is invalid, the field will not accept it and consume the event. The field will also
+ * display a tooltip to inform the user if the input is not updated.
+ * </p>
  */
 public class WeightAndIterationsField extends TextField {
 
