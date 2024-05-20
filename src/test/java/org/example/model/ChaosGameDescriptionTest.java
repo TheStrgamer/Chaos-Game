@@ -552,6 +552,112 @@ public class ChaosGameDescriptionTest {
       }
     }
 
+    @Test
+    @DisplayName("changeZoom zooms out with correct values")
+    void testChangeZoomZoomsOut() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new AffineTransform2D(new Matrix2x2(1, 2, 3, 4), new Vector2D(1, 2)));        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
+            new Vector2D(100, 100),
+            transforms);
+        chaosGameDescription.changeZoom(.1);
+        assertEquals(-5, chaosGameDescription.getMinCoords().getX0());
+        assertEquals(-5, chaosGameDescription.getMinCoords().getX1());
+        assertEquals(105, chaosGameDescription.getMaxCoords().getX0());
+        assertEquals(105, chaosGameDescription.getMaxCoords().getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("changeZoom zooms in with correct values")
+    void testChangeZoomZoomsIn() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 0, 0, 1), new Vector2D(0, 0));
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(affineTransform2D);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
+            new Vector2D(100, 100),
+            transforms);
+        chaosGameDescription.changeZoom(-.5);
+        assertEquals(25, chaosGameDescription.getMinCoords().getX0());
+        assertEquals(25, chaosGameDescription.getMinCoords().getX1());
+        assertEquals(75, chaosGameDescription.getMaxCoords().getX0());
+        assertEquals(75, chaosGameDescription.getMaxCoords().getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("moveCanvas moves left the canvas with correct values")
+    void testMoveCanvasMovesLeft() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 0, 0, 1), new Vector2D(0, 0));
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(affineTransform2D);        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
+            new Vector2D(100, 100),
+            transforms);
+        chaosGameDescription.moveCanvas(new Vector2D(10,0));
+        assertEquals(-10, chaosGameDescription.getMinCoords().getX0());
+        assertEquals(90, chaosGameDescription.getMaxCoords().getX0());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("moveCanvas moves right the canvas with correct values")
+    void testMoveCanvasMovesRight() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 0, 0, 1), new Vector2D(0, 0));
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(affineTransform2D);        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
+            new Vector2D(100, 100),
+            transforms);
+        chaosGameDescription.moveCanvas(new Vector2D(-10,0));
+        assertEquals(10, chaosGameDescription.getMinCoords().getX0());
+        assertEquals(110, chaosGameDescription.getMaxCoords().getX0());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("moveCanvas moves up the canvas with correct values")
+    void testMoveCanvasMovesUp() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 0, 0, 1), new Vector2D(0, 0));
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(affineTransform2D);        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
+            new Vector2D(100, 100),
+            transforms);
+        chaosGameDescription.moveCanvas(new Vector2D(0,-10));
+        assertEquals(10, chaosGameDescription.getMinCoords().getX1());
+        assertEquals(110, chaosGameDescription.getMaxCoords().getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("moveCanvas moves down the canvas with correct values")
+    void testMoveCanvasMovesDown() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 0, 0, 1), new Vector2D(0, 0));
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(affineTransform2D);        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(0, 0),
+            new Vector2D(100, 100),
+            transforms);
+        chaosGameDescription.moveCanvas(new Vector2D(0,10));
+        assertEquals(-10, chaosGameDescription.getMinCoords().getX1());
+        assertEquals(90, chaosGameDescription.getMaxCoords().getX1());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message " + e.getMessage());
+      }
+    }
+
   }
 
   @Nested

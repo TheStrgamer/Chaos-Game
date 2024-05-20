@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.example.model.chaosGame.ChaosGameDescription;
 import org.example.model.chaosGame.ChaosGameFileHandler;
+import org.example.model.exceptions.DescriptionFileEmptyException;
 import org.example.model.exceptions.MissingDataException;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
@@ -272,6 +273,23 @@ class ChaosGameFileHandlerTest {
       } catch (MissingDataException e) {
         assertEquals(
             "Description file is missing transform data, and cannot be used to create a ChaosGameDescription.",
+            e.getMessage());
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
+    @Test
+    @DisplayName("readFromFile throws DescriptionFileEmptyException with empty file")
+    void testReadFromFileThrowsDescriptionFileEmptyExceptionWithEmptyFile() {
+      try {
+        ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
+        ChaosGameDescription description = chaosGameFileHandler.readFromFile(
+            "src/test/resources/testfiles/testFileEmpyFile.txt");
+        fail("An exception was not thrown");
+      } catch (DescriptionFileEmptyException e) {
+        assertEquals(
+            "Description file is empty",
             e.getMessage());
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());

@@ -192,8 +192,71 @@ public class ChaosGameDescriptionFactoryTest {
       }
     }
 
-
+    @Test
+    @DisplayName("createDescription creates snake description when given the correct string")
+    void testCreateSnakeDescription() {
+      try {
+        ChaosGameDescription description = factory.createDescription("Snake");
+        assertNotNull(description);
+        assertEquals(description.toString(), "Affine    #Transform type\n"
+            + "-1.0, -6.0    #minimum coordinates\n"
+            + "3.0, 0.0    #maximum coordinates\n"
+            + "-0.99, -0.04, 0.29, 0.71, 1.35, -1.9    #transform\n"
+            + "-0.58, -0.51, 0.05, 0.5, -0.09, -0.07    #transform\n"
+            + "0.79, 0.53, -0.41, 0.2, 1.78, -1.93    #transform\n");
+      } catch (IllegalArgumentException e) {
+        fail("Exception thrown");
+      }
   }
+
+  @Test
+  @DisplayName("createDescription creates spine description when given the correct string")
+  void testCreateSpineDescription() {
+    try {
+      ChaosGameDescription description = factory.createDescription("Spine");
+      assertNotNull(description);
+      assertEquals(description.toString(), "Affine    #Transform type\n"
+          + "-3.5, -7.9    #minimum coordinates\n"
+          + "8.5, 3.8    #maximum coordinates\n"
+          + "0.94, 0.25, -0.17, 0.73, 1.9, -0.8    #transform\n"
+          + "-0.13, 0.38, -0.66, -0.57, 0.37, 0.04    #transform\n");
+    } catch (IllegalArgumentException e) {
+      fail("Exception thrown");
+    }
+  }
+
+  @Test
+  @DisplayName("createDescription creates empty affine description when given the correct string")
+  void testCreateEmptyAffineDescription() {
+    try {
+      ChaosGameDescription description = factory.createDescription("EmptyAffine");
+      assertNotNull(description);
+      assertEquals(description.toString(), "Affine    #Transform type\n"
+          + "-1.0, -1.0    #minimum coordinates\n"
+          + "1.0, 1.0    #maximum coordinates\n"
+          + "1.0, 0.0, 0.0, 1.0, 0.0, 0.0    #transform\n");
+    } catch (IllegalArgumentException e) {
+      fail("Exception thrown");
+    }
+  }
+
+  @Test
+  @DisplayName("createDescription creates empty julia description when given the correct string")
+  void testCreateEmptyJuliaDescription() {
+    try {
+      ChaosGameDescription description = factory.createDescription("EmptyJulia");
+      assertNotNull(description);
+      assertEquals(description.toString(), "Julia    #Transform type\n"
+          + "-1.6, -1.2    #minimum coordinates\n"
+          + "1.6, 1.2    #maximum coordinates\n"
+          + "0.0, 0.0    #transform\n"
+          + "0.0, 0.0    #transform\n");
+    } catch (IllegalArgumentException e) {
+      fail("Exception thrown");
+    }
+  }
+  }
+
 
   @Nested
   class NegativeTests {

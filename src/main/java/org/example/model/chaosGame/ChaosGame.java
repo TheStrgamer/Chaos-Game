@@ -191,14 +191,6 @@ public class ChaosGame {
   }
 
   /**
-   * Clears the canvas of this chaos game. Notifies all observers that the canvas has changed.
-   */
-  public void clearCanvas() {
-    canvas.clear();
-    notifyCanvasChanged();
-  }
-
-  /**
    * Changes the zoom of the canvas.
    *
    * @param multiplier the multiplier to change the zoom with.

@@ -155,6 +155,19 @@ class JuliaTransformTest {
       }
     }
 
+    @Test
+    @DisplayName("getPoint returns the correct complex number")
+    void testGetPointReturnsCorrectComplexNumber() {
+      try {
+        Complex complex = new Complex(1, 2);
+        JuliaTransform juliaTransform = new JuliaTransform(new Complex(1, 2), 1);
+        Complex testComplex = juliaTransform.getPoint();
+        assertTrue(complex.equals(testComplex));
+      } catch (Exception e) {
+        fail("An exception was thrown with the message: " + e.getMessage());
+      }
+    }
+
   }
 
   @Nested

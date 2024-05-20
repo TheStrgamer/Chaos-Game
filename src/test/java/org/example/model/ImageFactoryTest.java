@@ -2,13 +2,16 @@ package org.example.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.factory.ImageFactory;
 import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,7 +25,10 @@ public class ImageFactoryTest {
   static void init() {
     factory = new ImageFactory();
     canvas = new ChaosCanvas(10, 10, new Vector2D(0,0), new Vector2D(10,10));
-
+  }
+  @BeforeEach
+  void setUp() {
+    canvas.clear();
   }
 
   @Nested
@@ -65,6 +71,45 @@ public class ImageFactoryTest {
       assertEquals(0xFF000000,image.getPixelReader().getArgb(0, 0) );
       assertEquals(0x00000000,image.getPixelReader().getArgb(1, 1));
 
+    }
+
+    @Test
+    @DisplayName("createImage sets the correct color for a pixel with a specified color red")
+    void testCreateImageSetsCorrectColorForPixelWithSpecifiedColorRed() {
+      canvas.putPixel(new Vector2D(0, 0),255);
+      Color color = Color.RED;
+      Image image = factory.createImage(canvas,color);
+      assertEquals(0xFFFF0000,image.getPixelReader().getArgb(0, 0) );
+      assertEquals(0x00000000,image.getPixelReader().getArgb(1, 1));
+    }
+    @Test
+    @DisplayName("createImage sets the correct color for a pixel with a specified color blue")
+    void testCreateImageSetsCorrectColorForPixelWithSpecifiedColorBlue() {
+      canvas.putPixel(new Vector2D(0, 0),255);
+      Color color = Color.BLUE;
+      Image image = factory.createImage(canvas,color);
+      assertEquals(0xFF0000FF,image.getPixelReader().getArgb(0, 0) );
+      assertEquals(0x00000000,image.getPixelReader().getArgb(1, 1));
+    }
+
+    @Test
+    @DisplayName("createImage sets the correct color for a pixel with a specified color green")
+    void testCreateImageSetsCorrectColorForPixelWithSpecifiedColorGreen() {
+      canvas.putPixel(new Vector2D(0, 0),255);
+      Color color = new Color(0,1,0,1);
+      Image image = factory.createImage(canvas,color);
+      assertEquals(0xFF00FF00,image.getPixelReader().getArgb(0, 0) );
+      assertEquals(0x00000000,image.getPixelReader().getArgb(1, 1));
+    }
+
+    @Test
+    @DisplayName("createImage starts darkening the color after 255")
+    void testCreateImageDarkensColorAfter255() {
+      canvas.putPixel(new Vector2D(0, 0),355);
+
+      Color color = Color.RED;
+      Image image = factory.createImage(canvas,color);
+      assertTrue(image.getPixelReader().getArgb(0, 0) < 0xFFFF0000);
     }
 
   }

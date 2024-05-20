@@ -12,8 +12,7 @@ public class MissingDataException extends RuntimeException {
    * missing necessary data, and cannot be used to create a ChaosGameDescription"
    */
   public MissingDataException() {
-    super(
-        "Description file is missing necessary data, and cannot be used to create a ChaosGameDescription.");
+    super("Description file is missing necessary data, and cannot be used to create a ChaosGameDescription.");
   }
 
   /**
