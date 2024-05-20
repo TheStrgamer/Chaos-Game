@@ -40,6 +40,20 @@ public class Matrix2x2 {
   }
 
   /**
+   * Deep copy constructor for the Matrix2x2 class. Used to create a new Matrix2x2 object with the
+   * same values as the given Matrix2x2 object.
+   *
+   * @param matrix the Matrix2x2 object to copy
+   */
+  public Matrix2x2(Matrix2x2 matrix) {
+    int[] values = matrix.getValues();
+    this.a00 = values[0];
+    this.a01 = values[1];
+    this.a10 = values[2];
+    this.a11 = values[3];
+  }
+
+  /**
    * Multiplies this matrix with the given vector.
    *
    * @param vector the vector to multiply with
@@ -66,6 +80,15 @@ public class Matrix2x2 {
     }
     return this.a00 == matrix.a00 && this.a01 == matrix.a01 && this.a10 == matrix.a10
         && this.a11 == matrix.a11;
+  }
+
+  /**
+   * Returns the values of this matrix as an array.
+   *
+   * @return the values of this matrix as an array
+   */
+  public int[] getValues() {
+    return new int[]{(int) a00, (int) a01, (int) a10, (int) a11};
   }
 
   /**

@@ -33,6 +33,15 @@ public class Vector2D {
     setX0(x0);
     setX1(x1);
   }
+  /**
+   * Deep copy constructor for Vector2D class.
+   *
+   * @param vector the Vector2D object to copy
+   */
+  public Vector2D(Vector2D vector) {
+    setX0(vector.getX0());
+    setX1(vector.getX1());
+  }
 
   /**
    * Returns the x0 value of this vector.

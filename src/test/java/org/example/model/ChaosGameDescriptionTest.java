@@ -520,7 +520,7 @@ public class ChaosGameDescriptionTest {
     }
 
     @Test
-    @DisplayName("getTransformsAsList returns the correct list with julia transform")
+    @DisplayName("getTransforms returns the correct list with julia transform")
     void testGetTransformsAsListReturnsList() {
       try {
         List<Transform2D> transforms = new ArrayList<>();
@@ -529,7 +529,7 @@ public class ChaosGameDescriptionTest {
         ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
             new Vector2D(3, 4),
             transforms);
-        assertEquals(transforms, chaosGameDescription.getTransformsAsList());
+        assertEquals(transforms, chaosGameDescription.getTransforms());
       } catch (Exception e) {
         fail("An exception was thrown with the message " + e.getMessage());
       }

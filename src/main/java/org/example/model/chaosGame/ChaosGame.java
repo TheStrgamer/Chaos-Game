@@ -178,7 +178,7 @@ public class ChaosGame {
    * @return the canvas of this chaos game.
    */
   public ChaosCanvas getCanvas() {
-    return canvas;
+    return new ChaosCanvas(canvas);
   }
 
   /**
@@ -187,7 +187,7 @@ public class ChaosGame {
    * @return the description of this chaos game.
    */
   public ChaosGameDescription getDescription() {
-    return description;
+    return new ChaosGameDescription(description);
   }
 
   /**

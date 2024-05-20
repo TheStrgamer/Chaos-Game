@@ -44,7 +44,6 @@ public class MainController {
     stage.setTitle("Chaos Game");
 
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
-    ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     ChaosGame chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
     Mandelbrot mandelBrot = new Mandelbrot(
@@ -52,7 +51,7 @@ public class MainController {
         currentHeight - 100, 255, 3.0);
 
     chaosGameController = new ChaosGameController(this, chaosGame, mandelBrot);
-    fileController = new FileController(this, chaosGameFileHandler);
+    fileController = new FileController(this);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     popupController = new PopupController();
 
@@ -154,7 +153,7 @@ public class MainController {
    * Method for reading a description from a file.
    */
   public void readFromFile() {
-    fileController.readFromFile();
+    setCurrentDescription(fileController.readFromFile());
   }
 
   /**

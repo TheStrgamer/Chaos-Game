@@ -40,6 +40,16 @@ public class Complex extends Vector2D {
   }
 
   /**
+   * Deep copy constructor for the Complex class. Used to create a new Complex object with the same
+   *
+   * @param complex the Complex object to copy
+   *
+   */
+  public Complex(Complex complex) {
+    super(complex);
+  }
+
+  /**
    * Returns the real part of this complex number.
    *
    * @return the real part of this complex number

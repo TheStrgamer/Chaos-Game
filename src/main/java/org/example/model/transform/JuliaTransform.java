@@ -70,6 +70,17 @@ public class JuliaTransform implements Transform2D {
     this.sign = sign;
   }
 
+  /**
+   * Deep copy constructor for the JuliaTransform class. Used to create a new JuliaTransform object
+   * with the same values as the given transform.
+   * @param transform the JuliaTransform object to copy
+   *
+   */
+  public JuliaTransform(JuliaTransform transform) {
+    this.point = new Complex(transform.getPoint());
+    this.sign = transform.getSign();
+  }
+
 
   /**
    * Transforms the given vector using the Julia transformation.
@@ -96,8 +107,8 @@ public class JuliaTransform implements Transform2D {
    * transformation.
    *
    * @param transform the Julia transformation to compare
-   * @return true if the given Julia transformation has the same values as this Julia transformation,
-   * false otherwise
+   * @return true if the given Julia transformation has the same values as this Julia
+   * transformation, false otherwise
    */
   @Override
   public boolean equals(Transform2D transform) {
@@ -105,6 +116,34 @@ public class JuliaTransform implements Transform2D {
       return false;
     }
     return point.equals(juliaTransform.point) && sign == juliaTransform.sign;
+  }
+
+
+  /**
+   * Returns the point of the Julia transformation.
+   *
+   * @return the point of the Julia transformation
+   */
+  public Complex getPoint() {
+    return new Complex(point);
+  }
+
+  /**
+   * Returns the sign of the Julia transformation.
+   *
+   * @return the sign of the Julia transformation
+   */
+  public int getSign() {
+    return sign;
+  }
+
+  /**
+   * Returns a deep copy of this Julia transformation object.
+   * @return a deep copy of this Julia transformation object
+   */
+  @Override
+  public Transform2D deepCopy() {
+    return new JuliaTransform(this);
   }
 
   /**
@@ -117,17 +156,13 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
-   * Returns a string representation of the Julia transformation without the sign.
-   * Used when writing to file.
+   * Returns a string representation of the Julia transformation without the sign. Used when writing
+   * to file.
    *
    * @return a string representation of the Julia transformation without the sign
    */
   public String toString() {
     return point.toString();
-  }
-
-  public Complex getPoint() {
-    return point;
   }
 
 

@@ -127,281 +127,285 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Constructs a new ChaosGameDescription object with the given minimum and maximum coordinates, as
-   * well as a list of transforms, and a list of weights.
+   * Deep copy constructor for the ChaosGameDescription class. Used to create a new
+   * ChaosGameDescription with the same values as the given description
    *
-   * @param minCoords  is the minimum coordinates to use.
-   * @param maxCoords  is the maximum coordinates to use.
-   * @param transforms is the list of transforms to use.
-   * @param weights    is the list of weights to use.
-   * @throws IllegalArgumentException if the given minimum or maximum coordinates are null, if the
-   *                                  given list of transforms is null, empty or contains null
-   *                                  objects
+   * @param description the ChaosGameDescription object to copy
    */
+  public ChaosGameDescription(ChaosGameDescription description) {
+    this.minCoords = new Vector2D(description.minCoords);
+    this.maxCoords = new Vector2D(description.maxCoords);
+    this.transforms = description.getTransforms();
+    this.weights = description.getWeights();
+    calculateWeightSum();
+  }
+
+    /**
+     * Constructs a new ChaosGameDescription object with the given minimum and maximum coordinates, as
+     * well as a list of transforms, and a list of weights.
+     *
+     * @param minCoords  is the minimum coordinates to use.
+     * @param maxCoords  is the maximum coordinates to use.
+     * @param transforms is the list of transforms to use.
+     * @param weights    is the list of weights to use.
+     * @throws IllegalArgumentException if the given minimum or maximum coordinates are null, if the
+     *                                  given list of transforms is null, empty or contains null
+     *                                  objects
+     */
   public ChaosGameDescription(Vector2D minCoords, Vector2D maxCoords,
-      List<Transform2D> transforms, List<Integer> weights) {
-    verifyNotNullVector(minCoords);
-    verifyNotNullVector(maxCoords);
-    verifyListNotNullAndNotEmpty(transforms);
-    verifyWeightsNotNullAndNotEmpty(weights);
-    this.minCoords = minCoords;
-    this.maxCoords = maxCoords;
-    this.transforms = transforms;
-    this.weights = weights;
-    calculateWeightSum();
+        List<Transform2D> transforms, List<Integer> weights) {
+      verifyNotNullVector(minCoords);
+      verifyNotNullVector(maxCoords);
+      verifyListNotNullAndNotEmpty(transforms);
+      verifyWeightsNotNullAndNotEmpty(weights);
+      this.minCoords = minCoords;
+      this.maxCoords = maxCoords;
+      this.transforms = transforms;
+      this.weights = weights;
+      calculateWeightSum();
 
-  }
-
-  /**
-   * Returns the minimum and maximum coordinates of the game.
-   *
-   * @return a pair of vectors, where the first vector is the minimum coordinates and the second
-   * vector is the maximum coordinates.
-   */
-
-  public Vector2D getMinCoords() {
-    return minCoords;
-  }
-
-  /**
-   * Returns the maximum coordinates of the game.
-   *
-   * @return the maximum coordinates.
-   */
-  public Vector2D getMaxCoords() {
-    return maxCoords;
-  }
-
-  /**
-   * Returns the list of transforms that are used to generate the game.
-   *
-   * @return a list of transforms.
-   */
-  public List<Transform2D> getTransforms() {
-    return transforms;
-  }
-
-  /**
-   * Returns a string representation of the type of transform used in the description.
-   *
-   * @return the type of transform.
-   */
-  public String getTransformType() {
-    Transform2D transform = transforms.get(0);
-    if (transform instanceof AffineTransform2D) {
-      return "Affine";
-    } else if (transform instanceof JuliaTransform) {
-      return "Julia";
-    } else {
-      throw new IllegalArgumentException("Invalid transform type");
     }
-  }
 
-  /**
-   * Returns a list of string representations of the transforms.
-   *
-   * @return a list of the transforms.
-   */
-  public List<String> getTransformsAsStringList() {
-    List<String> transformsAsString = new ArrayList<>();
+    /**
+     * Returns the minimum and maximum coordinates of the game.
+     *
+     * @return a pair of vectors, where the first vector is the minimum coordinates and the second
+     * vector is the maximum coordinates.
+     */
 
-    if (getTransformType().equals("Julia")) {
-      for (int i = 0; i < transforms.size(); i += 2) {
-        transformsAsString.add(
-            transforms.get(i).toString() + ", " + weights.get(i) + ", " + weights.get(i + 1));
-      }
-    } else {
-      for (Transform2D transform : transforms) {
-        transformsAsString.add(
-            transform.toString() + ", " + weights.get(transforms.indexOf(transform)));
+    public Vector2D getMinCoords () {
+      return new Vector2D(minCoords);
+    }
+
+    /**
+     * Returns the maximum coordinates of the game.
+     *
+     * @return the maximum coordinates.
+     */
+    public Vector2D getMaxCoords () {
+      return new Vector2D(maxCoords);
+    }
+
+    /**
+     * Returns the list of transforms that are used to generate the game.
+     *
+     * @return a list of transforms.
+     */
+    public List<Transform2D> getTransforms () {
+      return transforms.stream().map(Transform2D::deepCopy).collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a string representation of the type of transform used in the description.
+     *
+     * @return the type of transform.
+     */
+    public String getTransformType () {
+      Transform2D transform = transforms.get(0);
+      if (transform instanceof AffineTransform2D) {
+        return "Affine";
+      } else if (transform instanceof JuliaTransform) {
+        return "Julia";
+      } else {
+        throw new IllegalArgumentException("Invalid transform type");
       }
     }
-    return transformsAsString;
-  }
 
-  /**
-   * Checks if the given ChaosGameDescription object has the same values as this
-   * ChaosGameDescription.
-   *
-   * @param description the ChaosGameDescription to compare
-   * @return true if the given ChaosGameDescription has the same values as this
-   * ChaosGameDescription, false otherwise
-   */
-  public boolean equals(ChaosGameDescription description) {
-    if (description == null) {
-      return false;
-    }
-    if (!minCoords.equals(description.minCoords) || !maxCoords.equals(description.maxCoords)) {
-      return false;
-    }
-    if (transforms.size() != description.transforms.size()) {
-      return false;
-    }
-    return IntStream.range(0, transforms.size())
-        .allMatch(i -> transforms.get(i).equals(description.transforms.get(i)));
-  }
+    /**
+     * Returns a list of string representations of the transforms.
+     *
+     * @return a list of the transforms.
+     */
+    public List<String> getTransformsAsStringList () {
+      List<String> transformsAsString = new ArrayList<>();
 
-  /**
-   * Returns the weight of the transform at the given index. Throws an IllegalArgumentException if
-   * the index is out of bounds.
-   *
-   * @param index the index of the transform.
-   * @return the weight of the transform.
-   */
-  public int getWeight(int index) {
-    verifyWithinBounds(index, weights.size());
-    return weights.get(index);
-  }
-
-  /**
-   * Sets the weight of the transform at the given index. Throws an IllegalArgumentException if the
-   * index is out of bounds.
-   *
-   * @param index  the index of the transform.
-   * @param weight the weight of the transform.
-   */
-  public void setWeight(int index, int weight) {
-    verifyWithinBounds(index, weights.size());
-    weights.set(index, weight);
-    calculateWeightSum();
-  }
-
-  /**
-   * Sets the weights of the transforms, replacing the current list of weights. Throws an
-   * IllegalArgumentException if the list of weights is null, empty or contains null objects.
-   *
-   * @param weights the list of weights.
-   */
-  public void setWeights(List<Integer> weights) {
-    verifyWeightsNotNullAndNotEmpty(weights);
-    this.weights = weights;
-    calculateWeightSum();
-  }
-
-  /**
-   * Returns the list of weights of the transforms.
-   *
-   * @return the list of weights of the transforms.
-   */
-  public List<Integer> getWeights() {
-    return new ArrayList<>(this.weights);
-  }
-
-  /**
-   * Returns the sum of the weights of all the transforms.
-   *
-   * @return the sum of the weights of all the transforms.
-   */
-  public int sumOfWeights() {
-    return weightSum;
-  }
-
-  /**
-   * Recalculates the sum of the weights of all the transforms.
-   */
-  private void calculateWeightSum() {
-    weightSum = weights.stream().mapToInt(Integer::intValue).sum();
-  }
-
-
-  /**
-   * Returns the sum of the weights of all the transforms below the given index.
-   *
-   * @param index the index of the transform.
-   * @return the sum of the weights of all the transforms below the given index.
-   */
-  public int sumOfWeightsBelowIndex(int index) {
-    verifyWithinBounds(index, weights.size() + 1);
-    int sum = 0;
-    for (int i = 0; i < index; i++) {
-      sum += getWeight(i);
-    }
-    return sum;
-  }
-
-  /**
-   * Returns the transform with the given index, taking into account the weight of the transform.
-   *
-   * @param index the weight of the transform.
-   * @return the transform with the given weight.
-   */
-  public Transform2D getTransformWithWeight(int index) {
-    verifyWithinBounds(index, weightSum);
-    for (int i = 0; i < transforms.size(); i++) {
-      if (index < sumOfWeightsBelowIndex(i + 1)) {
-        return transforms.get(i);
+      if (getTransformType().equals("Julia")) {
+        for (int i = 0; i < transforms.size(); i += 2) {
+          transformsAsString.add(
+              transforms.get(i).toString() + ", " + weights.get(i) + ", " + weights.get(i + 1));
+        }
+      } else {
+        for (Transform2D transform : transforms) {
+          transformsAsString.add(
+              transform.toString() + ", " + weights.get(transforms.indexOf(transform)));
+        }
       }
+      return transformsAsString;
     }
-    return null;
+
+    /**
+     * Checks if the given ChaosGameDescription object has the same values as this
+     * ChaosGameDescription.
+     *
+     * @param description the ChaosGameDescription to compare
+     * @return true if the given ChaosGameDescription has the same values as this
+     * ChaosGameDescription, false otherwise
+     */
+    public boolean equals (ChaosGameDescription description){
+      if (description == null) {
+        return false;
+      }
+      if (!minCoords.equals(description.minCoords) || !maxCoords.equals(description.maxCoords)) {
+        return false;
+      }
+      if (transforms.size() != description.transforms.size()) {
+        return false;
+      }
+      return IntStream.range(0, transforms.size())
+          .allMatch(i -> transforms.get(i).equals(description.transforms.get(i)));
+    }
+
+    /**
+     * Returns the weight of the transform at the given index. Throws an IllegalArgumentException if
+     * the index is out of bounds.
+     *
+     * @param index the index of the transform.
+     * @return the weight of the transform.
+     */
+    public int getWeight ( int index){
+      verifyWithinBounds(index, weights.size());
+      return weights.get(index);
+    }
+
+    /**
+     * Sets the weight of the transform at the given index. Throws an IllegalArgumentException if the
+     * index is out of bounds.
+     *
+     * @param index  the index of the transform.
+     * @param weight the weight of the transform.
+     */
+    public void setWeight ( int index, int weight){
+      verifyWithinBounds(index, weights.size());
+      weights.set(index, weight);
+      calculateWeightSum();
+    }
+
+    /**
+     * Sets the weights of the transforms, replacing the current list of weights. Throws an
+     * IllegalArgumentException if the list of weights is null, empty or contains null objects.
+     *
+     * @param weights the list of weights.
+     */
+    public void setWeights (List < Integer > weights) {
+      verifyWeightsNotNullAndNotEmpty(weights);
+      this.weights = weights;
+      calculateWeightSum();
+    }
+
+    /**
+     * Returns the list of weights of the transforms.
+     *
+     * @return the list of weights of the transforms.
+     */
+    public List<Integer> getWeights () {
+      return new ArrayList<>(this.weights);
+    }
+
+    /**
+     * Returns the sum of the weights of all the transforms.
+     *
+     * @return the sum of the weights of all the transforms.
+     */
+    public int sumOfWeights () {
+      return weightSum;
+    }
+
+    /**
+     * Recalculates the sum of the weights of all the transforms.
+     */
+    private void calculateWeightSum () {
+      weightSum = weights.stream().mapToInt(Integer::intValue).sum();
+    }
+
+    /**
+     * Returns the sum of the weights of all the transforms below the given index.
+     *
+     * @param index the index of the transform.
+     * @return the sum of the weights of all the transforms below the given index.
+     */
+    public int sumOfWeightsBelowIndex ( int index){
+      verifyWithinBounds(index, weights.size() + 1);
+      int sum = 0;
+      for (int i = 0; i < index; i++) {
+        sum += getWeight(i);
+      }
+      return sum;
+    }
+
+    /**
+     * Returns the transform with the given index, taking into account the weight of the transform.
+     *
+     * @param index the weight of the transform.
+     * @return the transform with the given weight.
+     */
+    public Transform2D getTransformWithWeight ( int index){
+      verifyWithinBounds(index, weightSum);
+      for (int i = 0; i < transforms.size(); i++) {
+        if (index < sumOfWeightsBelowIndex(i + 1)) {
+          return transforms.get(i);
+        }
+      }
+      return null;
+    }
+
+    /**
+     * Returns a string representation of the ChaosGameDescription object.
+     *
+     * @return a string representation of the ChaosGameDescription object.
+     */
+    public String toString () {
+      return String.format("%s    #Transform type\n", getTransformType())
+          + String.format("%s    #minimum coordinates\n", minCoords)
+          + String.format("%s    #maximum coordinates\n", maxCoords)
+          + transforms.stream()
+          .map(transform -> transform.toString() + "    #transform\n")
+          .collect(Collectors.joining());
+    }
+
+    /**
+     * Changes the zoom of the description by multiplying the minimum and maximum coordinates by the
+     * given multiplier.
+     *
+     * @param multiplier the multiplier to use.
+     */
+    public void changeZoom ( double multiplier){
+      double xDiff = maxCoords.getX0() - minCoords.getX0();
+      double yDiff = maxCoords.getX1() - minCoords.getX1();
+      Vector2D newDiff = new Vector2D(xDiff * multiplier, yDiff * multiplier);
+
+      minCoords.setX0(minCoords.getX0() - newDiff.getX0() / 2);
+      minCoords.setX1(minCoords.getX1() - newDiff.getX1() / 2);
+      maxCoords.setX0(maxCoords.getX0() + newDiff.getX0() / 2);
+      maxCoords.setX1(maxCoords.getX1() + newDiff.getX1() / 2);
+
+    }
+
+    /**
+     * Moves the description based on the given vector in percentage of the min and max coordinates.
+     *
+     * @param vector the vector to move the description by.
+     */
+    public void moveCanvas (Vector2D vector){
+      double xDiff = maxCoords.getX0() - minCoords.getX0();
+      double yDiff = maxCoords.getX1() - minCoords.getX1();
+      Vector2D newDiff = new Vector2D(xDiff * vector.getX0() / 100, yDiff * vector.getX1() / 100);
+
+      minCoords.setX0(minCoords.getX0() - newDiff.getX0());
+      minCoords.setX1(minCoords.getX1() - newDiff.getX1());
+      maxCoords.setX0(maxCoords.getX0() - newDiff.getX0());
+      maxCoords.setX1(maxCoords.getX1() - newDiff.getX1());
+      roundCoords();
+    }
+
+    /**
+     * Rounds the coordinates to 4 decimals.
+     */
+    private void roundCoords () {
+      int amountOfDecimals = 5;
+      int multiplier = (int) Math.pow(10, amountOfDecimals);
+      minCoords.setX0((double) Math.round(minCoords.getX0() * multiplier) / multiplier);
+      minCoords.setX1((double) Math.round(minCoords.getX1() * multiplier) / multiplier);
+      maxCoords.setX0((double) Math.round(maxCoords.getX0() * multiplier) / multiplier);
+      maxCoords.setX1((double) Math.round(maxCoords.getX1() * multiplier) / multiplier);
+    }
   }
-
-  /**
-   * Returns the list of transforms in the description.
-   *
-   * @return a list of transforms.
-   */
-  public List<Transform2D> getTransformsAsList() {
-    return new ArrayList<>(this.transforms);
-  }
-
-  /**
-   * Returns a string representation of the ChaosGameDescription object.
-   *
-   * @return a string representation of the ChaosGameDescription object.
-   */
-  public String toString() {
-    return String.format("%s    #Transform type\n", getTransformType())
-        + String.format("%s    #minimum coordinates\n", minCoords)
-        + String.format("%s    #maximum coordinates\n", maxCoords)
-        + transforms.stream()
-        .map(transform -> transform.toString() + "    #transform\n")
-        .collect(Collectors.joining());
-  }
-
-  /**
-   * Changes the zoom of the description by multiplying the minimum and maximum coordinates by the
-   * given multiplier.
-   *
-   * @param multiplier the multiplier to use.
-   */
-  public void changeZoom(double multiplier) {
-    double xDiff = maxCoords.getX0() - minCoords.getX0();
-    double yDiff = maxCoords.getX1() - minCoords.getX1();
-    Vector2D newDiff = new Vector2D(xDiff * multiplier, yDiff * multiplier);
-
-    minCoords.setX0(minCoords.getX0() - newDiff.getX0() / 2);
-    minCoords.setX1(minCoords.getX1() - newDiff.getX1() / 2);
-    maxCoords.setX0(maxCoords.getX0() + newDiff.getX0() / 2);
-    maxCoords.setX1(maxCoords.getX1() + newDiff.getX1() / 2);
-
-  }
-
-  /**
-   * Moves the description based on the given vector in percentage of the min and max coordinates.
-   *
-   * @param vector the vector to move the description by.
-   */
-  public void moveCanvas(Vector2D vector) {
-    double xDiff = maxCoords.getX0() - minCoords.getX0();
-    double yDiff = maxCoords.getX1() - minCoords.getX1();
-    Vector2D newDiff = new Vector2D(xDiff * vector.getX0()/100, yDiff * vector.getX1()/100);
-
-    minCoords.setX0(minCoords.getX0() - newDiff.getX0());
-    minCoords.setX1(minCoords.getX1() - newDiff.getX1());
-    maxCoords.setX0(maxCoords.getX0() - newDiff.getX0());
-    maxCoords.setX1(maxCoords.getX1() - newDiff.getX1());
-    roundCoords();
-  }
-
-  /**
-   * Rounds the coordinates to 4 decimals.
-   */
-  private void roundCoords() {
-    int amountOfDecimals = 5;
-    int multiplier = (int) Math.pow(10, amountOfDecimals);
-    minCoords.setX0((double) Math.round(minCoords.getX0() * multiplier) / multiplier);
-    minCoords.setX1((double) Math.round(minCoords.getX1() * multiplier) / multiplier);
-    maxCoords.setX0((double) Math.round(maxCoords.getX0() * multiplier) / multiplier);
-    maxCoords.setX1((double) Math.round(maxCoords.getX1() * multiplier) / multiplier);
-  }
-}

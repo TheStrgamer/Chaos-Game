@@ -94,7 +94,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
     minCoords = description.getMinCoords();
     maxCoords = description.getMaxCoords();
-    transforms = description.getTransformsAsList();
+    transforms = description.getTransforms();
     modifyDescriptionView = new ModifyDescriptionView(this, mainController);
   }
 
@@ -185,7 +185,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     currentDescription = description;
     minCoords = description.getMinCoords();
     maxCoords = description.getMaxCoords();
-    transforms = description.getTransformsAsList();
+    transforms = description.getTransforms();
     modifyDescriptionView.updateDescriptionList();
   }
 

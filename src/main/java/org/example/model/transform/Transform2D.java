@@ -24,4 +24,11 @@ public interface Transform2D {
    * @return true if the given transform is equal to this transform, false otherwise
    */
   boolean equals(Transform2D transform);
+
+  /**
+   * Returns a deep copy of this transform.
+   *
+   * @return a deep copy of this transform
+   */
+  Transform2D deepCopy();
 }

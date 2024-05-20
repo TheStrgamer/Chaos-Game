@@ -55,6 +55,15 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
+   * Deep copy constructor for the AffineTransform2D class. Used to create a new AffineTransform2D with the same values as the given transform
+   * @param transform the AffineTransform2D object to copy
+   */
+  public AffineTransform2D(AffineTransform2D transform) {
+    this.matrix = new Matrix2x2(transform.getMatrix());
+    this.vector = new Vector2D(transform.getVector());
+  }
+
+  /**
    * Transforms the given vector using the affine transformation.
    *
    * @param vector the vector to transform
@@ -69,8 +78,10 @@ public class AffineTransform2D implements Transform2D {
 
   /**
    * Checks if the given AffineTransform2D object has the same values as this AffineTransform2D
+   *
    * @param transform the object to compare
-   * @return true if the given AffineTransform2D object has the same values as this AffineTransform2D
+   * @return true if the given AffineTransform2D object has the same values as this
+   * AffineTransform2D
    */
   @Override
   public boolean equals(Transform2D transform) {
@@ -81,11 +92,43 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
+   * Returns the matrix of this AffineTransform2D object.
+   *
+   * @return the matrix
+   */
+  public Matrix2x2 getMatrix() {
+    return new Matrix2x2(matrix);
+  }
+
+  /**
+   * Returns the vector of this AffineTransform2D object.
+   *
+   * @return the vector
+   */
+  public Vector2D getVector() {
+    return new Vector2D(vector.getX0(), vector.getX1());
+  }
+
+  /**
+   * Returns a deep copy of this AffineTransform2D object.
+   *
+   * @return a deep copy of this AffineTransform2D object
+   */
+  @Override
+  public Transform2D deepCopy() {
+    return new AffineTransform2D(this);
+  }
+
+
+  /**
    * Returns a string representation of this AffineTransform2D object.
+   *
    * @return a string representation of this AffineTransform2D object
    */
 
-  public String toString() {return matrix.toString() + ", " + vector;}
+  public String toString() {
+    return matrix.toString() + ", " + vector;
+  }
 
 
 }

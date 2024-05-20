@@ -27,11 +27,9 @@ public class FileController {
    *
    * @param mainController        the main controller for the application. Used for switching
    *                              between views.
-   * @param chaosGameFileHandler  the backend file handler for the application. Used for reading and
-   *                              writing chaos game descriptions to and from files.
    */
-  public FileController(MainController mainController, ChaosGameFileHandler chaosGameFileHandler) {
-    this.chaosGameFileHandler = chaosGameFileHandler;
+  public FileController(MainController mainController) {
+    this.chaosGameFileHandler = new ChaosGameFileHandler();
     this.mainController = mainController;
   }
 
@@ -57,17 +55,19 @@ public class FileController {
    * Reads a chaos game description from a file.  The description is then set as the current description
    *
    */
-  public void readFromFile() {
+  public ChaosGameDescription readFromFile() {
     try {
       String path = chooseLoadPath();
       if (path == null) {
-        return;
+        return null;
       }
       ChaosGameDescription readDescription = chaosGameFileHandler.readFromFile(path);
-      mainController.setCurrentDescription(readDescription);
       System.out.println("File read successfully");
+      return readDescription;
+
     } catch (Exception e) {
       System.out.println("Error reading file");
+      return null;
     }
   }
 

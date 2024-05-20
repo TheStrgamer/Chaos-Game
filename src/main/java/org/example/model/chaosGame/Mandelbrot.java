@@ -304,7 +304,7 @@ public class Mandelbrot {
    * @return the description
    */
   public ChaosGameDescription getDescription() {
-    return description;
+    return new ChaosGameDescription(description);
   }
 
   /**
@@ -314,7 +314,7 @@ public class Mandelbrot {
    * @return the canvas
    */
   public ChaosCanvas getCanvas() {
-    return canvas;
+    return new ChaosCanvas(canvas);
   }
 
   /**

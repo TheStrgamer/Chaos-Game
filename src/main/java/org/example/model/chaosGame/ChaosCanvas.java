@@ -91,6 +91,17 @@ public class ChaosCanvas {
   }
 
   /**
+   * Returns whether the given point is outside the canvas.
+   *
+   * @param point the point to check
+   * @return true if the point is outside the canvas, false otherwise
+   */
+  private boolean pointOutsideCanvas(Vector2D point) {
+    return !(point.getX0() >= 0 && point.getX0() < height && point.getX1() >= 0
+        && point.getX1() < width);
+  }
+
+  /**
    * Constructor for ChaosCanvas, creates an object with the given width, height, minimum
    * coordinates and maximum coordinates.
    *
@@ -111,6 +122,27 @@ public class ChaosCanvas {
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.canvas = new int[width][height];
+    this.transformCoordsToIndices = new AffineTransform2D(
+        new Matrix2x2(0, (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
+            (width - 1) / (maxCoords.getX0() - minCoords.getX0()), 0),
+
+        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1())
+            , ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0()))
+    );
+  }
+
+  /**
+   * Deep copy constructor for ChaosCanvas class. Used to create a new ChaosCanvas with the same
+   * values as the given canvas.
+   *
+   * @param canvas the ChaosCanvas object to copy
+   */
+  public ChaosCanvas(ChaosCanvas canvas) {
+    this.width = canvas.getWidth();
+    this.height = canvas.getHeight();
+    this.minCoords = new Vector2D(canvas.minCoords);
+    this.maxCoords = new Vector2D(canvas.maxCoords);
+    this.canvas = canvas.getCanvasArray();
     this.transformCoordsToIndices = new AffineTransform2D(
         new Matrix2x2(0, (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
             (width - 1) / (maxCoords.getX0() - minCoords.getX0()), 0),
@@ -174,20 +206,28 @@ public class ChaosCanvas {
     Vector2D indices = transformCoords(point);
 
     int newValue = getPixel(point) + value;
-    newValue = Math.min(newValue,755);
+    newValue = Math.min(newValue, 755);
 
     canvas[(int) indices.getX1()][(int) indices.getX0()] = newValue;
 
   }
+
+  /**
+   * Puts the given value to the current pixel value at the given point in the canvas, does not
+   * transform the point.
+   *
+   * @param point the point to set the pixel value at
+   * @param value the value to put
+   */
   public void putPixel(Vector2D point, int value) {
     verifyNotNull(point);
-    if (!(point.getX0() >= 0 && point.getX0() < height && point.getX1() >= 0 && point.getX1() < width)) {
+    if (pointOutsideCanvas(point)) {
       return;
     }
-
     canvas[(int) point.getX1()][(int) point.getX0()] = value;
 
   }
+
 
   /**
    * Sets the pixel value at the given point to 0.
@@ -253,6 +293,7 @@ public class ChaosCanvas {
 
   /**
    * Returns a string with the details of the canvas. These include dimensions and coordinates.
+   *
    * @return the details of the canvas
    */
   public String getInfoString() {
