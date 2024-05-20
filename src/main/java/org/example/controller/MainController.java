@@ -22,10 +22,8 @@ public class MainController {
   private final PopupController popupController;
   private final ChaosGameDescriptionFactory chaosGameDescriptionFactory;
   private final FileController fileController;
-  private final ChaosGameFileHandler chaosGameFileHandler;
 
   private ChaosGameDescription currentDescription;
-  private final ChaosGame chaosGame;
 
   private int currentWidth = 800;
   private int currentHeight = 600;
@@ -33,9 +31,7 @@ public class MainController {
   private final int minCanvasWidth = 600;
   private final int minCanvasHeight = 350;
 
-  Stage stage;
-  Scene chaosGameScene;
-  private Mandelbrot mandelBrot;
+  private final Stage stage;
 
 
   /**
@@ -48,10 +44,12 @@ public class MainController {
     stage.setTitle("Chaos Game");
 
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
-    chaosGameFileHandler = new ChaosGameFileHandler();
+    ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
-    chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
-    mandelBrot = new Mandelbrot(currentDescription, currentWidth - 30, currentHeight - 100, 255, 3.0);
+    ChaosGame chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
+    Mandelbrot mandelBrot = new Mandelbrot(
+        chaosGameDescriptionFactory.createDescription("EmptyJulia"), currentWidth - 30,
+        currentHeight - 100, 255, 3.0);
 
     chaosGameController = new ChaosGameController(this, chaosGame, mandelBrot);
     fileController = new FileController(this, chaosGameFileHandler);
@@ -128,16 +126,6 @@ public class MainController {
   }
 
   /**
-   * Method for getting the current description of the Chaos Game.
-   *
-   * @return the current description of the Chaos Game.
-   */
-
-  public ChaosGameDescription getChaosGameDescription() {
-    return chaosGame.getDescription();
-  }
-
-  /**
    * Method for getting the stage of the application.
    *
    * @return the stage of the application.
@@ -163,17 +151,15 @@ public class MainController {
   }
 
   /**
-   * Returns the current description of the Chaos Game.
-   *
-   * @return the current description of the Chaos Game.
+   * Method for reading a description from a file.
    */
-  public ChaosGameDescription getCurrentDescription() {
-    return currentDescription;
-  }
   public void readFromFile() {
     fileController.readFromFile();
   }
 
+  /**
+   * Method for saving the current image to a file.
+   */
   public void saveImageToFile() {
     fileController.saveImageToFile(chaosGameController.getImage());
   }

@@ -323,7 +323,9 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void setDescription(ChaosGameDescription currentDescription) {
     this.currentDescription = currentDescription;
-    mandelBrot.setDescription(currentDescription);
+    if (currentDescription.getTransformType().equals("Julia")) {
+      mandelBrot.setDescription(currentDescription);
+    }
     chaosGame.setDescription(currentDescription);
 
   }
@@ -334,6 +336,6 @@ public class ChaosGameController implements ChaosGameObserver {
    * @return the image of the Chaos Game.
    */
   public Image getImage() {
-    return imageFactory.createImage(currentCanvas,color);
+    return imageFactory.createImage(currentCanvas, color);
   }
 }

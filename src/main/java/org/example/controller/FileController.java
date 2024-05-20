@@ -80,6 +80,7 @@ public class FileController {
     BufferedImage bufferImage = SwingFXUtils.fromFXImage(image, null);
     fileChooser.setTitle("Save image");
     fileChooser.setInitialFileName("image.png");
+    fileChooser.getExtensionFilters().clear();
     fileChooser.getExtensionFilters().add(pngExtFilter);
     File file = fileChooser.showSaveDialog(mainController.getStage());
     if (file != null) {
@@ -100,6 +101,7 @@ public class FileController {
   private String chooseSavePath() {
     fileChooser.setTitle("Save description");
     fileChooser.setInitialFileName("description.txt");
+    fileChooser.getExtensionFilters().clear();
     fileChooser.getExtensionFilters().add(txtExtFilter);
     File file = fileChooser.showSaveDialog(mainController.getStage());
     return getPath(file);
@@ -112,6 +114,7 @@ public class FileController {
    */
   private String chooseLoadPath() {
     fileChooser.setTitle("Load description");
+    fileChooser.getExtensionFilters().clear();
     fileChooser.getExtensionFilters().add(txtExtFilter);
     File file = fileChooser.showOpenDialog(mainController.getStage());
     return getPath(file);
