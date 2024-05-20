@@ -231,7 +231,7 @@ class MandelbrotTest {
             new Vector2D(1, 1), transforms);
 
         Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
-        mandelbrot.runSteps(100, 1);
+        mandelbrot.runSteps(100);
       } catch (Exception e) {
         fail("runSteps should not throw an exception with valid parameters");
       }
@@ -291,7 +291,7 @@ class MandelbrotTest {
         Mandelbrot mandelbrot = new Mandelbrot(chaosGameDescription, 100, 100, 100, 2.0);
         TestListener observer = new TestListener();
         mandelbrot.addObserver(observer);
-        mandelbrot.runSteps(100, 1);
+        mandelbrot.runSteps(100);
 
         assertTrue(observer.isNotifiedCanvas());
       } catch (Exception e) {
@@ -539,7 +539,7 @@ class MandelbrotTest {
 
         Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
 
-        mandelbrot.runSteps(-100, 1);
+        mandelbrot.runSteps(-100);
         fail("runSteps should throw an exception with negative maxIterations");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Max iterations must be positive");
@@ -547,8 +547,8 @@ class MandelbrotTest {
     }
 
     @Test
-    @DisplayName("runSteps throws exception with negative steps")
-    void testRunStepsThrowsExceptionWithNegativeSteps() {
+    @DisplayName("setEscapeRadius throws exception with negative escape radius")
+    void testRunStepsThrowsExceptionWithNegativeRadius() {
       try {
         List<Transform2D> transforms2 = new ArrayList<>();
         transforms2.add(new JuliaTransform(new Complex(.7, .1), 1));
@@ -556,9 +556,8 @@ class MandelbrotTest {
             new Vector2D(1, 1), transforms2);
 
         Mandelbrot mandelbrot = new Mandelbrot(juliaDescription, 100, 100, 100, 2.0);
-
-        mandelbrot.runSteps(100, -1);
-        fail("runSteps should throw an exception with negative steps");
+        mandelbrot.setEscapeRadius(-1);
+        fail("setEscapeRadius should throw an exception with negative steps");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Escape radius must be positive");
       }

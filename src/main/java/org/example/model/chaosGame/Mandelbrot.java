@@ -1,61 +1,23 @@
 package org.example.model.chaosGame;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import org.example.model.math.Complex;
 import org.example.model.math.Vector2D;
-import org.example.model.observer.ChaosGameObserver;
 import org.example.model.transform.JuliaTransform;
 
 /**
  * <h1>Mandelbrot</h1>
  * The Mandelbrot class is used to generate a Mandelbrot set based on a description and a canvas.
  */
-public class Mandelbrot {
+public class Mandelbrot extends Game {
 
-  private ChaosCanvas canvas;
-  private ChaosGameDescription description;
-
-  private int canvasWidth;
-  private int canvasHeight;
-
-  double zoom = 1.0;
   private int maxIterations;
   private double escapeRadius;
 
   private double xOffset = 0;
   private double yOffset = 0;
-  private final List<ChaosGameObserver> observers = new ArrayList<>();
 
 
-  /**
-   * Verifies that the given width and height are positive. Throws an IllegalArgumentException if
-   * the given width or height is not positive.
-   *
-   * @param width  the width to verify
-   * @param height the height to verify
-   * @throws IllegalArgumentException if the given width or height is not positive
-   */
-  private void verifyValidCanvasSize(int width, int height) {
-    if (width < 0 || height < 0) {
-      throw new IllegalArgumentException("Width and height must be positive");
-    }
-  }
-
-  /**
-   * Verifies that the given description is not null. Throws an IllegalArgumentException if the
-   * given description is null.
-   *
-   * @param description the description to verify
-   * @throws IllegalArgumentException if the given description is null
-   */
-  private void verifyNotNullDescription(ChaosGameDescription description) {
-    if (description == null) {
-      throw new IllegalArgumentException("Description cannot be null");
-    }
-
-  }
 
   /**
    * Verifies that the given description is of type Julia. Throws an IllegalArgumentException if the
@@ -116,6 +78,7 @@ public class Mandelbrot {
    *
    * @param description the description to set
    */
+  @Override
   public void setDescription(ChaosGameDescription description) {
     verifyNotNullDescription(description);
     verifyDescriptionJulia(description);
@@ -127,52 +90,14 @@ public class Mandelbrot {
   }
 
   /**
-   * Adds an observer to the list of observers listening to this chaos game.
-   *
-   * @param observer is the observer to add.
-   */
-  public void addObserver(ChaosGameObserver observer) {
-    observers.add(observer);
-  }
-
-  /**
-   * Removes an observer from the list of observers listening to this chaos game.
-   *
-   * @param observer is the observer to remove.
-   */
-  public void removeObserver(ChaosGameObserver observer) {
-    observers.remove(observer);
-  }
-
-  /**
-   * Notifies all observers that the canvas has changed.
-   */
-  private void notifyCanvasChanged() {
-    for (ChaosGameObserver observer : observers) {
-      observer.updateCanvas(canvas);
-    }
-  }
-
-
-  /**
-   * Notifies all observers that the description has changed.
-   */
-  private void notifyDescriptionChanged() {
-    for (ChaosGameObserver observer : observers) {
-      observer.updateDescription(description);
-    }
-  }
-
-  /**
    * Runs the steps of the Mandelbrot.
    *
    * @param maxIterations the maximum number of iterations to run
    */
-  public void runSteps(int maxIterations, double escapeRadius) {
+  @Override
+  public void runSteps(int maxIterations) {
     verifyPositiveValue(maxIterations, "Max iterations");
-    verifyPositiveValue(escapeRadius, "Escape radius");
     this.maxIterations = maxIterations;
-    this.escapeRadius = escapeRadius;
     JuliaTransform transform = (JuliaTransform) description.getTransforms().get(0);
 
     Complex c = transform.getPoint();
@@ -186,6 +111,14 @@ public class Mandelbrot {
     }
     notifyCanvasChanged();
 
+  }
+
+  /**
+   * Sets escape radius.
+   */
+  public void setEscapeRadius(double escapeRadius) {
+    verifyPositiveValue(escapeRadius, "Escape radius");
+    this.escapeRadius = escapeRadius;
   }
 
   /**
@@ -280,42 +213,6 @@ public class Mandelbrot {
     notifyDescriptionChanged();
   }
 
-  /**
-   * Sets the size of the canvas.
-   *
-   * @param width  the width of the canvas
-   * @param height the height of the canvas
-   */
-  public void setCanvasSize(int width, int height) {
-    verifyValidCanvasSize(width, height);
-    this.canvas = new ChaosCanvas(width, height, description.getMinCoords(),
-        description.getMaxCoords());
-    this.canvasWidth = width;
-    this.canvasHeight = height;
-    notifyCanvasChanged();
-  }
-
-
-
-  /**
-   * Returns the description used by the mandelbrot.
-   * used for testing purposes
-   *
-   * @return the description
-   */
-  public ChaosGameDescription getDescription() {
-    return new ChaosGameDescription(description);
-  }
-
-  /**
-   * Returns the canvas used by the mandelbrot.
-   * used for testing purposes
-   *
-   * @return the canvas
-   */
-  public ChaosCanvas getCanvas() {
-    return new ChaosCanvas(canvas);
-  }
 
   /**
    * Returns the zoom level of the mandelbrot.

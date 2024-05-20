@@ -26,14 +26,11 @@ public class ChaosGameController implements ChaosGameObserver {
   private final Mandelbrot mandelBrot;
   private final ChaosGameView chaosGameView;
 
-  private final MainController mainController;
-
   private final ImageFactory imageFactory;
 
   private boolean autoRunOnDescriptionChange = false;
   private int steps;
   private int maxIterations = 255;
-  private double escapeRadius = 3.0;
 
   private Color color = new Color(1, 0, 0, 1);
 
@@ -51,7 +48,6 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public ChaosGameController(MainController mainController, ChaosGame chaosGame,
       Mandelbrot mandelBrot) {
-    this.mainController = mainController;
     this.chaosGame = chaosGame;
     this.mandelBrot = mandelBrot;
     this.currentCanvas = chaosGame.getCanvas();
@@ -103,7 +99,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void runIterations() {
     if (isMandelbrotMode()) {
-      mandelBrot.runSteps(maxIterations, escapeRadius);
+      mandelBrot.runSteps(maxIterations);
     } else {
       chaosGame.runSteps(steps);
     }
@@ -116,7 +112,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public void runIterations(int iterations) {
     if (isMandelbrotMode()) {
-      mandelBrot.runSteps(maxIterations, escapeRadius);
+      mandelBrot.runSteps(maxIterations);
     } else {
       chaosGame.runSteps(iterations);
     }
@@ -228,7 +224,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param escapeRadius the escape radius to set
    */
   public void setEscapeRadius(double escapeRadius) {
-    this.escapeRadius = escapeRadius;
+    mandelBrot.setEscapeRadius(escapeRadius);
   }
 
 
