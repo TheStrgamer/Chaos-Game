@@ -67,6 +67,7 @@ public class ChaosGameView implements PageViewInterface {
   private Button randomJulia;
   private Button randomAffine;
   private Button toModifyDescription;
+  private Button burgerMenu;
 
   private VBox iterationsLayout;
 
@@ -187,7 +188,6 @@ public class ChaosGameView implements PageViewInterface {
 
     Label autoRunLabel = new Label("Auto Run:");
 
-
     topBar.getChildren()
         .addAll(juliaSetModeLabel, juliaSetMode, iterationsLayout, runButton, clearButton,
             autoRunLabel, autoRunOnDescriptionChange,
@@ -224,6 +224,24 @@ public class ChaosGameView implements PageViewInterface {
     toModifyDescription = createButton("Modify Description",
         event -> mainController.openModifyPopup());
 
+    burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()),
+        "burgerMenuButton");
+
+    Label colorLabel = new Label("Color:");
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
+    colorPicker.setValue(chaosGameController.getColor());
+
+    HBox colorHbox = new HBox(colorLabel, colorPicker);
+    VBox colorVbox = new VBox(colorHbox);
+
+    extraElements.add(colorVbox);
+
+    VBox randomButtonLayout = new VBox(randomJulia, randomAffine);
+
+    extraElements.add(randomButtonLayout);
+    extraElements.add(new VBox(toModifyDescription));
+
     Button newAffine = createButton("New Affine", event -> {
       mainController.setCurrentDescription("EmptyAffine");
       setComboBoxEmpty();
@@ -237,6 +255,10 @@ public class ChaosGameView implements PageViewInterface {
     newAffine.getStyleClass().add("newButton");
     newJulia.getStyleClass().add("newButton");
 
+    VBox newJuliaAffine = new VBox(newJulia, newAffine);
+
+    extraElements.add(newJuliaAffine);
+
     Button saveDescription = createButton("Save Description",
         event -> mainController.saveToFile(), "saveLoadButton");
     Button loadDescription = createButton("Load Description",
@@ -244,31 +266,8 @@ public class ChaosGameView implements PageViewInterface {
     VBox saveLoadLayout = new VBox(saveDescription, loadDescription);
     extraElements.add(saveLoadLayout);
 
-
     Button saveImage = createButton("Save Image", event -> mainController.saveImageToFile());
     extraElements.add(new VBox(saveImage));
-
-    Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()),
-        "burgerMenuButton");
-    extraElements.add(new VBox(burgerMenu));
-
-
-    Label colorLabel = new Label("Color:");
-    ColorPicker colorPicker = new ColorPicker();
-    colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
-    colorPicker.setValue(chaosGameController.getColor());
-
-    HBox colorHbox = new HBox(colorLabel, colorPicker);
-    VBox colorVbox = new VBox(colorHbox);
-
-    extraElements.add(colorVbox);
-
-    VBox randomButtonLayout = new VBox(randomJulia, randomAffine);
-    VBox newJuliaAffine = new VBox(newJulia, newAffine);
-
-    extraElements.add(randomButtonLayout);
-    extraElements.add(new VBox(toModifyDescription));
-    extraElements.add(newJuliaAffine);
 
     // Tooltips
     Tooltip randomJuliaTooltip = new Tooltip("Generate a random Julia fractal.");
@@ -453,7 +452,7 @@ public class ChaosGameView implements PageViewInterface {
     int defaultElementsCount = 7;
     boolean shouldAddSideBar = false;
 
-    for (int i = 0; i < extraElements.size() - 1; i++) {
+    for (int i = 0; i < extraElements.size(); i++) {
       if (shouldAddToTopBar(i, width, widthPerElement, defaultElementsCount)) {
         topBar.getChildren().add(extraElements.get(i));
       } else {
@@ -462,7 +461,7 @@ public class ChaosGameView implements PageViewInterface {
       }
     }
     if (shouldAddSideBar) {
-      topBar.getChildren().add(extraElements.get(extraElements.size() - 1));
+      topBar.getChildren().add(burgerMenu);
     }
   }
 

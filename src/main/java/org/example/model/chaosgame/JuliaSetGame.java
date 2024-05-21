@@ -195,7 +195,7 @@ public class JuliaSetGame extends Game {
       double multiplier = Math.pow((double) value / maxIterations, 0.2);
       value = (int) (maxIterations - maxIterations * multiplier);
       int maxColorValue = 754;
-      return Math.max((int) ((double) value / maxIterations * maxColorValue),0);
+      return Math.max((int) ((double) value / maxIterations * maxColorValue), 0);
     }
   }
 
