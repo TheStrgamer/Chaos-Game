@@ -1,14 +1,13 @@
 package org.example.view;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
-
 import java.util.List;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,7 +16,7 @@ import org.example.view.components.DoubleNumberField;
 import org.example.view.components.WeightAndIterationsField;
 
 /**
- * <h2>ModifyDescriptionView</h2>
+ * <h2>ModifyDescriptionView.</h2>
  * <p>
  * The view class for the Modify Description page of the application. Responsible for displaying the
  * Modify Description page. Implements the PageView interface.
@@ -68,14 +67,13 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @return the layout of the Modify Description page.
    */
   private VBox createLayout() {
-    VBox layout = new VBox();
     HBox content = new HBox();
-
     VBox editDescription = new VBox();
     Label editDescriptionLabel = new Label("Current description: ");
     fillDescriptionList();
     editDescription.getChildren().addAll(editDescriptionLabel, descriptionList);
 
+    VBox layout = new VBox();
     content.getChildren().addAll(editDescription);
     layout.getChildren().addAll(content);
 
@@ -90,21 +88,21 @@ public class ModifyDescriptionView implements PageViewInterface {
    */
   private void fillDescriptionList() {
     descriptionList.getItems().clear();
-    VBox minCoords = vector2DToHBox("Min Coords: ", modifyDescriptionController.getMinCoords());
-    VBox maxCoords = vector2DToHBox("Max Coords: ", modifyDescriptionController.getMaxCoords());
+    VBox minCoords = vector2DtoHbox("Min Coords: ", modifyDescriptionController.getMinCoords());
+    VBox maxCoords = vector2DtoHbox("Max Coords: ", modifyDescriptionController.getMaxCoords());
 
     descriptionList.getItems().addAll(minCoords, maxCoords);
     int index = 0;
     List<String> transforms = modifyDescriptionController.getTransforms();
     if (modifyDescriptionController.getTransformType().equals("Affine")) {
       for (String transform : transforms) {
-        VBox affine = affineTransformToHBox(transform, index, transforms.size() > 1);
+        VBox affine = affineTransformToHbox(transform, index, transforms.size() > 1);
         descriptionList.getItems().add(affine);
         index++;
       }
     } else {
       for (String transform : transforms) {
-        VBox julia = juliaTransformToHBox(transform, index, transforms.size() > 1);
+        VBox julia = juliaTransformToHbox(transform, index, transforms.size() > 1);
         descriptionList.getItems().add(julia);
         index += 2;
       }
@@ -131,37 +129,35 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param vector the vector to convert.
    * @return the HBox containing the vector.
    */
-  private VBox vector2DToHBox(String name, String vector) {
-    VBox row = new VBox();
-    HBox nameLabelBox = new HBox(new Label(name));
+  private VBox vector2DtoHbox(String name, String vector) {
     HBox content = new HBox();
 
     String[] split = vector.split(",");
 
-    TextField X0 = new DoubleNumberField(split[0]);
-    TextField Y0 = new DoubleNumberField(split[1]);
+    TextField x0 = new DoubleNumberField(split[0]);
+    TextField y0 = new DoubleNumberField(split[1]);
 
     EventHandler<KeyEvent> listener = event -> {
-      if (X0.getText().isEmpty() || Y0.getText().isEmpty()) {
+      if (x0.getText().isEmpty() || y0.getText().isEmpty()) {
         return;
       }
       if (event.getCode() == KeyCode.ENTER) {
         switch (name) {
           case "Min Coords: ":
-            if (modifyDescriptionController.minCoordsIsValid(X0.getText(), Y0.getText())) {
-              modifyDescriptionController.setMinCoords(X0.getText(), Y0.getText());
-              setCoordFieldsValid(X0, Y0);
+            if (modifyDescriptionController.minCoordsIsValid(x0.getText(), y0.getText())) {
+              modifyDescriptionController.setMinCoords(x0.getText(), y0.getText());
+              setCoordFieldsValid(x0, y0);
             } else {
-              setCoordFieldsInvalid(X0, Y0, "Min Coords must be less than Max Coords");
+              setCoordFieldsInvalid(x0, y0, "Min Coords must be less than Max Coords");
             }
-            modifyDescriptionController.setMinCoords(X0.getText(), Y0.getText());
+            modifyDescriptionController.setMinCoords(x0.getText(), y0.getText());
             break;
           case "Max Coords: ":
-            if (modifyDescriptionController.maxCoordsIsValid(X0.getText(), Y0.getText())) {
-              modifyDescriptionController.setMaxCoords(X0.getText(), Y0.getText());
-              setCoordFieldsValid(X0, Y0);
+            if (modifyDescriptionController.maxCoordsIsValid(x0.getText(), y0.getText())) {
+              modifyDescriptionController.setMaxCoords(x0.getText(), y0.getText());
+              setCoordFieldsValid(x0, y0);
             } else {
-              setCoordFieldsInvalid(X0, Y0, "Max Coords must be greater than Min Coords");
+              setCoordFieldsInvalid(x0, y0, "Max Coords must be greater than Min Coords");
             }
             break;
           default:
@@ -170,10 +166,12 @@ public class ModifyDescriptionView implements PageViewInterface {
         }
       }
     };
-    X0.setOnKeyPressed(listener);
-    Y0.setOnKeyPressed(listener);
+    x0.setOnKeyPressed(listener);
+    y0.setOnKeyPressed(listener);
 
-    content.getChildren().addAll(X0, Y0);
+    HBox nameLabelBox = new HBox(new Label(name));
+    VBox row = new VBox();
+    content.getChildren().addAll(x0, y0);
     row.getChildren().addAll(nameLabelBox, content);
 
     //Style
@@ -185,31 +183,31 @@ public class ModifyDescriptionView implements PageViewInterface {
   /**
    * Sets the coordinate field styles to valid for better user feedback.
    *
-   * @param X0 the X0 field.
-   * @param Y0 the Y0 field.
+   * @param x0 the X0 field.
+   * @param y0 the Y0 field.
    */
 
-  private void setCoordFieldsValid(TextField X0, TextField Y0) {
-    X0.getStyleClass().remove("invalid");
-    Y0.getStyleClass().remove("invalid");
-    X0.getStyleClass().remove("unsaved");
-    Y0.getStyleClass().remove("unsaved");
-    X0.setTooltip(null);
-    Y0.setTooltip(null);
+  private void setCoordFieldsValid(TextField x0, TextField y0) {
+    x0.getStyleClass().remove("invalid");
+    y0.getStyleClass().remove("invalid");
+    x0.getStyleClass().remove("unsaved");
+    y0.getStyleClass().remove("unsaved");
+    x0.setTooltip(null);
+    y0.setTooltip(null);
   }
 
   /**
    * Sets the coordinate field styles to invalid for better user feedback.
    *
-   * @param X0      the X0 field.
-   * @param Y0      the Y0 field.
+   * @param x0      the X0 field.
+   * @param y0      the Y0 field.
    * @param tooltip the tooltip to display.
    */
-  private void setCoordFieldsInvalid(TextField X0, TextField Y0, String tooltip) {
-    X0.getStyleClass().add("invalid");
-    Y0.getStyleClass().add("invalid");
-    X0.setTooltip(new Tooltip(tooltip));
-    Y0.setTooltip(new Tooltip(tooltip));
+  private void setCoordFieldsInvalid(TextField x0, TextField y0, String tooltip) {
+    x0.getStyleClass().add("invalid");
+    y0.getStyleClass().add("invalid");
+    x0.setTooltip(new Tooltip(tooltip));
+    y0.setTooltip(new Tooltip(tooltip));
   }
 
   /**
@@ -221,12 +219,7 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param removable if the transform is removable.
    * @return the VBox containing the affine transform.
    */
-  private VBox affineTransformToHBox(String transform, int index, boolean removable) {
-    VBox row = new VBox();
-    HBox content = new HBox();
-
-    HBox titleBox = new HBox(new Label("Transform: "));
-
+  private VBox affineTransformToHbox(String transform, int index, boolean removable) {
     String[] split = transform.split(",");
     TextField a00 = new DoubleNumberField(split[0]);
     TextField a01 = new DoubleNumberField(split[1]);
@@ -273,6 +266,9 @@ public class ModifyDescriptionView implements PageViewInterface {
 
       rightSide.getChildren().add(removeTransform);
     }
+    HBox content = new HBox();
+    VBox row = new VBox();
+    HBox titleBox = new HBox(new Label("Transform: "));
     content.getChildren().addAll(matrixCol1, matrixCol2, plus, vector, rightSide);
     row.getChildren().addAll(titleBox, content);
 
@@ -290,11 +286,7 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param removable if the transform is removable.
    * @return the VBox containing the julia transform.
    */
-  private VBox juliaTransformToHBox(String transform, int index, boolean removable) {
-    VBox row = new VBox();
-    HBox content = new HBox();
-
-    HBox titleBox = new HBox(new Label("Transform: "));
+  private VBox juliaTransformToHbox(String transform, int index, boolean removable) {
     String[] split = transform.split(",");
 
     TextField real = new DoubleNumberField(split[0]);
@@ -325,6 +317,10 @@ public class ModifyDescriptionView implements PageViewInterface {
 
     real.setOnKeyPressed(listener);
     imaginary.setOnKeyPressed(listener);
+
+    VBox row = new VBox();
+    HBox content = new HBox();
+    HBox titleBox = new HBox(new Label("Transform: "));
 
     content.getChildren().addAll(real, imaginary, rightSide);
     row.getChildren().addAll(titleBox, content);

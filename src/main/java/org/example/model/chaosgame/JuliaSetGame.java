@@ -6,7 +6,7 @@ import org.example.model.math.Vector2D;
 import org.example.model.transform.JuliaTransform;
 
 /**
- * <h2>JuliaSetGame</h2>
+ * <h2>JuliaSetGame.</h2>
  * <p>
  * The JuliaSetGame class is used to generate a Julia set set based on a description and a canvas.
  * </p>
@@ -27,8 +27,8 @@ public class JuliaSetGame extends Game {
   private int maxIterations;
   private double escapeRadius;
 
-  private double xOffset = 0;
-  private double yOffset = 0;
+  private double xoffset = 0;
+  private double yoffset = 0;
 
 
   /**
@@ -173,8 +173,8 @@ public class JuliaSetGame extends Game {
    */
   private double[] scaleCoords(double x0, double x1) {
     double[] coords = new double[2];
-    coords[0] = xOffset + zoom * (x0 - (double) canvasWidth / 2) * 4.0 / canvasWidth;
-    coords[1] = yOffset + zoom * (x1 - (double) canvasHeight / 2) * 4.0 / canvasWidth;
+    coords[0] = xoffset + zoom * (x0 - (double) canvasWidth / 2) * 4.0 / canvasWidth;
+    coords[1] = yoffset + zoom * (x1 - (double) canvasHeight / 2) * 4.0 / canvasWidth;
     return coords;
   }
 
@@ -190,8 +190,8 @@ public class JuliaSetGame extends Game {
     if (iteration == this.maxIterations) {
       return 0;
     } else {
-      double abs_z = zx * zx + zy * zy;
-      int value = (int) (iteration + 1 - Math.log(Math.log(abs_z)) / Math.log(2));
+      double absZ = zx * zx + zy * zy;
+      int value = (int) (iteration + 1 - Math.log(Math.log(absZ)) / Math.log(2));
       double multiplier = Math.pow((double) value / this.maxIterations, 0.2);
       value = (int) (maxIterations - this.maxIterations * multiplier);
       int maxColorValue = 755;
@@ -217,8 +217,8 @@ public class JuliaSetGame extends Game {
    * @param vector the vector to move the canvas by.
    */
   public void moveCanvas(Vector2D vector) {
-    xOffset -= vector.getX0() * zoom / 10;
-    yOffset += vector.getX1() * zoom / 10;
+    xoffset -= vector.getX0() * zoom / 10;
+    yoffset += vector.getX1() * zoom / 10;
     notifyDescriptionChanged();
   }
 
@@ -237,8 +237,8 @@ public class JuliaSetGame extends Game {
    *
    * @return the x offset
    */
-  public double getXOffset() {
-    return xOffset;
+  public double getOffsetX() {
+    return xoffset;
   }
 
   /**
@@ -246,7 +246,7 @@ public class JuliaSetGame extends Game {
    *
    * @return the y offset
    */
-  public double getYOffset() {
-    return yOffset;
+  public double getOffsetY() {
+    return yoffset;
   }
 }

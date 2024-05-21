@@ -1,7 +1,7 @@
 package org.example.model.exceptions;
 
 /**
- * <h2>DescriptionFileEmptyException</h2>
+ * <h2>DescriptionFileEmptyException.</h2>
  * <p>
  * Exception thrown when the description file is empty. Used by ChaosGameFileHandler to indicate
  * that the description file is empty.

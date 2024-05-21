@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.scene.layout.VBox;
+import org.example.model.chaosgame.ChaosCanvas;
 import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
@@ -12,12 +13,10 @@ import org.example.model.observer.ChaosGameObserver;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.transform.JuliaTransform;
 import org.example.model.transform.Transform2D;
-import org.example.model.chaosgame.ChaosCanvas;
-
 import org.example.view.ModifyDescriptionView;
 
 /**
- * <h2>ModifyDescriptionController</h2>
+ * <h2>ModifyDescriptionController.</h2>
  * <p>
  * The controller class for the Modify Description page of the application. It handles the logic for
  * the Modify Description page, and is responsible for choosing and creating descriptions for the
@@ -74,33 +73,33 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   /**
    * checks if the given minCoords are valid, and if they are smaller than the maxCoords.
    *
-   * @param X0 the x0 value
-   * @param X1 the x1 value
+   * @param x0 the x0 value
+   * @param x1 the x1 value
    * @return true if the values are valid, false otherwise.
    */
-  public boolean minCoordsIsValid(String X0, String X1) {
-    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+  public boolean minCoordsIsValid(String x0, String x1) {
+    if (!Stream.of(x0, x1).allMatch(this::stringIsValidNumber)) {
       return false;
     }
-    double x0 = Double.parseDouble(X0);
-    double x1 = Double.parseDouble(X1);
-    return x0 < maxCoords.getX0() && x1 < maxCoords.getX1();
+    double newX0 = Double.parseDouble(x0);
+    double newX1 = Double.parseDouble(x1);
+    return newX0 < maxCoords.getX0() && newX1 < maxCoords.getX1();
   }
 
   /**
    * checks if the given maxCoords are valid, and if they are larger than the minCoords.
    *
-   * @param X0 the x0 value
-   * @param X1 the x1 value
+   * @param x0 the x0 value
+   * @param x1 the x1 value
    * @return true if the values are valid, false otherwise.
    */
-  public boolean maxCoordsIsValid(String X0, String X1) {
-    if (!Stream.of(X0, X1).allMatch(this::stringIsValidNumber)) {
+  public boolean maxCoordsIsValid(String x0, String x1) {
+    if (!Stream.of(x0, x1).allMatch(this::stringIsValidNumber)) {
       return false;
     }
-    double x0 = Double.parseDouble(X0);
-    double x1 = Double.parseDouble(X1);
-    return x0 > minCoords.getX0() && x1 > minCoords.getX1();
+    double newX0 = Double.parseDouble(x0);
+    double newX1 = Double.parseDouble(x1);
+    return newX0 > minCoords.getX0() && newX1 > minCoords.getX1();
   }
 
   /**
@@ -230,26 +229,26 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   /**
    * Sets the minimum coordinates of the description.
    *
-   * @param X0 the x-coordinate of the minimum coordinates.
-   * @param X1 the y-coordinate of the minimum coordinates.
+   * @param x0 the x-coordinate of the minimum coordinates.
+   * @param x1 the y-coordinate of the minimum coordinates.
    */
-  public void setMinCoords(String X0, String X1) {
-    double x0 = Double.parseDouble(X0);
-    double x1 = Double.parseDouble(X1);
-    minCoords = new Vector2D(x0, x1);
+  public void setMinCoords(String x0, String x1) {
+    double newX0 = Double.parseDouble(x0);
+    double newX1 = Double.parseDouble(x1);
+    minCoords = new Vector2D(newX0, newX1);
     createDescription();
   }
 
   /**
    * Sets the maximum coordinates of the description.
    *
-   * @param X0 the x-coordinate of the maximum coordinates.
-   * @param X1 the y-coordinate of the maximum coordinates.
+   * @param x0 the x-coordinate of the maximum coordinates.
+   * @param x1 the y-coordinate of the maximum coordinates.
    */
-  public void setMaxCoords(String X0, String X1) {
-    double x0 = Double.parseDouble(X0);
-    double x1 = Double.parseDouble(X1);
-    maxCoords = new Vector2D(x0, x1);
+  public void setMaxCoords(String x0, String x1) {
+    double newX0 = Double.parseDouble(x0);
+    double newX1 = Double.parseDouble(x1);
+    maxCoords = new Vector2D(newX0, newX1);
     createDescription();
   }
 

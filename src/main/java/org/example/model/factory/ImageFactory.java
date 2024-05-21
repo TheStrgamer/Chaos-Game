@@ -9,7 +9,7 @@ import org.example.model.math.Vector2D;
 
 
 /**
- * <h2>ImageFactory</h2>
+ * <h2>ImageFactory.</h2>
  * <p>
  * The ImageFactory class creates an image from a ChaosCanvas object. The class is used to create
  * images that are displayed on the interface.</p>

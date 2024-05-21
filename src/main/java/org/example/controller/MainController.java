@@ -11,7 +11,7 @@ import org.example.view.ErrorHandlingView;
 
 
 /**
- * <h2>MainController</h2>
+ * <h2>MainController.</h2>
  * <p>
  * The main controller class for the application. Responsible for creating controllers, and handling
  * communication between them.

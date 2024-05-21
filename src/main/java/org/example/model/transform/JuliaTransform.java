@@ -4,7 +4,7 @@ import org.example.model.math.Complex;
 import org.example.model.math.Vector2D;
 
 /**
- * <h2>JuliaTransform</h2>
+ * <h2>JuliaTransform.</h2>
  * <p>
  * A class representing a Julia transformation. The goal of this class is to transform a given
  * complex number using the Julia transformation. The class implements the Transform2D interface
@@ -129,7 +129,7 @@ public class JuliaTransform implements Transform2D {
    *
    * @param transform the Julia transformation to compare
    * @return true if the given Julia transformation has the same values as this Julia
-   * transformation, false otherwise
+   *        transformation, false otherwise
    */
   @Override
   public boolean equals(Transform2D transform) {

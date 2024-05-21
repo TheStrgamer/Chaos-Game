@@ -4,7 +4,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 /**
- * <h2>IntegerField</h2>
+ * <h2>IntegerField.</h2>
  * <p>
  * Custom TextField that only allows the input of valid Integers.
  * </p>

@@ -3,7 +3,7 @@ package org.example.model.transform;
 import org.example.model.math.Vector2D;
 
 /**
- * <h2>Transform2D</h2>
+ * <h2>Transform2D.</h2>
  * <p>
  * An interface representing a 2D transformation. The goal of this interface is to transform a given
  * 2D vector.

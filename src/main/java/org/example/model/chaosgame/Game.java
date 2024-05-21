@@ -5,7 +5,7 @@ import java.util.List;
 import org.example.model.observer.ChaosGameObserver;
 
 /**
- * <h2>Game</h2>
+ * <h2>Game.</h2>
  * <p>
  * A class that represents a chaos game. It contains the canvas and description of the game, and
  * notifies observers of changes in the canvas and description.
@@ -65,7 +65,7 @@ abstract class Game {
   }
 
   /**
-   * runs the game with the given parameters
+   * runs the game with the given parameters.
    *
    * @param steps the number of steps to run
    */
@@ -109,7 +109,7 @@ abstract class Game {
   }
 
   /**
-   * Sets the description of the game
+   * Sets the description of the game.
    *
    * @param description the description to set
    */
@@ -117,7 +117,7 @@ abstract class Game {
 
 
   /**
-   * Sets the canvas size of the game
+   * Sets the canvas size of the game.
    *
    * @param width  the width of the canvas
    * @param height the height of the canvas

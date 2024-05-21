@@ -1,7 +1,7 @@
 package org.example.model.math;
 
 /**
- * <h2>Vector2D</h2>
+ * <h2>Vector2D.</h2>
  * <p>
  * A class representing a 2D vector. It has methods for adding and subtracting vectors, as well as
  * multiplying the vector by a scalar.

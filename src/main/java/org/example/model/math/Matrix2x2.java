@@ -1,7 +1,7 @@
 package org.example.model.math;
 
 /**
- * <h2>Matrix2x2</h2>
+ * <h2>Matrix2x2.</h2>
  * <p>
  * A class representing a 2x2 matrix. A matrix is a rectangular array of numbers arranged in rows
  * and columns.

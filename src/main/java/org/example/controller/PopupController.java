@@ -2,12 +2,12 @@ package org.example.controller;
 
 import java.util.Objects;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.example.view.PageViewInterface;
 
 /**
- * <h2>PopupController</h2>
+ * <h2>PopupController.</h2>
  * <p>
  * The controller class for the popup window of the application.
  * </p>

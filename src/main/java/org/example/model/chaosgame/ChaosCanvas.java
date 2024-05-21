@@ -329,11 +329,11 @@ public class ChaosCanvas {
    */
   public String getInfoString() {
     return "ChaosCanvas{"
-        + "width=" + width
-        + ", height=" + height
-        + ", minCoords=" + minCoords
-        + ", maxCoords=" + maxCoords
-        + '}';
+            + "width=" + width
+            + ", height=" + height
+            + ", minCoords=" + minCoords
+            + ", maxCoords=" + maxCoords
+            + '}';
   }
 
   /**

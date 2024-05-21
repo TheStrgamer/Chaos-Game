@@ -177,13 +177,13 @@ class JuliaSetGameTest {
 
         JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertEquals(juliaSetGame.getXOffset(), 0.0);
-        assertEquals(juliaSetGame.getYOffset(), 0.0);
+        assertEquals(juliaSetGame.getOffsetX(), 0.0);
+        assertEquals(juliaSetGame.getOffsetY(), 0.0);
 
         juliaSetGame.moveCanvas(new Vector2D(1.0, 1.0));
 
-        assertEquals(juliaSetGame.getXOffset(), -.1);
-        assertEquals(juliaSetGame.getYOffset(), .1);
+        assertEquals(juliaSetGame.getOffsetX(), -.1);
+        assertEquals(juliaSetGame.getOffsetY(), .1);
       } catch (Exception e) {
         fail("moveCanvas should not throw an exception with valid parameters");
       }

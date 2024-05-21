@@ -1,7 +1,7 @@
 package org.example.model.math;
 
 /**
- * <h2>Complex</h2>
+ * <h2>Complex.</h2>
  * <p>
  * A class representing a complex number. It extends the Vector2D class and adds methods for
  * performing complex number operations.
@@ -17,7 +17,7 @@ package org.example.model.math;
 public class Complex extends Vector2D {
 
   /**
-   * checks if the given vector is of the complex class
+   * checks if the given vector is of the complex class.
    *
    * @param vector the vector to check
    * @throws IllegalArgumentException if the given vector is not of the Complex class

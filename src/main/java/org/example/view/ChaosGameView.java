@@ -2,9 +2,9 @@ package org.example.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
@@ -15,17 +15,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.image.ImageView;
-import org.example.controller.MainController;
 import org.example.controller.ChaosGameController;
+import org.example.controller.MainController;
 import org.example.view.components.WeightAndIterationsField;
 
 /**
- * <h2>ChaosGameView</h2>
+ * <h2>ChaosGameView.</h2>
  * <p>
  * The view class for the Chaos Game page of the application. Responsible for displaying the Chaos
  * Game page. Implements the PageView interface.
@@ -54,7 +54,7 @@ public class ChaosGameView implements PageViewInterface {
 
   private HBox topBar;
   private VBox sideBar;
-  private HBox zoomHBox;
+  private HBox zoomHbox;
 
   private Button zoomInButton;
   private Button zoomOutButton;
@@ -110,25 +110,25 @@ public class ChaosGameView implements PageViewInterface {
     topBar.getStyleClass().add("topBar");
     fillTopBarDefaultElements();
 
-    zoomHBox = new HBox();
-    fillZoomHBox();
-    TitledPane zoomPane = new TitledPane("Zoom", zoomHBox);
+    zoomHbox = new HBox();
+    fillZoomHbox();
+    TitledPane zoomPane = new TitledPane("Zoom", zoomHbox);
 
-    AnchorPane imageViewHBox = new AnchorPane();
+    AnchorPane imageViewHbox = new AnchorPane();
     AnchorPane.setRightAnchor(sideBar, 0.0);
     AnchorPane.setLeftAnchor(zoomPane, 0.0);
 
-    imageViewHBox.getChildren().addAll(this.imageView, sideBar, zoomPane);
-    layout.getChildren().addAll(topBar, imageViewHBox);
+    imageViewHbox.getChildren().addAll(this.imageView, sideBar, zoomPane);
+    layout.getChildren().addAll(topBar, imageViewHbox);
 
-    imageViewHBox.getStyleClass().add("imageView");
+    imageViewHbox.getStyleClass().add("imageView");
     return layout;
   }
 
   /**
    * Fills the zoom HBox with buttons that control the zoom and movement of the image.
    */
-  private void fillZoomHBox() {
+  private void fillZoomHbox() {
     zoomInButton = createButton("+", event -> chaosGameController.changeZoom(-0.1),
         "zoomButton");
     zoomOutButton = createButton("-", event -> chaosGameController.changeZoom(0.1),
@@ -150,13 +150,13 @@ public class ChaosGameView implements PageViewInterface {
     Button moveDownRightButton = createButton("↘", event -> chaosGameController.moveCanvas(-5, 5),
         "moveButton");
 
-    zoomHBox.getStyleClass().add("zoomHBox");
+    zoomHbox.getStyleClass().add("zoomHBox");
 
     VBox leftColumn = new VBox(moveUpLeftButton, moveLeftButton, moveDownLeftButton);
     VBox centerColumn = new VBox(moveUpButton, zoomInButton, zoomOutButton, moveDownButton);
     VBox rightColumn = new VBox(moveUpRightButton, moveRightButton, moveDownRightButton);
 
-    zoomHBox.getChildren().addAll(leftColumn, centerColumn, rightColumn);
+    zoomHbox.getChildren().addAll(leftColumn, centerColumn, rightColumn);
 
 
   }
@@ -218,7 +218,6 @@ public class ChaosGameView implements PageViewInterface {
       mainController.setCurrentDescription("AffineRandom");
       setComboBoxEmpty();
     }, "randomButton");
-    VBox randomButtonLayout = new VBox(randomJulia, randomAffine);
     randomJulia.getStyleClass().add("randomButton");
     randomAffine.getStyleClass().add("randomButton");
 
@@ -235,7 +234,6 @@ public class ChaosGameView implements PageViewInterface {
       setComboBoxEmpty();
       mainController.openModifyPopup();
     });
-    VBox newJuliaAffine = new VBox(newJulia, newAffine);
     newAffine.getStyleClass().add("newButton");
     newJulia.getStyleClass().add("newButton");
 
@@ -243,29 +241,34 @@ public class ChaosGameView implements PageViewInterface {
         event -> mainController.saveToFile(), "saveLoadButton");
     Button loadDescription = createButton("Load Description",
         event -> mainController.readFromFile(), "saveLoadButton");
-
     VBox saveLoadLayout = new VBox(saveDescription, loadDescription);
+    extraElements.add(saveLoadLayout);
+
 
     Button saveImage = createButton("Save Image", event -> mainController.saveImageToFile());
+    extraElements.add(new VBox(saveImage));
 
     Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()),
         "burgerMenuButton");
+    extraElements.add(new VBox(burgerMenu));
+
 
     Label colorLabel = new Label("Color:");
     ColorPicker colorPicker = new ColorPicker();
     colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
     colorPicker.setValue(chaosGameController.getColor());
 
-    HBox colorHBox = new HBox(colorLabel, colorPicker);
-    VBox colorVBox = new VBox(colorHBox);
+    HBox colorHbox = new HBox(colorLabel, colorPicker);
+    VBox colorVbox = new VBox(colorHbox);
 
-    extraElements.add(colorVBox);
+    extraElements.add(colorVbox);
+
+    VBox randomButtonLayout = new VBox(randomJulia, randomAffine);
+    VBox newJuliaAffine = new VBox(newJulia, newAffine);
+
     extraElements.add(randomButtonLayout);
     extraElements.add(new VBox(toModifyDescription));
     extraElements.add(newJuliaAffine);
-    extraElements.add(saveLoadLayout);
-    extraElements.add(new VBox(saveImage));
-    extraElements.add(new VBox(burgerMenu));
 
     // Tooltips
     Tooltip randomJuliaTooltip = new Tooltip("Generate a random Julia fractal.");
@@ -354,7 +357,7 @@ public class ChaosGameView implements PageViewInterface {
     iterationsLayout.getChildren().clear();
 
     if (chaosGameController.getJuliaSetMode()) {
-      HBox maxIterationsHBox = new HBox();
+      HBox maxIterationsHbox = new HBox();
 
       Label maxIterationsLabel = new Label("Max iterations: 255");
       Slider maxIterationsSlider = new Slider(1, 755, 255);
@@ -366,10 +369,10 @@ public class ChaosGameView implements PageViewInterface {
           });
 
       maxIterationsLabel.getStyleClass().add("juliaSetLabel");
-      maxIterationsHBox.getChildren().addAll(maxIterationsLabel,
+      maxIterationsHbox.getChildren().addAll(maxIterationsLabel,
           maxIterationsSlider);
 
-      HBox escapeRadiusHBox = new HBox();
+      HBox escapeRadiusHbox = new HBox();
       Label escapeRadiusLabel = new Label("Escape radius 3.0:");
 
       Slider escapeRadiusSlider = new Slider(0, 10, 2);
@@ -383,16 +386,16 @@ public class ChaosGameView implements PageViewInterface {
 
       escapeRadiusLabel.getStyleClass().add("juliaSetLabel");
 
-      escapeRadiusHBox.getChildren().addAll(escapeRadiusLabel,
+      escapeRadiusHbox.getChildren().addAll(escapeRadiusLabel,
           escapeRadiusSlider);
 
-      iterationsLayout.getChildren().addAll(maxIterationsHBox, escapeRadiusHBox);
+      iterationsLayout.getChildren().addAll(maxIterationsHbox, escapeRadiusHbox);
     } else {
 
-      HBox iterationsHBox = new HBox();
-      iterationsHBox.getChildren().addAll(new Label("Steps:"),
+      HBox iterationsHbox = new HBox();
+      iterationsHbox.getChildren().addAll(new Label("Steps:"),
           iterationsField);
-      iterationsLayout.getChildren().add(iterationsHBox);
+      iterationsLayout.getChildren().add(iterationsHbox);
     }
   }
 
@@ -505,6 +508,8 @@ public class ChaosGameView implements PageViewInterface {
         case M -> toModifyDescription.fire();
         case J -> randomJulia.fire();
         case K -> randomAffine.fire();
+        default -> {
+        }
       }
     });
   }
