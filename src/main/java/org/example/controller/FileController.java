@@ -52,7 +52,8 @@ public class FileController {
       chaosGameFileHandler.writeToFile(description, path);
       System.out.println("File saved successfully");
     } catch (Exception e) {
-      System.out.println("Error saving file");
+      mainController.showErrorPopup("An error occurred when saving" +
+              " description as a file: \n" + e.getMessage());
     }
   }
 
@@ -65,6 +66,7 @@ public class FileController {
     try {
       String path = chooseLoadPath();
       if (path == null) {
+        mainController.showErrorPopup("No file selected");
         return null;
       }
       ChaosGameDescription readDescription = chaosGameFileHandler.readFromFile(path);
@@ -72,7 +74,8 @@ public class FileController {
       return readDescription;
 
     } catch (Exception e) {
-      System.out.println("Error reading file");
+      mainController.showErrorPopup("An error occurred when trying to" +
+              " load a file: \n" + e.getMessage());
       return null;
     }
   }
@@ -93,7 +96,8 @@ public class FileController {
       try {
         javax.imageio.ImageIO.write(bufferImage, "png", file);
       } catch (Exception e) {
-        System.out.println("Error saving image");
+        mainController.showErrorPopup("An error occurred when trying to" +
+                " save an image: \n" + e.getMessage());
       }
     }
 

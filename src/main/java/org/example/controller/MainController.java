@@ -7,6 +7,8 @@ import org.example.model.chaosGame.ChaosGame;
 import org.example.model.chaosGame.ChaosGameDescription;
 import org.example.model.chaosGame.JuliaSetGame;
 import org.example.model.factory.ChaosGameDescriptionFactory;
+import org.example.view.ErrorHandlingView;
+import org.example.view.PageViewInterface;
 
 
 /**
@@ -155,7 +157,11 @@ public class MainController {
    * Method for reading a description from a file.
    */
   public void readFromFile() {
-    setCurrentDescription(fileController.readFromFile());
+    try {
+      setCurrentDescription(fileController.readFromFile());
+    } catch (Exception e) {
+      System.out.println("Error occurred trying to load a file: \n" + e.getMessage());
+    }
   }
 
   /**
@@ -163,5 +169,15 @@ public class MainController {
    */
   public void saveImageToFile() {
     fileController.saveImageToFile(chaosGameController.getImage());
+  }
+
+  /**
+   * Method for displaying error message.
+   *
+   * @param errorMessage a String with description of the error
+   */
+
+  public void showErrorPopup(String errorMessage) {
+    popupController.showErrorPopup(new ErrorHandlingView(errorMessage), 300, 200);
   }
 }
