@@ -237,6 +237,9 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param escapeRadius the escape radius to set
    */
   public void setEscapeRadius(double escapeRadius) {
+    if (escapeRadius < 0) {
+      return;
+    }
     juliaSetGame.setEscapeRadius(escapeRadius);
   }
 

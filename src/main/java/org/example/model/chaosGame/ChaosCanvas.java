@@ -167,7 +167,7 @@ public class ChaosCanvas {
    * @param point the point to get the pixel value at
    * @return the pixel value
    */
-  public int getPixel(Vector2D point) {
+  public int getPixelFromCoords(Vector2D point) {
     verifyNotNull(point);
     verifyPointWithinParameters(point);
     Vector2D indices = transformCoords(point);
@@ -191,7 +191,7 @@ public class ChaosCanvas {
    *
    * @param point the point to set the pixel value at
    */
-  public void setPixel(Vector2D point) {
+  public void setPixelWithCoords(Vector2D point) {
     verifyNotNull(point);
     if (!pointWithinParameters(point)) {
       return;
@@ -207,14 +207,14 @@ public class ChaosCanvas {
    * @param point the point to set the pixel value at
    * @param value the value to add
    */
-  public void setPixel(Vector2D point, int value) {
+  public void setPixelWithCoords(Vector2D point, int value) {
     verifyNotNull(point);
     if (!pointWithinParameters(point)) {
       return;
     }
     Vector2D indices = transformCoords(point);
 
-    int newValue = getPixel(point) + value;
+    int newValue = getPixelFromCoords(point) + value;
     newValue = Math.min(newValue, 755);
 
     canvas[(int) indices.getX1()][(int) indices.getX0()] = newValue;
@@ -228,7 +228,7 @@ public class ChaosCanvas {
    * @param point the point to set the pixel value at
    * @param value the value to put
    */
-  public void putPixel(Vector2D point, int value) {
+  public void setPixelWithPointOnCanvas(Vector2D point, int value) {
     verifyNotNull(point);
     if (pointOutsideCanvas(point)) {
       return;

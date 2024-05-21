@@ -119,7 +119,7 @@ public class ChaosGame extends Game {
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint, value);
+        canvas.setPixelWithCoords(currentPoint, value);
       } catch (Exception e) {
         throw new IllegalArgumentException("Invalid description");
       }

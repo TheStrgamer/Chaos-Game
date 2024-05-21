@@ -157,7 +157,7 @@ public class JuliaSetGame extends Game {
     }
 
     Vector2D point = new Vector2D(x1, x0);
-    canvas.putPixel(point, calculateValue(iteration, zx, zy));
+    canvas.setPixelWithPointOnCanvas(point, calculateValue(iteration, zx, zy));
   }
 
   /**
