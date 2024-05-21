@@ -108,6 +108,23 @@ public class ChaosGameDescription {
   }
 
   /**
+   * Verifies that the given minimum and maximum coordinates are valid. Throws an
+   * IllegalArgumentException if the given coordinates are not valid.
+   *
+   * @param minCoords the minimum coordinates to verify
+   * @param maxCoords the maximum coordinates to verify
+   * @throws IllegalArgumentException if the given minimum or maximum coordinates are equal, or if
+   *                                  the minimum coordinates are greater than the maximum
+   *                                  coordinates
+   */
+  private void minMaxCoordsValid(Vector2D minCoords, Vector2D maxCoords) {
+    if (minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()) {
+      throw new IllegalArgumentException(
+          "Minimum coordinates must be less than maximum coordinates");
+    }
+  }
+
+  /**
    * Constructs a new ChaosGameDescription object with the given minimum and maximum coordinates, as
    * well as a list of transforms.
    *
@@ -122,6 +139,7 @@ public class ChaosGameDescription {
       List<Transform2D> transforms) {
     verifyNotNullVector(minCoords);
     verifyNotNullVector(maxCoords);
+    minMaxCoordsValid(minCoords, maxCoords);
     verifyListNotNullAndNotEmpty(transforms);
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
@@ -161,6 +179,7 @@ public class ChaosGameDescription {
       List<Transform2D> transforms, List<Integer> weights) {
     verifyNotNullVector(minCoords);
     verifyNotNullVector(maxCoords);
+    minMaxCoordsValid(minCoords, maxCoords);
     verifyListNotNullAndNotEmpty(transforms);
     verifyWeightsNotNullAndNotEmpty(weights);
     this.minCoords = minCoords;
