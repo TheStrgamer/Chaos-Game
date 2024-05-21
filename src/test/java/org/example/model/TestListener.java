@@ -1,7 +1,7 @@
 package org.example.model;
 
-import org.example.model.chaosGame.ChaosCanvas;
-import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosgame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.observer.ChaosGameObserver;
 
 /**

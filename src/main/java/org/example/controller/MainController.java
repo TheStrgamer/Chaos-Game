@@ -3,12 +3,11 @@ package org.example.controller;
 import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.model.chaosGame.ChaosGame;
-import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.JuliaSetGame;
+import org.example.model.chaosgame.ChaosGame;
+import org.example.model.chaosgame.ChaosGameDescription;
+import org.example.model.chaosgame.JuliaSetGame;
 import org.example.model.factory.ChaosGameDescriptionFactory;
 import org.example.view.ErrorHandlingView;
-import org.example.view.PageViewInterface;
 
 
 /**

@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.example.model.chaosGame.ChaosGame;
-import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosgame.ChaosGame;
+import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
 import org.example.model.transform.AffineTransform2D;

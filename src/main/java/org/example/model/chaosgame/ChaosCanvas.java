@@ -1,8 +1,8 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
-import org.example.model.transform.AffineTransform2D;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
 
 /**
  * <h2>ChaosCanvas</h2>
@@ -63,8 +63,8 @@ public class ChaosCanvas {
    */
 
   private void verifyPointWithinParameters(Vector2D point) {
-    if (point.getX0() < minCoords.getX0() || point.getX0() > maxCoords.getX0() ||
-        point.getX1() < minCoords.getX1() || point.getX1() > maxCoords.getX1()) {
+    if (point.getX0() < minCoords.getX0() || point.getX0() > maxCoords.getX0()
+            || point.getX1() < minCoords.getX1() || point.getX1() > maxCoords.getX1()) {
       throw new IllegalArgumentException(
           "Point " + point + " is not within the given parameters " + minCoords + "; "
               + maxCoords);
@@ -78,8 +78,8 @@ public class ChaosCanvas {
    * @return true if the given point is within the given parameters, and false otherwise
    */
   private boolean pointWithinParameters(Vector2D point) {
-    return !(point.getX0() < minCoords.getX0()) && !(point.getX0() > maxCoords.getX0()) &&
-        !(point.getX1() < minCoords.getX1()) && !(point.getX1() > maxCoords.getX1());
+    return !(point.getX0() < minCoords.getX0()) && !(point.getX0() > maxCoords.getX0())
+            && !(point.getX1() < minCoords.getX1()) && !(point.getX1() > maxCoords.getX1());
   }
 
   /**
@@ -149,8 +149,8 @@ public class ChaosCanvas {
         new Matrix2x2(0, (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
             (width - 1) / (maxCoords.getX0() - minCoords.getX0()), 0),
 
-        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1())
-            , ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0()))
+        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1()),
+                ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0()))
     );
   }
 
@@ -172,8 +172,8 @@ public class ChaosCanvas {
         new Matrix2x2(0, (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
             (width - 1) / (maxCoords.getX0() - minCoords.getX0()), 0),
 
-        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1())
-            , ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0()))
+        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1()),
+                ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0()))
     );
   }
 
@@ -323,12 +323,12 @@ public class ChaosCanvas {
    * @return the details of the canvas
    */
   public String getInfoString() {
-    return "ChaosCanvas{" +
-        "width=" + width +
-        ", height=" + height +
-        ", minCoords=" + minCoords +
-        ", maxCoords=" + maxCoords +
-        '}';
+    return "ChaosCanvas{"
+            + "width=" + width
+            + ", height=" + height
+            + ", minCoords=" + minCoords
+            + ", maxCoords=" + maxCoords
+            + '}';
   }
 
   /**

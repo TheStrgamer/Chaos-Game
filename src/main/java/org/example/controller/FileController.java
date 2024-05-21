@@ -6,8 +6,8 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.ChaosGameFileHandler;
+import org.example.model.chaosgame.ChaosGameDescription;
+import org.example.model.chaosgame.ChaosGameFileHandler;
 
 /**
  * <h2>FileController</h2>

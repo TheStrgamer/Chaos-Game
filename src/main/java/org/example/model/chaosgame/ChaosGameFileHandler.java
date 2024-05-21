@@ -1,4 +1,4 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

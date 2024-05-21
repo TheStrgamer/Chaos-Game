@@ -3,7 +3,7 @@ package org.example.model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
-import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosCanvas;
 import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

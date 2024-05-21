@@ -1,8 +1,8 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
 import java.util.Random;
-import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
+import org.example.model.transform.Transform2D;
 
 /**
  * <h2>ChaosGame</h2>

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosCanvas;
 import org.example.model.factory.ImageFactory;
 import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.BeforeAll;

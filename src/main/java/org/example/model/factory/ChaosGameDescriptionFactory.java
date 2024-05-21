@@ -3,7 +3,7 @@ package org.example.model.factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.math.Complex;
 import org.example.model.transform.JuliaTransform;
