@@ -94,7 +94,7 @@ public class ChaosGameController implements ChaosGameObserver {
    *
    * @return true if description is a Julia set and juliaSetMode is true, false otherwise.
    */
-  private boolean isJuliaSetMode() {
+  private boolean useJuliaSet() {
     return (getTransformType().equals("Julia") && juliaSetMode);
   }
 
@@ -111,7 +111,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * Runs the Chaos Game for a set number of iterations.
    */
   public void runIterations() {
-    if (isJuliaSetMode()) {
+    if (useJuliaSet()) {
       juliaSetGame.runSteps(maxIterations);
     } else {
       chaosGame.runSteps(steps);
@@ -124,7 +124,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param iterations the number of iterations to run the Chaos Game for.
    */
   public void runIterations(int iterations) {
-    if (isJuliaSetMode()) {
+    if (useJuliaSet()) {
       juliaSetGame.runSteps(maxIterations);
     } else {
       chaosGame.runSteps(iterations);
@@ -138,7 +138,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param iterations the string representation of the number of iterations.
    * @return the number of iterations to run the Chaos Game for.
    */
-  public int getIterations(String iterations) {
+  private int getIterations(String iterations) {
     int defaultIterations = 0;
     int minIterations = 0;
     try {
@@ -274,7 +274,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param multiplier the multiplier to change the zoom by.
    */
   public void changeZoom(double multiplier) {
-    if (isJuliaSetMode()) {
+    if (useJuliaSet()) {
       juliaSetGame.changeZoom(multiplier);
     } else {
       chaosGame.changeZoom(multiplier);
@@ -297,7 +297,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param x1 the y-coordinate to move the canvas by.
    */
   public void moveCanvas(double x0, double x1) {
-    if (isJuliaSetMode()) {
+    if (useJuliaSet()) {
       juliaSetGame.moveCanvas(new Vector2D(x0, x1));
     } else {
       chaosGame.moveCanvas(new Vector2D(x0, x1));

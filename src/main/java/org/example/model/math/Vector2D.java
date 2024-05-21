@@ -25,9 +25,9 @@ public class Vector2D {
    * @param vector the double to check
    * @throws IllegalArgumentException if the given vector is null
    */
-  private void verifyNotNull(Vector2D vector) {
+  protected void verifyNotNull(Vector2D vector, String name) {
     if (vector == null) {
-      throw new IllegalArgumentException("Vector cannot be null");
+      throw new IllegalArgumentException(name + " cannot be null");
     }
   }
 
@@ -96,7 +96,7 @@ public class Vector2D {
    * @throws IllegalArgumentException if the given vector is null
    */
   public Vector2D add(Vector2D vector) {
-    verifyNotNull(vector);
+    verifyNotNull(vector, "Vector");
     double newX0 = getX0() + vector.getX0();
     double newX1 = getX1() + vector.getX1();
     return new Vector2D(newX0, newX1);
@@ -110,7 +110,7 @@ public class Vector2D {
    * @throws IllegalArgumentException if the given vector is null
    */
   public Vector2D subtract(Vector2D vector) {
-    verifyNotNull(vector);
+    verifyNotNull(vector, "Vector");
     double newX0 = x0 - vector.getX0();
     double newX1 = x1 - vector.getX1();
     return new Vector2D(newX0, newX1);

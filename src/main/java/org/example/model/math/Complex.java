@@ -28,17 +28,6 @@ public class Complex extends Vector2D {
   }
 
   /**
-   * checks if the given complex number is not null
-   *
-   * @param complex the complex number to check
-   */
-  private void verifyComplexIsNotNull(Vector2D complex) throws IllegalArgumentException {
-    if (complex == null) {
-      throw new IllegalArgumentException("Complex cannot be null");
-    }
-  }
-
-  /**
    * Constructs a new Complex object with the given real and imaginary values.
    *
    * @param real      the real value
@@ -81,7 +70,7 @@ public class Complex extends Vector2D {
    * @param complex the complex number to add
    */
   public Complex add(Vector2D complex) {
-    verifyComplexIsNotNull(complex);
+    verifyNotNull(complex, "Complex");
     verifyVectorIsComplex(complex);
     Vector2D result = super.add(complex);
     return new Complex(result.getX0(), result.getX1());
@@ -93,7 +82,7 @@ public class Complex extends Vector2D {
    * @param complex the complex number to subtract
    */
   public Complex subtract(Vector2D complex) {
-    verifyComplexIsNotNull(complex);
+    verifyNotNull(complex, "Complex");
     verifyVectorIsComplex(complex);
     Vector2D result = super.subtract(complex);
     return new Complex(result.getX0(), result.getX1());

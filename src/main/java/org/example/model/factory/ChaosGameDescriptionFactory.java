@@ -319,7 +319,6 @@ public class ChaosGameDescriptionFactory {
 
     transforms.add(transform1);
     transforms.add(transform2);
-    //TODO find a way to calculate min and max coords
     Vector2D minCoords = new Vector2D(-1.6, -1.2);
     Vector2D maxCoords = new Vector2D(1.6, 1.2);
 
@@ -343,7 +342,6 @@ public class ChaosGameDescriptionFactory {
       transforms.add(transform2);
     }
 
-    //TODO find a way to calculate min and max coords
     Vector2D minCoords = new Vector2D(-1.6, -1.4);
     Vector2D maxCoords = new Vector2D(1.6, 1.4);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);

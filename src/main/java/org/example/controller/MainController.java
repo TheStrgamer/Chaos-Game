@@ -69,7 +69,7 @@ public class MainController {
     Scene chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth,
         originalHeight);
     stage.setScene(chaosGameScene);
-    setStageListeners(stage);
+    setStageListeners();
     chaosGameController.setKeyListeners(chaosGameScene);
 
     chaosGameScene.getStylesheets().add(
@@ -79,9 +79,8 @@ public class MainController {
   /**
    * Sets the stage listeners for the primary stage.
    *
-   * @param stage the primary stage for the application.
    */
-  private void setStageListeners(Stage stage) {
+  private void setStageListeners() {
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
       if (newVal.intValue() < minCanvasWidth) {
         stage.setWidth(minCanvasWidth);
