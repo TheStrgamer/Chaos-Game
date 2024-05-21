@@ -2,9 +2,8 @@ package org.example.controller;
 
 import java.util.Objects;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.example.view.PageViewInterface;
 
 /**

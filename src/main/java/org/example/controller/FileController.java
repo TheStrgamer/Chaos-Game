@@ -23,8 +23,10 @@ public class FileController {
   private final ChaosGameFileHandler chaosGameFileHandler;
   private final MainController mainController;
   private final FileChooser fileChooser = new FileChooser();
-  private final ExtensionFilter txtExtFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
-  private final ExtensionFilter pngExtFilter = new FileChooser.ExtensionFilter("PNG Files (*.png)", "*.png");
+  private final ExtensionFilter txtExtFilter = new FileChooser
+          .ExtensionFilter("Text Files (*.txt)", "*.txt");
+  private final ExtensionFilter pngExtFilter = new FileChooser
+          .ExtensionFilter("PNG Files (*.png)", "*.png");
 
 
   /**
@@ -51,14 +53,15 @@ public class FileController {
       }
       chaosGameFileHandler.writeToFile(description, path);
     } catch (Exception e) {
-      mainController.showErrorPopup("An error occurred when saving" +
-              " description as a file: \n" + e.getMessage());
+      mainController.showErrorPopup("An error occurred when saving"
+              + " description as a file: \n" + e.getMessage());
     }
   }
 
   /**
    * Reads a chaos game description from a file, and returns the description.
    * If the file is not found, the method returns null.
+   *
    * @return the chaos game description read from the file.
    */
   public ChaosGameDescription readFromFile() {
@@ -70,8 +73,8 @@ public class FileController {
       return chaosGameFileHandler.readFromFile(path);
 
     } catch (Exception e) {
-      mainController.showErrorPopup("An error occurred when trying to" +
-              " load a file: \n" + e.getMessage());
+      mainController.showErrorPopup("An error occurred when trying to"
+              + " load a file: \n" + e.getMessage());
       return null;
     }
   }
@@ -92,8 +95,8 @@ public class FileController {
       try {
         javax.imageio.ImageIO.write(bufferImage, "png", file);
       } catch (Exception e) {
-        mainController.showErrorPopup("An error occurred when trying to" +
-                " save an image: \n" + e.getMessage());
+        mainController.showErrorPopup("An error occurred when trying to"
+                + " save an image: \n" + e.getMessage());
       }
     }
 

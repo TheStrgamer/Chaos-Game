@@ -7,12 +7,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.example.model.chaosGame.ChaosCanvas;
 import org.example.model.chaosGame.ChaosGame;
-
 import org.example.model.chaosGame.ChaosGameDescription;
 import org.example.model.chaosGame.JuliaSetGame;
+import org.example.model.factory.ImageFactory;
 import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
-import org.example.model.factory.ImageFactory;
 import org.example.view.ChaosGameView;
 
 /**
