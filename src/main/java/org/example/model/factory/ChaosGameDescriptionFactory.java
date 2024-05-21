@@ -22,7 +22,7 @@ import org.example.model.transform.Transform2D;
  * diamond, plant, flower, snake, and spine, which are randomly generated affine descriptions.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class ChaosGameDescriptionFactory {

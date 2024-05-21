@@ -10,7 +10,7 @@ package org.example.model.math;
  * A 2d vector is represented by two values, which in this class are called x0 and x1.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.1.0
  */
 public class Vector2D {
@@ -136,7 +136,7 @@ public class Vector2D {
    * @return true if the given vector has the same values as this vector, false otherwise
    */
   public boolean equals(Vector2D vector) {
-    if ((vector instanceof Complex complex) || vector == null) {
+    if ((vector instanceof Complex) || vector == null) {
       return false;
     }
     return x0 == vector.getX0() && x1 == vector.getX1();

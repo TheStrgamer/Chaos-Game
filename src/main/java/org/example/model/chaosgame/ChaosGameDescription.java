@@ -18,7 +18,7 @@ import org.example.model.transform.Transform2D;
  * game.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.2.0
  */
 public class ChaosGameDescription {

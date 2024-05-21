@@ -15,7 +15,7 @@ import org.example.model.math.Vector2D;
  * and then multiplying the result by the sign.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.2.0
  */
 public class JuliaTransform implements Transform2D {

@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
  * display a tooltip to inform the user if the input is not updated.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.4.0
  */
 public class DoubleNumberField extends TextField {

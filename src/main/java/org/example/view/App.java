@@ -14,7 +14,7 @@ import org.example.controller.MainController;
  * The class extends the Application class from JavaFX and overrides the start method.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class App extends Application {

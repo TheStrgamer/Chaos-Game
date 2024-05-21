@@ -16,7 +16,7 @@ import org.example.model.chaosgame.ChaosGameFileHandler;
  * writing and reading chaos game descriptions to and from files through file explorer.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class FileController {

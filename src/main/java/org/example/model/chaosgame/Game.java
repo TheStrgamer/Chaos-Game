@@ -11,7 +11,7 @@ import org.example.model.observer.ChaosGameObserver;
  * notifies observers of changes in the canvas and description.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.4.0
  */
 abstract class Game {

@@ -17,7 +17,7 @@ import org.example.view.ErrorHandlingView;
  * communication between them.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class MainController {
@@ -161,8 +161,9 @@ public class MainController {
     try {
       setCurrentDescription(fileController.readFromFile());
     } catch (Exception e) {
-      System.out.println("Error occurred trying to load a file: \n" + e.getMessage());
+      showErrorPopup("An error occurred when trying to load a file: \n" + e.getMessage());
     }
+
   }
 
   /**

@@ -7,7 +7,7 @@ package org.example.model.exceptions;
  * indicate that the description file does not have enough data to make a description.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.4.0
  */
 public class MissingDataException extends RuntimeException {

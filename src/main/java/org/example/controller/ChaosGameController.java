@@ -26,7 +26,7 @@ import org.example.view.ChaosGameView;
  * description is changed.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class ChaosGameController implements ChaosGameObserver {
@@ -220,7 +220,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param stepsString the number of steps to run the Chaos Game.
    */
   public void setSteps(String stepsString) {
-    this.steps = getIterations(stepsString);
+    setSteps(getIterations(stepsString));
   }
 
   /**

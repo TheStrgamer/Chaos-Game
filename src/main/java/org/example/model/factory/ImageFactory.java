@@ -16,7 +16,7 @@ import org.example.model.math.Vector2D;
  * <p>The color of each pixel is calculated based on the value of the canvas, and the gradient made
  * with the color chosen by the user</p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class ImageFactory {

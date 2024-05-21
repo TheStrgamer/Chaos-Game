@@ -6,7 +6,16 @@ import javafx.scene.layout.VBox;
 
 /**
  * <h1>ErrorHandlingView</h1>
+ * <p>
  * The view class for the error handling popup window layout.
+ * </p>
+ * <p>
+ * The class lets the user set the message for the error window, and creates the layout for the
+ * error popup.
+ * </p>
+ *
+ * @version 1.0.0
+ * @since 0.4.0
  */
 public class ErrorHandlingView implements PageViewInterface {
 

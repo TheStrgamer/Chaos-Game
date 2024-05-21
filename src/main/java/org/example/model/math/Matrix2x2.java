@@ -11,7 +11,7 @@ package org.example.model.math;
  * are equal.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.1.0
  */
 public class Matrix2x2 {

@@ -19,7 +19,7 @@ import org.example.model.transform.JuliaTransform;
  * href="https://en.wikipedia.org/wiki/Julia_set">...</a>
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.4.0
  */
 public class JuliaSetGame extends Game {
@@ -187,15 +187,15 @@ public class JuliaSetGame extends Game {
    * @return the value of the pixel at the given iteration
    */
   public int calculateValue(int iteration, double zx, double zy) {
-    if (iteration == this.maxIterations) {
+    if (iteration == maxIterations) {
       return 0;
     } else {
       double absZ = zx * zx + zy * zy;
       int value = (int) (iteration + 1 - Math.log(Math.log(absZ)) / Math.log(2));
-      double multiplier = Math.pow((double) value / this.maxIterations, 0.2);
-      value = (int) (maxIterations - this.maxIterations * multiplier);
-      int maxColorValue = 755;
-      return (int) ((double) value / maxIterations * maxColorValue);
+      double multiplier = Math.pow((double) value / maxIterations, 0.2);
+      value = (int) (maxIterations - maxIterations * multiplier);
+      int maxColorValue = 754;
+      return Math.max((int) ((double) value / maxIterations * maxColorValue),0);
     }
   }
 

@@ -14,7 +14,7 @@ import org.example.model.math.Vector2D;
  * point by multiplying the point by the matrix and adding the vector.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.1.0
  */
 public class AffineTransform2D implements Transform2D {

@@ -7,7 +7,7 @@ package org.example.model.exceptions;
  * that the description file is empty.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.4.0
  */
 public class DescriptionFileEmptyException extends RuntimeException {

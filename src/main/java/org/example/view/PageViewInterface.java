@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
  * method.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public interface PageViewInterface {

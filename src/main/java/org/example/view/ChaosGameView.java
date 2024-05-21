@@ -36,7 +36,7 @@ import org.example.view.components.WeightAndIterationsField;
  * saving and loading the fractal, as well as buttons for generating random fractals.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class ChaosGameView implements PageViewInterface {
@@ -375,7 +375,7 @@ public class ChaosGameView implements PageViewInterface {
       HBox escapeRadiusHbox = new HBox();
       Label escapeRadiusLabel = new Label("Escape radius 3.0:");
 
-      Slider escapeRadiusSlider = new Slider(0, 10, 2);
+      Slider escapeRadiusSlider = new Slider(1, 10, 3);
       escapeRadiusSlider.valueProperty().addListener(
           (observable, oldValue, newValue) -> {
             chaosGameController.setEscapeRadius(

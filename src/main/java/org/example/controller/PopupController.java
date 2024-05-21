@@ -16,7 +16,7 @@ import org.example.view.PageViewInterface;
  * shown at a time per controller.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class PopupController {

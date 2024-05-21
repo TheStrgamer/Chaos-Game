@@ -11,7 +11,7 @@ package org.example.model.math;
  * numbers, and i is an imaginary number with the property i^2 = -1.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.1.0
  */
 public class Complex extends Vector2D {
@@ -111,7 +111,7 @@ public class Complex extends Vector2D {
   }
 
   /**
-   * Returns the square root of this complex number as a new complex numer.
+   * Returns the square root of this complex number as a new complex number.
    *
    * @return the root of the complex number
    */

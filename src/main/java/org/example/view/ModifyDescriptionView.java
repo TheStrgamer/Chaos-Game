@@ -25,7 +25,7 @@ import org.example.view.components.WeightAndIterationsField;
  * The Modify Description page allows the user to edit the description of a chaos game.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.3.0
  */
 public class ModifyDescriptionView implements PageViewInterface {
@@ -146,22 +146,22 @@ public class ModifyDescriptionView implements PageViewInterface {
           case "Min Coords: ":
             if (modifyDescriptionController.minCoordsIsValid(x0.getText(), y0.getText())) {
               modifyDescriptionController.setMinCoords(x0.getText(), y0.getText());
-              setCoordFieldsValid(x0, y0);
+              setCoordinatesFieldsValid(x0, y0);
             } else {
-              setCoordFieldsInvalid(x0, y0, "Min Coords must be less than Max Coords");
+              setCoordinatesFieldsInvalid(x0, y0, "Min Coords must be less than Max Coords");
             }
             modifyDescriptionController.setMinCoords(x0.getText(), y0.getText());
             break;
           case "Max Coords: ":
             if (modifyDescriptionController.maxCoordsIsValid(x0.getText(), y0.getText())) {
               modifyDescriptionController.setMaxCoords(x0.getText(), y0.getText());
-              setCoordFieldsValid(x0, y0);
+              setCoordinatesFieldsValid(x0, y0);
             } else {
-              setCoordFieldsInvalid(x0, y0, "Max Coords must be greater than Min Coords");
+              setCoordinatesFieldsInvalid(x0, y0, "Max Coords must be greater than Min Coords");
             }
             break;
           default:
-            System.out.println("Error in vector2DToHBox");
+            System.out.println("Error in vector2DToHBox, invalid name.");
             break;
         }
       }
@@ -187,7 +187,7 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param y0 the Y0 field.
    */
 
-  private void setCoordFieldsValid(TextField x0, TextField y0) {
+  private void setCoordinatesFieldsValid(TextField x0, TextField y0) {
     x0.getStyleClass().remove("invalid");
     y0.getStyleClass().remove("invalid");
     x0.getStyleClass().remove("unsaved");
@@ -203,7 +203,7 @@ public class ModifyDescriptionView implements PageViewInterface {
    * @param y0      the Y0 field.
    * @param tooltip the tooltip to display.
    */
-  private void setCoordFieldsInvalid(TextField x0, TextField y0, String tooltip) {
+  private void setCoordinatesFieldsInvalid(TextField x0, TextField y0, String tooltip) {
     x0.getStyleClass().add("invalid");
     y0.getStyleClass().add("invalid");
     x0.setTooltip(new Tooltip(tooltip));

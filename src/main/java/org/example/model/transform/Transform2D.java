@@ -13,7 +13,7 @@ import org.example.model.math.Vector2D;
  * transform has the same values as this transform.
  * </p>
  *
- * @version 0.4.0
+ * @version 1.0.0
  * @since 0.2.0
  */
 public interface Transform2D {
