@@ -1,17 +1,17 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.example.model.math.Vector2D;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.transform.JuliaTransform;
 import org.example.model.transform.Transform2D;
-import org.example.model.math.Vector2D;
 
 /**
- * <h2>ChaosGameDescription</h2>
+ * <h2>ChaosGameDescription.</h2>
  * <p>
  * A class that represents a description of a chaos game. The description includes the minimum and
  * maximum coordinates of the game, as well as a list of transforms that are used to generate the
@@ -208,7 +208,7 @@ public class ChaosGameDescription {
    * Returns the minimum and maximum coordinates of the game.
    *
    * @return a pair of vectors, where the first vector is the minimum coordinates and the second
-   * vector is the maximum coordinates.
+   *        vector is the maximum coordinates.
    */
 
   public Vector2D getMinCoords() {
@@ -277,7 +277,7 @@ public class ChaosGameDescription {
    *
    * @param description the ChaosGameDescription to compare
    * @return true if the given ChaosGameDescription has the same values as this
-   * ChaosGameDescription, false otherwise
+   *        ChaosGameDescription, false otherwise
    */
   public boolean equals(ChaosGameDescription description) {
     if (description == null) {
@@ -325,7 +325,8 @@ public class ChaosGameDescription {
    * IllegalArgumentException if the list of weights is null, empty or contains null objects.
    *
    * @param weights the list of weights.
-   * @throws IllegalArgumentException if the list of weights is null, empty or contains null objects.
+   * @throws IllegalArgumentException if the list of weights is null, empty or contains null
+   *                                  objects.
    */
   public void setWeights(List<Integer> weights) {
     verifyWeightsNotNullAndNotEmpty(weights);
@@ -412,9 +413,9 @@ public class ChaosGameDescription {
    * @param multiplier the multiplier to use.
    */
   public void changeZoom(double multiplier) {
-    double xDiff = maxCoords.getX0() - minCoords.getX0();
-    double yDiff = maxCoords.getX1() - minCoords.getX1();
-    Vector2D newDiff = new Vector2D(xDiff * multiplier, yDiff * multiplier);
+    double xdiff = maxCoords.getX0() - minCoords.getX0();
+    double ydiff = maxCoords.getX1() - minCoords.getX1();
+    Vector2D newDiff = new Vector2D(xdiff * multiplier, ydiff * multiplier);
 
     minCoords.setX0(minCoords.getX0() - newDiff.getX0() / 2);
     minCoords.setX1(minCoords.getX1() - newDiff.getX1() / 2);
@@ -429,9 +430,9 @@ public class ChaosGameDescription {
    * @param vector the vector to move the description by.
    */
   public void moveCanvas(Vector2D vector) {
-    double xDiff = maxCoords.getX0() - minCoords.getX0();
-    double yDiff = maxCoords.getX1() - minCoords.getX1();
-    Vector2D newDiff = new Vector2D(xDiff * vector.getX0() / 100, yDiff * vector.getX1() / 100);
+    double xdiff = maxCoords.getX0() - minCoords.getX0();
+    double ydiff = maxCoords.getX1() - minCoords.getX1();
+    Vector2D newDiff = new Vector2D(xdiff * vector.getX0() / 100, ydiff * vector.getX1() / 100);
 
     minCoords.setX0(minCoords.getX0() - newDiff.getX0());
     minCoords.setX1(minCoords.getX1() - newDiff.getX1());

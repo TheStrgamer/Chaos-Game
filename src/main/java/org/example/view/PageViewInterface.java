@@ -5,8 +5,8 @@ import javafx.scene.layout.VBox;
 /**
  * <h2>PageViewInterface</h2>
  * <p>
- * Interface for the view classes of the application.
- * Ensures that all view classes have a getLayout method.
+ * Interface for the view classes of the application. Ensures that all view classes have a getLayout
+ * method.
  * </p>
  *
  * @version 0.4.0

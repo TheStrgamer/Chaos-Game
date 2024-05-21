@@ -1,29 +1,31 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
 import java.util.Scanner;
 import org.example.model.exceptions.DescriptionFileEmptyException;
 import org.example.model.exceptions.MissingDataException;
-import org.example.model.transform.AffineTransform2D;
 import org.example.model.math.Complex;
-import org.example.model.transform.JuliaTransform;
 import org.example.model.math.Matrix2x2;
-import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
 
 /**
- * <h2>ChaosGameFileHandler</h2>
+ * <h2>ChaosGameFileHandler.</h2>
  * <p>
  * A class that handles reading and writing chaos game descriptions to and from files.
  * </p>
  * <p>
- * The file handler can read descriptions from txt files, and throw exceptions if the file is not found or if the file is not formatted correctly.
+ * The file handler can read descriptions from txt files, and throw exceptions if the file is not
+ * found or if the file is not formatted correctly.
  * </p>
+ *
  * @version 0.4.0
  * @since 0.2.0
  */
@@ -151,20 +153,19 @@ public class ChaosGameFileHandler {
       }
       String[] minCoords = removeCommentsFromString(scanner.nextLine()).split(",");
       if (minCoords.length != 2) {
-        throw new MissingDataException("Description file is missing coordinate data, and cannot be used to create a ChaosGameDescription.");
+        throw new MissingDataException(
+            "Description file is missing coordinate data, and cannot be used to create a "
+                + "ChaosGameDescription.");
       }
-      Vector2D minCoordsVector = new Vector2D(verifyDouble(minCoords[0]),
-          verifyDouble(minCoords[1]));
-
       if (!scanner.hasNextLine()) {
         throw new MissingDataException("Description file is missing data");
       }
       String[] maxCoords = removeCommentsFromString(scanner.nextLine()).split(",");
       if (maxCoords.length != 2) {
-        throw new MissingDataException("Description file is missing coordinate data, and cannot be used to create a ChaosGameDescription.");
+        throw new MissingDataException(
+            "Description file is missing coordinate data, and cannot be used to create a "
+                + "ChaosGameDescription.");
       }
-      Vector2D maxCoordsVector = new Vector2D(verifyDouble(maxCoords[0]),
-          verifyDouble(maxCoords[1]));
 
       List<Transform2D> transforms = new ArrayList<>();
 
@@ -201,8 +202,15 @@ public class ChaosGameFileHandler {
         }
       }
       if (transforms.isEmpty()) {
-        throw new MissingDataException("Description file is missing transform data, and cannot be used to create a ChaosGameDescription.");
+        throw new MissingDataException(
+            "Description file is missing transform data, and cannot be used to create a "
+                + "ChaosGameDescription.");
       }
+      Vector2D minCoordsVector = new Vector2D(verifyDouble(minCoords[0]),
+          verifyDouble(minCoords[1]));
+      Vector2D maxCoordsVector = new Vector2D(verifyDouble(maxCoords[0]),
+          verifyDouble(maxCoords[1]));
+
       return new ChaosGameDescription(minCoordsVector, maxCoordsVector, transforms);
 
     } catch (MissingDataException e) {

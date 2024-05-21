@@ -10,6 +10,7 @@ package org.example.model.math;
  * The class provides methods for multiplying the matrix with a vector and checking if two matrices
  * are equal.
  * </p>
+ *
  * @version 0.4.0
  * @since 0.1.0
  */
@@ -33,7 +34,8 @@ public class Matrix2x2 {
   }
 
   /**
-   * Verifies that the given matrix object is not null. Throws an IllegalArgumentException if the given
+   * Verifies that the given matrix object is not null. Throws an IllegalArgumentException if the
+   * given
    */
   private void verifyNotNull(Matrix2x2 matrix) {
     if (matrix == null) {

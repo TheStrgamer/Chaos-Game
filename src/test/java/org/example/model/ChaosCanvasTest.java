@@ -3,7 +3,7 @@ package org.example.model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
-import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosCanvas;
 import org.example.model.math.Vector2D;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -360,17 +360,19 @@ class ChaosCanvasTest {
         chaosCanvas.setPixelWithCoords(new Vector2D(10, 10));
         String result = chaosCanvas.toString();
         assertNotNull(result);
-        assertEquals("          X\n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "           \n"
-            + "X          \n", result);
+        assertEquals("""
+                      X
+                      \s
+                      \s
+                      \s
+                      \s
+                      \s
+                      \s
+                      \s
+                      \s
+                      \s
+            X         \s
+            """, result);
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }

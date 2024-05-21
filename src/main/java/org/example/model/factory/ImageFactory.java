@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosCanvas;
 import org.example.model.math.Vector2D;
 
 

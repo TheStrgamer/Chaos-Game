@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.scene.layout.VBox;
-import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
@@ -12,7 +12,7 @@ import org.example.model.observer.ChaosGameObserver;
 import org.example.model.transform.AffineTransform2D;
 import org.example.model.transform.JuliaTransform;
 import org.example.model.transform.Transform2D;
-import org.example.model.chaosGame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosCanvas;
 
 import org.example.view.ModifyDescriptionView;
 
@@ -118,7 +118,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
     minCoords = description.getMinCoords();
     maxCoords = description.getMaxCoords();
     transforms = description.getTransforms();
-    modifyDescriptionView = new ModifyDescriptionView(this, mainController);
+    modifyDescriptionView = new ModifyDescriptionView(this);
   }
 
   /**

@@ -6,7 +6,7 @@ import org.example.controller.MainController;
 
 
 /**
- * <h2>App</h2>
+ * <h2>App.</h2>
  * <p>
  * The main class for the Chaos Game application. Responsible for starting the application.
  * </p>
@@ -27,7 +27,7 @@ public class App extends Application {
    */
   @Override
   public void start(Stage primaryStage) {
-    MainController mainController = new MainController(primaryStage);
+    new MainController(primaryStage);
     primaryStage.setTitle("ChaosGame Application");
     primaryStage.show();
 

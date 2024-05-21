@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.example.controller.MainController;
 import org.example.controller.ModifyDescriptionController;
 import org.example.view.components.DoubleNumberField;
 import org.example.view.components.WeightAndIterationsField;
@@ -41,10 +40,8 @@ public class ModifyDescriptionView implements PageViewInterface {
    * Constructor for the ModifyDescriptionView class.
    *
    * @param modifyDescriptionController the controller for the Modify Description page.
-   * @param mainController              the main controller for the application.
    */
-  public ModifyDescriptionView(ModifyDescriptionController modifyDescriptionController,
-      MainController mainController) {
+  public ModifyDescriptionView(ModifyDescriptionController modifyDescriptionController) {
     this.modifyDescriptionController = modifyDescriptionController;
     layout = createLayout();
 

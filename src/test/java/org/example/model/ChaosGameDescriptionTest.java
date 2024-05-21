@@ -1,6 +1,6 @@
 package org.example.model;
 
-import org.example.model.chaosGame.ChaosGameDescription;
+import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;

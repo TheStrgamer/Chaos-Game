@@ -4,11 +4,10 @@ import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
 
 /**
- * <h2>AffineTransform2D</h2>
+ * <h2>AffineTransform2D.</h2>
  * <p>
  * A class representing an affine transformation in 2D space. It has a method for transforming a
- * vector using the affine transformation.
- * The class implements the Transform2D interface.
+ * vector using the affine transformation. The class implements the Transform2D interface.
  * </p>
  * <p>
  * An affine transformation is represented by a 2x2 matrix and a 2D vector, where it transforms
@@ -38,8 +37,9 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
-   * Verifies that the given AffineTransform2D object is not null. Throws an IllegalArgumentException
-   * if the given AffineTransform2D object is null.
+   * Verifies that the given AffineTransform2D object is not null. Throws an
+   * IllegalArgumentException if the given AffineTransform2D object is null.
+   *
    * @param transform the AffineTransform2D object to verify
    * @throws IllegalArgumentException if the given AffineTransform2D object is null
    */
@@ -102,11 +102,11 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
-   * Checks if the given AffineTransform2D object has the same values as this AffineTransform2D
+   * Checks if the given AffineTransform2D object has the same values as this AffineTransform2D.
    *
    * @param transform the object to compare
    * @return true if the given AffineTransform2D object has the same values as this
-   * AffineTransform2D
+   *      AffineTransform2D
    */
   @Override
   public boolean equals(Transform2D transform) {

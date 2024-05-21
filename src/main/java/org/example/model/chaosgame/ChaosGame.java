@@ -1,11 +1,11 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
 import java.util.Random;
-import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
+import org.example.model.transform.Transform2D;
 
 /**
- * <h2>ChaosGame</h2>
+ * <h2>ChaosGame.</h2>
  * <p>
  * A class that represents a chaos game. The game is generated based on a description and a canvas.
  * </p>

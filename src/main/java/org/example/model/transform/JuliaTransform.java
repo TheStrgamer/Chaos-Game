@@ -63,17 +63,17 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
-   * Verifies that the given Julia transformation object is not null. Throws an IllegalArgumentException
-   * if the given Julia transformation object is null.
+   * Verifies that the given Julia transformation object is not null. Throws an
+   * IllegalArgumentException if the given Julia transformation object is null.
+   *
    * @param transform the Julia transformation object to verify
    * @throws IllegalArgumentException if the given Julia transformation object is null
-   *
    */
   private void verifyNotNull(JuliaTransform transform) {
     if (transform == null) {
       throw new IllegalArgumentException("Transform cannot be null");
     }
-}
+  }
 
   /**
    * Constructs a new JuliaTransform object with the given point and sign.

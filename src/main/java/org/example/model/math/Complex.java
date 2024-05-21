@@ -71,7 +71,8 @@ public class Complex extends Vector2D {
    *
    * @param complex the complex number to add
    * @return the sum of this complex number and the given complex number
-   * @throws IllegalArgumentException if the given complex number is null or not of the Complex class
+   * @throws IllegalArgumentException if the given complex number is null or not of the Complex
+   *                                  class
    */
   public Complex add(Vector2D complex) {
     verifyNotNull(complex, "Complex");
@@ -85,7 +86,8 @@ public class Complex extends Vector2D {
    *
    * @param complex the complex number to subtract
    * @return the difference between this complex number and the given complex number
-   * @throws IllegalArgumentException if the given complex number is null or not of the Complex class
+   * @throws IllegalArgumentException if the given complex number is null or not of the Complex
+   *                                  class
    */
   public Complex subtract(Vector2D complex) {
     verifyNotNull(complex, "Complex");
@@ -128,7 +130,6 @@ public class Complex extends Vector2D {
    *
    * @param scalar the scalar to multiply by
    * @return the product of the complex number and the scalar
-   *
    */
   public Complex multiply(double scalar) {
     Vector2D result = super.multiply(scalar);
@@ -137,6 +138,7 @@ public class Complex extends Vector2D {
 
   /**
    * Returns a string representation of the complex number.
+   *
    * @return string of complex number
    */
   public String toString() {

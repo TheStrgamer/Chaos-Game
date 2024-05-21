@@ -3,7 +3,6 @@ package org.example.view;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /**
  * <h1>ErrorHandlingView</h1>
@@ -11,7 +10,7 @@ import javafx.scene.text.Text;
  */
 public class ErrorHandlingView implements PageViewInterface {
 
-  private VBox layout;
+  private final VBox layout;
 
   /**
    * Constructor for the ErrorHandlingView class.
@@ -23,8 +22,8 @@ public class ErrorHandlingView implements PageViewInterface {
   }
 
   /**
-   * Creates the layout for the error handling popup window. The layout contains
-   * an error message and an "OK" button to close the popup window.
+   * Creates the layout for the error handling popup window. The layout contains an error message
+   * and an "OK" button to close the popup window.
    *
    * @param errorMessage the error message to display in the popup window.
    * @return the layout for the error handling popup window.

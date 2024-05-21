@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.JuliaSetGame;
+import org.example.model.chaosgame.ChaosGameDescription;
+import org.example.model.chaosgame.JuliaSetGame;
 import org.example.model.math.Complex;
 import org.example.model.math.Matrix2x2;
 import org.example.model.math.Vector2D;
@@ -177,13 +177,13 @@ class JuliaSetGameTest {
 
         JuliaSetGame juliaSetGame = new JuliaSetGame(chaosGameDescription, 100, 100, 100, 2.0);
 
-        assertEquals(juliaSetGame.getxOffset(), 0.0);
-        assertEquals(juliaSetGame.getyOffset(), 0.0);
+        assertEquals(juliaSetGame.getXOffset(), 0.0);
+        assertEquals(juliaSetGame.getYOffset(), 0.0);
 
         juliaSetGame.moveCanvas(new Vector2D(1.0, 1.0));
 
-        assertEquals(juliaSetGame.getxOffset(), -.1);
-        assertEquals(juliaSetGame.getyOffset(), .1);
+        assertEquals(juliaSetGame.getXOffset(), -.1);
+        assertEquals(juliaSetGame.getYOffset(), .1);
       } catch (Exception e) {
         fail("moveCanvas should not throw an exception with valid parameters");
       }

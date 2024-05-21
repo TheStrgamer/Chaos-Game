@@ -5,18 +5,17 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import org.example.model.chaosGame.ChaosCanvas;
-import org.example.model.chaosGame.ChaosGame;
-
-import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.JuliaSetGame;
+import org.example.model.chaosgame.ChaosCanvas;
+import org.example.model.chaosgame.ChaosGame;
+import org.example.model.chaosgame.ChaosGameDescription;
+import org.example.model.chaosgame.JuliaSetGame;
+import org.example.model.factory.ImageFactory;
 import org.example.model.math.Vector2D;
 import org.example.model.observer.ChaosGameObserver;
-import org.example.model.factory.ImageFactory;
 import org.example.view.ChaosGameView;
 
 /**
- * <h2>ChaosGameController</h2>
+ * <h2>ChaosGameController.</h2>
  * <p>
  * The controller class for the Chaos Game page of the application. It handles the logic for the
  * Chaos Game page, and is responsible for running the Chaos Game.
@@ -142,7 +141,7 @@ public class ChaosGameController implements ChaosGameObserver {
    * @return the number of iterations to run the Chaos Game for.
    */
   private int getIterations(String iterations) {
-    int defaultIterations = 0;
+    int defaultIterations = steps;
     int minIterations = 0;
     try {
       return Math.max(Integer.parseInt(iterations), minIterations);
@@ -255,8 +254,8 @@ public class ChaosGameController implements ChaosGameObserver {
    * @param height the height
    */
   public void setCanvasSize(int width, int height) {
-    chaosGame.setCanvasSize(width, height - 60);
-    juliaSetGame.setCanvasSize(width, height - 60);
+    chaosGame.setCanvasSize(width - 10, height - 85);
+    juliaSetGame.setCanvasSize(width, height - 10 - 85);
     if (autoRunOnDescriptionChange) {
       runIterations(steps / 5);
     }

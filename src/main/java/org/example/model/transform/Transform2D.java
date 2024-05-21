@@ -12,6 +12,7 @@ import org.example.model.math.Vector2D;
  * The interface has a method for transforming a 2D vector and a method for checking if the given
  * transform has the same values as this transform.
  * </p>
+ *
  * @version 0.4.0
  * @since 0.2.0
  */

@@ -1,4 +1,4 @@
-package org.example.model.chaosGame;
+package org.example.model.chaosgame;
 
 import java.util.Objects;
 import org.example.model.math.Complex;
@@ -8,14 +8,15 @@ import org.example.model.transform.JuliaTransform;
 /**
  * <h2>JuliaSetGame</h2>
  * <p>
- * The JulisSetGame class is used to generate a Julia set set based on a description and a canvas.
+ * The JuliaSetGame class is used to generate a Julia set set based on a description and a canvas.
  * </p>
  * <p>
  * The Julia set game extends the Game class, and is used to calculate the value of each pixel in
  * the canvas based on the Julia set values
  * </p>
  * <p>
- * The run method is inspired by the pseudocode from <a href="https://en.wikipedia.org/wiki/Julia_set">...</a>
+ * The run method is inspired by the pseudocode from <a
+ * href="https://en.wikipedia.org/wiki/Julia_set">...</a>
  * </p>
  *
  * @version 0.4.0
@@ -162,15 +163,6 @@ public class JuliaSetGame extends Game {
     canvas.setPixelWithPointOnCanvas(point, calculateValue(iteration, zx, zy));
   }
 
-  /**
-   * Updates the description of the Julia set.
-   */
-  public void updateDescription() {
-    this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
-        description.getMaxCoords());
-    notifyDescriptionChanged();
-    notifyCanvasChanged();
-  }
 
   /**
    * Scales the coordinates of the given pixel.
@@ -245,7 +237,7 @@ public class JuliaSetGame extends Game {
    *
    * @return the x offset
    */
-  public double getxOffset() {
+  public double getXOffset() {
     return xOffset;
   }
 
@@ -254,7 +246,7 @@ public class JuliaSetGame extends Game {
    *
    * @return the y offset
    */
-  public double getyOffset() {
+  public double getYOffset() {
     return yOffset;
   }
 }

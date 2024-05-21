@@ -187,15 +187,11 @@ public class ChaosGameView implements PageViewInterface {
 
     Label autoRunLabel = new Label("Auto Run:");
 
-    Label colorLabel = new Label("Color:");
-    ColorPicker colorPicker = new ColorPicker();
-    colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
-    colorPicker.setValue(chaosGameController.getColor());
 
     topBar.getChildren()
         .addAll(juliaSetModeLabel, juliaSetMode, iterationsLayout, runButton, clearButton,
             autoRunLabel, autoRunOnDescriptionChange,
-            descriptionComboBox, colorLabel, colorPicker
+            descriptionComboBox
         );
 
     // Tooltips
@@ -205,8 +201,6 @@ public class ChaosGameView implements PageViewInterface {
     Tooltip iterationsTooltip = new Tooltip("The number of iterations to run the Chaos Game.");
     iterationsField.setTooltip(iterationsTooltip);
 
-    Tooltip colorTooltip = new Tooltip("The color of the Chaos Game fractal.");
-    colorPicker.setTooltip(colorTooltip);
 
   }
 
@@ -257,6 +251,15 @@ public class ChaosGameView implements PageViewInterface {
     Button burgerMenu = createButton("☰", event -> sideBar.setVisible(!sideBar.isVisible()),
         "burgerMenuButton");
 
+    Label colorLabel = new Label("Color:");
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setOnAction(event -> chaosGameController.setColor(colorPicker.getValue()));
+    colorPicker.setValue(chaosGameController.getColor());
+
+    HBox colorHBox = new HBox(colorLabel, colorPicker);
+    VBox colorVBox = new VBox(colorHBox);
+
+    extraElements.add(colorVBox);
     extraElements.add(randomButtonLayout);
     extraElements.add(new VBox(toModifyDescription));
     extraElements.add(newJuliaAffine);
@@ -279,6 +282,9 @@ public class ChaosGameView implements PageViewInterface {
 
     Tooltip saveImageTooltip = new Tooltip("Save the current image to file.");
     saveImage.setTooltip(saveImageTooltip);
+
+    Tooltip colorTooltip = new Tooltip("The color of the Chaos Game fractal.");
+    colorPicker.setTooltip(colorTooltip);
 
 
   }
@@ -441,7 +447,7 @@ public class ChaosGameView implements PageViewInterface {
     sideBar.setVisible(false);
 
     int widthPerElement = 90;
-    int defaultElementsCount = 8;
+    int defaultElementsCount = 7;
     boolean shouldAddSideBar = false;
 
     for (int i = 0; i < extraElements.size() - 1; i++) {

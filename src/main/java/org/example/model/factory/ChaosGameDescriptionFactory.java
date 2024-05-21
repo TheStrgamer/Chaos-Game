@@ -3,16 +3,16 @@ package org.example.model.factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.transform.AffineTransform2D;
+import org.example.model.chaosgame.ChaosGameDescription;
 import org.example.model.math.Complex;
-import org.example.model.transform.JuliaTransform;
 import org.example.model.math.Matrix2x2;
-import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
+import org.example.model.transform.AffineTransform2D;
+import org.example.model.transform.JuliaTransform;
+import org.example.model.transform.Transform2D;
 
 /**
- * <h2>ChaosGameDescriptionFactory</h2>
+ * <h2>ChaosGameDescriptionFactory.</h2>
  * <p>
  * A factory class that creates ChaosGameDescription objects based on the given type.
  * </p>
@@ -68,8 +68,6 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   private ChaosGameDescription createSierpinskiDescription() {
-    Vector2D minCoords = new Vector2D(0, 0);
-    Vector2D maxCoords = new Vector2D(1, 1);
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(0.5, 0, 0, 0.5);
@@ -87,6 +85,10 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform1);
     transforms.add(transform2);
     transforms.add(transform3);
+
+    Vector2D minCoords = new Vector2D(0, 0);
+    Vector2D maxCoords = new Vector2D(1, 1);
+
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
@@ -96,8 +98,6 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   private ChaosGameDescription createBarnsleyDescription() {
-    Vector2D minCoords = new Vector2D(-2.65, 0);
-    Vector2D maxCoords = new Vector2D(2.65, 10);
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(0, 0, 0, 0.16);
@@ -126,6 +126,8 @@ public class ChaosGameDescriptionFactory {
     weights.add(12);
     weights.add(12);
 
+    Vector2D minCoords = new Vector2D(-2.65, 0);
+    Vector2D maxCoords = new Vector2D(2.65, 10);
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
@@ -172,8 +174,6 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   private ChaosGameDescription createDiamondDescription() {
-    Vector2D minCoords = new Vector2D(-0.25, -.75);
-    Vector2D maxCoords = new Vector2D(1.25, .5);
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(-0.035359, -0.45328, 0.61167, -0.30323);
@@ -191,6 +191,8 @@ public class ChaosGameDescriptionFactory {
     weights.add(1);
     weights.add(5);
 
+    Vector2D minCoords = new Vector2D(-0.25, -.75);
+    Vector2D maxCoords = new Vector2D(1.25, .5);
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
@@ -201,8 +203,6 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   private ChaosGameDescription createPlantDescription() {
-    Vector2D minCoords = new Vector2D(-6, -2.5);
-    Vector2D maxCoords = new Vector2D(2.5, 6);
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(0.7735, 0.2473, -0.3505, 0.8680);
@@ -219,6 +219,9 @@ public class ChaosGameDescriptionFactory {
     List<Integer> weights = new ArrayList<>();
     weights.add(8);
     weights.add(5);
+
+    Vector2D minCoords = new Vector2D(-6, -2.5);
+    Vector2D maxCoords = new Vector2D(2.5, 6);
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
@@ -254,8 +257,6 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   public ChaosGameDescription createSnakeDescription() {
-    Vector2D minCoords = new Vector2D(-1, -6);
-    Vector2D maxCoords = new Vector2D(3, 0);
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(-0.99, -0.04, 0.29, 0.71);
@@ -274,6 +275,8 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform2);
     transforms.add(transform3);
 
+    Vector2D minCoords = new Vector2D(-1, -6);
+    Vector2D maxCoords = new Vector2D(3, 0);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
@@ -284,8 +287,6 @@ public class ChaosGameDescriptionFactory {
    * @return the ChaosGameDescription object.
    */
   public ChaosGameDescription createSpineDescription() {
-    Vector2D minCoords = new Vector2D(-3.5, -7.9);
-    Vector2D maxCoords = new Vector2D(8.5, 3.8);
     List<Transform2D> transforms = new ArrayList<>();
 
     Matrix2x2 matrix1 = new Matrix2x2(0.94, 0.25, -0.17, 0.73);
@@ -303,6 +304,8 @@ public class ChaosGameDescriptionFactory {
     weights.add(3);
     weights.add(1);
 
+    Vector2D minCoords = new Vector2D(-3.5, -7.9);
+    Vector2D maxCoords = new Vector2D(8.5, 3.8);
     return new ChaosGameDescription(minCoords, maxCoords, transforms, weights);
   }
 
@@ -384,17 +387,21 @@ public class ChaosGameDescriptionFactory {
     int transformCount = random.nextInt(3) + 2;
     for (int i = 0; i < transformCount; i++) {
       double a = random.nextDouble() * 2 - 1;
-      double b = random.nextDouble() * 2 - 1;
-      double c = random.nextDouble() * 2 - 1;
-      double d = random.nextDouble() * 2 - 1;
-      double e = random.nextDouble() * 4 - 2;
-      double f = random.nextDouble() * 4 - 2;
-
       a = Math.round(a * 10000.0) / 10000.0;
+
+      double b = random.nextDouble() * 2 - 1;
       b = Math.round(b * 10000.0) / 10000.0;
+
+      double c = random.nextDouble() * 2 - 1;
       c = Math.round(c * 10000.0) / 10000.0;
+
+      double d = random.nextDouble() * 2 - 1;
       d = Math.round(d * 10000.0) / 10000.0;
+
+      double e = random.nextDouble() * 4 - 2;
       e = Math.round(e * 10000.0) / 10000.0;
+
+      double f = random.nextDouble() * 4 - 2;
       f = Math.round(f * 10000.0) / 10000.0;
 
       Matrix2x2 matrix = new Matrix2x2(a, b, c, d);
