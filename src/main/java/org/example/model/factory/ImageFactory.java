@@ -9,10 +9,23 @@ import org.example.model.math.Vector2D;
 
 
 /**
- * <h1>ImageFactory</h1>
- * The ImageFactory class creates an image from a ChaosCanvas object.
+ * <h2>ImageFactory</h2>
+ * <p>
+ * The ImageFactory class creates an image from a ChaosCanvas object. The class is used to create
+ * images that are displayed on the interface.</p>
+ * <p>The color of each pixel is calculated based on the value of the canvas, and the gradient made
+ * with the color chosen by the user</p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class ImageFactory {
+
+  /**
+   * Constructor for ImageFactory.
+   */
+  public ImageFactory() {
+  }
 
 
   /**
@@ -40,7 +53,7 @@ public class ImageFactory {
    * Creates an image from a ChaosCanvas object with a specified color.
    *
    * @param canvas is the canvas to create the image from.
-   * @param color is the color to use for the image.
+   * @param color  is the color to use for the image.
    * @return the image created from the canvas.
    */
   public Image createImage(ChaosCanvas canvas, Color color) {
@@ -51,7 +64,7 @@ public class ImageFactory {
    * Creates an image from a ChaosCanvas object with a specified color.
    *
    * @param canvas is the canvas to create the image from.
-   * @param color is the color to use for the image.
+   * @param color  is the color to use for the image.
    * @return the image created from the canvas.
    */
   private Image createImageInternal(ChaosCanvas canvas, Color color) {
@@ -87,7 +100,8 @@ public class ImageFactory {
         return new Color(color.getRed(), color.getGreen(), color.getBlue(), value / 255.0);
       } else {
         double alpha = 1.0 / (1.0 + Math.pow((value - 255) / 100.0, 2));
-        return new Color(color.getRed() * alpha, color.getGreen() * alpha, color.getBlue() * alpha, 1.0);
+        return new Color(color.getRed() * alpha, color.getGreen() * alpha, color.getBlue() * alpha,
+            1.0);
       }
     }
   }

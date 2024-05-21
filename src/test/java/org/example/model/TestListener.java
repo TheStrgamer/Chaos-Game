@@ -5,9 +5,12 @@ import org.example.model.chaosGame.ChaosGameDescription;
 import org.example.model.observer.ChaosGameObserver;
 
 /**
- * <h1>TestObserver</h1>
+ * <h2>TestObserver</h2>
  * A class that implements the ChaosGameObserver interface for testing purposes.
- * It is used to check if the observer is notified about changes in the description and canvas. 
+ * It is used to check if the observer is notified about changes in the description and canvas.
+ *
+ * @version 0.3.0
+ * @since 0.3.0
  */
 public class TestListener implements ChaosGameObserver {
 

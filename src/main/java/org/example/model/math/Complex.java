@@ -1,9 +1,18 @@
 package org.example.model.math;
 
 /**
- * <h1>Complex</h1>
+ * <h2>Complex</h2>
+ * <p>
  * A class representing a complex number. It extends the Vector2D class and adds methods for
  * performing complex number operations.
+ * </p>
+ * <p>
+ * A complex number is a number that can be expressed in the form a + bi, where a and b are real
+ * numbers, and i is an imaginary number with the property i^2 = -1.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.1.0
  */
 public class Complex extends Vector2D {
 
@@ -15,17 +24,6 @@ public class Complex extends Vector2D {
   private void verifyVectorIsComplex(Vector2D vector) throws IllegalArgumentException {
     if (!(vector instanceof Complex)) {
       throw new IllegalArgumentException("Input must be of the Complex class");
-    }
-  }
-
-  /**
-   * checks if the given complex number is not null
-   *
-   * @param complex the complex number to check
-   */
-  private void verifyComplexIsNotNull(Vector2D complex) throws IllegalArgumentException {
-    if (complex == null) {
-      throw new IllegalArgumentException("Complex cannot be null");
     }
   }
 
@@ -43,7 +41,6 @@ public class Complex extends Vector2D {
    * Deep copy constructor for the Complex class. Used to create a new Complex object with the same
    *
    * @param complex the Complex object to copy
-   *
    */
   public Complex(Complex complex) {
     super(complex);
@@ -73,7 +70,7 @@ public class Complex extends Vector2D {
    * @param complex the complex number to add
    */
   public Complex add(Vector2D complex) {
-    verifyComplexIsNotNull(complex);
+    verifyNotNull(complex, "Complex");
     verifyVectorIsComplex(complex);
     Vector2D result = super.add(complex);
     return new Complex(result.getX0(), result.getX1());
@@ -85,7 +82,7 @@ public class Complex extends Vector2D {
    * @param complex the complex number to subtract
    */
   public Complex subtract(Vector2D complex) {
-    verifyComplexIsNotNull(complex);
+    verifyNotNull(complex, "Complex");
     verifyVectorIsComplex(complex);
     Vector2D result = super.subtract(complex);
     return new Complex(result.getX0(), result.getX1());
@@ -106,6 +103,7 @@ public class Complex extends Vector2D {
 
   /**
    * Returns the square root of this complex number.
+   *
    * @return the square root of this complex number
    */
   public Complex sqrt() {

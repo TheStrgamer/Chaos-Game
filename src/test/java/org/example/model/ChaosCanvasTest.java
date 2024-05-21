@@ -86,7 +86,7 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        assertEquals(0, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -111,7 +111,7 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(new Vector2D(0, 0));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -123,8 +123,8 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(255, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0));
+        assertEquals(255, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -135,8 +135,8 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(new Vector2D(0, 0),5);
-        assertEquals(5, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0),5);
+        assertEquals(5, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -148,8 +148,8 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 1)));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0));
+        assertEquals(0, chaosCanvas.getPixelFromCoords(new Vector2D(0, 1)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -185,10 +185,10 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(255, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0));
+        assertEquals(255, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
         chaosCanvas.removePixel(new Vector2D(0, 0));
-        assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        assertEquals(0, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -322,10 +322,10 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(101, 101, new Vector2D(0, 0),
             new Vector2D(100, 100));
-        chaosCanvas.setPixel(new Vector2D(0, 0));
-        assertEquals(255, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0));
+        assertEquals(255, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
         chaosCanvas.clear();
-        assertEquals(0, chaosCanvas.getPixel(new Vector2D(0, 0)));
+        assertEquals(0, chaosCanvas.getPixelFromCoords(new Vector2D(0, 0)));
       } catch (Exception e) {
         fail("An exception was thrown with the message: " + e.getMessage());
       }
@@ -356,8 +356,8 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(11, 11, new Vector2D(0, 0),
             new Vector2D(10, 10));
-        chaosCanvas.setPixel(new Vector2D(0, 0));
-        chaosCanvas.setPixel(new Vector2D(10, 10));
+        chaosCanvas.setPixelWithCoords(new Vector2D(0, 0));
+        chaosCanvas.setPixelWithCoords(new Vector2D(10, 10));
         String result = chaosCanvas.toString();
         assertNotNull(result);
         assertEquals("          X\n"
@@ -447,7 +447,7 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.getPixel(new Vector2D(300, 300));
+        chaosCanvas.getPixelFromCoords(new Vector2D(300, 300));
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Point 300.0, 300.0 is not within the given parameters 0.0, 0.0; 200.0, 200.0");
@@ -460,7 +460,7 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.getPixel(null);
+        chaosCanvas.getPixelFromCoords(null);
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Vector cannot be null");
@@ -473,7 +473,7 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(new Vector2D(300, 300));
+        chaosCanvas.setPixelWithCoords(new Vector2D(300, 300));
         assertEquals(0, Arrays.stream(chaosCanvas.getCanvasArray()).flatMapToInt(Arrays::stream).max().getAsInt());
       } catch (Exception e) {
         fail(e.getMessage());
@@ -486,7 +486,7 @@ class ChaosCanvasTest {
       try {
         ChaosCanvas chaosCanvas = new ChaosCanvas(100, 100, new Vector2D(0, 0),
             new Vector2D(200, 200));
-        chaosCanvas.setPixel(null);
+        chaosCanvas.setPixelWithCoords(null);
         fail("An exception was not thrown");
       } catch (Exception e) {
         assertEquals(e.getMessage(), "Vector cannot be null");

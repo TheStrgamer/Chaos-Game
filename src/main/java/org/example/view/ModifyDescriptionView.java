@@ -18,14 +18,21 @@ import org.example.view.components.DoubleNumberField;
 import org.example.view.components.WeightAndIterationsField;
 
 /**
- * <h1>ModifyDescriptionView</h1>
+ * <h2>ModifyDescriptionView</h2>
+ * <p>
  * The view class for the Modify Description page of the application. Responsible for displaying the
  * Modify Description page. Implements the PageView interface.
+ * </p>
+ * <p>
+ * The Modify Description page allows the user to edit the description of a chaos game.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class ModifyDescriptionView implements PageViewInterface {
 
   private final ModifyDescriptionController modifyDescriptionController;
-  private final MainController mainController;
   private VBox layout;
 
   private final ListView<VBox> descriptionList = new ListView<>();
@@ -39,7 +46,6 @@ public class ModifyDescriptionView implements PageViewInterface {
   public ModifyDescriptionView(ModifyDescriptionController modifyDescriptionController,
       MainController mainController) {
     this.modifyDescriptionController = modifyDescriptionController;
-    this.mainController = mainController;
     layout = createLayout();
 
 

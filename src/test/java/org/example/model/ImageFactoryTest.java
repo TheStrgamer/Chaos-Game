@@ -66,7 +66,7 @@ public class ImageFactoryTest {
     @Test
     @DisplayName("createImage sets the correct color for a pixel")
     void testCreateImageSetsCorrectColorForPixel() {
-      canvas.setPixel(new Vector2D(0, 10));
+      canvas.setPixelWithCoords(new Vector2D(0, 10));
       Image image = factory.createImage(canvas);
       assertEquals(0xFF000000,image.getPixelReader().getArgb(0, 0) );
       assertEquals(0x00000000,image.getPixelReader().getArgb(1, 1));
@@ -76,7 +76,7 @@ public class ImageFactoryTest {
     @Test
     @DisplayName("createImage sets the correct color for a pixel with a specified color red")
     void testCreateImageSetsCorrectColorForPixelWithSpecifiedColorRed() {
-      canvas.putPixel(new Vector2D(0, 0),255);
+      canvas.setPixelWithPointOnCanvas(new Vector2D(0, 0),255);
       Color color = Color.RED;
       Image image = factory.createImage(canvas,color);
       assertEquals(0xFFFF0000,image.getPixelReader().getArgb(0, 0) );
@@ -85,7 +85,7 @@ public class ImageFactoryTest {
     @Test
     @DisplayName("createImage sets the correct color for a pixel with a specified color blue")
     void testCreateImageSetsCorrectColorForPixelWithSpecifiedColorBlue() {
-      canvas.putPixel(new Vector2D(0, 0),255);
+      canvas.setPixelWithPointOnCanvas(new Vector2D(0, 0),255);
       Color color = Color.BLUE;
       Image image = factory.createImage(canvas,color);
       assertEquals(0xFF0000FF,image.getPixelReader().getArgb(0, 0) );
@@ -95,7 +95,7 @@ public class ImageFactoryTest {
     @Test
     @DisplayName("createImage sets the correct color for a pixel with a specified color green")
     void testCreateImageSetsCorrectColorForPixelWithSpecifiedColorGreen() {
-      canvas.putPixel(new Vector2D(0, 0),255);
+      canvas.setPixelWithPointOnCanvas(new Vector2D(0, 0),255);
       Color color = new Color(0,1,0,1);
       Image image = factory.createImage(canvas,color);
       assertEquals(0xFF00FF00,image.getPixelReader().getArgb(0, 0) );
@@ -105,7 +105,7 @@ public class ImageFactoryTest {
     @Test
     @DisplayName("createImage starts darkening the color after 255")
     void testCreateImageDarkensColorAfter255() {
-      canvas.putPixel(new Vector2D(0, 0),355);
+      canvas.setPixelWithPointOnCanvas(new Vector2D(0, 0),355);
 
       Color color = Color.RED;
       Image image = factory.createImage(canvas,color);

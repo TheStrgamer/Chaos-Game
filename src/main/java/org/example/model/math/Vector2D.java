@@ -1,9 +1,17 @@
 package org.example.model.math;
 
 /**
- * <h1>Vector2D</h1>
+ * <h2>Vector2D</h2>
+ * <p>
  * A class representing a 2D vector. It has methods for adding and subtracting vectors, as well as
  * multiplying the vector by a scalar.
+ * </p>
+ * <p>
+ * A 2d vector is represented by two values, which in this class are called x0 and x1.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.1.0
  */
 public class Vector2D {
 
@@ -17,9 +25,9 @@ public class Vector2D {
    * @param vector the double to check
    * @throws IllegalArgumentException if the given vector is null
    */
-  private void verifyNotNull(Vector2D vector) {
+  protected void verifyNotNull(Vector2D vector, String name) {
     if (vector == null) {
-      throw new IllegalArgumentException("Vector cannot be null");
+      throw new IllegalArgumentException(name + " cannot be null");
     }
   }
 
@@ -33,6 +41,7 @@ public class Vector2D {
     setX0(x0);
     setX1(x1);
   }
+
   /**
    * Deep copy constructor for Vector2D class.
    *
@@ -87,7 +96,7 @@ public class Vector2D {
    * @throws IllegalArgumentException if the given vector is null
    */
   public Vector2D add(Vector2D vector) {
-    verifyNotNull(vector);
+    verifyNotNull(vector, "Vector");
     double newX0 = getX0() + vector.getX0();
     double newX1 = getX1() + vector.getX1();
     return new Vector2D(newX0, newX1);
@@ -101,7 +110,7 @@ public class Vector2D {
    * @throws IllegalArgumentException if the given vector is null
    */
   public Vector2D subtract(Vector2D vector) {
-    verifyNotNull(vector);
+    verifyNotNull(vector, "Vector");
     double newX0 = x0 - vector.getX0();
     double newX1 = x1 - vector.getX1();
     return new Vector2D(newX0, newX1);

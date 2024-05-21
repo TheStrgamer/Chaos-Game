@@ -10,9 +10,14 @@ import org.example.model.chaosGame.ChaosGameDescription;
 import org.example.model.chaosGame.ChaosGameFileHandler;
 
 /**
- * <h1>FileController</h1>
+ * <h2>FileController</h2>
+ * <p>
  * The controller class for handling file operations in the application. this class has methods
  * for writing and reading chaos game descriptions to and from files through file explorer.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class FileController {
   private final ChaosGameFileHandler chaosGameFileHandler;
@@ -52,8 +57,9 @@ public class FileController {
   }
 
   /**
-   * Reads a chaos game description from a file.  The description is then set as the current description
-   *
+   * Reads a chaos game description from a file, and returns the description.
+   * If the file is not found, the method returns null.
+   * @return the chaos game description read from the file.
    */
   public ChaosGameDescription readFromFile() {
     try {

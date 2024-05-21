@@ -5,15 +5,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.model.chaosGame.ChaosGame;
 import org.example.model.chaosGame.ChaosGameDescription;
-import org.example.model.chaosGame.Mandelbrot;
-import org.example.model.chaosGame.ChaosGameFileHandler;
+import org.example.model.chaosGame.JuliaSetGame;
 import org.example.model.factory.ChaosGameDescriptionFactory;
 
 
 /**
- * <h1>MainController</h1>
- * The main controller class for the application. Responsible for creating views and controllers,
- * and switching between the pages.
+ * <h2>MainController</h2>
+ * <p>
+ * The main controller class for the application. Responsible for creating controllers, and
+ * handling communication between them.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.3.0
  */
 public class MainController {
 
@@ -46,26 +50,26 @@ public class MainController {
     chaosGameDescriptionFactory = new ChaosGameDescriptionFactory();
     currentDescription = chaosGameDescriptionFactory.createDescription("Sierpinski");
     ChaosGame chaosGame = new ChaosGame(currentDescription, currentWidth - 30, currentHeight - 100);
-    Mandelbrot mandelBrot = new Mandelbrot(
+    JuliaSetGame juliaSetGame = new JuliaSetGame(
         chaosGameDescriptionFactory.createDescription("EmptyJulia"), currentWidth - 30,
         currentHeight - 100, 255, 3.0);
 
-    chaosGameController = new ChaosGameController(this, chaosGame, mandelBrot);
+    chaosGameController = new ChaosGameController(this, chaosGame, juliaSetGame);
     fileController = new FileController(this);
     modifyDescriptionController = new ModifyDescriptionController(this, currentDescription);
     popupController = new PopupController();
 
     chaosGame.addObserver(modifyDescriptionController);
     chaosGame.addObserver(chaosGameController);
-    mandelBrot.addObserver(chaosGameController);
-    mandelBrot.addObserver(modifyDescriptionController);
+    juliaSetGame.addObserver(chaosGameController);
+    juliaSetGame.addObserver(modifyDescriptionController);
 
     int originalWidth = 800;
     int originalHeight = 600;
     Scene chaosGameScene = new Scene(chaosGameController.getLayout(), originalWidth,
         originalHeight);
     stage.setScene(chaosGameScene);
-    setStageListeners(stage);
+    setStageListeners();
     chaosGameController.setKeyListeners(chaosGameScene);
 
     chaosGameScene.getStylesheets().add(
@@ -75,9 +79,8 @@ public class MainController {
   /**
    * Sets the stage listeners for the primary stage.
    *
-   * @param stage the primary stage for the application.
    */
-  private void setStageListeners(Stage stage) {
+  private void setStageListeners() {
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
       if (newVal.intValue() < minCanvasWidth) {
         stage.setWidth(minCanvasWidth);
@@ -103,8 +106,7 @@ public class MainController {
   }
 
   /**
-   * Sets the current description of the Chaos Game. sets the change description
-   * combobox empty.
+   * Sets the current description of the Chaos Game. sets the change description combobox empty.
    *
    * @param description the description to set as the current description.
    */

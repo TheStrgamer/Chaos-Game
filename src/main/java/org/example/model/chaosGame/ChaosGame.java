@@ -5,10 +5,20 @@ import org.example.model.transform.Transform2D;
 import org.example.model.math.Vector2D;
 
 /**
- * <h1>ChaosGame</h1>
+ * <h2>ChaosGame</h2>
+ * <p>
  * A class that represents a chaos game. The game is generated based on a description and a canvas.
+ * </p>
+ * <p>
+ * The chaos game extends the Game class, and is used to transform a given point based on randomly
+ * selected transforms from a given description. The transformed point increases in value in the
+ * canvas, and the canvas is updated after the given number of steps is run.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.2.0
  */
-public class ChaosGame extends Game{
+public class ChaosGame extends Game {
 
   private final Vector2D currentPoint;
 
@@ -53,10 +63,10 @@ public class ChaosGame extends Game{
     notifyCanvasChanged();
     notifyDescriptionChanged();
   }
+
   /**
    * Updates the description of this chaos game. The canvas is reset to a new canvas based on the
    * description. Notifies all observers that the description has changed.
-   *
    */
   public void updateDescription() {
     currentPoint.setX0(0);
@@ -73,7 +83,7 @@ public class ChaosGame extends Game{
    * @param multiplier the multiplier to change the zoom with.
    */
   public void changeZoom(double multiplier) {
-    zoom += zoom*multiplier;
+    zoom += zoom * multiplier;
     description.changeZoom(multiplier);
     updateDescription();
   }
@@ -90,7 +100,6 @@ public class ChaosGame extends Game{
   }
 
 
-
   /**
    * Runs the chaos game for the given number of steps. Notifies all observers that the canvas has
    * changed after all steps have been run.
@@ -101,7 +110,7 @@ public class ChaosGame extends Game{
   public void runSteps(int steps) {
     verifyStepsPositive(steps);
     int sumOfWeights = description.sumOfWeights();
-    int value = (int) Math.min(10/zoom+1, 255);
+    int value = (int) Math.min(10 / zoom + 1, 255);
     for (int i = 0; i < steps; i++) {
       try {
         int randomInt = random.nextInt(sumOfWeights);
@@ -110,7 +119,7 @@ public class ChaosGame extends Game{
         currentPoint.setX0(tmp.getX0());
         currentPoint.setX1(tmp.getX1());
 
-        canvas.setPixel(currentPoint, value);
+        canvas.setPixelWithCoords(currentPoint, value);
       } catch (Exception e) {
         throw new IllegalArgumentException("Invalid description");
       }

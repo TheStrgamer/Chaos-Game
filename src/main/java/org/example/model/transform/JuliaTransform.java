@@ -4,12 +4,19 @@ import org.example.model.math.Complex;
 import org.example.model.math.Vector2D;
 
 /**
- * <h1>JuliaTransform</h1>
- * A class representing a Julia transformation. The goal of this class is to transform a given
- * complex number using the Julia transformation.
+ * <h2>JuliaTransform</h2>
  * <p>
- * The class implements the Transform2D interface
+ * A class representing a Julia transformation. The goal of this class is to transform a given
+ * complex number using the Julia transformation. The class implements the Transform2D interface
  * </p>
+ * <p>
+ * The Julia transformation is represented by a complex number and a sign. The transformation is
+ * done by taking the square root of the difference between the given complex number and the point,
+ * and then multiplying the result by the sign.
+ * </p>
+ *
+ * @version 0.4.0
+ * @since 0.2.0
  */
 public class JuliaTransform implements Transform2D {
 
@@ -73,8 +80,8 @@ public class JuliaTransform implements Transform2D {
   /**
    * Deep copy constructor for the JuliaTransform class. Used to create a new JuliaTransform object
    * with the same values as the given transform.
-   * @param transform the JuliaTransform object to copy
    *
+   * @param transform the JuliaTransform object to copy
    */
   public JuliaTransform(JuliaTransform transform) {
     this.point = new Complex(transform.getPoint());
@@ -139,6 +146,7 @@ public class JuliaTransform implements Transform2D {
 
   /**
    * Returns a deep copy of this Julia transformation object.
+   *
    * @return a deep copy of this Julia transformation object
    */
   @Override

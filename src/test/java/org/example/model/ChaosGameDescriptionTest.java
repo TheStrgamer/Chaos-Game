@@ -921,5 +921,36 @@ public class ChaosGameDescriptionTest {
         assertEquals(e.getMessage(), "List cannot be null");
       }
     }
+
+    @Test
+    @DisplayName("Constructor throws IllegalArgumentException when minCoords is greater than maxCoords")
+    void testConstructorThrowsExceptionOnMinCoordsGreaterThanMaxCoords() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(0, 0),
+            transforms);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Minimum coordinates must be less than maximum coordinates");
+      }
+    }
+
+    @Test
+    @DisplayName("Constructor throws IllegalArgumentException when minCoords is equal to maxCoords")
+    void testConstructorThrowsExceptionOnMinCoordsEqualToMaxCoords() {
+      try {
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(new JuliaTransform(new Complex(1, 3), -1));
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(1, 2),
+            transforms);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Minimum coordinates must be less than maximum coordinates");
+      }
+    }
+
   }
 }
