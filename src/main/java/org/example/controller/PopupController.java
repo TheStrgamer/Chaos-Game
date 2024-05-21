@@ -1,6 +1,7 @@
 package org.example.controller;
 import java.util.Objects;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import org.example.view.PageViewInterface;
@@ -31,6 +32,7 @@ public class PopupController {
     if (popupStage.isShowing()) {
       popupStage.close();
     }
+    popupStage.setTitle("");
     Scene popupScene = new Scene(layout, width, height);
     setSceneSizeLimit(popupScene, width, (int) (height*0.75));
     popupScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
@@ -45,11 +47,12 @@ public class PopupController {
    * @param width the width of the popup window.
    * @param height the height of the popup window.
    */
-  public void showPopup(PageViewInterface pageView, int width, int height) {
+  public void showErrorPopup(PageViewInterface pageView, int width, int height) {
     if (popupStage.isShowing()) {
       popupStage.close();
     }
     Scene popupScene = new Scene(pageView.getLayout(), width, height);
+    popupStage.setTitle("Error!");
     setSceneSizeLimit(popupScene, width, (int) (height*0.75));
     popupScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
     popupStage.setScene(popupScene);
