@@ -60,6 +60,18 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   }
 
   /**
+   * Checks if the given weight is a valid number.
+   */
+  public boolean weightIsValid(String weight) {
+    try {
+      Integer.parseInt(weight);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  /**
    * checks if the given minCoords are valid, and if they are smaller than the maxCoords.
    *
    * @param X0 the x0 value
@@ -251,6 +263,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    */
   public void setJuliaTransforms(int index, String real, String imaginary) {
     if (!Stream.of(real, imaginary).allMatch(this::stringIsValidNumber)) {
+      mainController.showErrorPopup("One or more values are invalid");
       return;
     }
     Complex c = new Complex(Double.parseDouble(real), Double.parseDouble(imaginary));
@@ -283,6 +296,7 @@ public class ModifyDescriptionController implements ChaosGameObserver {
   public void setAffineTransforms(int index, String a00, String a01, String a10, String a11,
       String a, String b) {
     if (!Stream.of(a00, a01, a10, a11, a, b).allMatch(this::stringIsValidNumber)) {
+      mainController.showErrorPopup("One or more values are invalid");
       return;
     }
     Matrix2x2 matrix = new Matrix2x2(Double.parseDouble(a00), Double.parseDouble(a01),
@@ -330,7 +344,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
    * @param weight the weight of the transform.
    */
   public void setWeight(int index, String weight) {
-    if (!stringIsValidNumber(weight)) {
+    if (!weightIsValid(weight)) {
+      mainController.showErrorPopup("Invalid weight");
       return;
     }
     int newWeight = Integer.parseInt(weight);

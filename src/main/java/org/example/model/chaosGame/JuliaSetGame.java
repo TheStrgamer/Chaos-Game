@@ -88,6 +88,7 @@ public class JuliaSetGame extends Game {
    * Sets the description of the Julia set.
    *
    * @param description the description to set
+   * @throws IllegalArgumentException if the given description is null
    */
   @Override
   public void setDescription(ChaosGameDescription description) {
@@ -104,6 +105,7 @@ public class JuliaSetGame extends Game {
    * Runs the julia set for each pixel.
    *
    * @param maxIterations the maximum number of iterations to run per pixel
+   * @throws IllegalArgumentException if the given max iterations is not positive
    */
   @Override
   public void runSteps(int maxIterations) {
@@ -213,7 +215,8 @@ public class JuliaSetGame extends Game {
   public void changeZoom(double multiplier) {
     zoom += zoom * multiplier;
     description.changeZoom(multiplier);
-    updateDescription();
+    notifyDescriptionChanged();
+    notifyCanvasChanged();
   }
 
   /**

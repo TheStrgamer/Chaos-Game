@@ -32,6 +32,8 @@ import org.example.view.ChaosGameView;
  */
 public class ChaosGameController implements ChaosGameObserver {
 
+  private final MainController mainController;
+
   private final ChaosGame chaosGame;
   private final JuliaSetGame juliaSetGame;
   private final ChaosGameView chaosGameView;
@@ -59,6 +61,7 @@ public class ChaosGameController implements ChaosGameObserver {
    */
   public ChaosGameController(MainController mainController, ChaosGame chaosGame,
       JuliaSetGame juliaSetGame) {
+    this.mainController = mainController;
     this.chaosGame = chaosGame;
     this.juliaSetGame = juliaSetGame;
     this.currentCanvas = chaosGame.getCanvas();
@@ -144,7 +147,7 @@ public class ChaosGameController implements ChaosGameObserver {
     try {
       return Math.max(Integer.parseInt(iterations), minIterations);
     } catch (NumberFormatException e) {
-      System.out.println(e.getMessage());
+      mainController.showErrorPopup("Invalid number of iterations");
       return defaultIterations;
     }
   }

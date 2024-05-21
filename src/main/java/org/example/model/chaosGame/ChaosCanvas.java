@@ -42,6 +42,19 @@ public class ChaosCanvas {
   }
 
   /**
+   * Verifies that the given canvas is not null. Throws an IllegalArgumentException if the given
+   * canvas is null.
+   *
+   * @param canvas the canvas to verify
+   * @throws IllegalArgumentException if the given canvas is null
+   */
+  private void verifyNotNull(ChaosCanvas canvas) {
+    if (canvas == null) {
+      throw new IllegalArgumentException("Canvas cannot be null");
+    }
+  }
+
+  /**
    * Verifies that the given point is within the given parameters. Throws an
    * IllegalArgumentException if the given point is not within the given parameters.
    *
@@ -53,12 +66,13 @@ public class ChaosCanvas {
     if (point.getX0() < minCoords.getX0() || point.getX0() > maxCoords.getX0() ||
         point.getX1() < minCoords.getX1() || point.getX1() > maxCoords.getX1()) {
       throw new IllegalArgumentException(
-          "Point " + point + " is not within the given parameters " + minCoords + "; " + maxCoords);
+          "Point " + point + " is not within the given parameters " + minCoords + "; "
+              + maxCoords);
     }
   }
 
   /**
-   * Returns true if the given point is within the given parameters, and false otherwise.
+   * Returns whether the given point is within the given parameters or not.
    *
    * @param point the point to check
    * @return true if the given point is within the given parameters, and false otherwise
@@ -145,8 +159,10 @@ public class ChaosCanvas {
    * values as the given canvas.
    *
    * @param canvas the ChaosCanvas object to copy
+   * @throws IllegalArgumentException if the given canvas is null
    */
   public ChaosCanvas(ChaosCanvas canvas) {
+    verifyNotNull(canvas);
     this.width = canvas.getWidth();
     this.height = canvas.getHeight();
     this.minCoords = new Vector2D(canvas.minCoords);
@@ -166,6 +182,7 @@ public class ChaosCanvas {
    *
    * @param point the point to get the pixel value at
    * @return the pixel value
+   * @throws IllegalArgumentException if the given point is null or not within the parameters
    */
   public int getPixelFromCoords(Vector2D point) {
     verifyNotNull(point);
@@ -237,7 +254,6 @@ public class ChaosCanvas {
 
   }
 
-
   /**
    * Sets the pixel value at the given point to 0.
    *
@@ -273,13 +289,14 @@ public class ChaosCanvas {
   /**
    * transforms the given indices to coordinates. Main goal is testing.
    *
-   * @param coord the indices to transform
+   * @param coordinate the indices to transform
    * @return the transformed coordinates
+   * @throws IllegalArgumentException if the given coordinate is null
    */
-  public Vector2D transformCoords(Vector2D coord) {
-    verifyNotNull(coord);
-    verifyPointWithinParameters(coord);
-    return transformCoordsToIndices.transform(coord);
+  public Vector2D transformCoords(Vector2D coordinate) {
+    verifyNotNull(coordinate);
+    verifyPointWithinParameters(coordinate);
+    return transformCoordsToIndices.transform(coordinate);
   }
 
   /**

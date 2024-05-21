@@ -287,4 +287,15 @@ class Vector2DTest {
     }
   }
 
+  @Test
+  @DisplayName("deep copy constructor throws exception when given vector is null")
+  void testDeepCopyConstructorThrowsOnNull() {
+    try {
+      new Vector2D(null);
+      fail("An exception was not thrown");
+    } catch (Exception e) {
+      assertEquals(e.getMessage(), "Vector cannot be null");
+    }
+  }
+
 }

@@ -67,6 +67,7 @@ public class ChaosGameFileHandler {
    *
    * @param path is the path to the file.
    * @return true if the file exists, false otherwise.
+   * @throws IllegalArgumentException if the file is not found.
    */
   private boolean verifyFileExists(String path) {
     File file = new File(path);
@@ -78,6 +79,7 @@ public class ChaosGameFileHandler {
    *
    * @param path is the path to the file.
    * @return a valid path to the file.
+   * @throws IllegalArgumentException if the file is not found.
    */
   private String makeValidPath(String path) {
     if (!path.contains(".txt")) {
@@ -90,6 +92,7 @@ public class ChaosGameFileHandler {
    * Verifies that a path is valid.
    *
    * @param path is the path to the file.
+   * @throws IllegalArgumentException if the file is not found.
    */
   private void verifyValidPath(String path) {
     if (!verifyFileExists(path)) {

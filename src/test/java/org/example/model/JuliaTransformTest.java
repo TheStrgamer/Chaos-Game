@@ -246,6 +246,18 @@ class JuliaTransformTest {
       }
     }
 
+    @Test
+    @DisplayName("Deep copy constructor throws IllegalArgumentException with null transform")
+    void testDeepCopyConstructorThrowsIllegalArgumentExceptionWithNullTransform() {
+      try {
+        JuliaTransform juliaTransform = new JuliaTransform(null, 1);
+        JuliaTransform juliaTransform2 = new JuliaTransform(juliaTransform);
+        fail("An exception was not thrown");
+      } catch (IllegalArgumentException e) {
+        assertEquals("Input must be of the Complex class", e.getMessage());
+      }
+    }
+
   }
 
 }

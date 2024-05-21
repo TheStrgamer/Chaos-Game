@@ -32,6 +32,7 @@ public class ChaosGame extends Game {
    * @param description is the description to use.
    * @param width       is the width of the canvas.
    * @param height      is the height of the canvas.
+   * @throws IllegalArgumentException if the given width or height is not positive, or if the given
    */
   public ChaosGame(ChaosGameDescription description, int width, int height) {
     verifyNotNullDescription(description);
@@ -50,6 +51,7 @@ public class ChaosGame extends Game {
    * description. Notifies all observers that the description has changed.
    *
    * @param description is the description to use.
+   * @throws IllegalArgumentException if the given description is null.
    */
   @Override
   public void setDescription(ChaosGameDescription description) {
@@ -105,6 +107,7 @@ public class ChaosGame extends Game {
    * changed after all steps have been run.
    *
    * @param steps is the number of steps to run.
+   * @throws IllegalArgumentException if the given number of steps is not positive.
    */
   @Override
   public void runSteps(int steps) {

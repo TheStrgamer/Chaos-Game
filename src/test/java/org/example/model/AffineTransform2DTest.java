@@ -241,6 +241,17 @@ class AffineTransform2DTest {
         assertEquals(e.getMessage(), "Vector cannot be null");
       }
     }
+
+    @Test
+    @DisplayName("Deep copy constructor throws exception when given transform is null")
+    void testDeepCopyConstructorThrowsOnNull() {
+      try {
+        new AffineTransform2D((AffineTransform2D) null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Transform cannot be null");
+      }
+    }
   }
 
 }

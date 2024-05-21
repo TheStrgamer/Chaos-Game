@@ -33,6 +33,15 @@ public class Matrix2x2 {
   }
 
   /**
+   * Verifies that the given matrix object is not null. Throws an IllegalArgumentException if the given
+   */
+  private void verifyNotNull(Matrix2x2 matrix) {
+    if (matrix == null) {
+      throw new IllegalArgumentException("Matrix cannot be null");
+    }
+  }
+
+  /**
    * Constructs a new Matrix2x2 object with the given values.
    *
    * @param a00 the a00 value
@@ -53,8 +62,10 @@ public class Matrix2x2 {
    * same values as the given Matrix2x2 object.
    *
    * @param matrix the Matrix2x2 object to copy
+   * @throws IllegalArgumentException if the given matrix is null
    */
   public Matrix2x2(Matrix2x2 matrix) {
+    verifyNotNull(matrix);
     double[] values = matrix.getValues();
     this.a00 = values[0];
     this.a01 = values[1];
@@ -103,7 +114,7 @@ public class Matrix2x2 {
   /**
    * Returns a string representation of this matrix.
    *
-   * @return a string representation of this matrix
+   * @return the string of this matrix
    */
   public String toString() {
     return a00 + ", " + a01 + ", " + a10 + ", " + a11;

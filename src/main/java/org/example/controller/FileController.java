@@ -50,7 +50,6 @@ public class FileController {
         return;
       }
       chaosGameFileHandler.writeToFile(description, path);
-      System.out.println("File saved successfully");
     } catch (Exception e) {
       mainController.showErrorPopup("An error occurred when saving" +
               " description as a file: \n" + e.getMessage());
@@ -66,12 +65,9 @@ public class FileController {
     try {
       String path = chooseLoadPath();
       if (path == null) {
-        mainController.showErrorPopup("No file selected");
         return null;
       }
-      ChaosGameDescription readDescription = chaosGameFileHandler.readFromFile(path);
-      System.out.println("File read successfully");
-      return readDescription;
+      return chaosGameFileHandler.readFromFile(path);
 
     } catch (Exception e) {
       mainController.showErrorPopup("An error occurred when trying to" +
@@ -139,8 +135,6 @@ public class FileController {
   private String getPath(File file) {
     if (file != null) {
       return file.getAbsolutePath();
-    } else {
-      System.out.println("File open cancelled");
     }
     return null;
 

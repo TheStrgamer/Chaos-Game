@@ -68,6 +68,18 @@ public class ChaosGameDescription {
   }
 
   /**
+   * Verifies that the given description is not null.
+   *
+   * @param description the description to verify
+   * @throws IllegalArgumentException if the given description is null
+   */
+  private void verifyNotNullDescription(ChaosGameDescription description) {
+    if (description == null) {
+      throw new IllegalArgumentException("Description cannot be null");
+    }
+  }
+
+  /**
    * Verifies that the given list of transforms is not null, not empty and does not contain any null
    * objects.
    *
@@ -154,8 +166,10 @@ public class ChaosGameDescription {
    * ChaosGameDescription with the same values as the given description
    *
    * @param description the ChaosGameDescription object to copy
+   * @throws IllegalArgumentException if the given description is null
    */
   public ChaosGameDescription(ChaosGameDescription description) {
+    verifyNotNullDescription(description);
     this.minCoords = new Vector2D(description.minCoords);
     this.maxCoords = new Vector2D(description.maxCoords);
     this.transforms = description.getTransforms();
@@ -285,6 +299,7 @@ public class ChaosGameDescription {
    *
    * @param index the index of the transform.
    * @return the weight of the transform.
+   * @throws IllegalArgumentException if the index is out of bounds.
    */
   public int getWeight(int index) {
     verifyWithinBounds(index, weights.size());
@@ -297,6 +312,7 @@ public class ChaosGameDescription {
    *
    * @param index  the index of the transform.
    * @param weight the weight of the transform.
+   * @throws IllegalArgumentException if the index is out of bounds.
    */
   public void setWeight(int index, int weight) {
     verifyWithinBounds(index, weights.size());
@@ -309,6 +325,7 @@ public class ChaosGameDescription {
    * IllegalArgumentException if the list of weights is null, empty or contains null objects.
    *
    * @param weights the list of weights.
+   * @throws IllegalArgumentException if the list of weights is null, empty or contains null objects.
    */
   public void setWeights(List<Integer> weights) {
     verifyWeightsNotNullAndNotEmpty(weights);
@@ -346,6 +363,7 @@ public class ChaosGameDescription {
    *
    * @param index the index of the transform.
    * @return the sum of the weights of all the transforms below the given index.
+   * @throws IllegalArgumentException if the index is out of bounds.
    */
   public int sumOfWeightsBelowIndex(int index) {
     verifyWithinBounds(index, weights.size() + 1);
@@ -361,6 +379,7 @@ public class ChaosGameDescription {
    *
    * @param index the weight of the transform.
    * @return the transform with the given weight.
+   * @throws IllegalArgumentException if the index is out of bounds.
    */
   public Transform2D getTransformWithWeight(int index) {
     verifyWithinBounds(index, weightSum);

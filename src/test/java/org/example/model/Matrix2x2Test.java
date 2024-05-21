@@ -188,4 +188,14 @@ public class Matrix2x2Test {
       }
     }
   }
+  @Test
+  @DisplayName("deep copy constructor throws exception when given matrix is null")
+  void testDeepCopyConstructorThrowsOnNull() {
+    try {
+      new Matrix2x2(null);
+      fail("An exception was not thrown");
+    } catch (Exception e) {
+      assertEquals(e.getMessage(), "Matrix cannot be null");
+    }
+  }
 }

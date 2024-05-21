@@ -40,6 +40,7 @@ public class ChaosGameDescriptionFactory {
    *
    * @param type is the type of description to create.
    * @return the ChaosGameDescription object.
+   * @throws IllegalArgumentException if the given type is invalid.
    */
   public ChaosGameDescription createDescription(String type) {
     return switch (type) {

@@ -952,5 +952,23 @@ public class ChaosGameDescriptionTest {
       }
     }
 
+    @Test
+    @DisplayName("Deep copy throws exception when given object is null")
+    void testDeepCopyThrowsExceptionOnNull() {
+      try {
+        AffineTransform2D affineTransform2D = new AffineTransform2D(new Matrix2x2(1, 0, 0, 1),
+            new Vector2D(0, 0));
+        List<Transform2D> transforms = new ArrayList<>();
+        transforms.add(affineTransform2D);
+        ChaosGameDescription chaosGameDescription = new ChaosGameDescription(new Vector2D(1, 2),
+            new Vector2D(3, 4), transforms);
+
+        new ChaosGameDescription(null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Description cannot be null");
+      }
+    }
+
   }
 }

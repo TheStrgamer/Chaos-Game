@@ -32,6 +32,7 @@ public class ImageFactory {
    * Verifies that the canvas is not null.
    *
    * @param canvas is the canvas to verify.
+   * @throws IllegalArgumentException if the canvas is null.
    */
   private void verifyCanvasNotNull(ChaosCanvas canvas) {
     if (canvas == null) {
@@ -44,6 +45,7 @@ public class ImageFactory {
    *
    * @param canvas is the canvas to create the image from.
    * @return the image created from the canvas.
+   * @throws IllegalArgumentException if the canvas is null.
    */
   public Image createImage(ChaosCanvas canvas) {
     return createImageInternal(canvas, Color.BLACK);
@@ -55,6 +57,7 @@ public class ImageFactory {
    * @param canvas is the canvas to create the image from.
    * @param color  is the color to use for the image.
    * @return the image created from the canvas.
+   * @throws IllegalArgumentException if the canvas is null.
    */
   public Image createImage(ChaosCanvas canvas, Color color) {
     return createImageInternal(canvas, color);
@@ -66,6 +69,7 @@ public class ImageFactory {
    * @param canvas is the canvas to create the image from.
    * @param color  is the color to use for the image.
    * @return the image created from the canvas.
+   * @throws IllegalArgumentException if the canvas is null.
    */
   private Image createImageInternal(ChaosCanvas canvas, Color color) {
     try {

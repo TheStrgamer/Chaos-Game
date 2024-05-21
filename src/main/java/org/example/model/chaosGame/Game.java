@@ -66,6 +66,7 @@ abstract class Game {
 
   /**
    * runs the game with the given parameters
+   *
    * @param steps the number of steps to run
    */
   public abstract void runSteps(int steps);
@@ -120,6 +121,7 @@ abstract class Game {
    *
    * @param width  the width of the canvas
    * @param height the height of the canvas
+   * @throws IllegalArgumentException if the given width or height is not positive
    */
   public void setCanvasSize(int width, int height) {
     verifyValidCanvasSize(width, height);

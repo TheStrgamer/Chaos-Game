@@ -48,6 +48,7 @@ public class Vector2D {
    * @param vector the Vector2D object to copy
    */
   public Vector2D(Vector2D vector) {
+    verifyNotNull(vector, "Vector");
     setX0(vector.getX0());
     setX1(vector.getX1());
   }

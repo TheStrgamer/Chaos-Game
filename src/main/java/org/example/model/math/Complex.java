@@ -20,6 +20,7 @@ public class Complex extends Vector2D {
    * checks if the given vector is of the complex class
    *
    * @param vector the vector to check
+   * @throws IllegalArgumentException if the given vector is not of the Complex class
    */
   private void verifyVectorIsComplex(Vector2D vector) throws IllegalArgumentException {
     if (!(vector instanceof Complex)) {
@@ -32,6 +33,7 @@ public class Complex extends Vector2D {
    *
    * @param real      the real value
    * @param imaginary the imaginary value
+   * @throws IllegalArgumentException if the given vector is null or not of the Complex class
    */
   public Complex(double real, double imaginary) {
     super(real, imaginary);
@@ -68,6 +70,8 @@ public class Complex extends Vector2D {
    * Adds the given complex number to this complex number.
    *
    * @param complex the complex number to add
+   * @return the sum of this complex number and the given complex number
+   * @throws IllegalArgumentException if the given complex number is null or not of the Complex class
    */
   public Complex add(Vector2D complex) {
     verifyNotNull(complex, "Complex");
@@ -80,6 +84,8 @@ public class Complex extends Vector2D {
    * Subtracts the given complex number from this complex number.
    *
    * @param complex the complex number to subtract
+   * @return the difference between this complex number and the given complex number
+   * @throws IllegalArgumentException if the given complex number is null or not of the Complex class
    */
   public Complex subtract(Vector2D complex) {
     verifyNotNull(complex, "Complex");
@@ -92,6 +98,7 @@ public class Complex extends Vector2D {
    * Checks if the given complex number has the same values as this complex number.
    *
    * @param vector the vector to compare
+   * @return true if the given complex number has the same values as this complex number, false
    */
   @Override
   public boolean equals(Vector2D vector) {
@@ -102,9 +109,9 @@ public class Complex extends Vector2D {
   }
 
   /**
-   * Returns the square root of this complex number.
+   * Returns the square root of this complex number as a new complex numer.
    *
-   * @return the square root of this complex number
+   * @return the root of the complex number
    */
   public Complex sqrt() {
     double real = getReal();
@@ -120,6 +127,8 @@ public class Complex extends Vector2D {
    * Multiplies the given complex number by given scalar.
    *
    * @param scalar the scalar to multiply by
+   * @return the product of the complex number and the scalar
+   *
    */
   public Complex multiply(double scalar) {
     Vector2D result = super.multiply(scalar);
@@ -128,6 +137,7 @@ public class Complex extends Vector2D {
 
   /**
    * Returns a string representation of the complex number.
+   * @return string of complex number
    */
   public String toString() {
     return getReal() + ", " + getImaginary();

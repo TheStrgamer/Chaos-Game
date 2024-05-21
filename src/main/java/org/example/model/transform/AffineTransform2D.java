@@ -38,6 +38,18 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
+   * Verifies that the given AffineTransform2D object is not null. Throws an IllegalArgumentException
+   * if the given AffineTransform2D object is null.
+   * @param transform the AffineTransform2D object to verify
+   * @throws IllegalArgumentException if the given AffineTransform2D object is null
+   */
+  private void verifyTransformNotNull(AffineTransform2D transform) {
+    if (transform == null) {
+      throw new IllegalArgumentException("Transform cannot be null");
+    }
+  }
+
+  /**
    * Verifies that the given matrix is not null. Throws an IllegalArgumentException if the given
    * matrix is null.
    *
@@ -71,6 +83,7 @@ public class AffineTransform2D implements Transform2D {
    * @param transform the AffineTransform2D object to copy
    */
   public AffineTransform2D(AffineTransform2D transform) {
+    verifyTransformNotNull(transform);
     this.matrix = new Matrix2x2(transform.getMatrix());
     this.vector = new Vector2D(transform.getVector());
   }
@@ -124,7 +137,7 @@ public class AffineTransform2D implements Transform2D {
   /**
    * Returns a deep copy of this AffineTransform2D object.
    *
-   * @return a deep copy of this AffineTransform2D object
+   * @return a deep copy of this transform
    */
   @Override
   public Transform2D deepCopy() {
@@ -135,7 +148,7 @@ public class AffineTransform2D implements Transform2D {
   /**
    * Returns a string representation of this AffineTransform2D object.
    *
-   * @return a string representation of this AffineTransform2D object
+   * @return a string of this AffineTransform2D
    */
 
   public String toString() {

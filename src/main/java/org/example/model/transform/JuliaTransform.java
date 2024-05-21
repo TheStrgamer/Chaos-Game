@@ -63,6 +63,19 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
+   * Verifies that the given Julia transformation object is not null. Throws an IllegalArgumentException
+   * if the given Julia transformation object is null.
+   * @param transform the Julia transformation object to verify
+   * @throws IllegalArgumentException if the given Julia transformation object is null
+   *
+   */
+  private void verifyNotNull(JuliaTransform transform) {
+    if (transform == null) {
+      throw new IllegalArgumentException("Transform cannot be null");
+    }
+}
+
+  /**
    * Constructs a new JuliaTransform object with the given point and sign.
    *
    * @param point the point to use
@@ -84,6 +97,7 @@ public class JuliaTransform implements Transform2D {
    * @param transform the JuliaTransform object to copy
    */
   public JuliaTransform(JuliaTransform transform) {
+    verifyNotNull(transform);
     this.point = new Complex(transform.getPoint());
     this.sign = transform.getSign();
   }

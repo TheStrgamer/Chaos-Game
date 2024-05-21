@@ -113,6 +113,9 @@ public class MainController {
    * @param description the description to set as the current description.
    */
   public void setCurrentDescription(ChaosGameDescription description) {
+    if (description == null) {
+      return;
+    }
     currentDescription = description;
     chaosGameController.setDescription(currentDescription);
     chaosGameController.setComboBoxEmpty();
@@ -178,6 +181,6 @@ public class MainController {
    */
 
   public void showErrorPopup(String errorMessage) {
-    popupController.showErrorPopup(new ErrorHandlingView(errorMessage), 300, 200);
+    popupController.showErrorPopup(new ErrorHandlingView(errorMessage), 300, 100);
   }
 }

@@ -324,5 +324,16 @@ class ComplexTest {
         assertEquals(e.getMessage(), "Complex cannot be null");
       }
     }
+
+    @Test
+    @DisplayName("Deep copy constructor throws exception when given complex is null")
+    void testDeepCopyConstructorThrowsOnNull() {
+      try {
+        new Complex((Complex) null);
+        fail("An exception was not thrown");
+      } catch (Exception e) {
+        assertEquals(e.getMessage(), "Vector cannot be null");
+      }
+    }
   }
 }

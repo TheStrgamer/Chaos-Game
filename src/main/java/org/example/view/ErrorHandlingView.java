@@ -29,7 +29,7 @@ public class ErrorHandlingView implements PageViewInterface {
    * @param errorMessage the error message to display in the popup window.
    * @return the layout for the error handling popup window.
    */
-  public VBox createPopUpError(String errorMessage) {
+  private VBox createPopUpError(String errorMessage) {
     VBox layout = new VBox();
     Button closeButton = new Button("OK");
     Label errorLabel = new Label(errorMessage);
