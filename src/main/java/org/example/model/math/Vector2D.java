@@ -23,6 +23,7 @@ public class Vector2D {
    * Checks if the given vector object is null and throws an IllegalArgumentException if it is.
    *
    * @param vector the double to check
+   * @param name   the name to use in the exception message
    * @throws IllegalArgumentException if the given vector is null
    */
   protected void verifyNotNull(Vector2D vector, String name) {

@@ -60,6 +60,8 @@ public class ModifyDescriptionController implements ChaosGameObserver {
 
   /**
    * Checks if the given weight is a valid number.
+   * @param weight the weight to check.
+   * @return true if the weight is a valid number, false otherwise.
    */
   public boolean weightIsValid(String weight) {
     try {

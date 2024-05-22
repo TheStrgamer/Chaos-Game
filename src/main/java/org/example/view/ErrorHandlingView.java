@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * <h1>ErrorHandlingView.</h1>
+ * <h2>ErrorHandlingView.</h2>
  * <p>
  * The view class for the error handling popup window layout.
  * </p>
