@@ -160,6 +160,15 @@ public class ChaosGameView implements PageViewInterface {
     zoomHbox.getChildren().addAll(leftColumn, centerColumn, rightColumn);
 
 
+    // Tooltips
+    zoomInButton.setTooltip(new Tooltip("(+)"));
+    zoomOutButton.setTooltip(new Tooltip("(-)"));
+    moveLeftButton.setTooltip(new Tooltip("(A)"));
+    moveRightButton.setTooltip(new Tooltip("(D)"));
+    moveUpButton.setTooltip(new Tooltip("(W)"));
+    moveDownButton.setTooltip(new Tooltip("(S)"));
+
+
   }
 
   /**
@@ -171,8 +180,7 @@ public class ChaosGameView implements PageViewInterface {
     Label juliaSetModeLabel = new Label("Julia set Mode:");
     juliaSetModeLabel.getStyleClass().add("juliaSetModeLabel");
     CheckBox juliaSetMode = new CheckBox();
-    juliaSetMode.setTooltip(
-        new Tooltip("Toggle weather julia sets are ran as julia set or chaos game"));
+
     juliaSetMode.setSelected(chaosGameController.getJuliaSetMode());
     juliaSetMode.setOnAction(event -> {
       chaosGameController.setJuliaSetMode(juliaSetMode.isSelected());
@@ -195,6 +203,12 @@ public class ChaosGameView implements PageViewInterface {
         );
 
     // Tooltips
+
+    runButton.setTooltip(new Tooltip("(R)"));
+    clearButton.setTooltip(new Tooltip("(C)"));
+
+    juliaSetMode.setTooltip(
+        new Tooltip("Toggle weather julia sets are ran as julia set or chaos game"));
     Tooltip autoRunTooltip = new Tooltip(
         "Automatically run the Chaos Game when the description is changed.");
     autoRunOnDescriptionChange.setTooltip(autoRunTooltip);
@@ -270,10 +284,13 @@ public class ChaosGameView implements PageViewInterface {
     extraElements.add(new VBox(saveImage));
 
     // Tooltips
-    Tooltip randomJuliaTooltip = new Tooltip("Generate a random Julia fractal.");
+    Tooltip modifyDescriptionKeyBind = new Tooltip("(M)");
+    toModifyDescription.setTooltip(modifyDescriptionKeyBind);
+
+    Tooltip randomJuliaTooltip = new Tooltip("(J) Generate a random Julia fractal.");
     randomJulia.setTooltip(randomJuliaTooltip);
 
-    Tooltip randomAffineTooltip = new Tooltip("Generate a random Affine fractal.");
+    Tooltip randomAffineTooltip = new Tooltip("(K) Generate a random Affine fractal.");
     randomAffine.setTooltip(randomAffineTooltip);
 
     Tooltip saveDescriptionTooltip = new Tooltip("Save the current description to file.");
