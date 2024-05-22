@@ -16,7 +16,7 @@ import org.example.model.transform.JuliaTransform;
  * </p>
  * <p>
  * The run method is inspired by the pseudocode from <a
- * href="https://en.wikipedia.org/wiki/Julia_set">...</a>
+ * href="https://en.wikipedia.org/wiki/Julia_set">wikipedia.org/Julia_set</a>
  * </p>
  *
  * @version 1.0.0
